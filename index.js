@@ -1,12 +1,11 @@
 const {Client, MessageEmbed, Collection, Intents} = require('discord.js');
 const voiceCollection = new Collection();
-const {PREFIX} = require('./config')
+const {PREFIX, MONGO, TOKEN} = require('./config')
 const bot = new Client({shards: "auto", restTimeOffset: 0, allowedMentions: { parse: ['users', 'roles'], repliedUser: true}, intents: [Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES] });
 const fs = require('fs');
 const mongoose = require('mongoose');
 const mc = require('discordjs-mongodb-currency')
 const Levels = require("discord-xp");
-const MONGO = process.env.MONGO
 Levels.setURL(MONGO);
 
 mc.connect(MONGO)
@@ -175,4 +174,4 @@ process.on('unhandledRejection', error => {
   console.log('Test error:', error);
 });
 
-bot.login(process.env.TOKEN)
+bot.login(TOKEN)

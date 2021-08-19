@@ -8,7 +8,7 @@ const {error, embed, perms} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 const Levels = require("discord-xp");
-Levels.setURL(process.env.MONGO);
+Levels.setURL(MONGO);
 
 
 module.exports = {

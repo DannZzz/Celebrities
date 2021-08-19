@@ -1,12 +1,12 @@
 const { MessageEmbed, MessageAttachment, MessageButton } = require('discord.js');
 const {greenlight, redlight, cyan} = require('../../JSON/colours.json');
-const { COIN, BANK, STAR } = require('../../config');
+const { COIN, BANK, STAR, MONGO } = require('../../config');
 const serverModel = require("../../models/serverSchema");
 const {error, pagination} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 const Levels = require("discord-xp");
-Levels.setURL(process.env.MONGO);
+Levels.setURL(MONGO);
 
 
 module.exports = {

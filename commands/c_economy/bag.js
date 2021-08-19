@@ -7,7 +7,7 @@ const {greenlight, redlight, cyan} = require('../../JSON/colours.json');
 const { COIN, BANK, STAR, MONGO } = require('../../config');
 const vipModel = require("../../models/vipSchema");
 const Levels = require("discord-xp");
-Levels.setURL(process.env.MONGO);
+Levels.setURL(MONGO);
 module.exports = {
   config: {
     name: 'профиль',

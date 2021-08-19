@@ -1,10 +1,11 @@
 const begModel = require("../../models/begSchema");
 const serverModel = require("../../models/serverSchema");
 const {error, embed, perms} = require('../../functions');
+const {MONGO} = require('../../config');
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 const Levels = require("discord-xp");
-Levels.setURL(process.env.MONGO)
+Levels.setURL(MONGO)
 
 module.exports = {
   config: {

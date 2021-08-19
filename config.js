@@ -17,3 +17,6 @@ exports.giphy_API = 'afWlnBmAo2txNzxVgN4m4P34yNZN9PFt';
 exports.AGREE = '<:check2:876438109707989032>';
 
 exports.DISAGREE = '<:cross2:876438109728960522>';
+
+exports.TOKEN = 'NzI3OTI0OTI5MTY4NjcwNzIw.Xvy66w.C9NIwvO5xlyU2lzleiPfkukQOgk'
+exports.MONGO = 'mongodb+srv://DannTest:DannTestDiscord@botdiscord.hkvvx.mongodb.net/test'
