@@ -59,18 +59,6 @@ bot.on("guildMemberAdd", async member => {
     }
     }
 
-    if(sd.autoRoleOn){
-      var role = member.guild.roles.cache.find(role => role.id == sd.autoRole);
-      if (role) {
-        if (role.editable) {
-          member.roles.add(role);
-        } else {
-          return
-        }
-
-      }
-    }
-
     let vipData = await vipModel.findOne({ userID: member.id });
     if (!vipData) {
     let vip = await vipModel.create({
