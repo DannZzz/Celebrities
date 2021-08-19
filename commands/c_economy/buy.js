@@ -1,5 +1,7 @@
 
 const sd = require('../../models/serverSchema.js')
+const bd = require('../../models/begSchema.js')
+const pd = require('../../models/profileSchema.js')
 const mc = require('discordjs-mongodb-currency');
 const {error, embed, perms} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
@@ -17,13 +19,30 @@ module.exports = {
   run: async (bot, message, args) => {
     let limited = rateLimiter.take(message.author.id)
       if(limited) return
-       
+    
+    const profileData = await pd.findOne({userID: message.author.id})
     const user = await mc.findUser(message.author.id, message.guild.id)
     const servData = await sd.findOne({serverID: message.guild.id})
-
-    if (!args[0] || isNaN(args[0])) return error(message, "Укажите номер предмета, который хотите купить.");
+    const begdata = await bd.findOne({userID: message.author.id})
+    if(!args[0]) return error(message, "Укажите предмет.");
+    if(args[0].toLowerCase() === "место" || args[0].toLowerCase() === "place") {
+      if(!profileData.allowMultiHeroes) {
+        if(begdata.stars >= 2000) {
+          await bd.updateOne({userID: message.author.id}, {$inc: {stars: -2000}})
+          await pd.updateOne({userID: message.author.id}, {$set: {allowMultiHeroes: true}})
+          return embed(message, "Вы успешно купили дополнительное место для героев.")
+        } else {
+          return error(message, "У вас недостаточно звёзд.")
+        }
+      } else {
+        return error(message, "Вы уже купили дополнительное место.")
+      }
+    }
+    if (isNaN(args[0])) return error(message, "Укажите номер предмета, который хотите купить.");
     if (args[0] > servData.shop.length) return error(message, "Предмет не найден.");
+    if(args[0].toLowerCase() === "место" || args[0].toLowerCase() === "place") {
 
+    }
     const resp = args[0] - 1
     const item = servData.shop[resp]
     if(isNaN(item.Cost) || item.Cost === null) return error(message, "Предмет полностью не готов.");

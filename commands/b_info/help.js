@@ -119,11 +119,6 @@ module.exports = {
               '**Категория "Информация"**\n\n' + bot.commands.filter(c => c.config.category === 'b_info').map(func)
               .slice(5, 10)
               .join("\n\n"))
-            description2 = new MessageEmbed()
-              .setDescription(
-              '**Категория "Информация"**\n\n' + bot.commands.filter(c => c.config.category === 'b_info').map(func)
-              .slice(10, 15)
-              .join("\n\n"))
 
           } else if(args[0] === 'игра' || args[0] === 'roleplay' || args[0] === 'rpg' || args[0] === 'RPG') {
 
@@ -138,6 +133,12 @@ module.exports = {
               '**Категория "Ролевая Игра"**\n\n' + bot.commands.filter(c => c.config.category === 'h_roleplay').map(func)
               .slice(5, 10)
               .join("\n\n"))
+              
+              description2 = new MessageEmbed()
+              .setDescription(
+              '**Категория "Ролевая Игра"**\n\n' + bot.commands.filter(c => c.config.category === 'h_roleplay').map(func)
+              .slice(10, 15)
+              .join("\n\n")) 
 
           } else if(args[0] === 'экономика' || args[0] === 'economy') {
 

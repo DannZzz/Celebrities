@@ -55,8 +55,19 @@ module.exports = {
       return message.channel.send({embeds: [newEmb]})
     }
     if (bal < requiredValue) return error(message, `У вас недостаточно денег.\nСтоимость прокачки до следующего уровня **${requiredValue}** ${STAR}.`)
+    let a = rp.heroes.indexOf(rp.heroes.filter(a => a["name"] === rp.item))
+    let b = rp.heroes[a];
 
-
+    let getItem = rp.heroes;
+    if(getItem[0]["name"] === rp.item) {
+      await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.0.health`]: addH}});
+      await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.0.level`]: 1}});
+      await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.0.damage`]: addD}});
+    } else if(getItem[1]["name"] === rp.item) {
+      await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.1.health`]: addH}});
+      await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.1.level`]: 1}});
+      await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.1.damage`]: addD}});
+    }
 
     await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {level: 1}});
     await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {health: addH}});

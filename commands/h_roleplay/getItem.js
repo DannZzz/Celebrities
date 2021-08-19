@@ -49,7 +49,7 @@ module.exports = {
     if (!args[0]) return error(message, 'Укажите героя.')
     if (!items.includes(args[0])) return error(message, 'Герой не найден.')
     const type = args[0];
-    if (rp.item === null) {
+    if (rp.heroes.length !== 2 && rp.heroes.length < 2) {
       const item = heroes[type]
 
       if (item.vip === true) {
@@ -57,6 +57,10 @@ module.exports = {
           return error(message, 'Герой доступен только для **VIP 2** пользователей.');
         }
       }
+
+      if (rp.heroes.length === 1 && !coinData.allowMultiHeroes) return error(message, "У вас недостаточно мест.")
+
+      if (rp.heroes.length === 1 && rp.heroes[0].name === type) return error(message, "Вы уже имеете этого героя.")
 
       if (item.costType === "star") {
         const stars = bag.stars
@@ -70,13 +74,21 @@ module.exports = {
         await rpg.findOneAndUpdate({userID: user.id}, {$set: {level: 1}});
         await rpg.findOneAndUpdate({userID: user.id}, {$set: {damage: item.damage}});
 
+        rp.heroes.push({
+          name: type,
+          health: item.health,
+          damage: item.damage,
+          level: 1
+        })
+        rp.save()
+        
         return embed(message, `Вы успешно купили героя **${item.nameRus}.**`);
       } else {
         return error(message, 'Герой недоступен для покупки.');
       }
 
     } else {
-      return error(message, `Вы уже имеете герой, сначала убейте его, чтобы купить новый.`);
+      return error(message, `Вы уже имеете достаточно героев, сначала убейте одного, чтобы купить новый.`);
 
     }
     //

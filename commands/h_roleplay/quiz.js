@@ -65,8 +65,8 @@ module.exports = {
     if (respA.includes(collected.first().content)) {
       userResponse = a
       if (userResponse === getAnswer) {
-        await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: 1}})
-        return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — **1** ${STAR}.`)]})
+        await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: 3}})
+        return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — **3** ${STAR}.`)]})
 
       } else {
         return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} Вы ответили неправильно.`)]})
@@ -74,8 +74,8 @@ module.exports = {
     } else if (respB.includes(collected.first().content)) {
       userResponse = b
       if (userResponse === getAnswer) {
-        await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: 1}})
-        return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — **1** ${STAR}.`)]})
+        await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: 3}})
+        return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — **3** ${STAR}.`)]})
 
       } else {
         return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} Вы ответили неправильно.`)]})
@@ -83,8 +83,8 @@ module.exports = {
     } else if (respC.includes(collected.first().content)) {
       userResponse = c
       if (userResponse === getAnswer) {
-        await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: 1}})
-        return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — **1** ${STAR}.`)]})
+        await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: 3}})
+        return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — **3** ${STAR}.`)]})
 
       } else {
         return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} Вы ответили неправильно.`)]})
@@ -92,8 +92,8 @@ module.exports = {
         } else if (respD.includes(collected.first().content)) {
       userResponse = d
       if (userResponse === getAnswer) {
-        await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: 1}})
-        return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — **1** ${STAR}.`)]})
+        await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: 3}})
+        return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — **3** ${STAR}.`)]})
 
       } else {
         return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} Вы ответили неправильно.`)]})

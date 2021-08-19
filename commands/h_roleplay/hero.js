@@ -13,7 +13,7 @@ module.exports = {
     name: "герой",
     aliases: ['hero'],
     category: 'h_roleplay',
-    description: "Посмотреть статистику своего героя.",
+    description: "Посмотреть статистику своего основного героя.",
     usage: "(участник)",
     accessableby: "Для всех"
   },

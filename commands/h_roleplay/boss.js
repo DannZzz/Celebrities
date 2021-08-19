@@ -11,7 +11,7 @@ const { checkValue } = require("../../functions");
 const mc = require('discordjs-mongodb-currency');
 const {error, embed, perms} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 5000);
+let rateLimiter = new RateLimiter(1, 60000);
 
 module.exports = {
   config: {
@@ -24,7 +24,7 @@ module.exports = {
   },
   run: async (bot, message, args) => {
     let limited = rateLimiter.take(message.author.id)
-      if(limited) return
+      if(limited) return error(message, 'Подождите одну минуту.')
        
     const bag = await bd.findOne({ userID: message.author.id });
     const profileData = await pd.findOne({ userID: message.author.id });
@@ -40,7 +40,7 @@ module.exports = {
         return error(message, `Попробуй еще раз через **${time.getHours()} часа(ов) ${time.getMinutes()} минут.**.`);
     }
     if (!args[0]) return error(message, 'Укажите первого участника.');
-    let user1 = message.mentions.members.first() || message.guild.members.cache.get(args[0])
+    const user1 = message.mentions.members.first() || message.guild.members.cache.get(args[0])
     if(!user1) return error(message, 'Участник не найден.');
     if(user1.user.bot) return error(message, 'Укажите другого участника.');
     const mUser = message.author;
@@ -48,9 +48,9 @@ module.exports = {
     let count = 0;
 
     if(!args[1]) return error(message, 'Укажите второго участника.');
-    let user2 = message.mentions.members.last() || message.guild.members.cache.get(args[1]) || message.mentions.members.array(0)
+    const user2 = message.mentions.members.last() || message.guild.members.cache.get(args[1]);
     if(!user2) return error(message, 'Участник не найден.');
-    if(user1.id === user2.id) return error(message, 'Этого участника вы уже указывали.')
+    if(user2.id === user1.id) return error(message, 'Этого участника вы уже указывали.')
 
 
     if(user2.id === mUser.id) return error(message, 'Вы не можете начать бой с собой.');
@@ -88,7 +88,7 @@ module.exports = {
 
     let msg1;
     let msg2;
-
+    let TIME = true;
     let fight = new MessageEmbed()
     .setTitle(`Поединок начался.`)
     .setImage(boss.url)
@@ -101,17 +101,15 @@ module.exports = {
     .setColor(cyan)
     .setTimestamp()
     let trues = [false, false]
-    const filter1 = m => m.author.id === user1.id;
-    const filter2 = m => m.author.id === user2.id;
+    let filter = m => m.author.id === user1.id;
     message.delete()
     let wait1 = await embed(message, `<@${user1.user.id}>, <@${message.author.id}> вас приглашает в «Бой с Боссом», у вас 20 секунд.\nПринять: \`\`+\`\``, false)
     await message.channel.awaitMessages({
-    filter1,
+    filter,
     max: 1, // leave this the same
-    time: 20000,
-    errors: ['time'] // time in MS. there are 1000 MS in a second
+    time: 20000 // time in MS. there are 1000 MS in a second
   }).then(async (collected) => {
-    if (collected.first().content == '+') {
+    if (collected.first().content === '+') {
       await wait1.delete()
 
       msg1 = await message.channel.send('Первый участник согласился.')
@@ -121,18 +119,18 @@ module.exports = {
     }
     console.log('collected :' + collected.first().content)
   }).catch(async() => {
-    return message.reply('Время прошло, ваши друзья не успели принять приглашение.')
+    TIME = false
+    return message.channel.send('Время прошло, ваши друзья не успели принять приглашение.')
     });
-
+    if(!TIME) return
     let wait2 = await embed(message, `<@${user2.user.id}>, <@${message.author.id}> вас приглашает в «Бой с Боссом», у вас 20 секунд.\nПринять: \`\`+\`\``, false)
-
+    filter = m => m.author.id === user2.id;
     await message.channel.awaitMessages({
-    filter2,
+    filter,
     max: 1, // leave this the same
-    time: 20000,
-    errors: ['time'] // time in MS. there are 1000 MS in a second
+    time: 20000 // time in MS. there are 1000 MS in a second
   }).then(async (collected) => {
-    if (collected.first().content == '+') {
+    if (collected.first().content === '+') {
       await wait2.delete()
 
       msg2 = await message.channel.send('Второй участник согласился.')
@@ -150,7 +148,7 @@ module.exports = {
       if(trues[0] == true && trues[1] === true) {
         msg1.delete()
         msg2.delete()
-        let newmsg = await message.channel.send(fight)
+        let newmsg = await message.channel.send({embeds: [fight]})
         setTimeout(async function() {
           let rand = Math.floor(Math.random() * 32)
           if (rand < 16) {
