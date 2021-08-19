@@ -1,1 +1,1 @@
-worker: node --require dotenv/config index.js
+worker: npm run dev
