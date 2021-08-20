@@ -75,10 +75,10 @@ module.exports = {
       }
       if (win) {
 
-          embed(message, `${slotItems[number[0]]} | ${slotItems[number[1]]} | ${slotItems[number[2]]}\n\n${AGREE} Ты выиграл ${money}${COIN}`);
+          embed(message, `${slotItems[number[0]]} | ${slotItems[number[1]]} | ${slotItems[number[2]]}\n\n${AGREE} Ты выиграл ${money}${COIN}`, false);
           await mc.giveCoins(user.id, message.guild.id, Math.floor(money))
       } else {
-          embed(message, `${slotItems[number[0]]} | ${slotItems[number[1]]} | ${slotItems[number[2]]}\n\n${DISAGREE} Ты проиграл ${money}${COIN}`);
+          embed(message, `${slotItems[number[0]]} | ${slotItems[number[1]]} | ${slotItems[number[2]]}\n\n${DISAGREE} Ты проиграл ${money}${COIN}`, false);
 
       }
 
