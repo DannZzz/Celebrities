@@ -32,7 +32,14 @@ module.exports = {
             })
         rp.save()
     }
-
+    if(rp.heroes.length > 2) {
+      while(rp.heroes.length > 2) {
+        rp.heroes.pop()
+        rp.save()
+      }
+    }
+    
+    
     const item = rp.heroes[0]
     const h = heroes[item.name];
     const hero = new MessageEmbed()
