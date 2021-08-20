@@ -21,9 +21,9 @@ module.exports = {
     let limited = rateLimiter.take(message.author.id)
     if (limited) return
     const rp = await rpg.findOne({userID: message.author.id});
-    if (!rp || !rp.item) return error(message, 'Вы не имеете героев.')
+    if (!rp) return error(message, 'Вы не имеете героев.')
 
-    if (!rp.heroes || rp.heroes.length === 0) {
+    if (!rp.heroes || rp.heroes.length === 0 || rp.item !== rp.heroes[0]["name"]) {
         await rp.heroes.push({
                 name: rp.item,
                 level: rp.level,

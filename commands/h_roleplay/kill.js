@@ -49,7 +49,7 @@ module.exports = {
           await rpg.findOneAndUpdate({userID: user.id}, {$set: {damage: rp.heroes[0]["damage"]}});
           await rpg.findOneAndUpdate({userID: user.id}, {$set: {level: rp.heroes[0]["level"]}});
         }
-        const item = heroes[rp.item]
+        const item = heroes[type]
         return embed(message, `Вы успешно убили своего героя - __${item.nameRus}__.`);
       } else {
         const item = heroes[rp.item]

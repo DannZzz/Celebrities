@@ -103,6 +103,16 @@ module.exports = {
     .addField(`Жизнь: ${eragon.health} ❤`, `**Атака: ${eragon.damage}** ⚔`, true)
     allDrags.push(dragon8)
 
+    const ariel = heroes["Ariel"]
+    const dragon9 = new MessageEmbed()
+    .setColor(cyan)
+    .setTitle(`${ariel.name} (${ariel.nameRus}) ${cVip(ariel.vip)}`)
+    .setThumbnail(ariel.url)
+    .setDescription(ariel.description)
+    .addField(`Цена: ${ariel.cost} ${cType(ariel.costType)}`, `**Доступен: ${ariel.available}**`, true)
+    .addField(`Жизнь: ${ariel.health} ❤`, `**Атака: ${ariel.damage}** ⚔`, true)
+    allDrags.push(dragon9)
+
     const timeout = '100000'
     const userids = [message.author.id]
     const pages = allDrags

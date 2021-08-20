@@ -23,7 +23,7 @@ module.exports = {
     let limited = rateLimiter.take(message.author.id)
       if(limited) return
        
-    const items = ["Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "PerfectDuo", "Eragon"];
+    const items = ["Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "PerfectDuo", "Eragon", "Ariel"];
     const user = message.author;
     const coinData = await pd.findOne({userID: user.id});
     let rp = await rpg.findOne({userID: user.id});

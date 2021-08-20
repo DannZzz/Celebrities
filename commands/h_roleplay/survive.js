@@ -41,6 +41,8 @@ module.exports = {
     let enemy;
     if (nowLevel % 10 === 0) {
       enemy = enemies["D'Lord"]
+    } else if (nowLevel % 7 === 0) {
+      enemy = enemies["D'Wolf"];
     } else if (nowLevel % 5 === 0) {
       enemy = enemies["Arthas"];
     } else if (nowLevel % 4 === 0) {
@@ -71,7 +73,7 @@ module.exports = {
     .addField(`${enemy.name}`, `(${enemy.nameRus})`, true)
     .addField(`❤ Общая жизнь: ${enemyHealth}`, `**⚔ Общая атака: ${enemyDamage}**`, true)
     .setThumbnail(`https://media.giphy.com/media/SwUwZMPpgwHNQGIjI7/giphy.gif`)
-    .setImage("https://i.ibb.co/wrsPgsQ/killin.gif")
+    .setImage("https://i.ibb.co/9sZWpJ3/download.gif")
 
     if (args[0] && argsWords.includes(args[0])) {
 
@@ -127,7 +129,11 @@ module.exports = {
     let winner;
     win ? winner = hero : winner = enemy
 
-    if(hero.name === "Eragon") {
+    if(hero.name === "Eragon" && enemy.name === "D'Lord") {
+      winner = hero
+    }
+
+    if(hero.name === "Ariel" && enemy.name === "D'Wolf") {
       winner = hero
     }
     

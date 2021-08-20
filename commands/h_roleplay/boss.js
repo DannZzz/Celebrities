@@ -103,7 +103,7 @@ module.exports = {
     let trues = [false, false]
     let filter = m => m.author.id === user1.id;
     message.delete()
-    let wait1 = await embed(message, `<@${user1.user.id}>, <@${message.author.id}> вас приглашает в «Бой с Боссом», у вас 20 секунд.\nПринять: \`\`+\`\``, false)
+    let wait1 = await embed(message, `<@${user1.user.id}> вас приглашают в «Бой с Боссом», у вас 20 секунд.\nПринять: \`\`+\`\``, false)
     await message.channel.awaitMessages({
     filter,
     max: 1, // leave this the same
@@ -120,10 +120,11 @@ module.exports = {
     console.log('collected :' + collected.first().content)
   }).catch(async() => {
     TIME = false
-    return message.channel.send('Время прошло, ваши друзья не успели принять приглашение.')
+    wait1.delete()
+    return message.channel.send('Время вышло, ваши друзья не успели принять приглашение.')
     });
     if(!TIME) return
-    let wait2 = await embed(message, `<@${user2.user.id}>, <@${message.author.id}> вас приглашает в «Бой с Боссом», у вас 20 секунд.\nПринять: \`\`+\`\``, false)
+    let wait2 = await embed(message, `<@${user2.user.id}> вас приглашают в «Бой с Боссом», у вас 20 секунд.\nПринять: \`\`+\`\``, false)
     filter = m => m.author.id === user2.id;
     await message.channel.awaitMessages({
     filter,
@@ -140,7 +141,8 @@ module.exports = {
     }
     console.log('collected :' + collected.first().content)
   }).catch(async() => {
-    return
+    wait2.delete()
+    return message.channel.send('Время вышло, ваши друзья не успели принять приглашение.')
     });
 
 
