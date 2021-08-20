@@ -34,9 +34,9 @@ module.exports = {
       newData.save()
     }
     rp = await rpg.findOne({userID: user.id})
-
+    if(rp.heroes.length >= 2) return error(message, "Участник имеет достаточно героев.")
     if(!args[1]) return error(message, "Укажите подарок.")
-    const items = ["Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "PerfectDuo", "Eragon"];
+    const items = ["Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "PerfectDuo", "Eragon", "Ariel"];
     if (!items.includes(args[1])) return error(message, "Герой не найден.")
     let giftType = heroes[args[01]]
 
@@ -44,6 +44,15 @@ module.exports = {
     await rpg.findOneAndUpdate({userID: user.id}, {$set: {health: giftType.health}})
     await rpg.findOneAndUpdate({userID: user.id}, {$set: {damage: giftType.damage}})
     await rpg.findOneAndUpdate({userID: user.id}, {$set: {level: 1}})
+
+    await rp.heroes.push({
+      name: giftType.name,
+      level: 1,
+      health: giftType.health,
+      damage: giftType.damage
+      })
+    rp.save()
+  
     message.react(`${AGREE}`)
       //
     user.send({embeds: [embed(message, `**У вас подарок от разработчика!🎉**\n\n||---**${giftType.nameRus}**---||`, "dm")]}).catch(()=> message.react('❌'))
