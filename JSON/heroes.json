@@ -68,7 +68,7 @@
     "name": "Zeus",
     "nameRus": "Зевс",
     "health": 8000,
-    "damage": 170,
+    "damage": 150,
     "cost": "200₽",
     "costType": "dev",
     "url": "https://i.ibb.co/SdnW1Mp/zeus.gif",
@@ -100,7 +100,20 @@
     "url": "https://i.ibb.co/3z10srp/beautiful-with-drag.gif",
     "description": "Принцесса Мариам и заколдованный Дэн.\nДа! Любовь не умирает.\nХоть они и не бессмертны, но их любовь останется навечно!\n\n__Гарантированная победа против Д'Лорда__.",
     "available": "Да",
-    "vip": true,
+    "vip": false,
     "upgradeCost": 40
+  },
+  "Ariel": {
+    "name": "Ariel",
+    "nameRus": "Ариэль",
+    "health": 4500,
+    "damage": 100,
+    "cost": 1000,
+    "costType": "star",
+    "url": "https://i.ibb.co/QNxKBHr/ariel.gif",
+    "description": "Очаровательная повелительница диких волков, живёт на севере, мужчинам лучше не подходить!\n\n__Гарантированная победа против Д'Волка__.",
+    "available": "Да",
+    "vip": true,
+    "upgradeCost": 50
   }
 }
