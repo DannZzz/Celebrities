@@ -33,7 +33,7 @@ module.exports = {
     }
     rp = await rpg.findOne({userID: user.id});
     if(rp.item !== null) {
-      if ((!rp.heroes || rp.heroes.length === 0) && rp.item !== rp.heroes[0]["name"]) {
+      if ((rp.heroes && rp.heroes.length === 1 && rp.item !== rp.heroes[0]["name"]) || ((rp.heroes && rp.heroes.length === 0) || !rp.heroes)) {
         await rp.heroes.push({
                 name: rp.item,
                 level: rp.level,

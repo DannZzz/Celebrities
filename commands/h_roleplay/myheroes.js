@@ -23,7 +23,7 @@ module.exports = {
     const rp = await rpg.findOne({userID: message.author.id});
     if (!rp) return error(message, 'Вы не имеете героев.')
 
-    if ((!rp.heroes || rp.heroes.length === 0 || rp.item !== rp.heroes[0]["name"]) && rp.item !== null) {
+    if ((rp.heroes && rp.heroes.length === 0 && rp.item !== rp.heroes[0]["name"]) && rp.item !== null) {
         await rp.heroes.push({
                 name: rp.item,
                 level: rp.level,

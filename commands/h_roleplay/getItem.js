@@ -74,7 +74,7 @@ module.exports = {
         await rpg.findOneAndUpdate({userID: user.id}, {$set: {level: 1}});
         await rpg.findOneAndUpdate({userID: user.id}, {$set: {damage: item.damage}});
 
-        rp.heroes.push({
+        await rp.heroes.push({
           name: type,
           health: item.health,
           damage: item.damage,
