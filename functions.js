@@ -26,13 +26,13 @@ module.exports = {
 
     const row = new MessageActionRow().addComponents(buttonList);
     const curPage = await interaction.reply({
-      embeds: [pages[page].setFooter(`Страница ${page + 1} / ${pages.length}`)],
+      embeds: [pages[page].setFooter(`${page + 1} / ${pages.length}`)],
       components: [row],fetchReply: true,
     });
 
     const filter = (i) =>
-      i.customId === buttonList[0].customId ||
-      i.customId === buttonList[1].customId &&
+      (i.customId === buttonList[0].customId ||
+      i.customId === buttonList[1].customId) &&
       ids.includes(i.user.id);
 
     const collector = await curPage.createMessageComponentCollector({
@@ -53,7 +53,7 @@ module.exports = {
       }
       await i.deferUpdate();
       await i.editReply({
-        embeds: [pages[page].setFooter(`Страница ${page + 1} / ${pages.length}`)],
+        embeds: [pages[page].setFooter(`${page + 1} / ${pages.length}`)],
         components: [row],
       }).catch(()=>interaction.react('❌'));
       collector.resetTimer();
@@ -66,7 +66,7 @@ module.exports = {
           buttonList[1].setDisabled(true)
         );
         curPage.edit({
-          embeds: [pages[page].setFooter(`Страница ${page + 1} / ${pages.length}`)],
+          embeds: [pages[page].setFooter(`${page + 1} / ${pages.length}`)],
           components: [disabledRow],
         });
       }
