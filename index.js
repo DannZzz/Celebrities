@@ -53,7 +53,7 @@ bot.on("guildMemberAdd", async member => {
 
     let channel = member.guild.channels.cache.get(sd.welcomeChannel);
     if(channel) {
-      channel.send(emb)
+      channel.send({embeds: [emb]})
     } else {
       return
     }
