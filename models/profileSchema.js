@@ -9,6 +9,7 @@ const profileSchema = new mongoose.Schema({
   rpg: { type: Number, default: 0},
   survive: { type: Number, default: 0},
   boss: { type: Number, default: 0},
+  join: { type: Number, default: 0},
   allowMultiHeroes: { type: Boolean, default: false }
 });
 
