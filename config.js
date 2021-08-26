@@ -23,3 +23,5 @@ exports.MONGO = 'mongodb+srv://DannDev:vard04mak@cluster0.fcdo0.mongodb.net/test
 exports.AGREE = '<:check2:876438109707989032>';
 
 exports.DISAGREE = '<:cross2:876438109728960522>';
+
+exports.CLAN = '<a:clancurrency:878337758458970172>';
