@@ -43,6 +43,16 @@ module.exports = {
     .addField(`Жизнь: ${dilan.health} ❤`, `**Атака: ${dilan.damage}** ⚔`, true)
     allDrags.push(dragon2)
 
+    const Archangel = heroes["Archangel"]
+    const arch = new MessageEmbed()
+    .setColor(cyan)
+    .setTitle(`${Archangel.name} (${Archangel.nameRus}) ${cVip(Archangel.vip)}`)
+    .setThumbnail(Archangel.url)
+    .setDescription(Archangel.description)
+    .addField(`Цена: ${Archangel.cost} ${cType(Archangel.costType)}`, `**Доступен: ${Archangel.available}**`, true)
+    .addField(`Жизнь: ${Archangel.health} ❤`, `**Атака: ${Archangel.damage}** ⚔`, true)
+    allDrags.push(arch)
+
     const darius = heroes["Darius"]
     const dragon3 = new MessageEmbed()
     .setColor(cyan)
@@ -113,6 +123,16 @@ module.exports = {
     .addField(`Жизнь: ${ariel.health} ❤`, `**Атака: ${ariel.damage}** ⚔`, true)
     allDrags.push(dragon9)
 
+    const Darkangel = heroes["Darkangel"]
+    const dark = new MessageEmbed()
+    .setColor(cyan)
+    .setTitle(`${Darkangel.name} (${Darkangel.nameRus}) ${cVip(Darkangel.vip)}`)
+    .setThumbnail(Darkangel.url)
+    .setDescription(Darkangel.description)
+    .addField(`Цена: ${Darkangel.cost} ${cType(Darkangel.costType)}`, `**Доступен: ${Darkangel.available}**`, true)
+    .addField(`Жизнь: ${Darkangel.health} ❤`, `**Атака: ${Darkangel.damage}** ⚔`, true)
+    allDrags.push(dark)
+    
     const timeout = '100000'
     const userids = [message.author.id]
     const pages = allDrags
