@@ -5,6 +5,7 @@ const rpgSchema = new mongoose.Schema({
   userID: { type: String, require: false, unique: true },
   item: { type: String, default: null },
   heroes: { type: Array, default: []},
+  clanID: { type: String, default: null},
   level: { type: Number, default: 1},
   health: { type: Number, default: null },
   damage: { type: Number, default: null },
