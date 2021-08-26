@@ -50,7 +50,8 @@ module.exports = {
     const logo = ['логотип', 'лого', 'logo'];
     const description = ['описание', 'description', 'desc'];
     const del = ['удалить', 'delete'];
-    const reward = ['награда', 'reward']
+    const reward = ['награда', 'reward'];
+    const leave = ['выйти', 'leave'];
     
     if (!args[0]) {
       const mc = await clan.findOne({ID: rp.clanID});
@@ -58,7 +59,7 @@ module.exports = {
 
       let a = await rpg.find({clanID: rp.clanID})
       let b = a.map((docs, p = 0)=> {
-         return `__${p+1}.__ ${message.guild.members.cache.get(docs.userID) ? message.guild.members.cache.get(docs.userID) : bot.users.cache.get(docs.userID).tag}`
+         return `__${p+1}.__ ${message.guild.members.cache.get(docs.userID) ? `${message.guild.members.cache.get(docs.userID)} ${docs.userID === mc.owner ? "   <:danncrown:880492405390979132>" : ""}` : `${bot.users.cache.get(docs.userID).tag} ${docs.userID === mc.owner ? "   <:danncrown:880492405390979132>" : ""}`}`
        })
       
       
@@ -282,7 +283,7 @@ module.exports = {
         await clan.updateOne({ID: c.ID}, {$inc: {level: 1}});
         await clan.updateOne({ID: c.ID}, {$inc: {space: 5}});
 
-        return embed(message, `Уровень клана успешно улучен до __${c.level+1}__.`);
+        return embed(message, `Уровень клана успешно улучшен до __${c.level+1}__.`);
 
       }, a * 1000)
     } else if (description.includes(resp)) {
@@ -423,6 +424,12 @@ module.exports = {
       await users.forEach(async asd => await bd.updateOne({userID: asd.userID}, {$inc: {stars: rew}}))
       
       return embed(message, `Все участники клана получили по — __${rew}__ ${STAR}`)
+    } else if (leave.includes(resp)) {
+      const c = await clan.findOne({ID: rp.clanID});
+      if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
+
+      await rpg.updateOne({userID: user.id}, {$set: {clanID: null}});
+      return embed(message, "Вы успешно вышли из клана.")
     } else {
       return error(message, "Укажите действие. (\`\`?клан хелп\`\`)");
     }

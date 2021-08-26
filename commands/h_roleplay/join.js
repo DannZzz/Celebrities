@@ -24,7 +24,7 @@ module.exports = {
     let limited = rateLimiter.take(message.author.id)
     if(limited) return
 
-    const data = await bd.findOne({userID: message.author.id})
+    const data = await pd.findOne({userID: message.author.id})
     const user = message.author;
     const bag = await bd.findOne({userID: user.id})
     let rp = await rpg.findOne({userID: user.id});
@@ -39,7 +39,17 @@ module.exports = {
     rp = await rpg.findOne({userID: user.id});
     
     let [a1] = args
-
+    let author = await data.join;
+      let timeout;
+      if (bag["vip2"] === true) { timeout = 1800 * 1000; } else {
+        timeout = 3559 * 1000;
+      }
+      if (author !== null && timeout - (Date.now() - author) > 0) {
+          let time = new Date(timeout - (Date.now() - author));
+  
+          return error(message, `Попробуй еще раз через **${time.getMinutes()} минут ${time.getSeconds()} секунд**.`);
+      }
+    if (!a1) return error(message, "Укажите номер клана.");
     let getClan = await clan.findOne({ID: a1});
     if (!getClan) return error(message, "Клан не найден!");
 
