@@ -6,10 +6,10 @@ const clan = require("../../models/clanSchema");
 const fishes = require('../../JSON/fishes.json');
 const { MessageEmbed } = require('discord.js');
 const {greenlight, redlight, cyan} = require('../../JSON/colours.json');
-const { COIN, BANK, STAR, MONGO } = require('../../config');
+const { COIN, BANK, STAR} = require('../../config');
 const vipModel = require("../../models/vipSchema");
 const Levels = require("discord-xp");
-Levels.setURL(MONGO);
+Levels.setURL(process.env.MONGO);
 module.exports = {
   config: {
     name: 'профиль',
