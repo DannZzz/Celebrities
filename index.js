@@ -1,12 +1,17 @@
 const {Client, MessageEmbed, Collection, Intents} = require('discord.js');
 const voiceCollection = new Collection();
-const {PREFIX, MONGO, TOKEN} = require('./config')
+const {PREFIX} = require('./config')
 const bot = new Client({shards: "auto", restTimeOffset: 0, allowedMentions: { parse: ['users', 'roles'], repliedUser: true}, intents: [Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES] });
 const fs = require('fs');
 const mongoose = require('mongoose');
 const mc = require('discordjs-mongodb-currency')
 const Levels = require("discord-xp");
+const dotenv = require('dotenv');
+dotenv.config();
+const MONGO = process.env.MONGO
 Levels.setURL(MONGO);
+const Canvas = require('canvas')
+Canvas.registerFont(`./AlumniSans-SemiBold.ttf`, { family: "Alumni Sans"})
 
 mc.connect(MONGO)
 mongoose.connect(MONGO, {useNewUrlParser: true, useUnifiedTopology: true})
@@ -53,7 +58,7 @@ bot.on("guildMemberAdd", async member => {
 
     let channel = member.guild.channels.cache.get(sd.welcomeChannel);
     if(channel) {
-      channel.send({embeds: [emb]})
+      channel.send({embeds:[emb]})
     } else {
       return
     }
@@ -162,4 +167,4 @@ process.on('unhandledRejection', error => {
   console.log('Test error:', error);
 });
 
-bot.login(TOKEN)
+bot.login(process.env.TOKEN)
