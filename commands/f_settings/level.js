@@ -5,7 +5,7 @@ const {MONGO} = require('../../config');
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 const Levels = require("discord-xp");
-Levels.setURL(MONGO)
+Levels.setURL(process.env.MONGO)
 
 module.exports = {
   config: {
