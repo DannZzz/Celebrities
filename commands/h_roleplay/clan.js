@@ -249,7 +249,7 @@ module.exports = {
         if (getuser.clanID !== null) return error(message, "Этот участник уже состоит в другом клане.")
         await rpg.updateOne({userID: c.apps[index]["id"]}, {$set: {clanID: c.ID}});
 
-        await c.apps.splice(index);
+        await c.apps.splice(index, 1);
         c.save()
 
         
@@ -426,11 +426,95 @@ module.exports = {
       
       return embed(message, `Все участники клана получили по — __${rew}__ ${STAR}`)
     } else if (leave.includes(resp)) {
+      const now = ops.queue.get(user.id);
+      if (now) return
       const c = await clan.findOne({ID: rp.clanID});
       if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
+      if (user.id === c.owner) return error(message, "Лидер клана не может выйти.");
 
-      await rpg.updateOne({userID: user.id}, {$set: {clanID: null}});
-      return embed(message, "Вы успешно вышли из клана.")
+      const button1 = new MessageButton()
+      .setCustomId('previousbtn')
+      .setLabel('Отменить')
+      .setStyle('DANGER');
+
+      const button2 = new MessageButton()
+      .setCustomId('nextbtn')
+      .setLabel('Выйти')
+      .setStyle('SUCCESS');
+
+      let buttonList = [
+          button1,
+          button2
+      ]
+
+      const Emb = new MessageEmbed()
+      .setColor(cyan)
+      .setTimestamp()
+      .setAuthor(user.username, user.displayAvatarURL({dynamic: true}))
+      .setTitle('Вы уверены, что хотите удалить клан?')
+
+      ops.queue.set(user.id, {name: "deleting"})
+
+      const row = new MessageActionRow().addComponents(buttonList);
+      const curPage = await message.reply({
+        embeds: [Emb],
+        components: [row],
+      })
+
+      const filter = (i) =>
+      (i.customId === buttonList[0].customId ||
+      i.customId === buttonList[1].customId) &&
+      i.user.id === user.id;
+
+      const collector = await curPage.createMessageComponentCollector({
+      filter,
+      time: 15000,
+      });
+
+      collector.on("collect", async (i) => {
+        if(i.customId === buttonList[0].customId) {
+          await i.deferUpdate()
+          if (!curPage.deleted) {
+            const disabledRow = new MessageActionRow().addComponents(
+              buttonList[0].setDisabled(true),
+              buttonList[1].setDisabled(true)
+            );
+            curPage.edit({
+              embeds: [Emb.setTitle('Дейстие успешно отклонено.')],
+              components: [disabledRow],
+            });
+          }
+          ops.queue.delete(user.id)
+          collector.stop()
+        } else if (i.customId === buttonList[1].customId) {
+          await i.deferUpdate()
+          await rpg.updateOne({userID: user.id}, {$set: {clanID: null}});
+          const disabledRow = new MessageActionRow().addComponents(
+            buttonList[0].setDisabled(true),
+            buttonList[1].setDisabled(true)
+          );
+          curPage.edit({
+            embeds: [Emb.setTitle('Вы успешно вышли клан.')],
+            components: [disabledRow],
+          });//
+          ops.queue.delete(user.id)
+          collector.stop()
+        }
+      })
+      
+      collector.on("end", () => {
+        if (!curPage.deleted) {
+          const disabledRow = new MessageActionRow().addComponents(
+            buttonList[0].setDisabled(true),
+            buttonList[1].setDisabled(true)
+          );
+          curPage.edit({
+            components: [disabledRow],
+          });
+        }
+        ops.queue.delete(user.id)
+      });
+      
     } else {
       return error(message, "Укажите действие. (\`\`?клан хелп\`\`)");
     }
