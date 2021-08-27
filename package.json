@@ -13,7 +13,6 @@
   "license": "ISC",
   "dependencies": {
     "amethyste-api": "^1.1.5",
-    "canvacord": "^5.2.1",
     "canvas": "^2.8.0",
     "common-tags": "^1.8.0",
     "discord-xp": "^1.1.16",
