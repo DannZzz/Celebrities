@@ -494,7 +494,7 @@ module.exports = {
             buttonList[1].setDisabled(true)
           );
           curPage.edit({
-            embeds: [Emb.setTitle('Вы успешно вышли клан.')],
+            embeds: [Emb.setTitle('Вы успешно вышли из клана.')],
             components: [disabledRow],
           });//
           ops.queue.delete(user.id)
