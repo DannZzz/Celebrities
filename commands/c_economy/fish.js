@@ -54,7 +54,7 @@ module.exports = {
             }
             await profileModel.findOneAndUpdate({userID: user.id}, {$set: {fish: Date.now()}})
 
-            embed(message, `**🎣 Вы забросили свою удочку и поймали ${fishh.symbol}**!`);
+            embed(message, `**🎣 Вы забросили свою удочку и поймали ${fishh.symbol}**!`, false);
             if (rarity === "junk") await begModel.findOneAndUpdate({userID: user.id},{$inc: {junk: 1}})
             else if (rarity === "common") await begModel.findOneAndUpdate({userID: user.id},{$inc: {common: 1}})
             else if (rarity === "uncommon") await begModel.findOneAndUpdate({userID: user.id},{$inc: {uncommon: 1}})
