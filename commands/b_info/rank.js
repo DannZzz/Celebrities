@@ -82,6 +82,11 @@ module.exports = {
         ctx.font = '38px "Alumni Sans"';
         ctx.fillStyle = customColor || '#fff';
         ctx.fillText(`Уровень ${person.level}`, 570, 65);
+
+        ctx.globalAlpha = 1;
+        ctx.font = '38px "Alumni Sans"';
+        ctx.fillStyle = customColor || '#fff';
+        ctx.fillText(`Опыт ${person.xp}`, 570, 90);
         
         ctx.globalAlpha = 1;
         ctx.font = '38px "Alumni Sans"';
