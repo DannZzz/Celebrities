@@ -138,7 +138,7 @@ module.exports = {
     } else {
     const gg = await Levels.computeLeaderboard(bot, led, true);
 
-    const lb = gg.map(e => `**${e.position === 1 ? `🏆 #${e.position}` : `#${e.position}`}**. **${e.username}**#${e.discriminator}\n**Уровень:** ${e.level} | **Опыт:** ${e.xp.toLocaleString()}`);
+    const lb = gg.map(e => `**${e.position === 1 ? `🏆 №${e.position}` : `№${e.position}`}**. **${e.username}**#${e.discriminator}\n**Уровень:** ${e.level} | **Опыт:** ${e.xp.toLocaleString()}`);
 
     let as;
     let page1;
