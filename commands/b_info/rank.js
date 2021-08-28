@@ -86,7 +86,7 @@ module.exports = {
         ctx.globalAlpha = 1;
         ctx.font = '38px "Alumni Sans"';
         ctx.fillStyle = customColor || '#fff';
-        ctx.fillText(`Опыт ${person.xp}`, 570, 90);
+        ctx.fillText(`Опыт ${person.xp}`, 570, 125);
         
         ctx.globalAlpha = 1;
         ctx.font = '38px "Alumni Sans"';
