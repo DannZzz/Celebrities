@@ -9,6 +9,7 @@ const clanSchema = new mongoose.Schema({
   reward: { type: Number, default: 0},
   budget: { type: Number, default: 0},
   apps: { type: Array, default: []},
+  staff: { type: Array, default: []},
   logo: { type: String, default: null},
   description: { type: String, default: null},
   appsStatus: { type: Boolean, default: true}
