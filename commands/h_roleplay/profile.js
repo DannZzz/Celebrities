@@ -10,6 +10,8 @@ const { COIN, BANK, STAR} = require('../../config');
 const vipModel = require("../../models/vipSchema");
 const Levels = require("discord-xp");
 Levels.setURL(process.env.MONGO);
+const devs = ["382906068319076372"];
+
 module.exports = {
   config: {
     name: 'профиль',
@@ -49,7 +51,7 @@ module.exports = {
 
 
 
-      embed.addField(`**VIP** - ${vip}`, `${STAR} ${data.stars}\n${CL}\n**XP:** ${person.xp || 0}\n\n`)
+      embed.addField(`**VIP** - ${vip}`, `${STAR} ${data.stars} ${devs.includes(member.id) ? "__Dev__" : ""}\n${CL}\n**XP:** ${person.xp || 0}\n\n`)
       embed.addField(`__Рыбы__\n`,
     `\`\`\`Хлам(🔧) - ${data.junk}\nОбычная(🐟) - ${data.common}\nНеобычная(🐠) - ${data.uncommon}\nРедкая(🦑) - ${data.rare}\nЛегенда(🐋) - ${data.legendary}\`\`\`\n`, true)
 
