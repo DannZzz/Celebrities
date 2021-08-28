@@ -175,7 +175,7 @@ module.exports = {
       if(!page3) { pages = [
         page1.setAuthor(`${message.guild.name}\nТоп 20 активных участников!`).setThumbnail(message.guild.iconURL({dynamic: true})),
         page2.setAuthor(`${message.guild.name}\nТоп 20 активных участников!`).setThumbnail(message.guild.iconURL({dynamic: true}))
-      ] } else { pages = [page1.setAuthor(`${message.guild.name}\nТоп 30 активных участников!`, message.guild.iconURL({dynamic: true})),
+      ] } else { pages = [page1.setAuthor(`${message.guild.name}\nТоп 30 активных участников!`).setThumbnail(message.guild.iconURL({dynamic: true})),
         page2.setAuthor(`${message.guild.name}\nТоп 30 активных участников!`).setThumbnail(message.guild.iconURL({dynamic: true})),
         page3.setAuthor(`${message.guild.name}\nТоп 30 активных участников!`).setThumbnail(message.guild.iconURL({dynamic: true}))] }
 
