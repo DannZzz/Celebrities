@@ -11,7 +11,8 @@ const {error, embed, perms, firstUpperCase} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
 const { update } = require('../../models/profileSchema');
 let rateLimiter = new RateLimiter(1, 5000);
-const {isWebUri} = require('valid-url')
+const {isWebUri} = require('valid-url');
+const devs = ['382906068319076372'];
 
 module.exports = {
   config: {
@@ -52,6 +53,8 @@ module.exports = {
     const del = ['удалить', 'delete'];
     const reward = ['награда', 'reward'];
     const leave = ['выйти', 'leave'];
+    const up = ['повысить', 'up'];
+    const down = ['понизить', 'down'];
     
     if (!args[0]) {
       const mc = await clan.findOne({ID: rp.clanID});
@@ -59,7 +62,7 @@ module.exports = {
 
       let a = await rpg.find({clanID: rp.clanID})
       let b = a.map((docs, p = 0)=> {
-         return `__${p+1}.__ ${message.guild.members.cache.get(docs.userID) ? `${message.guild.members.cache.get(docs.userID)} ${docs.userID === mc.owner ? "   <:danncrown:880492405390979132>" : ""}` : `${bot.users.cache.get(docs.userID).tag} ${docs.userID === mc.owner ? "   <:danncrown:880492405390979132>" : ""}`}`
+         return `__${p+1}.__ ${message.guild.members.cache.get(docs.userID) ? `${message.guild.members.cache.get(docs.userID)} ${docs.userID === mc.owner ? "   <:danncrown:880492405390979132>" : ""} ${mc.staff.includes(docs.userID) ? "   <:dannstaff:881110710057332766>" : ""} ${devs.includes(docs.userID) ? "  __Dev__" : ""}` : `${bot.users.cache.get(docs.userID).tag} ${docs.userID === mc.owner ? "   <:danncrown:880492405390979132>" : ""}`}`
        })
       
       
@@ -174,6 +177,7 @@ module.exports = {
       let getIndex = Math.round(args[1]) - 1;
 
       if(a[getIndex]["userID"] === message.author.id) return error(message, 'Вы — лидер клана, не можете выгнать себя.');
+      if (getCl.staff.includes(a[getIndex]["userID"])) return error(message, "Невозможно выгнать сотрудника.");
       
       await rpg.updateOne({userID: a[getIndex]["userID"]}, {$set: {clanID: null}});
 
@@ -182,28 +186,35 @@ module.exports = {
       
       const c = await clan.findOne({ID: rp.clanID});
       if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
-      if (message.author.id !== c.owner) return error(message, 'Вы не лидер клана!');
-
-      if (args[1] && (args[1] === "включить" || args[1] === 'on')) {
+      if (message.author.id !== c.owner && !c.staff.includes(user.id)) return error(message, 'У вас недостаточно прав!');
+      if (user.id == c.owner && args[1]) {
+        if (args[1] && (args[1] === "включить" || args[1] === 'on') && user.id === c.owner) {
         if (c.appsStatus) return error(message, "Заявки и так включены!");
 
         await clan.updateOne({ID: c.ID}, {$set: {appsStatus: true}});
 
         return embed(message, "Заявки успешно включены.");
-      } else if (args[1] && (args[1] === "отключить" || args[1] === 'off')) {
+      } else if (args[1] && (args[1] === "отключить" || args[1] === 'off') && user.id === c.owner) {
         if (!c.appsStatus) return error(message, "Заявки и так отключены!");
 
         await clan.updateOne({ID: c.ID}, {$set: {appsStatus: false}});
 
         return embed(message, "Заявки успешно отключены.");
-      }
-      
-      if(c.apps.length === 0) return error(message, "Нет заявок.");
-      if (args[1] === 'очистить' || args[1] === 'clear') {
+      } else if (args[1] === 'очистить' || args[1] === 'clear') {
+        if(c.apps.length === 0) return error(message, "Нет заявок.");
+
         await clan.updateOne({ID: c.ID}, {$set: {apps: []}});
         
         return embed(message, "Все заявки успешно отклонены.");
       }
+
+      } else if (args[1]){
+        return error(message, "Вы не лидер клана, либо что-то указали неверно")
+      }
+       
+      
+      if(c.apps.length === 0) return error(message, "Нет заявок.");
+      
       const arr = c.apps.map(({tag, hero, level}, p=0) => `\`\`${p+1}.\`\` Участник: __${tag}__\nГерой: __${hero}__\nУровень: __${level}__`)
 
       const emb = new MessageEmbed()
@@ -216,7 +227,7 @@ module.exports = {
     } else if (reject.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
       if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
-      if (message.author.id !== c.owner) return error(message, 'Вы не лидер клана!');
+      if (message.author.id !== c.owner  && !c.staff.includes(user.id)) return error(message, 'У вас недостаточно прав!');
       if(c.apps.length === 0) return error(message, "Нет заявок!");
       if(!args[1] || isNaN(args[1])) return error(message, "Укажите номер заявки");
 
@@ -236,7 +247,7 @@ module.exports = {
         msg.delete()
         const c = await clan.findOne({ID: rp.clanID});
         if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
-        if (message.author.id !== c.owner) return error(message, 'Вы не лидер клана!');
+        if (message.author.id !== c.owner && !c.staff.includes(user.id)) return error(message, 'У вас недостаточно прав!');
         const members = await rpg.find({clanID: c.ID});
         if(c.space === members) return error(message, "В вашем клане достаточно участников, улучшайте уровень клана.");
         if(c.apps.length === 0) return error(message, "Нет заявок!");
@@ -405,7 +416,7 @@ module.exports = {
     } else if (reward.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
       if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
-      if (user.id !== c.owner) return error(message, 'Вы не лидер клана!');
+      if (user.id !== c.owner && !c.staff.includes(user.id)) return error(message, 'У вас недостаточно прав!');
       
       let author = await c.reward;
       let timeout;
@@ -493,6 +504,12 @@ module.exports = {
             buttonList[0].setDisabled(true),
             buttonList[1].setDisabled(true)
           );
+          
+          if (c.staff.includes(user.id)) {
+            await c.staff.splice(c.staff.indexOf(user.id), 1);
+            c.save()
+          }
+          
           curPage.edit({
             embeds: [Emb.setTitle('Вы успешно вышли из клана.')],
             components: [disabledRow],
@@ -515,6 +532,50 @@ module.exports = {
         ops.queue.delete(user.id)
       });
       
+    } else if (up.includes(resp)) {
+      const c = await clan.findOne({ID: rp.clanID});
+      if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
+      if (user.id !== c.owner) return error(message, 'Вы не лидер клана!');
+      const a = await rpg.find({clanID: c.ID}).exec()
+      const a1 = args[1];
+      
+      if (!a1 || isNaN(a1)) return error(message, "Укажите номер участника.");
+      if (a1 > a.length) return error(message, "Участник не найден.")
+      const i = a1 - 1;
+      
+      const memb = a[i]["userID"];
+      if(memb === c.owner) return error(message, 'Вы — лидер клана, не можете повысить себя.');
+      
+      if(c.staff.includes(memb)) return error(message, "Этого участника вы уже повысили.");
+      const count = c.space / 5;
+      if (count === c.staff.length) return error(message, "Вы уже имеете достаточно сотрудников.");
+
+      await c.staff.push(memb);
+      c.save()
+
+      return embed(message, 'Вы успешно повысили участника.')
+      
+    } else if (down.includes(resp)) {
+      const c = await clan.findOne({ID: rp.clanID});
+      if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
+      if (user.id !== c.owner) return error(message, 'Вы не лидер клана!');
+
+      const a = await rpg.find({clanID: c.ID}).exec()
+      const a1 = args[1];
+      
+      if (!a1 || isNaN(a1)) return error(message, "Укажите номер участника.");
+      if (a1 > a.length) return error(message, "Участник не найден.")
+      const i = a1 - 1;
+      
+      const memb = a[i]["userID"];
+      if(memb === c.owner) return error(message, 'Вы — лидер клана, не можете понизить себя.');
+      
+      if(!c.staff.includes(memb)) return error(message, "Невозможно понизить этого участника.");
+      
+      await c.staff.splice(c.staff.indexOf(memb), 1);
+      c.save()
+
+      return embed(message, 'Вы успешно понизить участника.')
     } else {
       return error(message, "Укажите действие. (\`\`?клан хелп\`\`)");
     }
