@@ -542,7 +542,7 @@ module.exports = {
       const a1 = args[1];
       
       if (!a1 || isNaN(a1)) return error(message, "Укажите номер участника.");
-      if (a1 > a.length) return error(message, "Участник не найден.")
+      if (a1 > a.length || Math.round(a1) <= 0) return error(message, "Участник не найден.")
       const i = a1 - 1;
       
       const memb = a[i]["userID"];
@@ -566,7 +566,7 @@ module.exports = {
       const a1 = args[1];
       
       if (!a1 || isNaN(a1)) return error(message, "Укажите номер участника.");
-      if (a1 > a.length) return error(message, "Участник не найден.")
+      if (a1 > a.length || Math.round(a1) <= 0) return error(message, "Участник не найден.")
       const i = a1 - 1;
       
       const memb = a[i]["userID"];
