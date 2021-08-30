@@ -71,17 +71,17 @@ module.exports = {
         ctx.fillStyle = customColor || '#fff';
         if(user.user.username.length > 15){
             const username = user.user.username;
-            ctx.fillText(`${username.slice(0, 15) + "..."}`, 225, 125);
-            ctx.fillText(user.user.discriminator, (15 * 19.5 + (3 * 6)) + 225, 125)
+            ctx.fillText(`${username.slice(0, 15) + "..."}`, 225, 65);
+            ctx.fillText(user.user.discriminator, (15 * 19.5 + (3 * 6)) + 230, 65)
         }else{
-            ctx.fillText(user.user.username, 225, 125);
-            ctx.fillText(`#${user.user.discriminator}`, ((user.user.username.length * 19) - (user.user.username.length * 1.4)) + 225, 125)
+            ctx.fillText(user.user.username, 225, 65);
+            ctx.fillText(`#${user.user.discriminator}`, ((user.user.username.length * 19) - (user.user.username.length * 1.4)) + 230, 65)
         }
 
         ctx.globalAlpha = 1;
         ctx.font = '38px "Alumni Sans Semi Bold"';
         ctx.fillStyle = customColor || '#fff';
-        ctx.fillText(`Уровень ${person.level}`, 570, 65);
+        ctx.fillText(`Уровень ${person.level}`, 450, 125);
 
         ctx.globalAlpha = 1;
         ctx.font = '38px "Alumni Sans Semi Bold"';
@@ -91,7 +91,7 @@ module.exports = {
         ctx.globalAlpha = 1;
         ctx.font = '38px "Alumni Sans Semi Bold"';
         ctx.fillStyle = customColor || '#fff';
-        ctx.fillText(`Ранг ${person.position}`, 370, 65);
+        ctx.fillText(`Ранг ${person.position}`, 225, 125);
 
         ctx.beginPath();
         ctx.globalAlpha = 1;
