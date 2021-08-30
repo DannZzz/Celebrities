@@ -66,6 +66,7 @@ module.exports = {
     })
     getClan.save()
 
+    await pd.updateOne({userID: message.author.id}, {$set: {join: Date.now()}})
     return embed(message, "Вы успешно подали заявку, ждите ответа.");
     
     }
