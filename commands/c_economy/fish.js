@@ -81,7 +81,7 @@ module.exports = {
 ​Чем больше рыб, тем большая цена!
 `)
                 .setFooter(message.guild.name, message.guild.iconURL())
-            return message.channel.send({embed: [lEmbed]});
+            return message.channel.send({embeds: [lEmbed]});
         }
     }
 }
