@@ -76,7 +76,7 @@ module.exports = {
 
             return message.channel.send({embeds: [embed]})
         }else if(catArray.includes(args[0]) && !args[1]) {
-          let func = c => `**${prefix}${c.config.name}** -  ${c.config.description || "Нет описания."} \n\`${ c.config.usage ? `\`Применение: ${prefix}${c.config.name} ${c.config.usage}\`` : "\`Нет применения.\`"}\`\n\`Псевдонимы: ${c.config.aliases ? c.config.aliases.join(", ") : "Нету."}\``
+          let func = c => `**${prefix}${c.config.name}** -  ${c.config.description || "Нет описания."} \n\`${ c.config.usage ? `Применение: ${prefix}${c.config.name} ${c.config.usage}` : "Нет применения."}\`\n\`Псевдонимы: ${c.config.aliases ? c.config.aliases.join(", ") : "Нету."}\``
           let description;
           let description1;
           let description2;
@@ -88,25 +88,7 @@ module.exports = {
               message.author.displayAvatarURL({ dynamic: true })
             )
           let pages;
-          if(args[0] === 'модерация' || args[0] === 'модер' || args[0] === 'moder') {
-
-            description = new MessageEmbed()
-              .setDescription(
-              '**Категория "Модерация"**\n\n' + bot.commands.filter(c => c.config.category === 'a_moderation').map(func)
-                .slice(0, 5)
-                .join("\n\n"))
-            description1 = new MessageEmbed()
-              .setDescription(
-              '**Категория "Модерация"**\n\n' + bot.commands.filter(c => c.config.category === 'a_moderation').map(func)
-                .slice(5, 10)
-                .join("\n\n"))
-            description2 = new MessageEmbed()
-              .setDescription(
-              '**Категория "Модерация"**\n\n' + bot.commands.filter(c => c.config.category === 'a_moderation').map(func)
-                .slice(10, 15)
-                .join("\n\n"))
-
-          } else if(args[0] === 'информация' || args[0] === 'инфо' || args[0] === 'info') {
+          if(args[0] === 'информация' || args[0] === 'инфо' || args[0] === 'info') {
 
             description = new MessageEmbed()
               .setDescription(
@@ -175,12 +157,6 @@ module.exports = {
               '**Категория "Реакционные"**\n\n' + bot.commands.filter(c => c.config.category === 'd_reaction').map(func)
               .slice(5, 10)
               .join("\n\n"))
-            description2 = new MessageEmbed()
-              .setDescription(
-              '**Категория "Реакционные"**\n\n' + bot.commands.filter(c => c.config.category === 'd_reaction').map(func)
-              .slice(10, 15)
-              .join("\n\n"))
-
           } else if(args[0] === 'фан' || args[0] === 'fun') {
 
             let fun = new MessageEmbed()
