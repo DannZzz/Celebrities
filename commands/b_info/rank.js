@@ -66,17 +66,17 @@ module.exports = {
         ctx.fillRect(20, 20, 760, 260);
         ctx.closePath();
 
-        ctx.globalAlpha = 1;
-        ctx.font = '35px "Arial Unicode MS"';
-        ctx.fillStyle = customColor || '#fff';
-        if(user.user.username.length > 15){
-            const username = user.user.username;
-            ctx.fillText(`${username.slice(0, 15) + "..."}`, 225, 65);
-            ctx.fillText(user.user.discriminator, (15 * 19.5 + (3 * 6)) + 250, 65)
-        }else{
-            ctx.fillText(user.user.username, 225, 65);
-            ctx.fillText(`#${user.user.discriminator}`, ((user.user.username.length * 19) - (user.user.username.length * 1.4)) + 250, 65)
-        }
+        // ctx.globalAlpha = 1;
+        // ctx.font = '35px "Arial Unicode MS"';
+        // ctx.fillStyle = customColor || '#fff';
+        // if(user.user.username.length > 15){
+        //     const username = user.user.username;
+        //     ctx.fillText(`${username.slice(0, 15) + "..."}`, 225, 65);
+        //     ctx.fillText(user.user.discriminator, (15 * 19.5 + (3 * 6)) + 250, 65)
+        // }else{
+        //     ctx.fillText(user.user.username, 225, 65);
+        //     ctx.fillText(`#${user.user.discriminator}`, ((user.user.username.length * 19) - (user.user.username.length * 1.4)) + 250, 65)
+        // }
 
         ctx.globalAlpha = 1;
         ctx.font = '38px "Alumni Sans Semi Bold"';
@@ -134,7 +134,14 @@ module.exports = {
     
     
     
-    message.reply({ files: [{ attachment: canvas.toBuffer(), name: 'rankcard.png' }] });
+    //message.reply({ files: [{ attachment: canvas.toBuffer(), name: 'rankcard.png' }] });
+    const att = new MessageAttachment(canvas.toBuffer(), 'rank.png')
+    const emb = new MessageEmbed()
+    .setColor(cyan)
+    .setFooter(message.guild.name, message.guild.iconURL({dynamic: true}))
+    .setTitle(user.user.tag)
+    .setImage('attachment://rank.png')
 
+    message.reply({embeds: [emb], files: [att]})
   }
 }
