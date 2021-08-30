@@ -122,6 +122,12 @@ module.exports = {
               .slice(10, 15)
               .join("\n\n")) 
 
+              description3 = new MessageEmbed()
+              .setDescription(
+              '**Категория "Ролевая Игра"**\n\n' + bot.commands.filter(c => c.config.category === 'h_roleplay').map(func)
+              .slice(15, 20)
+              .join("\n\n"))
+
           } else if(args[0] === 'экономика' || args[0] === 'economy') {
 
             description = new MessageEmbed()
