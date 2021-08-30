@@ -67,7 +67,7 @@ module.exports = {
         ctx.closePath();
 
         ctx.globalAlpha = 1;
-        ctx.font = '35px "Alumni Sans"';
+        ctx.font = '35px "Arial Unicode MS"';
         ctx.fillStyle = customColor || '#fff';
         if(user.user.username.length > 15){
             const username = user.user.username;
@@ -79,17 +79,17 @@ module.exports = {
         }
 
         ctx.globalAlpha = 1;
-        ctx.font = '38px "Alumni Sans"';
+        ctx.font = '38px "Alumni Sans Semi Bold"';
         ctx.fillStyle = customColor || '#fff';
         ctx.fillText(`Уровень ${person.level}`, 570, 65);
 
         ctx.globalAlpha = 1;
-        ctx.font = '38px "Alumni Sans"';
+        ctx.font = '38px "Alumni Sans Semi Bold"';
         ctx.fillStyle = customColor || '#fff';
         ctx.fillText(`Опыт ${person.xp}`, 570, 125);
         
         ctx.globalAlpha = 1;
-        ctx.font = '38px "Alumni Sans"';
+        ctx.font = '38px "Alumni Sans Semi Bold"';
         ctx.fillStyle = customColor || '#fff';
         ctx.fillText(`Ранг ${person.position}`, 370, 65);
 
@@ -117,7 +117,7 @@ module.exports = {
         ctx.lineTo(220, 170);
         ctx.lineTo(220, 135);
         ctx.fill();
-        ctx.font = '28px "Alumni Sans"';
+        ctx.font = '28px "Alumni Sans Semi Bold"';
         ctx.fillStyle = "#000";
         ctx.fillText(`${nowLevelToZero} / ${nowLevelToReq} xp`, 230, 162)
         ctx.closePath();
