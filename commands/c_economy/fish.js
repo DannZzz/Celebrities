@@ -5,6 +5,11 @@ const begModel = require("../../models/begSchema");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 const {error, embed} = require('../../functions');
+const {
+    greenlight,
+    redlight,
+    cyan
+  } = require('../../JSON/colours.json');
 
 function randomRange(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
