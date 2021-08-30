@@ -42,7 +42,7 @@ module.exports = {
     if(data["vip1"] && checkVip.profileImage !== null && data["vip2"]) embed.setImage(checkVip.profileImage);
     if(data["vip1"] && checkVip.profileThumbnail !== null) embed.setThumbnail(checkVip.profileThumbnail);
     let CL;
-    if (rp.clanID) {
+    if (rp && rp.clanID) {
       let cll = await clan.findOne({ID: rp.clanID});
       CL = `Клан: **${cll.name}** | Уровень: __${cll.level}__`
     } else {
