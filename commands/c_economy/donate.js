@@ -1,3 +1,8 @@
+const {
+    greenlight,
+    redlight,
+    cyan
+  } = require('../../JSON/colours.json');
 
 const {MessageEmbed} = require("discord.js");
 const { RateLimiter } = require('discord.js-rate-limiter');
