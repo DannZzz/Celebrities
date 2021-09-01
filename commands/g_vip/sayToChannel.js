@@ -22,7 +22,7 @@ module.exports = {
     if(bag["vip1"] === false) return error(message, "Эта команда доступна только для **VIP 1** пользователей.");
 
     let arg = args.slice(1).join(" ")
-    if (!message.member.hasPermission("ADMINISTRATOR")) return error(message, "У вас недостаточно прав.");
+    if (!message.member.permissions.has("ADMINISTRATOR")) return error(message, "У вас недостаточно прав.");
     if(!args[0]) return error(message, "Укажите #текстовый канал.");
     if(!arg) return error(message, "Укажите текст.");
     if(!channel) return error(message, "Укажите доступный #текстовый канал.");
