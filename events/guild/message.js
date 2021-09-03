@@ -11,10 +11,24 @@ const queue3 = new Map();
 const queue = new Map();
 const games = new Map();
 const mongoCurrency = require('discordjs-mongodb-currency');
-
+const {error, embed} = require('../../functions');
+const {cyan} = require('../../JSON/colours.json');
 
 module.exports = async (bot, messageCreate) => {
-  let message = messageCreate
+  let message = messageCreate;
+  let afkMember = message.mentions.members;
+  if (afkMember.length !== 0) {
+    afkMember.forEach(async i => {
+      const data = await profileModel.findOne({userID: i.id})
+      if (data && data.afkMessage && !message.author.bot) {
+        const emb = new MessageEmbed()
+        .setColor(cyan)
+        .setDescription(`Пользователь **${i.user.tag}** в данный момент в режиме АФК\nПо причине: **${data.afkMessage}**`)
+        message.channel.send({embeds: [emb]}).then((m) => setTimeout(() => m.delete(), 10000))
+      }
+    })
+  }
+    
   try {
     const user = await mongoCurrency.findUser(message.author.id, message.guild.id); // Get the user from the database.
     if (!user) {
