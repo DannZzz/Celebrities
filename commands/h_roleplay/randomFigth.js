@@ -49,10 +49,10 @@ module.exports = {
 
     if (!bag["vip1"] && value > 10) {
       return error(message, "Максимальная ставка **10**!\nЛибо купите VIP 1");
-    } else if (!bag["vip2"] && value > 100) {
-      return error(message, "Максимальная ставка **100**!\nЛибо купите VIP 2");
-    } else if (bag["vip2"] && value > 500) {
-      return error(message, "Максимальная ставка **500**!");
+    } else if (!bag["vip2"] && value > 50) {
+      return error(message, "Максимальная ставка **50**!\nЛибо купите VIP 2");
+    } else if (bag["vip2"] && value > 120) {
+      return error(message, "Максимальная ставка **120**!");
     }
 
     if(value > bag.stars) return error(message, `У вас недостаточно денег.`);
