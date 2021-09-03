@@ -76,29 +76,28 @@ module.exports = {
     
     const data1 = heroes[mItem];
     const data2 = heroes[item];
-    let rp = {}
-
+    let eLevel;
     const rand1 = Math.floor(Math.random() * 40);
     if (rand1 > 20) {
       if (rand1 > 27) {
-        rp.level = mrp.level + 2
+        eLevel = mrp.level + 2
       } else if (rand1 > 35) {
-        rp.level = mrp.level + 4
+        eLevel = mrp.level + 4
       }
     } else {
       if (rand1 > 10) {
-        rp.level = mrp.level - 1
+        eLevel = mrp.level - 1
       } else if (rand1 > 0) {
-        rp.level = mrp.level - 2
+        eLevel = mrp.level - 2
       }
     }
-    if (rp.level <= 1) rp.level = 2
-    rp.health = (rp.level - 1) * 250 + data2.health;
-    rp.damage = (rp.level - 1) * 20 + data2.damage;
+    if (eLevel <= 1) eLevel = 2
+    let eHealth = (eLevel - 1) * 250 + data2.health;
+    let eDamage = (eLevel - 1) * 20 + data2.damage;
     
-    let h1 = rp.health
+    let h1 = eHealth
     let h2 = mrp.health
-    let d1 = rp.damage
+    let d1 = eDamage
     let d2 = mrp.damage
     let winner = false
   
@@ -109,7 +108,7 @@ module.exports = {
     .addField(`${message.author.username} (${data1.nameRus})`, `**Уровень: ${mrp.level}**`, true)
     .addField(`❤ Общая жизнь: ${mrp.health}`, `**⚔ Общая атака: ${mrp.damage}**`, true)
     .addField(`\u200b`, `\u200b`, false)
-    .addField(`${data2.name} (${data2.nameRus})`, `**Уровень: ${rp.level}**`, true)
+    .addField(`${data2.name} (${data2.nameRus})`, `**Уровень: ${eLevel}**`, true)
     .addField(`❤ Общая жизнь: ${h1}`, `**⚔ Общая атака: ${d1}**`, true)
     .setColor(cyan)
 
@@ -171,7 +170,7 @@ module.exports = {
           .setDescription(`Поединок между: ${message.member}, ${hero.name}(A.I)`)
           .setImage(hero.url)
           .setColor(cyan)
-          .addField(`❤ Общая жизнь: ${rp.health}`, `**⚔ Общая атака: ${rp.damage}**`, true)
+          .addField(`❤ Общая жизнь: ${eHealth}`, `**⚔ Общая атака: ${eDamage}**`, true)
   
           return msg.edit({embeds: [winEmb]})
         }
