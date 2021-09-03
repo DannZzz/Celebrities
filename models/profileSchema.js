@@ -10,7 +10,8 @@ const profileSchema = new mongoose.Schema({
   survive: { type: Number, default: 0},
   boss: { type: Number, default: 0},
   join: { type: Number, default: 0},
-  allowMultiHeroes: { type: Boolean, default: false }
+  allowMultiHeroes: { type: Boolean, default: false },
+  afkMessage: { type: String, default: null } 
 });
 
 const model = mongoose.model("ProfileModels", profileSchema);
