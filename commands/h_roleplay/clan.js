@@ -60,10 +60,11 @@ module.exports = {
       const mc = await clan.findOne({ID: rp.clanID});
       if (!mc) return error(message, "Вы не состоите в клане.");
 
-      let a = await rpg.find({clanID: rp.clanID})
-      let b = a.map((docs, p = 0)=> {
-         return `__${p+1}.__ ${message.guild.members.cache.get(docs.userID) ? `${message.guild.members.cache.get(docs.userID)} ${docs.userID === mc.owner ? "   <:danncrown:880492405390979132>" : ""} ${mc.staff.includes(docs.userID) ? "   <:dannstaff:881110710057332766>" : ""} ${devs.includes(docs.userID) ? "  __Dev__" : ""}` : `${bot.users.cache.get(docs.userID).tag} ${docs.userID === mc.owner ? "   <:danncrown:880492405390979132>" : ""}`}`
-       })
+      let a = await rpg.find({clanID: rp.clanID}).exec()
+      let b = await Promise.all(a.map(async(docs, p = 0)=> {
+        const rpp = await rpg.findOne({userID: docs.userID})
+        return `__${p+1}.__ ${message.guild.members.cache.get(docs.userID) ? `${message.guild.members.cache.get(docs.userID)} ${docs.userID === mc.owner ? "   <:danncrown:880492405390979132>" : ""} ${mc.staff.includes(docs.userID) ? "   <:dannstaff:881110710057332766>" : ""} ${devs.includes(docs.userID) ? "  __Dev__" : ""}` : `${bot.users.cache.get(docs.userID).tag} ${docs.userID === mc.owner ? "   <:danncrown:880492405390979132>" : ""}`} ${rpp && rpp.item ? `\n**Герой:** ${rpp.item} | **Уровень:** ${rpp.level}` : '\nНет героя'}`
+       }))
       
       
       let myClan = new MessageEmbed()
