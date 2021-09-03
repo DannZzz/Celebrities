@@ -67,7 +67,7 @@ module.exports = {
     const random = Math.floor(Math.random() * enem.length);
     item = enem[random]
     let gifUrl;
-    fights.filter(function (arr) {
+    await fights.filter(function (arr) {
       if((item === mItem && arr[0][0] === mItem && arr[0][1] === mItem) || (arr[0][0] === item && arr[0][1] === mItem) || (arr[0][1] === item && arr[0][0] === mItem)) gifUrl = arr[1]
 
     })
@@ -95,9 +95,9 @@ module.exports = {
     let eHealth = (eLevel - 1) * 250 + data2.health;
     let eDamage = (eLevel - 1) * 20 + data2.damage;
     
-    let h1 = eHealth
+    let h1 = +eHealth
     let h2 = mrp.health
-    let d1 = eDamage
+    let d1 = +eDamage
     let d2 = mrp.damage
     let winner = false
   
@@ -108,7 +108,7 @@ module.exports = {
     .addField(`${message.author.username} (${data1.nameRus})`, `**Уровень: ${mrp.level}**`, true)
     .addField(`❤ Общая жизнь: ${mrp.health}`, `**⚔ Общая атака: ${mrp.damage}**`, true)
     .addField(`\u200b`, `\u200b`, false)
-    .addField(`${data2.name} (${data2.nameRus})`, `**Уровень: ${eLevel}**`, true)
+    .addField(`${data2.name} (${data2.nameRus})`, `**Уровень: ${+eLevel}**`, true)
     .addField(`❤ Общая жизнь: ${h1}`, `**⚔ Общая атака: ${d1}**`, true)
     .setColor(cyan)
 
