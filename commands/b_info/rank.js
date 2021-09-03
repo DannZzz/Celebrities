@@ -60,11 +60,11 @@ module.exports = {
         }
 
 
-        ctx.beginPath();
-        ctx.fillStyle = "#000";
-        ctx.globalAlpha = 0.2
-        ctx.fillRect(20, 20, 760, 260);
-        ctx.closePath();
+        // ctx.beginPath();
+        // ctx.fillStyle = "#000";
+        // ctx.globalAlpha = 0.2
+        // ctx.fillRect(20, 20, 760, 260);
+        // ctx.closePath();
 
         // ctx.globalAlpha = 1;
         // ctx.font = '35px "Arial Unicode MS"';
