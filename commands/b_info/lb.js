@@ -143,45 +143,23 @@ module.exports = {
     let as;
     let page1;
     let page2;
-    let page3;
+    let array = []
     if(led.length <= 10) {
       as = lb.slice(0, 10).join("\n\n")
-      message.channel.send({embeds: [embed.setDescription(as).setThumbnail(message.guild.iconURL({dynamic: true}))]})
-    } else {
-      if (led.length <= 20){
-        page1 =  new MessageEmbed()
-        .setDescription(lb.slice(0, 10).join("\n\n"))
+      return message.channel.send({embeds: [embed.setDescription(as).setThumbnail(message.guild.iconURL({dynamic: true}))]})
+    }
+    function asd(arr, count = 0) {
+      while (arr.length > count) {
+        array.push(new MessageEmbed()
+        .setDescription(lb.slice(count, count + 10).join("\n\n"))
         .setColor(cyan)
         .setTimestamp()
-        page2 =  new MessageEmbed()
-        .setDescription(lb.slice(10, 20).join("\n\n"))
-        .setColor(cyan)
-        .setTimestamp()
-      } else if (led.length <= 30) {
-        page1 =  new MessageEmbed()
-        .setDescription(lb.slice(0, 10).join("\n\n"))
-        .setColor(cyan)
-        .setTimestamp()
-        page2 =  new MessageEmbed()
-        .setDescription(lb.slice(10, 20).join("\n\n"))
-        .setColor(cyan)
-        .setTimestamp()
-        page3 =  new MessageEmbed()
-        .setDescription(lb.slice(20, 30).join("\n\n"))
-        .setColor(cyan)
-        .setTimestamp()
+        .setAuthor(`${message.guild.name}\nТоп активных участников!`).setThumbnail(message.guild.iconURL({dynamic: true})))
+        count += 10;
       }
-      let pages = [page1, page2, page3]
-      if(!page3) { pages = [
-        page1.setAuthor(`${message.guild.name}\nТоп 20 активных участников!`).setThumbnail(message.guild.iconURL({dynamic: true})),
-        page2.setAuthor(`${message.guild.name}\nТоп 20 активных участников!`).setThumbnail(message.guild.iconURL({dynamic: true}))
-      ] } else { pages = [page1.setAuthor(`${message.guild.name}\nТоп 30 активных участников!`).setThumbnail(message.guild.iconURL({dynamic: true})),
-        page2.setAuthor(`${message.guild.name}\nТоп 30 активных участников!`).setThumbnail(message.guild.iconURL({dynamic: true})),
-        page3.setAuthor(`${message.guild.name}\nТоп 30 активных участников!`).setThumbnail(message.guild.iconURL({dynamic: true}))] }
-
-      const emojies = ['⏪', '◀️', '⏹️', '▶️', '⏩']
-
-      const timeout = '100000'
+    }
+    asd(lb)
+    const timeout = '100000'
 
       const button1 = new MessageButton()
             .setCustomId('previousbtn')
@@ -200,8 +178,63 @@ module.exports = {
 
       const userids = [message.author.id]
 
-      pagination(message, pages, buttonList, timeout, userids)
-    }
+      pagination(message, array, buttonList, timeout, userids)
+    
+    // else {
+    //   if (led.length <= 20){
+    //     page1 =  new MessageEmbed()
+    //     .setDescription(lb.slice(0, 10).join("\n\n"))
+    //     .setColor(cyan)
+    //     .setTimestamp()
+    //     page2 =  new MessageEmbed()
+    //     .setDescription(lb.slice(10, 20).join("\n\n"))
+    //     .setColor(cyan)
+    //     .setTimestamp()
+    //   } else if (led.length <= 30) {
+    //     page1 =  new MessageEmbed()
+    //     .setDescription(lb.slice(0, 10).join("\n\n"))
+    //     .setColor(cyan)
+    //     .setTimestamp()
+    //     page2 =  new MessageEmbed()
+    //     .setDescription(lb.slice(10, 20).join("\n\n"))
+    //     .setColor(cyan)
+    //     .setTimestamp()
+    //     page3 =  new MessageEmbed()
+    //     .setDescription(lb.slice(20, 30).join("\n\n"))
+    //     .setColor(cyan)
+    //     .setTimestamp()
+    //   }
+    //   let pages = [page1, page2, page3]
+    //   if(!page3) { pages = [
+    //     page1.setAuthor(`${message.guild.name}\nТоп 20 активных участников!`).setThumbnail(message.guild.iconURL({dynamic: true})),
+    //     page2.setAuthor(`${message.guild.name}\nТоп 20 активных участников!`).setThumbnail(message.guild.iconURL({dynamic: true}))
+    //   ] } else { pages = [page1.setAuthor(`${message.guild.name}\nТоп 30 активных участников!`).setThumbnail(message.guild.iconURL({dynamic: true})),
+    //     page2.setAuthor(`${message.guild.name}\nТоп 30 активных участников!`).setThumbnail(message.guild.iconURL({dynamic: true})),
+    //     page3.setAuthor(`${message.guild.name}\nТоп 30 активных участников!`).setThumbnail(message.guild.iconURL({dynamic: true}))] }
+
+    //   const emojies = ['⏪', '◀️', '⏹️', '▶️', '⏩']
+
+    //   const timeout = '100000'
+
+    //   const button1 = new MessageButton()
+    //         .setCustomId('previousbtn')
+    //         .setLabel('Предыдущая')
+    //         .setStyle('DANGER');
+
+    //         const button2 = new MessageButton()
+    //         .setCustomId('nextbtn')
+    //         .setLabel('Следующая')
+    //         .setStyle('SUCCESS');
+
+    //   let buttonList = [
+    //       button1,
+    //       button2
+    //   ]
+
+    //   const userids = [message.author.id]
+
+    //   pagination(message, pages, buttonList, timeout, userids)
+    // }
 
     }
   }
