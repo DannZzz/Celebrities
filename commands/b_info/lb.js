@@ -38,7 +38,7 @@ module.exports = {
       } catch (e) {
         asd = mongoose.model('Levels', LevelSchema);
       }
-    const lol = await asd.find({guildID: message.guild.id}).exec()
+    const lol = await asd.find({guildID: message.guild.id})
     let embed = new MessageEmbed()
     .setTimestamp()
     .setAuthor(`${message.guild.name}\nТоп 10 активных участников!`)
