@@ -14,8 +14,8 @@ let rateLimiter = new RateLimiter(1, 5000);
 
 module.exports = {
   config: {
-    name: "random",
-    aliases: ['рандом'],
+    name: "битва",
+    aliases: ['battle'],
     category: 'h_roleplay',
     description: "Пойти в поединок с рандомным героем.",
     usage: "<ставка>",
