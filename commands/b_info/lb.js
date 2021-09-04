@@ -7,7 +7,7 @@ const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 const Levels = require("discord-xp");
 Levels.setURL(process.env.MONGO);
-
+const mongoose = require("mongoose");
 
 module.exports = {
   config: {
@@ -24,6 +24,21 @@ module.exports = {
 
     let server = await serverModel.findOne({serverID: message.guild.id})
 
+    const LevelSchema = new mongoose.Schema({
+      userID: { type: String },
+      guildID: { type: String },
+      xp: { type: Number, default: 0 },
+      level: { type: Number, default: 0 },
+      lastUpdated: { type: Date, default: new Date() }
+    });
+    
+    let asd
+      try {
+        asd = mongoose.model('Levels')
+      } catch (e) {
+        asd = mongoose.model('Levels', LevelSchema);
+      }
+    const lol = await asd.find({guildID: message.guild.id}).exec()
     let embed = new MessageEmbed()
     .setTimestamp()
     .setAuthor(`${message.guild.name}\nТоп 10 активных участников!`)
@@ -31,7 +46,7 @@ module.exports = {
 
     if (!server.rank) return error(message, `**Система уровней для этого сервера отключена!**`);
 
-    const led = await Levels.fetchLeaderboard(message.guild.id, 30)
+    const led = await Levels.fetchLeaderboard(message.guild.id, lol.length)
     if (led.length <1) return error(message, `**Тут пока никого нет.**`);
 
     if (args[0]) {
