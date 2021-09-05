@@ -17,7 +17,7 @@ const {cyan} = require('../../JSON/colours.json');
 module.exports = async (bot, messageCreate) => {
   let message = messageCreate;
   let afkMember = message.mentions.members;
-  if (afkMember.length !== 0) {
+  if (afkMember && afkMember.length !== 0) {
     afkMember.forEach(async i => {
       const data = await profileModel.findOne({userID: i.id})
       if (data && data.afkMessage && !message.author.bot) {
