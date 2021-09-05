@@ -55,6 +55,7 @@ module.exports = {
     const leave = ['выйти', 'leave'];
     const up = ['повысить', 'up'];
     const down = ['понизить', 'down'];
+    const mess = ["сообщение", "message"]
     
     if (!args[0]) {
       const mc = await clan.findOne({ID: rp.clanID});
@@ -580,6 +581,30 @@ module.exports = {
       c.save()
 
       return embed(message, 'Вы успешно понизить участника.')
+    } else if (mess.includes(resp)) {
+      if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
+      let getCl = await clan.findOne({ID: rp.clanID});
+      if(message.author.id !== getCl.owner) return error(message, "Вы не лидер клана.");
+
+      if (!args[1]) return error(message, "Укажите сообщение.");
+      let text = args.slice(1).join(" ").split("")
+      if (text.length > 300) return error(message, "Максимальное количество символов — 300.");
+      text = text.join("")
+
+      const users = await rpg.find({clanID: getCl.ID}).exec()
+
+      const send = new MessageEmbed()
+      .setColor(cyan)
+      .setAuthor('У вас сообщение от лидера клана')
+      .setFooter(bot.users.cache.get(getCl.owner).tag, bot.users.cache.get(getCl.owner).displayAvatarURL({dynamic: true}))
+      users.forEach((user) => {
+        if (getCl.owner !== user.userID) {
+          const DM = bot.users.cache.get(user.userID)
+          DM.send({embeds: [send.setDescription(text)]}).catch(() => `ID: ${user.userID}`)
+        }
+        
+     })
+     return embed(message, "Сообщение успешно отправлено всем.")
     } else {
       return error(message, "Укажите действие. (\`?клан хелп\`)");
     }

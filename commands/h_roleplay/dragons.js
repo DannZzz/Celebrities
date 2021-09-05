@@ -106,7 +106,7 @@ module.exports = {
     const eragon = heroes["Eragon"]
     const dragon8 = new MessageEmbed()
     .setColor(cyan)
-    .setTitle(`${eragon.name} (${eragon.nameRus}) ${cVip(eragon.vip)}`)
+    .setTitle(`${eragon.name} (${eragon.nameRus}) 💞 ${cVip(eragon.vip)}`)
     .setThumbnail(eragon.url)
     .setDescription(eragon.description)
     .addField(`Цена: ${eragon.cost} ${cType(eragon.costType)}`, `**Доступен: ${eragon.available}**`, true)

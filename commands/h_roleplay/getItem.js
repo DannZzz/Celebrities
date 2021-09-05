@@ -6,7 +6,7 @@ const rpg = require("../../models/rpgSchema");
 const { MessageEmbed } = require("discord.js");
 const { COIN } = require("../../config");
 const { checkValue } = require("../../functions");
-const {error, embed, perms} = require('../../functions');
+const {error, embed, perms, firstUpperCase} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 
@@ -22,7 +22,7 @@ module.exports = {
   run: async (bot, message, args) => {
     let limited = rateLimiter.take(message.author.id)
       if(limited) return
-       
+
     const items = ["Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "PerfectDuo", "Eragon", "Ariel", "Archangel", "Darkangel"];
     const user = message.author;
     const coinData = await pd.findOne({userID: user.id});
@@ -47,8 +47,8 @@ module.exports = {
         return error(message, `Вы недавно купили новый герой.\n\nПопробуй еще раз через **${Math.round(Math.abs(time) / 86400000)} дней**.`);
     }
     if (!args[0]) return error(message, 'Укажите героя.')
-    if (!items.includes(args[0])) return error(message, 'Герой не найден.')
-    const type = args[0];
+    const type = firstUpperCase(args[0]);
+    if (!items.includes(type)) return error(message, 'Герой не найден.')
     if (rp.heroes.length !== 2 && rp.heroes.length < 2) {
       const item = heroes[type]
 
@@ -57,6 +57,8 @@ module.exports = {
           return error(message, 'Герой доступен только для **VIP 2** пользователей.');
         }
       }
+
+      if (item.marry === true && !coinData.marryID) return error(message, "Вы должны быть в любви, чтобы купить этого героя.")
 
       if (rp.heroes.length === 1 && !coinData.allowMultiHeroes) return error(message, "У вас недостаточно мест.")
 
