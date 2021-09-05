@@ -49,7 +49,7 @@ module.exports = {
     let msg = await embed(message, `
 У вас 15 секунд.
 Вопрос:
-\`\`${getQuestion}\`\`
+\`${getQuestion}\`
 
 :regional_indicator_a: | ${a}
 :regional_indicator_b: | ${b}

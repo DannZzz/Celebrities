@@ -14,7 +14,7 @@ module.exports = {
         aliases: ['marry'],
         category: 'h_roleplay',
         description: "Пожениться...",
-        usage: "",
+        usage: "[упоминание | ID]",
         accessableby: "Для всех"
       },
     run: async (bot, message, args, ops) => {
