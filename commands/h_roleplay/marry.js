@@ -132,6 +132,7 @@ module.exports = {
   
             await pd.updateOne({userID: user.id}, {$set: {marryID: ID}});
             await pd.updateOne({userID: member.id}, {$set: {marryID: ID}});
+            await pd.updateOne({userID: user.id}, {$set: {marry: Date.now()}});
             newData.save()
           }
          
