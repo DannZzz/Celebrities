@@ -14,7 +14,7 @@ module.exports = {
     usage: "[ник участника | упоминание | ID]",
     accessableby: "Для всех"
   },
-  run: async (message, args) => {
+  run: async (bot, message, args) => {
     let limited = rateLimiter.take(message.author.id)
       if(limited) return
        
