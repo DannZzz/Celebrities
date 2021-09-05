@@ -39,7 +39,8 @@ module.exports = {
         const his = await pd.findOne({userID: member.id});
         if (my.marryID && his.marryID && my.marryID === his.marryID) {
         return message.channel.send({embeds: [sembed]})
-        }
+        } else if (my.marryID && my.marryID !== his.marryID) {return error(message, "Где твоя верность?")}
+        else if (!my.marryID && his.marryID) return error(message, "Этот участник уже занят.")
         const button1 = new MessageButton()
         .setCustomId('previousbtn')
         .setLabel('Отказаться')
