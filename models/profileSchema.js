@@ -6,6 +6,7 @@ const profileSchema = new mongoose.Schema({
   daily: {type: Number, default: 0 },
   marry: { type: Number, default: 0},
   marryID: { type: Number, default: null },
+  gift: { type: Number, default: 0},
   bug: {type: Number, default: 0 },
   drag: { type: Number, default: 0},
   rpg: { type: Number, default: 0},
