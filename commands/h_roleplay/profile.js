@@ -1,8 +1,9 @@
-const profileModel = require("../../models/profileSchema");
+const pd = require("../../models/profileSchema");
 const memberModel = require("../../models/memberSchema");
 const begModel = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const clan = require("../../models/clanSchema");
+const marry = require("../../models/marry");
 const fishes = require('../../JSON/fishes.json');
 const { MessageEmbed } = require('discord.js');
 const {greenlight, redlight, cyan} = require('../../JSON/colours.json');
@@ -11,6 +12,7 @@ const vipModel = require("../../models/vipSchema");
 const Levels = require("discord-xp");
 Levels.setURL(process.env.MONGO);
 const devs = ["382906068319076372"];
+const moment = require('moment');
 
 module.exports = {
   config: {
@@ -30,7 +32,18 @@ module.exports = {
     .setColor(cyan)
     .setAuthor(`Профиль: ` + member.user.tag , member.user.displayAvatarURL({dynamic: true}))
 
-
+    const data1 = await pd.findOne({userID: member.id});
+    let marData;
+    if (data1.marryID) {
+      let mar = await marry.findOne({id: data1.marryID})
+      if (member.id === mar.first) {
+        marData = `${(message.guild.members.cache.get(mar.second) ? message.guild.members.cache.get(mar.second) : bot.users.cache.get(mar.second).tag) || "Неизвестный"} с ${moment(mar.date).format('DD.MM.YYYY')}`;
+      } else {
+        marData = `${(message.guild.members.cache.get(mar.first) ? message.guild.members.cache.get(mar.first) : bot.users.cache.get(mar.first).tag) || "Неизвестный"} с ${moment(mar.date).format('DD.MM.YYYY')}`;
+      }
+    } else {
+      marData = '—'
+    }
     let data = await begModel.findOne({ userID: member.id });
     let rp = await rpg.findOne({ userID: member.id });
     let vip = '**0** <a:vip:867867143915438100>'
@@ -40,7 +53,6 @@ module.exports = {
 
 
     if(data["vip1"] && checkVip.profileImage !== null && data["vip2"]) embed.setImage(checkVip.profileImage);
-    if(data["vip1"] && checkVip.profileThumbnail !== null) embed.setThumbnail(checkVip.profileThumbnail);
     let CL;
     if (rp && rp.clanID) {
       let cll = await clan.findOne({ID: rp.clanID});
@@ -51,7 +63,7 @@ module.exports = {
 
 
 
-      embed.addField(`**VIP** - ${vip}`, `${STAR} ${data.stars} ${devs.includes(member.id) ? "__Dev__" : ""}\n${CL}\n**XP:** ${person.xp || 0}\n\n`)
+      embed.addField(`**VIP** - ${vip}`, `${STAR} ${data.stars} ${devs.includes(member.id) ? "__Dev__" : ""}\n${CL}\nСупруг(-а): ${marData}\n**XP:** ${person.xp || 0}\n\n`)
       embed.addField(`__Рыбы__\n`,
     `\`\`\`Хлам(🔧) - ${data.junk}\nОбычная(🐟) - ${data.common}\nНеобычная(🐠) - ${data.uncommon}\nРедкая(🦑) - ${data.rare}\nЛегенда(🐋) - ${data.legendary}\`\`\`\n`, true)
 
