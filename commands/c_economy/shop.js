@@ -38,7 +38,7 @@ module.exports = {
         value: `• Vip 1 + 100 ${STAR} - 30₽\n• Vip 2 + 200 ${STAR} - 100₽\n• Герой **Zeus (Зевс)** - 200₽\n• 10000 ${STAR} - 100₽ (скидка на 33%)\n• 3000 ${STAR} - 40₽ (скидка на 12%)\n• 1000 ${STAR} - 15₽`,
         inline: false},
         {name: `+ 1 место для героев.`,
-        value: `• Стоит 2000 ${STAR}\n\`\`?купить место\`\``,
+        value: `• Стоит 2000 ${STAR}\n\`?купить место\``,
         inline: false}
       )
       .setTimestamp()
@@ -57,7 +57,7 @@ module.exports = {
       .setTitle(`Магазин сервера — ${server.name}`)
 
       data.shop.forEach((item, i) => {
-        return shopEmb.addField(`\`\`${i + 1}\`\` Название: **${item.Name}**`, `**Цена:** ${item.Cost ? `\`\`${new Intl.NumberFormat('de-DE').format(item.Cost)}\`\`${COIN}` : "\`\`Отсуствует\`\`"}\n**Роль:** ${server.roles.cache.get(item.Role) ? `<@&${item.Role}>` : `\`\`Отсуствует\`\``}\n**Описание:** \`\`${item.Description ? item.Description : 'Отсуствует'}\`\``, false)
+        return shopEmb.addField(`\`${i + 1}\` Название: **${item.Name}**`, `**Цена:** ${item.Cost ? `\`${new Intl.NumberFormat('de-DE').format(item.Cost)}\`${COIN}` : "\`Отсуствует\`"}\n**Роль:** ${server.roles.cache.get(item.Role) ? `<@&${item.Role}>` : `\`Отсуствует\``}\n**Описание:** \`${item.Description ? item.Description : 'Отсуствует'}\``, false)
       });
 
       return message.channel.send({embeds: [shopEmb]})
@@ -70,14 +70,14 @@ module.exports = {
 **Оооо, пора выбрать магазин**
 
 **Глобальный магазин**
-\`\`${data.prefix}магазин глобал\`\`
-\`\`\`
+\`${data.prefix}магазин глобал\`
+\`\`
 Вещи, которые можно тащить с собой куда угодно.
-\`\`\`
+\`\`
 **Магазин сервера**
-\`\`${data.prefix}магазин сервер\`\`
-\`\`\`
-Можешь купить себе роли, на этом сервер.\`\`\``, false)
+\`${data.prefix}магазин сервер\`
+\`\`
+Можешь купить себе роли, на этом сервер.\`\``, false)
     }
 
 
