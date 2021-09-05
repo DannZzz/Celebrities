@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
 let ownerID = '382906068319076372';
+const { MessageEmbed, MessageAttachment, MessageButton, MessageActionRow } = require('discord.js');
 const {greenlight, redlight, cyan} = require('../../JSON/colours.json');
-
+const {error, pagination} = require('../../functions');
 
 module.exports = {
   config: {
@@ -15,11 +16,56 @@ module.exports = {
   run: async (bot, message, args) => {
     if (message.author.id == ownerID) {
 
+      let array = []
+      function asd(arr, count = 0) {
+        while (arr.size > count) {
+        let description =
+        `Все сервера - ${bot.guilds.cache.size} | Все участники - ${bot.users.cache.size}\n\n` +
+        arr
+          .sort((a, b) => b.memberCount - a.memberCount)
+          .map(r => r)
+          .map((r, i) => `**${i + 1} - ${r.name} | ${r.memberCount} Участники**\nID - ${r.id}`)
+          .slice(count, count + 10)
+          .join("\n");
 
-      let i0 = 0;
-      let i1 = 10;
-      let page = 1;
+      let embed = new MessageEmbed()
+        .setAuthor(
+          message.author.tag,
+          message.author.displayAvatarURL({ dynamic: true })
+        )
+        .setColor(cyan)
+        .setFooter(bot.user.username)
+        .setDescription(description);
 
+        array.push(embed)
+        
+        count += 10;
+        }
+      }
+      asd(bot.guilds.cache)
+
+      const timeout = '100000'
+
+      const button1 = new MessageButton()
+            .setCustomId('previousbtn')
+            .setLabel('Предыдущая')
+            .setStyle('DANGER');
+
+            const button2 = new MessageButton()
+            .setCustomId('nextbtn')
+            .setLabel('Следующая')
+            .setStyle('SUCCESS');
+
+      let buttonList = [
+          button1,
+          button2
+      ]
+
+      const userids = [message.author.id]
+
+      pagination(message, array, buttonList, timeout, userids)
+      
+      return 
       let description =
         `Все сервера - ${bot.guilds.cache.size} | Все участники - ${bot.users.cache.size}\n\n` +
         bot.guilds.cache
