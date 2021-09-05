@@ -25,6 +25,8 @@ module.exports = {
 
 
     if(bag['vip1'] === false) return error(message, "Эта команда доступна только для **VIP 1** пользователей.");
+    let getLimit = args.join(" ").split("")
+    if(getLimit.length > 150) return error(message, "Название клана не может быть больше 150-и символов.")
     let arg = args.slice(" ").join(" ")
     if(!args[0]) return error(message, "Укажите текст.");
 
