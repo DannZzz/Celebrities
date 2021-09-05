@@ -71,7 +71,7 @@ module.exports = {
       let myClan = new MessageEmbed()
       .setColor(cyan)
       .setTitle(`📊 __#${mc.ID}__ — ${mc.name}`)
-      .setDescription(`👑 Лидер: ${message.guild.members.cache.get(mc.owner) ? message.guild.members.cache.get(mc.owner) : bot.users.cache.get(mc.owner).tag}\n📈 Уровень клана: __${mc.level}__\n💰 Бюджет: __${mc.budget}__ ${CLAN}${mc.description !== null ? "\n\n" + mc.description : ''}`)
+      .setDescription(`👑 Лидер: ${message.guild.members.cache.get(mc.owner) ? message.guild.members.cache.get(mc.owner) : bot.users.cache.get(mc.owner).tag}\n📈 Уровень клана: __${mc.level}__\n💰 Бюджет: __${mc.budget}__ ${CLAN}\n🎁 Награда: __${mc.level * 30}__ ${mc.reward !== null && (86400 * 1000) - (Date.now() - mc.reward) > 0 ? "<:disagree:870586968734580767>" : "<:agree:870586969606979664>"}${mc.description !== null ? "\n\n" + mc.description : ''}`)
       .addField(`Участники - ${a.length } / ${mc.space}`, `${b.length !== 0 ? b.join("\n") : "Тут никого нет."}`)
       
       if (mc.logo !== null) {
@@ -424,10 +424,7 @@ module.exports = {
       if (user.id !== c.owner && !c.staff.includes(user.id)) return error(message, 'У вас недостаточно прав!');
       
       let author = await c.reward;
-      let timeout;
-      if (bag["vip2"] === true) { timeout = 43200 * 1000; } else {
-        timeout = 86400 * 1000;
-      }
+      let timeout = 86400 * 1000 
       if (author !== null && timeout - (Date.now() - author) > 0) {
           let time = new Date(timeout - (Date.now() - author));
   
