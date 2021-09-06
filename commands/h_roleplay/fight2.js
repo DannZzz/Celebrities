@@ -118,11 +118,11 @@ module.exports = {
     .setTitle(user.user.tag)
     .setImage('attachment://fight.png')
 
-    return message.reply({embeds: [eamb], files: [att]})
+    //return message.reply({embeds: [eamb], files: [att]})
     
     let myHero = new MessageEmbed()
     .setTitle(`Поединок начался.`)
-    .setImage(gifUrl)
+    .setImage('attachment://fight.png')
     .setThumbnail('https://media.giphy.com/media/SwUwZMPpgwHNQGIjI7/giphy.gif')
     .addField(`${mUser.username} (${data1.nameRus})`, `**Уровень: ${mrp.level}**`, true)
     .addField(`❤ Общая жизнь: ${mrp.health}`, `**⚔ Общая атака: ${mrp.damage}**`, true)
@@ -149,7 +149,7 @@ module.exports = {
     else if (collected.first().content == '+') {
       await wait.delete()
       await pd.findOneAndUpdate({userID: message.author.id}, {$set: {rpg: Date.now()}})
-      let msg = await message.channel.send({embeds: [myHero]});
+      let msg = await message.channel.send({embeds: [myHero], files: [att]});
       let rand = Math.floor(Math.random() * 32)
       if (rand < 16) {
         while (true) {
