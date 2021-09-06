@@ -101,7 +101,7 @@ module.exports = {
         }
         if (author !== null && timeoutt - (Date.now() - author) > 0) {
             let time = new Date(timeoutt - (Date.now() - author));
-
+            damn.delete()
             return error(message, `Вы недавно вернулись из приключений. Отдыхай **${time.getMinutes()} минут ${time.getSeconds()} секунд.**.`);
         }
       let rand = Math.floor(Math.random() * 32)
