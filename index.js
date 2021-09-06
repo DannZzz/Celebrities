@@ -1,7 +1,7 @@
 const {Client, MessageEmbed, Collection, Intents} = require('discord.js');
 const voiceCollection = new Collection();
 const {PREFIX} = require('./config')
-const bot = new Client({shards: "auto", restTimeOffset: 0, allowedMentions: { parse: ['users', 'roles'], repliedUser: true}, intents: [Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES] });
+const bot = new Client({restWsBridgeTimeout: 0, shards: "auto", restTimeOffset: 0, allowedMentions: { parse: ['users', 'roles'], repliedUser: true}, intents: [Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES] });
 const fs = require('fs');
 const mongoose = require('mongoose');
 const mc = require('discordjs-mongodb-currency')
