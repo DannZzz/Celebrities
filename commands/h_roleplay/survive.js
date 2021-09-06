@@ -4,11 +4,12 @@ const { cyan } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, MessageAttachment } = require("discord.js");
 const { COIN, STAR } = require("../../config");
 const {error, embed, perms} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
+const Canvas = require('canvas');
 
 module.exports = {
   config: {
@@ -62,18 +63,8 @@ module.exports = {
     let myHealth = rp.health;
     let myDamage = rp.damage;
     let win;
-
-    const lonely = new MessageEmbed()
-    .setColor(cyan)
-    .setTimestamp()//
-    .setTitle(`Бой начался.`)
-    .addField(`${user.username}`, `(${hero.nameRus})`, true)
-    .addField(`❤ Общая жизнь: ${myHealth}`, `**⚔ Общая атака: ${myDamage}**`, true)
-    .addField(`\u200b`, `\u200b`, false)
-    .addField(`${enemy.name}`, `(${enemy.nameRus})`, true)
-    .addField(`❤ Общая жизнь: ${enemyHealth}`, `**⚔ Общая атака: ${enemyDamage}**`, true)
-    .setThumbnail(`https://media.giphy.com/media/SwUwZMPpgwHNQGIjI7/giphy.gif`)
-    .setImage("https://i.ibb.co/9sZWpJ3/download.gif")
+   
+    
 
     if (args[0] && argsWords.includes(args[0])) {
 
@@ -87,7 +78,23 @@ module.exports = {
       .setImage(enemy.url)
 
       return message.channel.send({embeds: [levMes]});
-    } else {
+    } 
+    let damn = await message.channel.send(`<a:dannloading:876008681479749662> Ищем противника...`);
+    const CC = await makeCanvas(hero.url, enemy.url)
+    const att = new MessageAttachment(CC.toBuffer(), 'fight.png')
+    
+    const lonely = new MessageEmbed()
+    .setColor(cyan)
+    .setTimestamp()//
+    .setTitle(`Бой начался.`)
+    .addField(`${user.username}`, `(${hero.nameRus})`, true)
+    .addField(`❤ Общая жизнь: ${myHealth}`, `**⚔ Общая атака: ${myDamage}**`, true)
+    .addField(`\u200b`, `\u200b`, false)
+    .addField(`${enemy.name}`, `(${enemy.nameRus})`, true)
+    .addField(`❤ Общая жизнь: ${enemyHealth}`, `**⚔ Общая атака: ${enemyDamage}**`, true)
+    .setThumbnail(`https://media.giphy.com/media/SwUwZMPpgwHNQGIjI7/giphy.gif`)
+    .setImage('attachment://fight.png')
+      
       let timeoutt;
         if (bag["vip2"] === true) { timeoutt = 1800000; } else {
           timeoutt = 3559000;
@@ -123,7 +130,7 @@ module.exports = {
           }
         }
       }
-    }
+    
 
 
     let winner;
@@ -163,9 +170,11 @@ module.exports = {
       await pd.findOneAndUpdate({userID: user.id}, {$set: {survive: Date.now()}})
 
     }
-    let msg = await message.channel.send({embeds: [lonely]});
+    let msg = await message.channel.send({embeds: [lonely], files: [att]});
+    damn.delete()
     setTimeout(function(){
-      return msg.edit({embeds: [emb]})
+      msg.delete()
+      return message.channel.send({embeds: [emb]})
     }, 15000)
     // message.channel.send(msgozv).then(
     //   (msg) => {
@@ -190,3 +199,30 @@ module.exports = {
 
   }
 };
+
+async function makeCanvas (data1, data2) {
+  const canvas = Canvas.createCanvas(1110, 520);
+  const ctx = canvas.getContext('2d');
+  const background = await Canvas.loadImage('https://png.pngtree.com/thumb_back/fh260/background/20200729/pngtree-game-battle-versus-vs-background-image_373230.jpg');
+  ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
+  const h = 300;
+  const heroHeight = 110;
+  const firstW = 60;
+  const secW = 750;
+  
+  const first = await Canvas.loadImage(data1);
+  const second = await Canvas.loadImage(data2);
+  
+  ctx.drawImage(first, firstW, heroHeight, h, h);
+  ctx.drawImage(second, secW, heroHeight, h, h);
+
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = "GRAY";
+  ctx.strokeRect(firstW, heroHeight, h, h)
+
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = "ORANGE";
+  ctx.strokeRect(secW, heroHeight, h, h)
+  
+  return canvas
+}

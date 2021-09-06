@@ -1,6 +1,5 @@
 const heroes = require('../../JSON/heroes.json');
 const enemies = require('../../JSON/enemies.json');
-const fights = require('../../JSON/fights.json');
 const { cyan } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
