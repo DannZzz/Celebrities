@@ -70,9 +70,9 @@ module.exports = {
       userResponse = a
       if (userResponse === getAnswer) {
         await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: reward}});
-        if (bag["vip2"] && rp.quizCount !== 40) {
+        if (bag["vip2"] && rp.quizCount !== 20) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
-        } else if (!bag["vip2"] && rp.quizCount < 20) {
+        } else if (!bag["vip2"] && rp.quizCount < 10) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
         }
         return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — __${reward}__ ${STAR}.`)]})
@@ -86,9 +86,9 @@ module.exports = {
       userResponse = b
       if (userResponse === getAnswer) {
         await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: reward}}); 
-        if (bag["vip2"] && rp.quizCount !== 40) {
+        if (bag["vip2"] && rp.quizCount !== 20) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
-        } else if (!bag["vip2"] && rp.quizCount < 20) {
+        } else if (!bag["vip2"] && rp.quizCount < 10) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
         }
          return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — __${reward}__ ${STAR}.`)]})
@@ -102,9 +102,9 @@ module.exports = {
       userResponse = c
       if (userResponse === getAnswer) {
         await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: reward}});
-        if (bag["vip2"] && rp.quizCount !== 40) {
+        if (bag["vip2"] && rp.quizCount !== 20) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
-        } else if (!bag["vip2"] && rp.quizCount < 20) {
+        } else if (!bag["vip2"] && rp.quizCount < 10) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
         }
         return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — __${reward}__ ${STAR}.`)]})
@@ -118,9 +118,9 @@ module.exports = {
       userResponse = d
       if (userResponse === getAnswer) {
         await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: reward}});
-        if (bag["vip2"] && rp.quizCount !== 40) {
+        if (bag["vip2"] && rp.quizCount !== 20) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
-        } else if (!bag["vip2"] && rp.quizCount < 20) {
+        } else if (!bag["vip2"] && rp.quizCount < 10) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
         }
         return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — __${reward}__ ${STAR}.`)]})

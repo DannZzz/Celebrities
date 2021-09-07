@@ -76,7 +76,7 @@ module.exports = {
 
 
     let Embed = new MessageEmbed()
-    .setAuthor(`Уровень успешно прокачена до ${rp.level + 1}`)
+    .setAuthor(`Уровень успешно прокачен до ${rp.level + 1}`)
     .setTitle(`${hero.name} (${hero.nameRus})`)
     .addField(`❤ Общая жизнь:`, `${rp.health + addH}`, true)
     .addField(`⚔ Общая атака:`, `${rp.damage + addD}`, true)
