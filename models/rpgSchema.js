@@ -12,7 +12,8 @@ const rpgSchema = new mongoose.Schema({
   wins: { type: Number, default: 0 },
   loses: { type: Number, default: 0 },
   totalGames: { type: Number, default: 0 },
-  surviveLevel: { type: Number, default: 0}
+  surviveLevel: { type: Number, default: 0},
+  quizCount: { type: Number, default: 1}
 });
 
 const model = mongoose.model("RpgModels", rpgSchema);
