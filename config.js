@@ -20,4 +20,4 @@ exports.DISAGREE = '<:cross2:876438109728960522>';
 
 exports.CLAN = '<a:clancurrency:878337758458970172>';
 
-exports.VERSION = '2.4.1';
+exports.VERSION = '2.5.2';
