@@ -4,13 +4,14 @@ const { cyan } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, MessageAttachment } = require("discord.js");
 const { COIN, STAR } = require("../../config");
 const { checkValue } = require("../../functions");
 const mc = require('discordjs-mongodb-currency');
 const {error, embed, perms} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 60000);
+let rateLimiter = new RateLimiter(1, 5000);
+const Canvas = require("canvas")
 
 module.exports = {
   config: {
@@ -88,9 +89,12 @@ module.exports = {
     let msg1;
     let msg2;
     let TIME = true;
+
+    const CC = await makeCanvas(data1.url, data2.url, data3.url, boss.url)
+    const att = new MessageAttachment(CC.toBuffer(), 'fight.png')
+    
     let fight = new MessageEmbed()
     .setTitle(`Поединок начался.`)
-    .setImage(boss.url)
     .setThumbnail('https://media.giphy.com/media/SwUwZMPpgwHNQGIjI7/giphy.gif')
     .addField(`${mUser.username} [${mrp.level}] (${data1.nameRus})\n${user1.user.username} [${rp1.level}] (${data2.nameRus})\n${user2.user.username} [${rp2.level}] (${data3.nameRus})`, `** **`, true)
     .addField(`❤ Общая жизнь: ${allHealth}`, `**⚔ Общая атака: ${allDamage}**`, true)
@@ -99,6 +103,10 @@ module.exports = {
     .addField(`❤ Общая жизнь: ${bossHealth}`, `**⚔ Общая атака: ${bossDamage}**`, false)
     .setColor(cyan)
     .setTimestamp()
+    .setImage('attachment://fight.png')
+
+    
+
     let trues = [false, false]
     let filter = m => m.author.id === user1.id;
     message.delete()
@@ -144,12 +152,16 @@ module.exports = {
     return message.channel.send('Время вышло, ваши друзья не успели принять приглашение.')
     });
 
-
+  
     while (true) {
       if(trues[0] == true && trues[1] === true) {
+        const damn = await message.channel.send(`<a:dannloading:876008681479749662> Подключаю вас с боссом...`)
+        const CC = await makeCanvas(data1.url, data2.url, data3.url, boss.url)
+        const att = new MessageAttachment(CC.toBuffer(), 'fight.png')
+        damn.delete()
         msg1.delete()
         msg2.delete()
-        let newmsg = await message.channel.send({embeds: [fight]})
+        let newmsg = await message.channel.send({embeds: [fight.setImage('attachment://fight.png')], files: [att]});
         setTimeout(async function() {
           let rand = Math.floor(Math.random() * 32)
           if (rand < 16) {
@@ -202,9 +214,11 @@ module.exports = {
             await pd.findOneAndUpdate({userID: user1.id}, {$set: {boss: Date.now()}})
             await pd.findOneAndUpdate({userID: user2.id}, {$set: {boss: Date.now()}})
 
-            return newmsg.edit({embeds: [winEmbed]})
+            newmsg.delete()
+            return message.channel.send({embeds: [winEmbed]})
           } else {
-            return newmsg.edit({embeds: [endEmbed]})
+            newmsg.delete()
+            return message.channel.send({embeds: [endEmbed]})
           }
 
         }, 20000)
@@ -216,3 +230,48 @@ module.exports = {
 
   }
 };
+
+async function makeCanvas (data1, data2, data3, data4) {
+  const canvas = Canvas.createCanvas(1110, 520);
+  const ctx = canvas.getContext('2d');
+  const background = await Canvas.loadImage('https://png.pngtree.com/thumb_back/fh260/background/20200729/pngtree-game-battle-versus-vs-background-image_373230.jpg');
+  ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
+  const h = 200;
+  const enemyH = 110;
+  const firstH = 160;
+  const secondH = 60;
+  const thirdH = 280;
+  
+  const firstW = 20;
+  const secW = 240;
+  const thW = 240;
+  const foW = 750;
+  
+  const first = await Canvas.loadImage(data1);
+  const second = await Canvas.loadImage(data2);
+  const third = await Canvas.loadImage(data3);
+  const fourth = await Canvas.loadImage(data4);
+  
+  ctx.drawImage(first, firstW, firstH, h, h);
+  ctx.drawImage(second, secW, secondH, h, h);
+  ctx.drawImage(third, thW, thirdH, h, h);
+  ctx.drawImage(fourth, foW, enemyH, 300, 300);
+
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = "GRAY";
+  ctx.strokeRect(firstW, firstH, h, h)
+  
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = "GRAY";
+  ctx.strokeRect(secW, secondH, h, h)
+
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = "GRAY";
+  ctx.strokeRect(thW, thirdH, h, h)
+
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = "ORANGE";
+  ctx.strokeRect(foW, enemyH, 300, 300)
+  
+  return canvas
+}

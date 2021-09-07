@@ -1,6 +1,7 @@
 const quiz = require('../../JSON/quiz.json');
 const { cyan } = require('../../JSON/colours.json');
 const bd = require("../../models/begSchema");
+const rpg = require("../../models/rpgSchema");
 const { MessageEmbed } = require("discord.js");
 const { COIN, STAR, AGREE, DISAGREE } = require("../../config");
 const { shuffle } = require("../../functions");
@@ -26,7 +27,10 @@ module.exports = {
     
     let limited = rateLimiter.take(message.author.id)
     if(limited) return
-
+    const rp = await rpg.findOne({userID: message.author.id});
+    const start = 1;
+    const reward = start * rp.quizCount;
+    
     let random = Math.floor(Math.random() * quiz.length)
     let newQuizArray = shuffle(quiz)
     let getOneQuestion = newQuizArray[random]
@@ -65,45 +69,59 @@ module.exports = {
     if (respA.includes(collected.first().content)) {
       userResponse = a
       if (userResponse === getAnswer) {
-        await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: 3}})
-        return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — **3** ${STAR}.`)]})
+        await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: reward}});
+        await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
+        return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — __${reward}__ ${STAR}.`)]})
 
       } else {
+        await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
+
         return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} Вы ответили неправильно.`)]})
       }
     } else if (respB.includes(collected.first().content)) {
       userResponse = b
       if (userResponse === getAnswer) {
-        await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: 3}})
-        return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — **3** ${STAR}.`)]})
+        await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: reward}});
+        await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
+        return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — __${reward}__ ${STAR}.`)]})
 
       } else {
+        await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
+
         return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} Вы ответили неправильно.`)]})
       }
     } else if (respC.includes(collected.first().content)) {
       userResponse = c
       if (userResponse === getAnswer) {
-        await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: 3}})
-        return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — **3** ${STAR}.`)]})
+        await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: reward}});
+        await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
+        return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — __${reward}__ ${STAR}.`)]})
 
       } else {
+        await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
+
         return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} Вы ответили неправильно.`)]})
       }
         } else if (respD.includes(collected.first().content)) {
       userResponse = d
       if (userResponse === getAnswer) {
-        await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: 3}})
-        return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — **3** ${STAR}.`)]})
+        await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: reward}});
+        await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
+        return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — __${reward}__ ${STAR}.`)]})
 
       } else {
+        await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
+
         return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} Вы ответили неправильно.`)]})
       }
     } else {
+        await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
+
       return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} Вы ответили неправильно.`)]});
     }
     console.log('collected :' + collected.first().content)
   }).catch(async() => {
-
+    await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
     return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} Время вышло, попробуйте снова.`)]});
     });
 
