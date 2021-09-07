@@ -63,7 +63,7 @@ module.exports = {
 
 
 
-      embed.addField(`**VIP** - ${vip}`, `${STAR} ${data.stars} ${devs.includes(member.id) ? "__Dev__" : ""}\n${CL}\nСупруг(-а): ${marData}\n**XP:** ${person.xp || 0}\n\n`)
+      embed.addField(`**VIP** - ${vip}`, `${STAR} ${data.stars} ${devs.includes(member.id) ? "__Dev__" : ""}\nВикторина: ${rp.quizCount}\n${CL}\nСупруг(-а): ${marData}\n**XP:** ${person.xp || 0}\n\n`)
       embed.addField(`__Рыбы__\n`,
     `\`\`\`Хлам(🔧) - ${data.junk}\nОбычная(🐟) - ${data.common}\nНеобычная(🐠) - ${data.uncommon}\nРедкая(🦑) - ${data.rare}\nЛегенда(🐋) - ${data.legendary}\`\`\`\n`, true)
 
