@@ -27,7 +27,12 @@ module.exports = {
     
     let limited = rateLimiter.take(message.author.id)
     if(limited) return
-    const rp = await rpg.findOne({userID: message.author.id});
+    let rp = await rpg.findOne({userID: message.author.id});
+    if (!rp) {const asd = await rpg.create({
+      userID: message.author.id
+    })
+    asd.save()}
+    rp = await rpg.findOne({userID: message.author.id});
     const start = 1;
     const reward = start * rp.quizCount;
     
@@ -44,7 +49,14 @@ module.exports = {
     let c = shuffledRes[2]
     let d = shuffledRes[3]
     let userResponse;
-    const bag = await bd.findOne({userID: message.author.id});
+    let bag = await bd.findOne({userID: message.author.id});
+    if (!bag) {
+      const asd = await bd.create({
+        userID: message.author.id
+      })
+      asd.save()
+    }
+    bag = await bd.findOne({userID: message.author.id});
     const filter = m => m.author.id === message.author.id;
     let Emb = new MessageEmbed()
     .setColor(cyan)
