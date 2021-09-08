@@ -118,7 +118,7 @@ module.exports = async (bot, messageCreate) => {
         let ss = new MessageEmbed().setColor("#2f3136").setTimestamp()
         var commandfile = bot.commands.get(cmd) || bot.commands.get(bot.aliases.get(cmd))
 
-        if (commandfile) {commandfile.run(bot, message, args, ops, profileData).catch(()=> message.react("❌"))}
+        if (commandfile) {commandfile.run(bot, message, args, ops, profileData)}//.catch(()=> message.react("❌"))}
         else {await customModel.findOne({serverID: message.guild.id, command: cmd}, async(err, data) =>{
         if(err) throw error
         if(data) return message.channel.send({embeds: [ss.setDescription(data.content)]}).catch(()=> message.react("❌"));
