@@ -5,6 +5,7 @@ const serverModel = require("../../models/serverSchema");
 const memberModel = require("../../models/memberSchema");
 const begModel = require("../../models/begSchema");
 const vipModel = require("../../models/vipSchema");
+const rpg = require("../../models/rpgSchema");
 const customModel = require("../../models/customSchema");
 const queue2 = new Map();
 const queue3 = new Map();
