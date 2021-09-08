@@ -44,6 +44,13 @@ module.exports = async (bot, messageCreate) => {
       let begData;
       let vipData;
   try {
+    let rp = await rpg.findOne({userID: message.author.id});
+    if (!rp) {const asd = await rpg.create({
+      userID: message.author.id
+    })
+    asd.save()
+    }
+    
     vipData = await vipModel.findOne({ userID: message.author.id });
     if (!vipData) {
     let vip = await vipModel.create({
