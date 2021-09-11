@@ -10,23 +10,25 @@ const { COIN, STAR, CLAN } = require("../../config");
 const {error, embed, perms, firstUpperCase} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
 const { update } = require('../../models/profileSchema');
-let rateLimiter = new RateLimiter(1, 5000);
+let rateLimiter = new RateLimiter(1, 3000);
 const {isWebUri} = require('valid-url');
 const devs = ['382906068319076372'];
 
 module.exports = {
   config: {
-    name: "клан",
-    aliases: ['clan'],
-    category: 'h_roleplay',
-    description: "Система кланов.",
-    usage: "(help | хелп)",
-    accessableby: "Для всех"
+    name: "clan",
+    aliases: "",
+    category: 'h_roleplay'
   },
   run: async (bot, message, args, ops) => {
     let limited = rateLimiter.take(message.author.id)
     if(limited) return
 
+    const getLang = require("../../models/serverSchema");
+    const LANG = await getLang.findOne({serverID: message.guild.id});
+    const {clan: cc, clans: ccc, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
+   
+    
     const data = await bd.findOne({userID: message.author.id})
     const user = message.author;
     let bag = await bd.findOne({userID: user.id})
@@ -41,38 +43,48 @@ module.exports = {
     
     rp = await rpg.findOne({userID: user.id});
     
-    const helps = ['help', 'хелп'];
-    const creates = ["создать", 'create'];
-    const kicks = ["kick", 'выгнать'];
-    const apps = ['заявки', 'apps'];
-    const accept = ['принять', 'accept'];
-    const reject = ['отклонить', 'reject'];
-    const upgrade = ['улучшить', 'upgrade'];
-    const logo = ['логотип', 'лого', 'logo'];
-    const description = ['описание', 'description', 'desc'];
-    const del = ['удалить', 'delete'];
-    const reward = ['награда', 'reward'];
-    const leave = ['выйти', 'leave'];
-    const up = ['повысить', 'up'];
-    const down = ['понизить', 'down'];
-    const mess = ["сообщение", "message"]
+    const helps = ['help'];
+    const creates = ['create'];
+    const kicks = ["kick"];
+    const apps = ['apps'];
+    const accept = ['accept'];
+    const reject = ['reject'];
+    const upgrade = ['update', 'upgrade'];
+    const logo = ['logo'];
+    const description = ['description', 'desc'];
+    const del = ['delete'];
+    const reward = ['reward'];
+    const leave = ['leave'];
+    const up = ['up'];
+    const down = ['down'];
+    const mess = ["message"]
     
     if (!args[0]) {
       const mc = await clan.findOne({ID: rp.clanID});
-      if (!mc) return error(message, "Вы не состоите в клане.");
+      if (!mc) return error(message, cm.noClan);
 
       let a = await rpg.find({clanID: rp.clanID}).exec()
       let b = await Promise.all(a.map(async(docs, p = 0)=> {
         const rpp = await rpg.findOne({userID: docs.userID})
-        return `__${p+1}.__ ${message.guild.members.cache.get(docs.userID) ? `${message.guild.members.cache.get(docs.userID)} ${docs.userID === mc.owner ? "   <:danncrown:880492405390979132>" : ""} ${mc.staff.includes(docs.userID) ? "   <:dannstaff:881110710057332766>" : ""} ${devs.includes(docs.userID) ? "  __Dev__" : ""}` : (bot.users.cache.get(docs.userID) ? `${bot.users.cache.get(docs.userID).tag} ${docs.userID === mc.owner ? "   <:danncrown:880492405390979132>" : ""}` : "🤔")} ${rpp && rpp.item ? `  <a:herodann:883382573231923201> ${rpp.item} (Ур. ${rpp.level})` : '   Нет героя'}`
+        let asd;
+        if (rpp && rpp.item) { 
+          if (LANG.lang === "ru") {
+            asd =  `  <a:herodann:883382573231923201> ${heroes[rpp.item].nameRus} (${ccc.lvl} ${rpp.level})`
+          } else {
+              asd =  `  <a:herodann:883382573231923201> ${rpp.item} (${ccc.lvl} ${rpp.level})`
+            }
+          } else {
+            asd = cm.noHero
+          }
+        return `__${p+1}.__ ${message.guild.members.cache.get(docs.userID) ? `${message.guild.members.cache.get(docs.userID)} ${docs.userID === mc.owner ? "   <:danncrown:880492405390979132>" : ""} ${mc.staff.includes(docs.userID) ? "   <:dannstaff:881110710057332766>" : ""} ${devs.includes(docs.userID) ? "  __Dev__" : ""}` : (bot.users.cache.get(docs.userID) ? `${bot.users.cache.get(docs.userID).tag} ${docs.userID === mc.owner ? "   <:danncrown:880492405390979132>" : ""}` : cc.unk)} ${asd}`
        }))
       
       
       let myClan = new MessageEmbed()
       .setColor(cyan)
       .setTitle(`📊 __#${mc.ID}__ — ${mc.name}`)
-      .setDescription(`👑 Лидер: ${message.guild.members.cache.get(mc.owner) ? message.guild.members.cache.get(mc.owner) : bot.users.cache.get(mc.owner).tag}\n📈 Уровень клана: __${mc.level}__\n💰 Бюджет: __${mc.budget}__ ${CLAN}\n🎁 Награда: __${mc.level * 30}__ ${mc.reward !== null && (86400 * 1000) - (Date.now() - mc.reward) > 0 ? "<:disagree:870586968734580767>" : "<:agree:870586969606979664>"}${mc.description !== null ? "\n\n" + mc.description : ''}`)
-      .addField(`Участники - ${a.length } / ${mc.space}`, `${b.length !== 0 ? b.join("\n") : "Тут никого нет."}`)
+      .setDescription(`👑 ${cm.leader} ${message.guild.members.cache.get(mc.owner) ? message.guild.members.cache.get(mc.owner) : bot.users.cache.get(mc.owner).tag}\n📈 ${cm.level} __${mc.level}__\n💰 ${cm.budget} __${mc.budget}__ ${CLAN}\n🎁 ${cm.reward} __${mc.level * 30}__ ${mc.reward !== null && (86400 * 1000) - (Date.now() - mc.reward) > 0 ? "<:disagree:870586968734580767>" : "<:agree:870586969606979664>"}${mc.description !== null ? "\n\n" + mc.description : ''}`)
+      .addField(`${cm.members} - ${a.length } / ${mc.space}`, `${b.length !== 0 ? b.join("\n") : cm.noMembers}`)
       
       if (mc.logo !== null) {
         if (!isWebUri(mc.logo)) {
@@ -88,20 +100,20 @@ module.exports = {
 
     if (!isNaN(resp)) {
       const mc = await clan.findOne({ID: rp.clanID});
-      if (!mc) return error(message, "Вы не состоите в клане.");
+      if (!mc) return error(message, cm.noClan);
 
       let value = Math.round(resp);
-      const msg = await message.channel.send(`<a:dannloading:876008681479749662> Перевожу...`)
+      const msg = await message.channel.send(`<a:dannloading:876008681479749662> ${cc.trans}`)
       let a = Math.round(Math.random() * 6) + 1
       return setTimeout(async () => {
         msg.delete()
         bag = await bd.findOne({userID: user.id})
-        if (bag.stars < value) return error(message, "У вас недостаточно звёзд.");
-        if (10 > value) return error(message, `Минимальная сумма — __10__ ${STAR}.`);
+        if (bag.stars < value) return error(message, noStar);
+        if (10 > value) return error(message, cc.min(STAR));
         value = Math.floor(value / 2)
         await bd.updateOne({userID: user.id}, {$inc: {stars: -value}});
         await clan.updateOne({ID: rp.clanID}, {$inc: {budget: value}});
-        return embed(message, `Вы успешно передали своему клану __${value}__ ${CLAN}`);
+        return embed(message, cc.done(value, CLAN));
       }, a * 1000)
      
     }
@@ -110,41 +122,23 @@ module.exports = {
       const helpEmb = new MessageEmbed()
       .setColor(cyan)
       .setTimestamp()
-      .setTitle("Все доступные функции!")
-      .setDescription(`
-      \`клан (число)\` — Скинуть звёзды в бюджет клана. ( __2 ${STAR}__ = __1 ${CLAN}__ )
-      \`клан создать [название]\` — Создать свой клан (цена 5000 ${STAR})
-      \`клан выгнать [номер участника]\` — Выгнать участника из клана.
-      \`клан повысить [номер участника]\` — Повысить участника.
-      \`клан понизить [номер участника]\` — Понизить участника.
-      \`клан заявки\` — Посмотреть заявки клана.
-      \`клан заявки очистить\` — Удалить все заявки.
-      \`клан заявки включить\` — Включить заявки для вступлении в клан.
-      \`клан заявки отключить\` — Отключить заявки для вступлении в клан.
-      \`клан отклонить [номер заявки]\` — Отклонить заявку участника.
-      \`клан принять [номер заявки]\` — Принять участника в клан.
-      \`клан улучшить (инфо)\` — Улучшить клан.
-      \`клан описание [текст]\` — Описание для клана.
-      \`клан логотип [ссылка на лого]\` — Логотип для клана.
-      \`клан награда\` — Получить ежедневные звёзды.
-      \`клан выйти\` — Выйти из клана.
-      \`клан удалить\` — Удалить клан.
-      `)
+      .setTitle(cc.actions)
+      .setDescription(cc.helpCommand(STAR, CLAN))
 
       return message.channel.send({embeds: [helpEmb]});
     } else if (creates.includes(resp)) {
-      const msg = await message.channel.send(`<a:dannloading:876008681479749662> Выполняю запрос...`)
+      const msg = await message.channel.send(`<a:dannloading:876008681479749662> ${cc.doing}`)
       let a = Math.round(Math.random() * 6) + 1
       //const clanData = await clan.findOne({owner: user.id})
       setTimeout(async () => {
         msg.delete()
-        if (rp.clanID !== null) return error(message, "Вы уже состоите в клане.");
+        if (rp.clanID !== null) return error(message, cm.clan);
 
-        if (bag.stars < 5000) return error(message, "У вас недостаточно звёзд.");
+        if (bag.stars < 5000) return error(message, noStar);
         
-        if (!args[1]) return error(message, "Укажите название клана.");
+        if (!args[1]) return error(message, cc.name);
         let getLimit = args.slice(1).join(" ").split("")
-        if(getLimit.length > 20) return error(message, "Название клана не может быть больше 20-и символов.")
+        if(getLimit.length > 20) return error(message, maxLimit(20))
         const nameOfClan = firstUpperCase(args.slice(1).join(" "), " ");
         let ID = 1
         let bool = true
@@ -167,179 +161,179 @@ module.exports = {
         newClan.save()
         await rpg.updateOne({userID: message.author.id}, {$set: {clanID: ID}})
         await bd.updateOne({userID: user.id}, {$inc: {stars: -5000}})
-        return embed(message, 'Вы успешно создали свой клан!')
+        return embed(message, cc.doneC)
       }, a * 1000)
       
     } else if (kicks.includes(resp)) {
-      if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
+      if (rp.clanID === null) return error(message, cm.noClan);
       let getCl = await clan.findOne({ID: rp.clanID});
-      if(message.author.id !== getCl.owner) return error(message, "Вы не лидер клана.");
-      if (!args[1] || isNaN(args[1])) return error(message, 'Укажите номер участника.');
+      if(message.author.id !== getCl.owner) return error(message, cm.notLeader);
+      if (!args[1] || isNaN(args[1])) return error(message, cm.specN);
       let a = await rpg.find({clanID: rp.clanID}).map(b => b);
 
-      if(Math.round(args[1]) > a.length || Math.round(args[1]) <= 0) return error(message, 'Участник клана не найден!')
+      if(Math.round(args[1]) > a.length || Math.round(args[1]) <= 0) return error(message, cc.noMember)
 
       let getIndex = Math.round(args[1]) - 1;
 
-      if(a[getIndex]["userID"] === message.author.id) return error(message, 'Вы — лидер клана, не можете выгнать себя.');
-      if (getCl.staff.includes(a[getIndex]["userID"])) return error(message, "Невозможно выгнать сотрудника.");
+      if(a[getIndex]["userID"] === message.author.id) return error(message, cc.uLeader);
+      if (getCl.staff.includes(a[getIndex]["userID"])) return error(message, cc.uStaff);
       
       await rpg.updateOne({userID: a[getIndex]["userID"]}, {$set: {clanID: null}});
 
-      return embed(message, `Вы успешно выгнали участника __${bot.users.cache.get(a[getIndex]["userID"]).tag}__.`)
+      return embed(message, cc.kicked(bot.users.cache.get(a[getIndex]["userID"]).tag))
     } else if (apps.includes(resp)) {
       
       const c = await clan.findOne({ID: rp.clanID});
-      if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
+      if (rp.clanID === null) return error(message, cm.noClan);
       if (message.author.id !== c.owner && !c.staff.includes(user.id)) return error(message, 'У вас недостаточно прав!');
       if (user.id == c.owner && args[1]) {
-        if (args[1] && (args[1] === "включить" || args[1] === 'on') && user.id === c.owner) {
-        if (c.appsStatus) return error(message, "Заявки и так включены!");
+        if (args[1] && args[1] === 'enable' && user.id === c.owner) {
+        if (c.appsStatus) return error(message, cc.appsEE);
 
         await clan.updateOne({ID: c.ID}, {$set: {appsStatus: true}});
 
-        return embed(message, "Заявки успешно включены.");
-      } else if (args[1] && (args[1] === "отключить" || args[1] === 'off') && user.id === c.owner) {
-        if (!c.appsStatus) return error(message, "Заявки и так отключены!");
+        return embed(message, cc.appsE);
+      } else if (args[1] && args[1] === 'disable' && user.id === c.owner) {
+        if (!c.appsStatus) return error(message, cc.appsDD);
 
         await clan.updateOne({ID: c.ID}, {$set: {appsStatus: false}});
 
-        return embed(message, "Заявки успешно отключены.");
-      } else if (args[1] === 'очистить' || args[1] === 'clear') {
-        if(c.apps.length === 0) return error(message, "Нет заявок.");
+        return embed(message, cc.appsD);
+      } else if (args[1] === 'clear') {
+        if(c.apps.length === 0) return error(message, cm.noApps);
 
         await clan.updateOne({ID: c.ID}, {$set: {apps: []}});
         
-        return embed(message, "Все заявки успешно отклонены.");
+        return embed(message, cc.appsClear);
       }
 
       } else if (args[1]){
-        return error(message, "Вы не лидер клана, либо что-то указали неверно")
+        return error(message, cc.appsError)
       }
        
       
-      if(c.apps.length === 0) return error(message, "Нет заявок.");
+      if(c.apps.length === 0) return error(message, cm.noApps);
       
-      const arr = c.apps.map(({tag, hero, level}, p=0) => `\`${p+1}.\` Участник: __${tag}__\nГерой: __${hero}__\nУровень: __${level}__`)
+      const arr = c.apps.map(({tag, hero, level}, p=0) => `\`${p+1}.\` ${cc.appType.m} __${tag}__\n${cc.appType.h} __${hero}__\n${cc.appType.l} __${level}__`)
 
       const emb = new MessageEmbed()
       .setColor(cyan)
       .setTimestamp()
-      .setAuthor(`Все заявки!`)
+      .setAuthor(cc.apps)
       .setDescription(arr.join("\n\n"))
 
       return message.channel.send({embeds: [emb]});
     } else if (reject.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
-      if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
-      if (message.author.id !== c.owner  && !c.staff.includes(user.id)) return error(message, 'У вас недостаточно прав!');
-      if(c.apps.length === 0) return error(message, "Нет заявок!");
-      if(!args[1] || isNaN(args[1])) return error(message, "Укажите номер заявки");
+      if (rp.clanID === null) return error(message, cm.noClan);
+      if (message.author.id !== c.owner  && !c.staff.includes(user.id)) return error(message, perm);
+      if(c.apps.length === 0) return error(message, cm.noApps);
+      if(!args[1] || isNaN(args[1])) return error(message, cm.specN);
 
       let index = Math.round(args[1]) - 1;
       
-      if(Math.round(args[1]) > c.apps.length || Math.round(args[1]) < 0) return error(message, "Заявка не найдена!");
+      if(Math.round(args[1]) > c.apps.length || Math.round(args[1]) < 0) return error(message, cc.appError);
 
       await c.apps.splice(index);
       c.save()
 
-      return embed(message, "Заявка успешно отклонена.");
+      return embed(message, cc.rejDone);
     } else if (accept.includes(resp)) {
-      const msg = await message.channel.send(`<a:dannloading:876008681479749662> Принимаем...`)
+      const msg = await message.channel.send(`<a:dannloading:876008681479749662> ${cc.accepting}`)
       let a = Math.round(Math.random() * 6) + 1
       //const clanData = await clan.findOne({owner: user.id})
       setTimeout(async () => {
         msg.delete()
         const c = await clan.findOne({ID: rp.clanID});
-        if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
-        if (message.author.id !== c.owner && !c.staff.includes(user.id)) return error(message, 'У вас недостаточно прав!');
+        if (rp.clanID === null) return error(message, cm.noClan);
+        if (message.author.id !== c.owner && !c.staff.includes(user.id)) return error(message, perm);
         const members = await rpg.find({clanID: c.ID});
-        if(c.space === members) return error(message, "В вашем клане достаточно участников, улучшайте уровень клана.");
-        if(c.apps.length === 0) return error(message, "Нет заявок!");
-        if(!args[1] || isNaN(args[1])) return error(message, "Укажите номер заявки");
+        if(c.space === members) return error(message, cc.enoughMembers);
+        if(c.apps.length === 0) return error(message, cm.noApps);
+        if(!args[1] || isNaN(args[1])) return error(message, cm.specN);
 
         let index = Math.round(args[1]) - 1;
         
-        if(Math.round(args[1]) > c.apps.length || Math.round(args[1]) < 0) return error(message, "Заявка не найдена!");
+        if(Math.round(args[1]) > c.apps.length || Math.round(args[1]) < 0) return error(message, cc.appError);
         const getuser = await rpg.findOne({userID: c.apps[index]["id"]});
-        if (getuser.clanID !== null) return error(message, "Этот участник уже состоит в другом клане.")
+        if (getuser.clanID !== null) return error(message, cc.already)
         await rpg.updateOne({userID: c.apps[index]["id"]}, {$set: {clanID: c.ID}});
 
         await c.apps.splice(index, 1);
         c.save()
 
         
-        return embed(message, "Заявка успешно принята.");
+        return embed(message, cc.acceptDone);
       }, a * 1000);
     } else if (upgrade.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
-      if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
-      if (user.id !== c.owner) return error(message, 'Вы не лидер клана!');
+      if (rp.clanID === null) return error(message, cm.noClan);
+      if (user.id !== c.owner) return error(message, cm.notLeader);
 
       let up = 3000;
       let cost = c.level * up;
-      if (c.level === 10) return error(message, "Ваш клан максимально улучшен!")
-      if (args[1] && (args[1] === "info" || args[1] === 'инфо')) {
+      if (c.level === 10) return error(message, cc.upLimit)
+      if (args[1] && args[1] === "info") {
         const emb = new MessageEmbed()
         .setColor(cyan)
         .setTimestamp()
-        .setAuthor('Информация об улучшении клана.')
-        .setDescription(`Цена — __${cost}__ ${CLAN}\nЧисло максимальных участников: __${c.space}__ + __5__\n${(c.level+1) === 5 ? 'Будут доступны описание и логотип клана!' : ''}`)
+        .setAuthor(cc.upInfoTitle)
+        .setDescription(cc.upInfo(cost, CLAN, c.space, c.level+1))
 
         return message.channel.send({embeds: [emb]})
       }
       let a = Math.round(Math.random() * 6) + 1
-      if (c.level === 5 && !bag["vip1"]) return error(message, "Вы должны иметь как минимум __VIP 1__ чтобы улучшить клан.")
-      const msg = await message.channel.send(`<a:dannloading:876008681479749662> Улучшаю...`)
+      if (c.level === 5 && !bag["vip1"]) return error(message, cc.upVip)
+      const msg = await message.channel.send(`<a:dannloading:876008681479749662> ${cc.upDo}`)
 
       setTimeout(async () => {
         msg.delete()
-        if (c.budget < cost) return error(message, "Недостаточно рубинов!")
+        if (c.budget < cost) return error(message, cc.errorRub)
         
         await clan.updateOne({ID: c.ID}, {$inc: {budget: -cost}});
         await clan.updateOne({ID: c.ID}, {$inc: {level: 1}});
         await clan.updateOne({ID: c.ID}, {$inc: {space: 5}});
 
-        return embed(message, `Уровень клана успешно улучшен до __${c.level+1}__.`);
+        return embed(message, cc.upped(c.level+1));
 
       }, a * 1000)
     } else if (description.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
-      if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
-      if (user.id !== c.owner) return error(message, 'Вы не лидер клана!');
-      if (!args[1]) return error(message, "Укажите описание.")
-      if (c.level < 5) return error(message, 'Эта функция доступна для кланов с уровнем 5 или выше.')
+      if (rp.clanID === null) return error(message, cm.noClan);
+      if (user.id !== c.owner) return error(message, cm.notLeader);
+      if (!args[1]) return error(message, cc.descError)
+      if (c.level < 5) return error(message, cc.clanLevel5)
       let getLimit = args.slice(1).join(" ").split("")
-      if(getLimit.length > 400) return error(message, "Описание клана не может быть больше 400 символов.")
+      if(getLimit.length > 400) return error(message, maxLimit(400))
       const descriptionText = args.slice(1).join(" ");
       await clan.updateOne({ID: c.ID}, {$set: {description: descriptionText}});
 
-      return embed(message, "Описание клана успешно установлено.");
+      return embed(message, cc.descDone);
     } else if (logo.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
-      if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
-      if (user.id !== c.owner) return error(message, 'Вы не лидер клана!');
-      if (!args[1]) return error(message, "Укажите ссылку на логотип.")
-      if (c.level < 5) return error(message, 'Эта функция доступна для кланов с уровнем 5 или выше.')
-      if(!isWebUri(args.slice(1).join(""))) return error(message, "Укажите рабочую ссылку!")
+      if (rp.clanID === null) return error(message, cm.noClan);
+      if (user.id !== c.owner) return error(message, cm.notLeader);
+      if (!args[1]) return error(message, specifyL)
+      if (c.level < 5) return error(message, cc.clanLevel5)
+      if(!isWebUri(args.slice(1).join(""))) return error(message, specifyL)
       await clan.updateOne({ID: c.ID}, {$set: {logo: args.slice(1).join("")}});
 
-      return embed(message, "Логотип клана успешно установлен.");
+      return embed(message, cc.logoDone);
     } else if (del.includes(resp)) {
       const now = ops.queue.get(user.id);
       if (now) return
       const c = await clan.findOne({ID: rp.clanID});
-      if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
-      if (user.id !== c.owner) return error(message, 'Вы не лидер клана!');
+      if (rp.clanID === null) return error(message, cm.noClan);
+      if (user.id !== c.owner) return error(message, cm.notLeader);
 
       const button1 = new MessageButton()
             .setCustomId('previousbtn')
-            .setLabel('Отменить')
+            .setLabel(buttonNo)
             .setStyle('DANGER');
 
             const button2 = new MessageButton()
             .setCustomId('nextbtn')
-            .setLabel('Удалить')
+            .setLabel(buttonYes)
             .setStyle('SUCCESS');
 
       let buttonList = [
@@ -351,7 +345,7 @@ module.exports = {
       .setColor(cyan)
       .setTimestamp()
       .setAuthor(user.username, user.displayAvatarURL({dynamic: true}))
-      .setTitle('Вы уверены, что хотите удалить клан?')
+      .setTitle(cc.quest)
       
       ops.queue.set(user.id, {name: "deleting"})
       
@@ -381,7 +375,7 @@ module.exports = {
               buttonList[1].setDisabled(true)
             );
             curPage.edit({
-              embeds: [Emb.setTitle('Дейстие успешно отклонено.')],
+              embeds: [Emb.setTitle(cc.canceled)],
               components: [disabledRow],
             });
           }
@@ -396,7 +390,7 @@ module.exports = {
             buttonList[1].setDisabled(true)
           );
           curPage.edit({
-            embeds: [Emb.setTitle('Вы успешно удалили свой клан.')],
+            embeds: [Emb.setTitle(cc.deleteDone)],
             components: [disabledRow],
           });//
           ops.queue.delete(user.id)
@@ -420,15 +414,15 @@ module.exports = {
       
     } else if (reward.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
-      if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
-      if (user.id !== c.owner && !c.staff.includes(user.id)) return error(message, 'У вас недостаточно прав!');
+      if (rp.clanID === null) return error(message, cm.noCLan);
+      if (user.id !== c.owner && !c.staff.includes(user.id)) return error(message, perm);
       
       let author = await c.reward;
       let timeout = 86400 * 1000 
       if (author !== null && timeout - (Date.now() - author) > 0) {
           let time = new Date(timeout - (Date.now() - author));
   
-          return error(message, `Попробуй еще раз через **${time.getUTCHours()} часа(-ов) ${time.getMinutes()} минут**.`);
+          return error(message, cc.rewardTime(time));
       }
 
       let rew = c.level * 30
@@ -437,22 +431,22 @@ module.exports = {
       await clan.updateOne({ID: c.ID}, {$set: {reward: Date.now()}})
       await users.forEach(async asd => await bd.updateOne({userID: asd.userID}, {$inc: {stars: rew}}))
       
-      return embed(message, `Все участники клана получили по — __${rew}__ ${STAR}`)
+      return embed(message, cc.getReward(rew, STAR))
     } else if (leave.includes(resp)) {
       const now = ops.queue.get(user.id);
       if (now) return
       const c = await clan.findOne({ID: rp.clanID});
-      if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
-      if (user.id === c.owner) return error(message, "Лидер клана не может выйти.");
+      if (rp.clanID === null) return error(message, cm.noClan);
+      if (user.id === c.owner) return error(message, cc.ldCant);
 
       const button1 = new MessageButton()
       .setCustomId('previousbtn')
-      .setLabel('Отменить')
+      .setLabel(buttonNo)
       .setStyle('DANGER');
 
       const button2 = new MessageButton()
       .setCustomId('nextbtn')
-      .setLabel('Выйти')
+      .setLabel(buttonYes)
       .setStyle('SUCCESS');
 
       let buttonList = [
@@ -464,7 +458,7 @@ module.exports = {
       .setColor(cyan)
       .setTimestamp()
       .setAuthor(user.username, user.displayAvatarURL({dynamic: true}))
-      .setTitle('Вы уверены, что хотите удалить клан?')
+      .setTitle(cc.leaveQuest)
 
       ops.queue.set(user.id, {name: "deleting"})
 
@@ -493,7 +487,7 @@ module.exports = {
               buttonList[1].setDisabled(true)
             );
             curPage.edit({
-              embeds: [Emb.setTitle('Дейстие успешно отклонено.')],
+              embeds: [Emb.setTitle(cc.canceled)],
               components: [disabledRow],
             });
           }
@@ -513,7 +507,7 @@ module.exports = {
           }
           
           curPage.edit({
-            embeds: [Emb.setTitle('Вы успешно вышли из клана.')],
+            embeds: [Emb.setTitle(cc.leaveDone)],
             components: [disabledRow],
           });//
           ops.queue.delete(user.id)
@@ -536,63 +530,63 @@ module.exports = {
       
     } else if (up.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
-      if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
-      if (user.id !== c.owner) return error(message, 'Вы не лидер клана!');
+      if (rp.clanID === null) return error(message, cm.noClan);
+      if (user.id !== c.owner) return error(message, cm.notLeader);
       const a = await rpg.find({clanID: c.ID}).exec()
       const a1 = args[1];
       
-      if (!a1 || isNaN(a1)) return error(message, "Укажите номер участника.");
-      if (a1 > a.length || Math.round(a1) <= 0) return error(message, "Участник не найден.")
+      if (!a1 || isNaN(a1)) return error(message, cm.specN);
+      if (a1 > a.length || Math.round(a1) <= 0) return error(message, notUser)
       const i = a1 - 1;
       
       const memb = a[i]["userID"];
-      if(memb === c.owner) return error(message, 'Вы — лидер клана, не можете повысить себя.');
+      if(memb === c.owner) return error(message, cc.uLeader);
       
-      if(c.staff.includes(memb)) return error(message, "Этого участника вы уже повысили.");
+      if(c.staff.includes(memb)) return error(message, cc.uError);
       const count = c.space / 5;
-      if (count === c.staff.length) return error(message, "Вы уже имеете достаточно сотрудников.");
+      if (count === c.staff.length) return error(message, cc.uLimit);
 
       await c.staff.push(memb);
       c.save()
 
-      return embed(message, 'Вы успешно повысили участника.')
+      return embed(message, cc.uDone)
       
     } else if (down.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
-      if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
-      if (user.id !== c.owner) return error(message, 'Вы не лидер клана!');
+      if (rp.clanID === null) return error(message, cm.noClan);
+      if (user.id !== c.owner) return error(message, cm.notLeader);
 
       const a = await rpg.find({clanID: c.ID}).exec()
       const a1 = args[1];
       
-      if (!a1 || isNaN(a1)) return error(message, "Укажите номер участника.");
-      if (a1 > a.length || Math.round(a1) <= 0) return error(message, "Участник не найден.")
+      if (!a1 || isNaN(a1)) return error(message, cm.specN);
+      if (a1 > a.length || Math.round(a1) <= 0) return error(message, notUser)
       const i = a1 - 1;
       
       const memb = a[i]["userID"];
-      if(memb === c.owner) return error(message, 'Вы — лидер клана, не можете понизить себя.');
+      if(memb === c.owner) return error(message, cc.uLeader);
       
-      if(!c.staff.includes(memb)) return error(message, "Невозможно понизить этого участника.");
+      if(!c.staff.includes(memb)) return error(message, cc.dError);
       
       await c.staff.splice(c.staff.indexOf(memb), 1);
       c.save()
 
-      return embed(message, 'Вы успешно понизить участника.')
+      return embed(message, cc.dDone)
     } else if (mess.includes(resp)) {
-      if (rp.clanID === null) return error(message, "Вы не состоите в клане.");
+      if (rp.clanID === null) return error(message, cm.noClan);
       let getCl = await clan.findOne({ID: rp.clanID});
-      if(message.author.id !== getCl.owner) return error(message, "Вы не лидер клана.");
+      if(message.author.id !== getCl.owner) return error(message, cm.notLeader);
 
-      if (!args[1]) return error(message, "Укажите сообщение.");
+      if (!args[1]) return error(message, specifyT);
       let text = args.slice(1).join(" ").split("")
-      if (text.length > 300) return error(message, "Максимальное количество символов — 300.");
+      if (text.length > 300) return error(message, maxLimit(300));
       text = text.join("")
 
       const users = await rpg.find({clanID: getCl.ID}).exec()
 
       const send = new MessageEmbed()
       .setColor(cyan)
-      .setAuthor('У вас сообщение от лидера клана')
+      .setAuthor(cc.mTitle)
       .setFooter(bot.users.cache.get(getCl.owner).tag, bot.users.cache.get(getCl.owner).displayAvatarURL({dynamic: true}))
       users.forEach((user) => {
         if (getCl.owner !== user.userID) {
@@ -601,9 +595,9 @@ module.exports = {
         }
         
      })
-     return embed(message, "Сообщение успешно отправлено всем.")
+     return embed(message, cc.mDone)
     } else {
-      return error(message, "Укажите действие. (\`?клан хелп\`)");
+      return error(message, cc.actionError);
     }
     
 

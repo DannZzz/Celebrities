@@ -9,18 +9,19 @@ const { MessageEmbed } = require("discord.js");
 const { COIN, STAR, CLAN } = require("../../config");
 const {error, embed, perms, firstUpperCase} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 5000);
+let rateLimiter = new RateLimiter(1, 3000);
 
 module.exports = {
   config: {
-    name: "вступить",
-    aliases: ['join'],
+    name: "join",
+    aliases: '',
     category: 'h_roleplay',
-    description: "Подать заявку на вступление в клан.",
-    usage: "(Номер клана)",
-    accessableby: "Для всех"
   },
   run: async (bot, message, args) => {
+    const getLang = require("../../models/serverSchema");
+    const LANG = await getLang.findOne({serverID: message.guild.id});
+    const {join: j, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
+   
     let limited = rateLimiter.take(message.author.id)
     if(limited) return
 
@@ -47,27 +48,27 @@ module.exports = {
       if (author !== null && timeout - (Date.now() - author) > 0) {
           let time = new Date(timeout - (Date.now() - author));
   
-          return error(message, `Попробуй еще раз через **${time.getMinutes()} минут ${time.getSeconds()} секунд**.`);
+          return error(message, j.time(time));
       }
-    if (!a1) return error(message, "Укажите номер клана.");
+    if (!a1) return error(message, cm.specN);
     let getClan = await clan.findOne({ID: a1});
-    if (!getClan) return error(message, "Клан не найден!");
+    if (!getClan) return error(message, cm.notCLan);
 
     const members = await rpg.find({clanID: a1});
-    if(rp.clanID !== null) return error(message, "Вы уже состоите в клане.");
-    if (!getClan.appsStatus) return error(message, "Заявки на вступление в этот клан отключены!");
-    if(getClan.space === members) return error(message, "В этом клане достаточно участников!");
+    if(rp.clanID !== null) return error(message, cm.clan);
+    if (!getClan.appsStatus) return error(message, j.offed);
+    if(getClan.space === members) return error(message, j.limit);
 
     await getClan.apps.unshift({
       tag: message.author.tag,
-      hero: rp.item || "Без героя",
+      hero: rp.item || cm.noHero,
       level: rp.level,
       id: message.author.id
     })
     getClan.save()
 
     await pd.updateOne({userID: message.author.id}, {$set: {join: Date.now()}})
-    return embed(message, "Вы успешно подали заявку, ждите ответа.");
+    return embed(message, j.done);
     
     }
 }

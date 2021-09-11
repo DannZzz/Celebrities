@@ -7,23 +7,18 @@ const { VERSION, STAR } = require('../../config');
 
 module.exports = {
     config: {
-        name: "журнал",
-        description: "Журнал изменений бота.",
-        usage: "",
+        name: "changelog",
         category: "b_info",
-        accessableby: "Для всех",
-        aliases: ['changelog']
+        aliases: ''
     },
     run: async (bot, message, args) => {
         try {
    
-          const page1 = new MessageEmbed()
-          .setAuthor('Последние изменения бота.')
-          .setTitle(`Изменения команд.\nВерсия: ${VERSION}`)
-          .setColor(cyan)
-          .setDescription(`Теперь выигрыш викторины растёт при правильном ответе.\nИзменены все аватарки героев и врагов, а так же все боевые сцены отображаются чуть по другому.`)
-
-          return message.channel.send({embeds: [page1]});
+        const getLang = require("../../models/serverSchema");
+        const LANG = await getLang.findOne({serverID: message.guild.id});
+        const {changelog: cl, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`); 
+               
+        return message.channel.send({embeds: [cl.get(VERSION)]});
 
           const timeout = '100000'
           const userids = [message.author.id]

@@ -6,31 +6,31 @@ const profileModel = require("../../models/profileSchema");
 const vipModel = require("../../models/vipSchema");
 const {error, embed, perms} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 5000);
+let rateLimiter = new RateLimiter(1, 3000);
 
 module.exports = {
   config: {
-    name: "профиль-био",
-    description: "Поставить био на свою профиль.",
+    name: "bio",
     category: "g_vip",
-    aliases: ["set-bio"],
-    accessableby: "Для всех",
-    usage: "[ваше сообщение]"
+    aliases: ''
   },
   run: async (bot, message, args) => {
     let limited = rateLimiter.take(message.author.id)
       if(limited) return
-      
+      const getLang = require("../../models/serverSchema");
+      const LANG = await getLang.findOne({serverID: message.guild.id});
+      const {bio: b, specify, specifyT, vipOne, vipTwo, maxLimit, perm} = require(`../../languages/${LANG.lang}`);   
+    
     let bag = await begModel.findOne({userID: message.author.id});
 
 
-    if(bag['vip1'] === false) return error(message, "Эта команда доступна только для **VIP 1** пользователей.");
+    if(bag['vip1'] === false) return error(message, vipOne);
     let getLimit = args.join(" ").split("")
-    if(getLimit.length > 150) return error(message, "Название клана не может быть больше 150-и символов.")
+    if(getLimit.length > 150) return error(message, maxLimit(150))
     let arg = args.slice(" ").join(" ")
-    if(!args[0]) return error(message, "Укажите текст.");
+    if(!args[0]) return error(message, specifyT);
 
-    embed(message, 'Успешно установленo новoe био профиля.');
+    embed(message, b.done);
     await vipModel.findOneAndUpdate({userID: message.author.id}, {$set: {profileBio: arg}})
 
   }

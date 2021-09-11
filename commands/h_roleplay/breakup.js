@@ -10,45 +10,28 @@ const { cyan } = require('../../JSON/colours.json');
 
 module.exports = {
     config: {
-        name: "marry",
+        name: "break-up",
         aliases: '',
         category: 'h_roleplay',
       },
     run: async (bot, message, args, ops) => {
         let limited = rateLimiter.take(message.author.id)
           if(limited) return
-        
+          
         const getLang = require("../../models/serverSchema");
         const LANG = await getLang.findOne({serverID: message.guild.id});
-        const {marry: m, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
-   
+        const {"break-up": bu, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
+            
         const user = message.author;
         const noww = ops.queue.get(user.id);
         if (noww) return
-        let bag = await bd.findOne({ userID: user.id });
-
         let mar1 = await pd.findOne({userID: user.id});
         let mar2 = await marry.findOne({id: mar1.marryID});
-        if (mar2) return error(message, m.err1);
-        let author = mar1.marry;
-        let timeout;
-        if (bag["vip2"] === true) { timeout =  86400000 * 7 / 2; } else {
-          timeout = 86400000 * 7;
-        }
-        if (author !== null && timeout - (Date.now() - author) > 0) {
-            let time = new Date(timeout - (Date.now() - author));
-    
-            return error(message, m.time(time));
-        }
-        if (!args[0]) return error(message, "Укажите участника.")
-      
-        const member = await message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+        if (!mar2) return error(message, bu.err);
 
-        let mard1 = await pd.findOne({userID: member.id});
-        let mard2 = await marry.findOne({id: mard1.marryID});
-        if (mard2) return error(message, m.err2);
+        let bag = await bd.findOne({ userID: user.id });
 
-        if (bag.stars < 150) return error(message, `${m.err3} ${STAR}`)
+        if (bag.stars < 150) return error(message, `${bu.err1} ${STAR}`)
         
         const button1 = new MessageButton()
       .setCustomId('previousbtn')
@@ -69,7 +52,7 @@ module.exports = {
       .setColor(cyan)
       .setTimestamp()
       .setAuthor(user.username, user.displayAvatarURL({dynamic: true}))
-      .setDescription(`${m.sure} ${member}`)
+      .setDescription(`${bu.sure} ${STAR}`)
 
       ops.queue.set(user.id, {name: "deleting"})
 
@@ -82,7 +65,7 @@ module.exports = {
       const filter = (i) =>
       (i.customId === buttonList[0].customId ||
       i.customId === buttonList[1].customId) &&
-      i.user.id === member.id;
+      i.user.id === user.id;
 
       const collector = await curPage.createMessageComponentCollector({
       filter,
@@ -98,7 +81,7 @@ module.exports = {
               buttonList[1].setDisabled(true)
             );
             curPage.edit({
-              embeds: [Emb.setDescription(`${member} ${m.ref}`)],
+              embeds: [Emb.setDescription(bu.action)],
               components: [disabledRow],
             });
           }
@@ -121,24 +104,14 @@ module.exports = {
             buttonList[1].setDisabled(true)
           );
           const now = await pd.findOne({userID: user.id})
-          const now1 = await pd.findOne({userID: member.id})
-          if (!now.marryID && !now1.marryID) {
-            const newData = await marry.create({
-              first: user.id,
-              second: member.id,
-              date: Date.now(),
-              id: ID   
-            })
+          if (now.marryID) {
+            await pd.updateMany({marryID: mar2.id}, {$set: {marryID: null}});
             await bd.updateOne({userID: user.id}, {$inc: {stars: -150}});
-  
-            await pd.updateOne({userID: user.id}, {$set: {marryID: ID}});
-            await pd.updateOne({userID: member.id}, {$set: {marryID: ID}});
-            await pd.updateOne({userID: user.id}, {$set: {marry: Date.now()}});
-            newData.save()
+            await marry.deleteOne({id: mar2.id});
           }
-         
+            
           curPage.edit({
-            embeds: [Emb.setDescription(`${message.guild.members.cache.get(user.id)} ${and} ${member}${m.done}`)],
+            embeds: [Emb.setDescription(`${message.guild.members.cache.get(user.id)} ${bu.done}`)],
             components: [disabledRow],
           });//
           ops.queue.delete(user.id)

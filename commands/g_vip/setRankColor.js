@@ -6,28 +6,28 @@ const profileModel = require("../../models/profileSchema");
 const vipModel = require("../../models/vipSchema");
 const {error, embed, perms} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 5000);
+let rateLimiter = new RateLimiter(1, 3000);
 
 module.exports = {
   config: {
-    name: "ранг-цвет",
-    description: "Установить цвет для текста на ранг-карту.",
+    name: "rank-color",
     category: "g_vip",
-    aliases: ["rank-color"],
-    accessableby: "Для всех",
-    usage: "[цвет hex(#00ff00)]"
+    aliases: "",
   },
   run: async (bot, message, args) => {
     let limited = rateLimiter.take(message.author.id)
       if(limited) return
-       
+      const getLang = require("../../models/serverSchema");
+      const LANG = await getLang.findOne({serverID: message.guild.id});
+      const {"rank-color": b, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm} = require(`../../languages/${LANG.lang}`);   
+      
     let bag = await begModel.findOne({userID: message.author.id});
 
-    if(bag['vip1'] === false || bag['vip2'] === false) return error(message, "Эта команда доступна только для **VIP 2** пользователей.");
+    if(!bag['vip2']) return error(message, vipTwo);
 
-    if(!args[0]) return error(message, "Укажите цвет.\nПример: \`\`#ff00ff или ff00ff\`\`");
+    if(!args[0]) return error(message, b.error);
 
-    embed(message, 'Успешно установлена новая картинка для ранг-карточки.\nОбратите внимание, что цвет указан правильно.');
+    embed(message, b.done);
     await vipModel.findOneAndUpdate({userID: message.author.id}, {$set: {rankColor: args[0]}})
 
   }

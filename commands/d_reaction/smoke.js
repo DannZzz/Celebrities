@@ -1,21 +1,22 @@
 const Discord = require('discord.js');
 const {greenlight, redlight, cyan} = require('../../JSON/colours.json');
 const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 5000);
+let rateLimiter = new RateLimiter(1, 3000);
 
 module.exports = {
   config: {
-    name: "курить",
-    aliases: ['smoke'],
-    category: 'd_reaction',
-    description: "Покурить..",
-    usage: "",
-    accessableby: "Для всех"
+    name: "smoke",
+    aliases: '',
+    category: 'd_reaction'
   },
   run: async (bot, message, args) => {
     let limited = rateLimiter.take(message.author.id)
       if(limited) return
        
+      const getLang = require("../../models/serverSchema");
+      const LANG = await getLang.findOne({serverID: message.guild.id});
+      const {smoke: s, specify} = require(`../../languages/${LANG.lang}`);   
+   
     try {
       const gifs = [
         "https://cdn.discordapp.com/attachments/830878676336902194/830925987281764352/smoke1.gif",
@@ -36,7 +37,7 @@ module.exports = {
         const random = Math.floor(Math.random() * gifs.length)
         const sembed = new Discord.MessageEmbed()
         .setColor(cyan)
-        .setDescription(`<@${message.author.id}> курит.`)
+        .setDescription(`<@${message.author.id}> ${s.done}`)
         .setImage(gifs[random])
         .setTimestamp()
         message.channel.send({embeds: [sembed]})

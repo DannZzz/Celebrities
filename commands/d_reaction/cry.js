@@ -1,20 +1,21 @@
 const Discord = require('discord.js');
 const {greenlight, redlight, cyan} = require('../../JSON/colours.json');
 const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 5000);
+let rateLimiter = new RateLimiter(1, 3000);
 
 module.exports = {
   config: {
-    name: "плакать",
-    aliases: ['cry'],
-    category: 'd_reaction',
-    description: "Плакать..Эх.",
-    usage: "",
-    accessableby: "Для всех"
+    name: "cry",
+    aliases: "",
+    category: 'd_reaction'
   },
   run: async (bot, message, args) => {
     let limited = rateLimiter.take(message.author.id)
       if(limited) return
+
+      const getLang = require("../../models/serverSchema");
+      const LANG = await getLang.findOne({serverID: message.guild.id});
+      const {cry: c} = require(`../../languages/${LANG.lang}`);
        
     try {
       const gifs = [
@@ -37,16 +38,15 @@ module.exports = {
       let member;
       if(args[0]) {
       member = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(r => r.user.username.toLowerCase() === args[0].toLocaleLowerCase()) || message.guild.members.cache.find(r => r.displayName.toLowerCase() === args[0].toLocaleLowerCase());
-      if(member) {m = `<@${message.author.id}> расплакался(алась) из-за <@${member.user.id}>.`}
-      else {m = `<@${message.author.id}> расплакался(алась).`}
-    } else {m = `<@${message.author.id}> расплакался(алась).`}
+      if(member) {m = `<@${message.author.id}> ${c.done1} <@${member.user.id}>.`}
+      else {m = `<@${message.author.id}> ${c.done2}`}
+    } else {m = `<@${message.author.id}> ${c.done2}.`}
 
         const random = Math.floor(Math.random() * gifs.length)
         const sembed = new Discord.MessageEmbed()
         .setColor(cyan)
         .setDescription(m)
         .setImage(gifs[random])
-        .setTimestamp()
         message.channel.send({embeds: [sembed]})
       } catch (e){
         console.log(e);

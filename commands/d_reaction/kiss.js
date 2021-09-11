@@ -5,50 +5,48 @@ const pd = require("../../models/profileSchema");
 const {greenlight, redlight, cyan} = require('../../JSON/colours.json');
 const {error} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 5000);
+let rateLimiter = new RateLimiter(1, 3000);
 
 module.exports = {
   config: {
-    name: "поцеловать",
-    aliases: ['поц', 'kiss'],
-    category: 'd_reaction',
-    description: "Поцелуй, давай!",
-    usage: "[ник участника | упоминание | ID]",
-    accessableby: "Для всех"
+    name: "kiss",
+    aliases: '',
+    category: 'd_reaction'
   },
   run: async (bot, message, args) => {
     let limited = rateLimiter.take(message.author.id)
       if(limited) return
-       
+      const getLang = require("../../models/serverSchema");
+      const LANG = await getLang.findOne({serverID: message.guild.id});
+      const {kiss: k, specify} = require(`../../languages/${LANG.lang}`);   
     try {
         const user = message.author
-        if(!args[0]) return error(message, "Укажи участника чтобы поцеловать его/ее.");
+        if(!args[0]) return error(message, specify);
         let member = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(r => r.user.username.toLowerCase() === args[0].toLocaleLowerCase()) || message.guild.members.cache.find(r => r.displayName.toLowerCase() === args[0].toLocaleLowerCase());
-        if (!member) return error(message, "Укажи участника чтобы поцеловать его/ее.");
-        if (member.id === message.author.id) return error(message, 'Ты не сможешь поцеловать себя.');
+        if (!member) return error(message, specify);
+        if (member.id === message.author.id) return error(message, k.error);
         const { body } = await superagent
         .get("https://nekos.life/api/kiss");
 
         const sembed = new Discord.MessageEmbed()
         .setColor(cyan)
-        .setDescription(`<@${message.author.id}> поцеловал(-а) <@${member.user.id}>`)
+        .setDescription(`<@${message.author.id}> ${k.done} <@${member.user.id}>`)
         .setImage(body.url)
-        .setTimestamp()
 
         const my = await pd.findOne({userID: message.author.id});
         const his = await pd.findOne({userID: member.id});
         if (my.marryID && his.marryID && my.marryID === his.marryID) {
         return message.channel.send({embeds: [sembed]})
-        } else if (my.marryID && my.marryID !== his.marryID) {return error(message, "Где твоя верность?")}
-        else if (!my.marryID && his.marryID) return error(message, "Этот участник уже занят.")
+        } else if (my.marryID && my.marryID !== his.marryID) {return error(message, k.fidelity)}
+        else if (!my.marryID && his.marryID) return error(message, k.already)
         const button1 = new MessageButton()
         .setCustomId('previousbtn')
-        .setLabel('Отказаться')
+        .setLabel(k.button1)
         .setStyle('DANGER');
   
         const button2 = new MessageButton()
         .setCustomId('nextbtn')
-        .setLabel('Согласиться')
+        .setLabel(k.button2)
         .setStyle('SUCCESS');
   
         let buttonList = [
@@ -60,7 +58,7 @@ module.exports = {
         .setColor(cyan)
         .setTimestamp()
         .setAuthor(user.username, user.displayAvatarURL({dynamic: true}))
-        .setDescription(`Хочет с вами поцеловаться ${member}`)
+        .setDescription(`${k.question} ${member}`)
   
         const row = new MessageActionRow().addComponents(buttonList);
         const curPage = await message.channel.send({
@@ -87,7 +85,7 @@ module.exports = {
                 buttonList[1].setDisabled(true)
               );
               curPage.edit({
-                embeds: [Emb.setDescription(`${member} отказался(-ась).`)],
+                embeds: [Emb.setDescription(`${member} ${k.refused}.`)],
                 components: [disabledRow],
               });
             }

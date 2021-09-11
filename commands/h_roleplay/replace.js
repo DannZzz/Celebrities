@@ -6,24 +6,26 @@ const rpg = require("../../models/rpgSchema");
 const { MessageEmbed } = require("discord.js");
 const {error, embed, perms} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 5000);
+let rateLimiter = new RateLimiter(1, 3000);
 
 module.exports = {
   config: {
-    name: "заменить",
-    aliases: ['replace'],
-    category: 'h_roleplay',
-    description: "Заменить своего основного героя.",
-    usage: "",
-    accessableby: "Для всех"
+    name: "replace",
+    aliases: "",
+    category: 'h_roleplay'
   },
   run: async (bot, message, args) => {
     let limited = rateLimiter.take(message.author.id)
       if(limited) return
-       
+    
+    const getLang = require("../../models/serverSchema");
+    const LANG = await getLang.findOne({serverID: message.guild.id});
+    const {replace: r, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
+         
+
     const user = message.author;
     const rp = await rpg.findOne({userID: user.id});
-    if (!rp && rp.item !== null) return error(message, 'Вы не имеете героя.');
+    if (!rp && rp.item !== null) return error(message, hm.noHero);
     if (rp.heroes.length !== 1){
       if (rp.heroes.length === 2) {
 
@@ -43,10 +45,10 @@ module.exports = {
         
       const item = heroes[rpp.item]
 
-    return embed(message, `Ваш основной герой сейчас - __${item.nameRus}__.`);
+    return embed(message, `${r.done} - __${LANG.lang === "ru" ? item.nameRus : item.name}__.`);
       }
   } else {
-    return error(message, 'У вас один герой.');
+    return error(message, r.err);
   }
 
   }

@@ -16,30 +16,30 @@ const moment = require('moment');
 
 module.exports = {
   config: {
-    name: 'профиль',
-    aliases: ['profile'],
-    category: 'h_roleplay',
-    description: 'Посмотреть профиль участника.',
-    usage: '',
-    acessableby: 'Для всех'
+    name: 'profile',
+    aliases: '',
+    category: 'h_roleplay'
   },
   run: async (bot, message, args) => {
-
+    const getLang = require("../../models/serverSchema");
+    const LANG = await getLang.findOne({serverID: message.guild.id});
+    const {profile: p, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
+   
     let member = await message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(r => r.user.username.toLowerCase() === args.join(' ').toLocaleLowerCase()) || message.guild.members.cache.find(r => r.displayName.toLowerCase() === args.join(' ').toLocaleLowerCase()) || message.member;
     let person = await Levels.fetch(member.user.id, message.guild.id, true)
     let embed = new MessageEmbed()
     .setTimestamp()
     .setColor(cyan)
-    .setAuthor(`Профиль: ` + member.user.tag , member.user.displayAvatarURL({dynamic: true}))
+    .setAuthor(`${p.pr} ` + member.user.tag , member.user.displayAvatarURL({dynamic: true}))
 
     const data1 = await pd.findOne({userID: member.id});
     let marData;
     if (data1.marryID) {
       let mar = await marry.findOne({id: data1.marryID})
       if (member.id === mar.first) {
-        marData = `${(message.guild.members.cache.get(mar.second) ? message.guild.members.cache.get(mar.second) : bot.users.cache.get(mar.second).tag) || "Неизвестный"} с ${moment(mar.date).format('DD.MM.YYYY')}`;
+        marData = `${(message.guild.members.cache.get(mar.second) ? message.guild.members.cache.get(mar.second) : bot.users.cache.get(mar.second).tag) || p.none} ${p.from} ${moment(mar.date).format('DD.MM.YYYY')}`;
       } else {
-        marData = `${(message.guild.members.cache.get(mar.first) ? message.guild.members.cache.get(mar.first) : bot.users.cache.get(mar.first).tag) || "Неизвестный"} с ${moment(mar.date).format('DD.MM.YYYY')}`;
+        marData = `${(message.guild.members.cache.get(mar.first) ? message.guild.members.cache.get(mar.first) : bot.users.cache.get(mar.first).tag) || p.none} ${p.from} ${moment(mar.date).format('DD.MM.YYYY')}`;
       }
     } else {
       marData = '—'
@@ -56,19 +56,19 @@ module.exports = {
     let CL;
     if (rp && rp.clanID) {
       let cll = await clan.findOne({ID: rp.clanID});
-      CL = `Клан: **${cll.name}** | Уровень: __${cll.level}__`
+      CL = `${p.clan} **${cll.name}** | ${p.level} __${cll.level}__`
     } else {
-      CL = "Не состоит в клане."
+      CL = p.noclan
     }
 
 
 
-      embed.addField(`**VIP** - ${vip}`, `${STAR} ${data.stars} ${devs.includes(member.id) ? "__Dev__" : ""}\nВикторина: ${rp.quizCount}\n${CL}\nСупруг(-а): ${marData}\n**XP:** ${person.xp || 0}\n\n`)
-      embed.addField(`__Рыбы__\n`,
-    `\`\`\`Хлам(🔧) - ${data.junk}\nОбычная(🐟) - ${data.common}\nНеобычная(🐠) - ${data.uncommon}\nРедкая(🦑) - ${data.rare}\nЛегенда(🐋) - ${data.legendary}\`\`\`\n`, true)
+      embed.addField(`**VIP** - ${vip}`, `${STAR} ${data.stars} ${devs.includes(member.id) ? "__Dev__" : ""}\n${p.quiz} ${rp.quizCount}\n${CL}\n${p.gg} ${marData}\n\n`)
+      embed.addField(`__${p.fishes}__\n`,
+    `\`\`\`${p.junk}(🔧) - ${data.junk}\n${p.common}(🐟) - ${data.common}\n${p.unc}(🐠) - ${data.uncommon}\n${p.rare}(🦑) - ${data.rare}\n${p.leg}(🐋) - ${data.legendary}\`\`\`\n`, true)
 
 
-    if(data["vip1"] && checkVip.profileBio !== null) embed.addField('Обо мне:',checkVip.profileBio, true);
+    if(data["vip1"] && checkVip.profileBio !== null) embed.addField(p.bio ,checkVip.profileBio, true);
 
     message.channel.send({embeds: [embed]})
   }

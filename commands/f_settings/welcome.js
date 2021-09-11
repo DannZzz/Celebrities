@@ -4,103 +4,99 @@ const serverModel = require("../../models/serverSchema");
 const begModel = require("../../models/begSchema");
 const {error, embed, perms} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 5000);
+let rateLimiter = new RateLimiter(1, 3000);
+const {isWebUri} = require('valid-url');
 
 module.exports = {
       config: {
-        name: "приветствие",
-        description: "Установить приветствие сервера.",
-        usage: "[действие] (параметр)",
+        name: "welcome",
         category: "f_settings",
-        accessableby: "Нужна права: Администратор.",
-        aliases: ["welcome"]
+        aliases: ["welcomer"]
     },
     run: async (bot, message, args) => {
       let limited = rateLimiter.take(message.author.id)
       if(limited) return
 
-      if (!perms(message, "ADMINISTRATOR")) return error(message, "У вас недостаточно прав.")
-      if (!args[0]) return error(message, `Укажите действие!\n\`\`?приветствие лист\`\`\n\`\`Действия: картина, текст, цвет, канал\`\``)
-      const option = args[0];
+      const getLang = require("../../models/serverSchema");
+      const LANG = await getLang.findOne({serverID: message.guild.id});
+      const {welcome: b, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm} = require(`../../languages/${LANG.lang}`);   
+      
+      
+      if (!perms(message, "ADMINISTRATOR")) return error(message, perms)
+      if (!args[0]) return error(message, b.error)
+      const option = args[0].toLowerCase();
       const serverData = await serverModel.findOne({serverID: message.guild.id});
-      if (option === 'on' || option === 'включить') {
+      if (option === 'enable') {
         if(serverData.welcome === false) {
           serverData.welcome = true
           serverData.save()
-          return embed(message, `Приветствие успешно включено.`)
+          return embed(message, b.done)
         } else {
-          return error(message, `Приветствие и так включено.`)
+          return error(message, b.done1)
         }
-      } else if (option === 'off' || option === 'отключить') {
+      } else if (option === 'disable') {
         if(serverData.welcome === true) {
           serverData.welcome = false
           serverData.save()
-          return embed(message, `Приветствие успешно отключено.`)
+          return embed(message, b.done2)
         } else {
-          return error(message, `Приветствие и так отключено.`)
+          return error(message, b.done4)
         }
-      } else if (option === 'list' || option === 'лист') {
+      } else if (option === 'help') {
         return message.channel.send(`
-          \`\`Установленные действия.\`\`
-          Картина - ${`[Ссылка](${serverData.welcomeImage})` || `Не установлена.`}
-          Текст - \`\`${serverData.welcomeText || `Не установлен.`}\`\`
-          Канал - ${message.guild.channels.cache.get(serverData.welcomeChannel) || `\`\`Не установлен.\`\``}
-          Цвет - \`\`${serverData.welcomeColor || `Не установлен.`}\`\`
+          \`${b.now}\`
+${b.image} - ${serverData.welcomeImage ? `[${b.LINK}](${serverData.welcomeImage})` : `\`${b.not}\``}
+${b.text} - \`${serverData.welcomeText || b.not}\`
+${b.channel} - ${message.guild.channels.cache.get(serverData.welcomeChannel) || `\`${b.not}\``}
+${b.color} - \`${serverData.welcomeColor || b.not}\`
           `)
       }
-      if (!args[1]) return error(message, `Укажите параметр действий.\n\`\`Например: ?приветствие картина хелп\`\``)
+      if (!args[1]) return error(message, b.spec)
       const prop = args.splice(1).join(' ');
       const checkVip = await begModel.findOne({userID: message.author.id});
 
 
-      if (option === 'картина' || option === 'image') {
+      if (option === 'image') {
         if(checkVip['vip2']) {
-          if(prop === 'help' || prop === 'хелп') {
-            return message.channel.send(`
-              \`\`?приветствие картина [ссылка на картину, можно и гифку]\`\`
-              `)
+          if(prop === 'help') {
+            return message.channel.send(b.helpImage)
           } else {
+            if (!isWebUri(prop)) return error(message, specifyL)
             serverData.welcomeImage = prop;
             serverData.save()
-            embed(message, `Успешно установлена картина для приветствие.`)
+            embed(message, b.imageDone)
           }
         } else {
-          return error(message, `Эта команда доступна только для **VIP 2** пользователей.`)
+          return error(message, vipTwo)
         }
-      } else if (option === 'текст' || option === 'text') {
-        if(prop === 'help' || prop === 'хелп') {
-          return message.channel.send(`
-            \`\`?приветствие текст [текст приветствий]\`\`
-            `)
+      } else if (option === 'text') {
+        if(prop === 'help') {
+          return message.channel.send(b.helpText)
         } else {
           serverData.welcomeText = `${prop}`;
           serverData.save()
-          embed(message, `Успешно установлен текст сообщений для приветствие.`)
+          embed(message, b.textDone)
         }
-      } else if (option === 'color' || option === 'цвет') {
-        if(prop === 'help' || prop === 'хелп') {
-          return message.channel.send(`
-            \`\`?приветствие цвет [цвет EMBED (Например: #0f0f0f)]\`\`
-            `)
+      } else if (option === 'color') {
+        if(prop === 'help') {
+          return message.channel.send(b.helpColor)
         } else {
           serverData.welcomeColor = prop;
           serverData.save()
-          embed(message, `Успешно установлен цвет сообщений для приветствие.`)
+          embed(message, b.colorDone)
         }
-      } else if (option === 'канал' || option === 'channel') {
-        if(prop === 'help' || prop === 'хелп') {
-          return message.channel.send(`
-            \`\`?приветствие канал [название текстового канала | упоминание | ID]\`\`
-            `)
+      } else if (option === 'channel') {
+        if(prop === 'help') {
+          return message.channel.send(b.channelHelp)
         } else {
           let channel = message.mentions.channels.first() || bot.guilds.cache.get(message.guild.id).channels.cache.get(args[1]) || message.guild.channels.cache.find(c => c.name.toLowerCase() === args.join(' ').toLocaleLowerCase());
-          if (!channel) return error(message, `Канал не найден!`)
+          if (!channel) return error(message, b.channelError)
           serverData.welcomeChannel = channel.id;
           serverData.save()
-          embed(message, `Успешно установлен канал сообщений для приветствие.`)
+          embed(message, b.channelDone)
         }
       } else {
-        return error(message, 'Действие не найдено!')
+        return error(message, b.err)
       }
 
     }

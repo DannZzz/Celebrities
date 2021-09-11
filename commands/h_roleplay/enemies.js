@@ -10,16 +10,18 @@ let rateLimiter = new RateLimiter(1, 5000);
 
 module.exports = {
   config: {
-    name: "враги",
-    aliases: ['enemies'],
+    name: "enemies",
+    aliases: '',
     category: 'h_roleplay',
-    description: "Информация о врагах.",
-    usage: "",
-    accessableby: "Для всех"
   },
   run: async (bot, message, args) => {
     let limited = rateLimiter.take(message.author.id)
       if(limited) return
+
+      const getLang = require("../../models/serverSchema");
+      const LANG = await getLang.findOne({serverID: message.guild.id});
+      const {enemies: e, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`); 
+      
        
     let allEnemies = []
 
@@ -28,8 +30,8 @@ module.exports = {
     .setColor(cyan)
     .setTitle(`${jorj.name} (${jorj.nameRus})`)
     .setThumbnail(jorj.url)
-    .setDescription(jorj.description)
-    .addField(`❤ Жизнь: ${jorj.health} х уровень`, `⚔ **Атака: ${jorj.damage} х уровень**`, true)
+    .setDescription(LANG.lang === "en" ? jorj.descriptionEN : jorj.description)
+    .addField(`❤ ${hm.health} ${jorj.health} х ${hm.level}`, `⚔ **${hm.damage} ${jorj.damage} х ${hm.level}**`, true)
     allEnemies.push(enemy1)
 
     const cousin = enemies["Cousin"]
@@ -37,8 +39,8 @@ module.exports = {
     .setColor(cyan)
     .setTitle(`${cousin.name} (${cousin.nameRus})`)
     .setThumbnail(cousin.url)
-    .setDescription(cousin.description)
-    .addField(`❤ Жизнь: ${cousin.health} х уровень`, `⚔ **Атака: ${cousin.damage} х уровень**`, true)
+    .setDescription(LANG.lang === "en" ? cousin.descriptionEN : cousin.description)
+    .addField(`❤ ${hm.health} ${cousin.health} х ${hm.level}`, `⚔ **${hm.damage} ${cousin.damage} х ${hm.level}**`, true)
     allEnemies.push(enemy2)
 
     const arthas = enemies["Arthas"]
@@ -46,8 +48,8 @@ module.exports = {
     .setColor(cyan)
     .setTitle(`${arthas.name} (${arthas.nameRus})`)
     .setThumbnail(arthas.url)
-    .setDescription(arthas.description)
-    .addField(`❤ Жизнь: ${arthas.health} х уровень`, `⚔ **Атака: ${arthas.damage} х уровень**`, true)
+    .setDescription(LANG.lang === "en" ? arthas.descriptionEN : arthas.description)
+    .addField(`❤ ${hm.health} ${arthas.health} х ${hm.level}`, `⚔ **${hm.damage} ${arthas.damage} х ${hm.level}**`, true)
     allEnemies.push(enemy3)
 
     const dwolf = enemies["D'Wolf"]
@@ -55,8 +57,8 @@ module.exports = {
     .setColor(cyan)
     .setTitle(`${dwolf.name} (${dwolf.nameRus})`)
     .setThumbnail(dwolf.url)
-    .setDescription(dwolf.description)
-    .addField(`❤ Жизнь: ${dwolf.health} х уровень`, `⚔ **Атака: ${dwolf.damage} х уровень**`, true)
+    .setDescription(LANG.lang === "en" ? dwolf.descriptionEN : dwolf.description)
+    .addField(`❤ ${hm.health} ${dwolf.health} х ${hm.level}`, `⚔ **${hm.damage} ${dwolf.damage} х ${hm.level}**`, true)
     allEnemies.push(enemyWolf)
 
     const dLord = enemies["D'Lord"]
@@ -64,26 +66,26 @@ module.exports = {
     .setColor(cyan)
     .setTitle(`${dLord.name} (${dLord.nameRus})`)
     .setThumbnail(dLord.url)
-    .setDescription(dLord.description)
-    .addField(`❤ Жизнь: ${dLord.health} х уровень`, `⚔ **Атака: ${dLord.damage} х уровень**`, true)
+    .setDescription(LANG.lang === "en" ? dLord.descriptionEN : dLord.description)
+    .addField(`❤ ${hm.health} ${dLord.health} х ${hm.level}`, `⚔ **${hm.damage} ${dLord.damage} х ${hm.level}**`, true)
     allEnemies.push(enemy4)
 
     const eaterSkull = enemies["EaterSkull"]
     const enemy5 = new MessageEmbed()
     .setColor(cyan)
-    .setTitle(`Босс ${eaterSkull.name} (${eaterSkull.nameRus})`)
+    .setTitle(`${e.boss} ${eaterSkull.name} (${eaterSkull.nameRus})`)
     .setThumbnail(eaterSkull.url)
-    .setDescription(eaterSkull.description)
-    .addField(`❤ Жизнь: ${eaterSkull.health}`, `⚔ **Атака: ${eaterSkull.damage}**\n**Награда: ${eaterSkull.reward}** ${STAR}`, true)
+    .setDescription(LANG.lang === "en" ? eaterSkull.descriptionEN : eaterSkull.description)
+    .addField(`❤ ${hm.health} ${eaterSkull.health}`, `⚔ **${hm.damage} ${eaterSkull.damage}**\n**Награда: ${eaterSkull.reward}** ${STAR}`, true)
     allEnemies.push(enemy5)
 
     const fireWalker = enemies["FireWalker"]
     const enemy6 = new MessageEmbed()
     .setColor(cyan)
-    .setTitle(`Босс ${fireWalker.name} (${fireWalker.nameRus})`)
+    .setTitle(`${e.boss} ${fireWalker.name} (${fireWalker.nameRus})`)
     .setThumbnail(fireWalker.url)
-    .setDescription(fireWalker.description)
-    .addField(`❤ Жизнь: ${fireWalker.health}`, `⚔ **Атака: ${fireWalker.damage}**\n**Награда: ${fireWalker.reward}** ${STAR}`, true)
+    .setDescription(LANG.lang === "en" ? fireWalker.descriptionEN : fireWalker.description)
+    .addField(`❤ ${hm.health} ${fireWalker.health}`, `⚔ **${hm.damage} ${fireWalker.damage}**\n**Награда: ${fireWalker.reward}** ${STAR}`, true)
     allEnemies.push(enemy6)
 
     const emojies = ['⏪', '◀️', '⏹️', '▶️', '⏩']
@@ -92,12 +94,12 @@ module.exports = {
     const pages = allEnemies
     const button1 = new MessageButton()
           .setCustomId('previousbtn')
-          .setLabel('Предыдущая')
+          .setLabel(e.t1)
           .setStyle('DANGER');
 
           const button2 = new MessageButton()
           .setCustomId('nextbtn')
-          .setLabel('Следующая')
+          .setLabel(e.t2)
           .setStyle('SUCCESS');
 
     let buttonList = [

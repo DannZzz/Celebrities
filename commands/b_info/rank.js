@@ -5,33 +5,34 @@ const vipModel = require("../../models/vipSchema");
 const serverModel = require("../../models/serverSchema");
 const {error, embed, perms} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 5000);
+let rateLimiter = new RateLimiter(1, 3000);
 const Levels = require("discord-xp");
 Levels.setURL(process.env.MONGO);
 const Canvas = require('canvas');
 
 module.exports = {
   config: {
-    name: 'ранг',
-    aliases: ['rank'],
-    category: 'b_info',
-    description: 'Посмотреть ранг участника по активности.',
-    usage: '[участник]',
-    acessableby: 'Для всех'
+    name: 'rank',
+    aliases: ['level'],
+    category: 'b_info'
   },
   run: async (bot, message, args) => {
     let limited = rateLimiter.take(message.author.id)
     if(limited) return
 
+    const getLang = require("../../models/serverSchema");
+    const LANG = await getLang.findOne({serverID: message.guild.id});
+    const {rank: r} = require(`../../languages/${LANG.lang}`);
+    
     let server = await serverModel.findOne({serverID: message.guild.id})
 
-    if (!server.rank) return error(message, `Система уровней для этого сервера отключена!`);
+    if (!server.rank) return error(message, r.offed);
 
     let user = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(r => r.user.username.toLowerCase() === args.join(' ').toLocaleLowerCase()) || message.guild.members.cache.find(r => r.displayName.toLowerCase() === args.join(' ').toLocaleLowerCase()) || message.member;
     let vip = await vipModel.findOne({userID: user.id})
-    if (user.user.bot) return error(message, `Боты не имеют профиль!`);
+    if (user.user.bot) return error(message, r.notBot);
     let person = await Levels.fetch(user.id, message.guild.id, true)
-    if (!person) return error(message, `Участник пока не имеет ранг!`);
+    if (!person) return error(message, r.error);
     let customColor = false;
     if (vip.rankColor !== null){
        let a = vip.rankColor.split("")
@@ -81,17 +82,17 @@ module.exports = {
         ctx.globalAlpha = 1;
         ctx.font = '38px "Alumni Sans Semi Bold"';
         ctx.fillStyle = customColor || '#fff';
-        ctx.fillText(`Уровень ${person.level}`, 375, 125);
+        ctx.fillText(`${r.level} ${person.level}`, 375, 125);
 
         ctx.globalAlpha = 1;
         ctx.font = '38px "Alumni Sans Semi Bold"';
         ctx.fillStyle = customColor || '#fff';
-        ctx.fillText(`Опыт ${person.xp}`, 570, 125);
+        ctx.fillText(`${r.xp} ${person.xp}`, 570, 125);
         
         ctx.globalAlpha = 1;
         ctx.font = '38px "Alumni Sans Semi Bold"';
         ctx.fillStyle = customColor || '#fff';
-        ctx.fillText(`Ранг ${person.position}`, 225, 125);
+        ctx.fillText(`${r.rank} ${person.position}`, 225, 125);
 
         ctx.beginPath();
         ctx.globalAlpha = 1;

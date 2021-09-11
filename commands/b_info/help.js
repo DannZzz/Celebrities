@@ -4,23 +4,26 @@ const serverModel = require("../../models/serverSchema")
 const { stripIndents } = require("common-tags");
 const { cyan } = require("../../JSON/colours.json");
 const { PREFIX, DISAGREE } = require('../../config');
-const {pagination} = require("../../functions");
+const {pagination, firstUpperCase} = require("../../functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 5000);
+let rateLimiter = new RateLimiter(1, 3000);
 
 module.exports = {
     config: {
-        name: "хелп",
-        aliases: ["х", 'help', "помощь"],
-        usage: "[команда] (по желанию)",
-        category: "b_info",
-        description: "Выдает все доступные команды.",
-        accessableby: "Для всех"
+      name: "help",
+      aliases: ['h'],
+      category: "b_info",
     },
     run: async (bot, message, args) => {
       let limited = rateLimiter.take(message.author.id)
       if(limited) return
 
+
+      const getLang = require("../../models/serverSchema");
+      const LANG = await getLang.findOne({serverID: message.guild.id});
+      const {help: h, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`); 
+      const cmd = require(`../../languages/${LANG.lang}`)  
+   
         let prefix;
         let serverData = await serverModel.findOne({ serverID: message.guild.id });
         if(!serverData) {
@@ -30,10 +33,10 @@ module.exports = {
         server.save()}
 
         prefix = serverData.prefix;
-        let catArray = ['RPG', 'игра', 'roleplay', 'rpg', 'информация', 'инфо', 'info', 'экономика', 'economy', 'реакционные', 'реакция', 'reaction', 'фан', 'fun', 'настройки', 'settings', 'VIP', 'vip']
+        let catArray = ['RPG', 'roleplay', 'rpg', 'информация', 'инфо', 'info', 'экономика', 'economy', 'реакционные', 'реакция', 'reaction', 'фан', 'fun', 'настройки', 'settings', 'VIP', 'vip']
         const embed = new MessageEmbed()
             .setColor(cyan)
-            .setAuthor(`${message.guild.me.displayName} | Хелп`, message.guild.iconURL())
+            .setAuthor(`${message.guild.me.displayName}`, message.guild.iconURL())
             .setThumbnail(bot.user.displayAvatarURL())
 
         if (!args[0]) {
@@ -41,232 +44,73 @@ module.exports = {
 
             const categories = readdirSync("./commands/")
 
-            embed.setDescription(`**Привет! я ${message.guild.me.displayName}\nМой глобальный префикс: \`${PREFIX}\`\nМой префикс на этом сервере: \`${prefix}\`\nЕще больше информации:\n\`${prefix}хелп [категория]\n${prefix}хелп [команда | псевдоним]\`**`)
-            embed.setFooter(`${message.guild.me.displayName} | Кол-во команд: ${bot.commands.size-5} `, bot.user.displayAvatarURL());
+            embed.setDescription(`**${h.t1} ${message.guild.me.displayName}\n${h.t2} \`${PREFIX}\`\n${h.t3} \`${prefix}\`\n${h.t4}\n\`${prefix}help [hero]\`**`)
+            embed.setFooter(`${message.guild.me.displayName} | ${h.t5} ${bot.commands.size-6} `, bot.user.displayAvatarURL());
 
-            let a = categories.map(category => {
-                const dir = bot.commands.filter(c => c.config.category === category);
-                if(category === "b_info") {category = "Информация"}
-                else if (category === "a_moderation") {
-                  category = "Модерация"
-                }
-                else if (category === "g_vip") {
-                  category = "VIP"
-                }
-                else if (category === "e_fun") {
-                  category = "Фан"
-                }
-                else if (category === "h_roleplay") {
-                  category = "Ролевая Игра(RPG)"
-                }
-                else if (category === "d_reaction") {
-                  category = "Реакционные"
-                }
-                else if (category === "c_economy") {
-                  category = "Экономика"
-                }
-                else if (category === "f_settings") {
-                  category = "Настройки"//
-                }
-                return category.slice(0, 1).toUpperCase() + category.slice(1) + ` [${dir.size}]`;
-
-            })
-            a.pop()
-            embed.addField(`Все доступные категории:`, `\`\`\`${a.join("\n")}\`\`\``)
-
-            return message.channel.send({embeds: [embed]})
-        }else if(catArray.includes(args[0]) && !args[1]) {
-          let func = c => `**${prefix}${c.config.name}** -  ${c.config.description || "Нет описания."} \n\`${ c.config.usage ? `Применение: ${prefix}${c.config.name} ${c.config.usage}` : "Нет применения."}\`\n\`Псевдонимы: ${c.config.aliases ? c.config.aliases.join(", ") : "Нету."}\``
-          let description;
-          let description1;
-          let description2;
-          let description3;
-          let description4;
-          let eembed = new MessageEmbed()
-            .setAuthor(
-              message.author.tag,
-              message.author.displayAvatarURL({ dynamic: true })
-            )
-          let pages;
-          if(args[0] === 'информация' || args[0] === 'инфо' || args[0] === 'info') {
-
-            description = new MessageEmbed()
-              .setDescription(
-                '**Категория "Информация"**\n\n' + bot.commands.filter(c => c.config.category === 'b_info').map(func)
-                .slice(0, 5)
-                .join("\n\n"))
-
-            description1 = new MessageEmbed()
-              .setDescription(
-              '**Категория "Информация"**\n\n' + bot.commands.filter(c => c.config.category === 'b_info').map(func)
-              .slice(5, 10)
-              .join("\n\n"))
-
-          } else if(args[0] === 'игра' || args[0] === 'roleplay' || args[0] === 'rpg' || args[0] === 'RPG') {
-
-            description = new MessageEmbed()
-              .setDescription(
-                '**Категория "Ролевая Игра"**\n\n' + bot.commands.filter(c => c.config.category === 'h_roleplay').map(func)
-                .slice(0, 5)
-                .join("\n\n"))
-
-            description1 = new MessageEmbed()
-              .setDescription(
-              '**Категория "Ролевая Игра"**\n\n' + bot.commands.filter(c => c.config.category === 'h_roleplay').map(func)
-              .slice(5, 10)
-              .join("\n\n"))
-              
-              description2 = new MessageEmbed()
-              .setDescription(
-              '**Категория "Ролевая Игра"**\n\n' + bot.commands.filter(c => c.config.category === 'h_roleplay').map(func)
-              .slice(10, 15)
-              .join("\n\n")) 
-
-              description3 = new MessageEmbed()
-              .setDescription(
-              '**Категория "Ролевая Игра"**\n\n' + bot.commands.filter(c => c.config.category === 'h_roleplay').map(func)
-              .slice(15, 20)
-              .join("\n\n"))
-
-          } else if(args[0] === 'экономика' || args[0] === 'economy') {
-
-            description = new MessageEmbed()
-              .setDescription(
-              '**Категория "Экономика"**\n\n' + bot.commands.filter(c => c.config.category === 'c_economy').map(func)
-                .slice(0, 5)
-                .join("\n\n"))
-            description1 = new MessageEmbed()
-              .setDescription(
-              '**Категория "Экономика"**\n\n' + bot.commands.filter(c => c.config.category === 'c_economy').map(func)
-                .slice(5, 10)
-                .join("\n\n"))
-            description2 = new MessageEmbed()
-              .setDescription(
-              '**Категория "Экономика"**\n\n' + bot.commands.filter(c => c.config.category === 'c_economy').map(func)
-                .slice(10, 15)
-                .join("\n\n"))
-            description3 = new MessageEmbed()
-              .setDescription(
-              '**Категория "Экономика"**\n\n' + bot.commands.filter(c => c.config.category === 'c_economy').map(func)
-                .slice(15, 20)
-                .join("\n\n"))
-
-          } else if(args[0] === 'реакционные' || args[0] === 'reaction' || args[0] === 'реакция') {
-
-            description = new MessageEmbed()
-              .setDescription(
-                '**Категория "Реакционные"**\n\n' + bot.commands.filter(c => c.config.category === 'd_reaction').map(func)
-                .slice(0, 5)
-                .join("\n\n"))
-            description1 = new MessageEmbed()
-              .setDescription(
-              '**Категория "Реакционные"**\n\n' + bot.commands.filter(c => c.config.category === 'd_reaction').map(func)
-              .slice(5, 10)
-              .join("\n\n"))
-          } else if(args[0] === 'фан' || args[0] === 'fun') {
-
-            let fun = new MessageEmbed()
-              .setColor(cyan)
-              .setDescription(
-                '**Категория "Фан"**\n\n' + bot.commands.filter(c => c.config.category === 'e_fun').map(func)
-                .slice(0, 5)
-                .join("\n\n"))
-
-          return message.channel.send({embeds: [fun]})
-
-
-          } else if(args[0] === 'настройки' || args[0] === 'settings') {
-
-            description = new MessageEmbed()
-              .setDescription(
-                '**Категория "Настройки"**\n\n' + bot.commands.filter(c => c.config.category === 'f_settings').map(func)
-                .slice(0, 5)
-                .join("\n\n"))
-            description1 = new MessageEmbed()
-              .setDescription(
-              '**Категория "Настройки"**\n\n' + bot.commands.filter(c => c.config.category === 'f_settings').map(func)
-              .slice(5, 10)
-              .join("\n\n"))
-            description2 = new MessageEmbed()
-              .setDescription(
-              '**Категория "Настройки"**\n\n' + bot.commands.filter(c => c.config.category === 'f_settings').map(func)
-              .slice(10, 15)
-              .join("\n\n"))
-
-          } else if(args[0] === 'VIP' || args[0] === 'vip') {
-
-            description = new MessageEmbed()
-              .setDescription(
-                '**Категория "VIP"**\n\n' + bot.commands.filter(c => c.config.category === 'g_vip').map(func)
-                .slice(0, 5)
-                .join("\n\n"))
-            description1 = new MessageEmbed()
-              .setDescription(
-              '**Категория "VIP"**\n\n' + bot.commands.filter(c => c.config.category === 'g_vip').map(func)
-              .slice(5, 10)
-              .join("\n\n"))
-          }
-          pages = [description, description1, description2]
-          if(!description2) { pages = [description.setColor(cyan), description1.setColor(cyan)] } else { pages = [description.setColor(cyan), description1.setColor(cyan), description2.setColor(cyan)] }
-          if(description3 !== undefined) pages.push(description3.setColor(cyan))
-
-          const emojies = ['⏪', '◀️', '⏹️', '▶️', '⏩']
-
-          const timeout = 100000
-
-          const button1 = new MessageButton()
-                .setCustomId('previousbtn')
-                .setLabel('Предыдущая')
-                .setStyle('DANGER');
-
-                const button2 = new MessageButton()
-                .setCustomId('nextbtn')
-                .setLabel('Следующая')
-                .setStyle('SUCCESS');
-
-          let buttonList = [
-              button1,
-              button2
-          ]
-
-          const userids = [message.author.id]
-
-          pagination(message, pages, buttonList, timeout, userids)
-        } else {
-            let command = bot.commands.get(bot.aliases.get(args[0].toLowerCase()) || args[0].toLowerCase())
-            if (!command) return message.channel.send({embeds: [embed.setTitle(`${DISAGREE} **Не правильная команда!**`).setDescription(`**Пишите \`${prefix}хелп\` чтобы посмотреть все доступные команды бота!**`)]})
-            command = command.config
-            let category = command.category;
-            if(category === "b_info") {category = "Информация"}
-            else if (category === "a_moderation") {
-              category = "Модерация"
-            }
+            categories.forEach(category => {
+              const dir = bot.commands.filter(c => c.config.category === category);
+            if(category === "b_info") {category = h.info}
             else if (category === "e_fun") {
-              category = "Фан"
+              category = h.fun
             }
             else if (category === "g_vip") {
-              category = "VIP"
+              category = h.vip
             }
             else if (category === "h_roleplay") {
-              category = "Ролевая Игра(RPG)"
+              category = h.rpg
             }
             else if (category === "d_reaction") {
-              category = "Реакционные"
-            }
-            else if (category === "c_economy") {
-              category = "Экономика"
+              category = h.react
             }
             else if (category === "f_settings") {
-              category = "Настройки"
+              category = h.settings
+            } 
+
+            if (category === "owner") return 
+              const capitalise = category.slice(0, 1).toUpperCase() + category.slice(1);
+              try {
+                  embed.addField(`${capitalise} [${dir.size}]: `, dir.map(c => `\`${prefix}${c.config.name}\``).join(" "))
+
+              } catch (e) {
+                  console.log(e)
+              }
+          })
+            
+          
+            return message.channel.send({embeds: [embed]})
+        }else if(catArray.includes(args[0]) && !args[1]) {
+          
+        } else {
+            let command = bot.commands.get(bot.aliases.get(args[0].toLowerCase()) || args[0].toLowerCase())
+            if (!command) return message.channel.send({embeds: [embed.setTitle(`${DISAGREE} **${h.non}**`).setDescription(h.nono(prefix))]})
+            command = command.config
+            
+            let category = command.category;
+            if(category === "b_info") {category = h.info}
+            else if (category === "e_fun") {
+              category = h.fun
             }
-            embed.setDescription(stripIndents`**Мой глобальный префикс: \`${PREFIX}\`**
-            **Мой префикс на этом сервере: \`${prefix}\`**\n
-            ** Команда: ** \`${command.name.slice(0, 1).toUpperCase() + command.name.slice(1)}\`
-            ** Описание:** \`${command.description || "Нет описания."}\`
-            **Категория:** \`${category}\`
-            ** Применение: ** ${command.usage ? `\`${prefix}${command.name} ${command.usage}\`` : "\`Нет применения.\`"}
-            ** Доступен для: ** \`${command.accessableby || "Для всех"}\`
-            ** Псевдонимы: ** \`${command.aliases ? command.aliases.join(", ") : "Нету."}\``)
+            else if (category === "g_vip") {
+              category = h.vip
+            }
+            else if (category === "h_roleplay") {
+              category = h.rpg
+            }
+            else if (category === "d_reaction") {
+              category = h.react
+            }
+            else if (category === "f_settings") {
+              category = h.settings
+            }
+
+            embed.setDescription(stripIndents`**${h.t2} \`${PREFIX}\`**
+            **${h.t3} \`${prefix}\`**\n
+            ** ${h.cmd} ** \`${command.name.slice(0, 1).toUpperCase() + command.name.slice(1)}\`
+            ** ${h.Desc} ** \`${cmd[command.name]["desc"]}\`
+            **${h.cat}** \`${category}\`
+            ** ${h.Usage} ** ${cmd[command.name].usage ? `\`${prefix}${command.name} ${cmd[command.name].usage}\`` : "`"+h.nousage+"`"}
+            ** ${h.avail} ** \`${cmd[command.name].access}\`
+            ** ${h.aliases} ** \`${command.aliases ? command.aliases.join(", ") : h.noaliases}\``)
             embed.setFooter(message.guild.name, message.guild.iconURL())
 
             return message.channel.send({embeds: [embed]})

@@ -6,25 +6,26 @@ const rpg = require("../../models/rpgSchema");
 const { MessageEmbed } = require("discord.js");
 const {error} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 5000);
+let rateLimiter = new RateLimiter(1, 3000);
 
 module.exports = {
   config: {
-    name: "герой",
-    aliases: ['hero'],
-    category: 'h_roleplay',
-    description: "Посмотреть статистику своего основного героя.",
-    usage: "",
-    accessableby: "Для всех"
+    name: "hero",
+    noaliases: "",
+    category: 'h_roleplay'
   },
   run: async (bot, message, args) => {
+
+    const getLang = require("../../models/serverSchema");
+    const LANG = await getLang.findOne({serverID: message.guild.id});
+    const {hero: h, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
+   
     let limited = rateLimiter.take(message.author.id)
       if(limited) return
        
     const user = message.member;
-    if(user.user.bot) return error(message, 'Бот не может иметь героя.');
     let rp = await rpg.findOne({userID: user.id});
-    if (!rp) return error(message, 'Вы не имеете героя.');
+    if (!rp) return error(message, hm.noHero);
     if (rp.item === null && rp.heroes && rp.heroes.length !== 0) {
       await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: rp.heroes[0]["name"]}});
       await rpg.findOneAndUpdate({userID: user.id}, {$set: {health: rp.heroes[0]["health"]}});
@@ -44,21 +45,21 @@ module.exports = {
     }
     const item = heroes[rp.item]
     let myHero = new MessageEmbed()
-    .setAuthor(`Герой ${user.user.tag}`)
-    .setTitle(`${item.name} (${item.nameRus})\nУровень: ${rp.level}  Приключения: ${rp.surviveLevel}-й`)
-    .setDescription(item.description)
+    .setAuthor(`${user.user.tag}`)
+    .setTitle(`${item.name} (${item.nameRus})\n${hm.level} ${rp.level}  ${h.journey}: ${rp.surviveLevel}`)
+    .setDescription(LANG.lang === "ru" ? item.description : item.descriptionEN)
     .setThumbnail(item.url)
-    .addField(`❤ Общая жизнь:`, `${rp.health}`, true)
-    .addField(`⚔ Общая атака:`, `${rp.damage}`, true)
-    .addField(`🟡 Сыграно игр:`, `${rp.totalGames}`, false)
-    .addField(`🟢 Выиграно игр:`, `${rp.wins}`, true)
-    .addField(`🔴 Проиграно игр:`, `${rp.loses}`, true)
-    .addField(`🏆 Процент побед:`, `${Math.trunc(rp.wins / rp.totalGames  * 100) || '0'}%`, true)
+    .addField(`❤ ${hm.health}`, `${rp.health}`, true)
+    .addField(`⚔ ${hm.damage}`, `${rp.damage}`, true)
+    .addField(`🟡 ${h.all}`, `${rp.totalGames}`, false)
+    .addField(`🟢 ${h.win}`, `${rp.wins}`, true)
+    .addField(`🔴 ${h.lose}`, `${rp.loses}`, true)
+    .addField(`🏆 ${hm.winrate}`, `${Math.trunc(rp.wins / rp.totalGames  * 100) || '0'}%`, true)
     .setColor(cyan)
 
     return message.channel.send({embeds: [myHero]}).then(msg => setTimeout(()=>msg.delete(), 30 * 1000))
   } else {
-    return error(message, 'Вы не имеете героя.');
+    return error(message, hm.noHero);
   }
 
   }

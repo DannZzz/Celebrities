@@ -10,21 +10,24 @@ const { checkValue } = require("../../functions");
 const mc = require('discordjs-mongodb-currency');
 const {error, embed, perms} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 5000);
+let rateLimiter = new RateLimiter(1, 3000);
 const Canvas = require("canvas")
 
 module.exports = {
   config: {
-    name: "босс",
-    aliases: ['boss'],
-    category: 'h_roleplay',
-    description: "Пойти в бой с боссом.",
-    usage: "[упоминание | ID] двоих участников",
-    accessableby: "Для всех"
+    name: "boss",
+    aliases: '',
+    category: 'h_roleplay'
   },
   run: async (bot, message, args) => {
+   
+    const getLang = require("../../models/serverSchema");
+    const LANG = await getLang.findOne({serverID: message.guild.id});
+    const {boss: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and} = require(`../../languages/${LANG.lang}`);   
+   
     let limited = rateLimiter.take(message.author.id)
-      if(limited) return error(message, 'Подождите одну минуту.')
+    if(limited) return error(message, b.wait)
+ 
        
     const bag = await bd.findOne({ userID: message.author.id });
     const profileData = await pd.findOne({ userID: message.author.id });
@@ -37,32 +40,32 @@ module.exports = {
     if (author !== null && timeout - (Date.now() - author) > 0) {
         let time = new Date(timeout - (Date.now() - author));
 
-        return error(message, `Попробуй еще раз через **${time.getHours()} часа(ов) ${time.getMinutes()} минут.**.`);
+        return error(message, b.time(time));
     }
-    if (!args[0]) return error(message, 'Укажите первого участника.');
+    if (!args[0]) return error(message, b.error);
     const user1 = message.mentions.members.first() || message.guild.members.cache.get(args[0])
-    if(!user1) return error(message, 'Участник не найден.');
-    if(user1.user.bot) return error(message, 'Укажите другого участника.');
+    if(!user1) return error(message, notUser);
+    if(user1.user.bot) return error(message, b.error1);
     const mUser = message.author;
-    if(user1.id === mUser.id) return error(message, 'Вы не можете начать бой с собой.');
+    if(user1.id === mUser.id) return error(message, b.error1);
     let count = 0;
 
-    if(!args[1]) return error(message, 'Укажите второго участника.');
+    if(!args[1]) return error(message, specify);
     const user2 = message.mentions.members.last() || message.guild.members.cache.get(args[1]);
-    if(!user2) return error(message, 'Участник не найден.');
-    if(user2.id === user1.id) return error(message, 'Этого участника вы уже указывали.')
+    if(!user2) return error(message, notUser);
+    if(user2.id === user1.id) return error(message, b.error1)
 
 
-    if(user2.id === mUser.id) return error(message, 'Вы не можете начать бой с собой.');
+    if(user2.id === mUser.id) return error(message, b.error1);
 
     const rp1 = await rpg.findOne({userID: user1.id});
     const rp2 = await rpg.findOne({userID: user2.id});
 
     const mrp = await rpg.findOne({userID: mUser.id});
 
-    if (!mrp || mrp.item === null) return error(message, 'Вы не имеете героя.');
-    if (!rp1 || rp1.item === null) return error(message, 'Первый участник не имеет героя.');
-    if (!rp2 || rp2.item === null) return error(message, 'Второй участник не имеет героя.');
+    if (!mrp || mrp.item === null) return error(message, hm.noHero);
+    if (!rp1 || rp1.item === null) return error(message, b.secondH);
+    if (!rp2 || rp2.item === null) return error(message, b.thirdH);
 
     let allHealth = rp1.health + rp2.health + mrp.health
     let allDamage = rp1.damage + rp2.damage + mrp.damage
@@ -94,13 +97,13 @@ module.exports = {
     const att = new MessageAttachment(CC.toBuffer(), 'fight.png')
     
     let fight = new MessageEmbed()
-    .setTitle(`Поединок начался.`)
+    .setTitle(hm.battle)
     .setThumbnail('https://media.giphy.com/media/SwUwZMPpgwHNQGIjI7/giphy.gif')
     .addField(`${mUser.username} [${mrp.level}] (${data1.nameRus})\n${user1.user.username} [${rp1.level}] (${data2.nameRus})\n${user2.user.username} [${rp2.level}] (${data3.nameRus})`, `** **`, true)
-    .addField(`❤ Общая жизнь: ${allHealth}`, `**⚔ Общая атака: ${allDamage}**`, true)
+    .addField(`❤ ${hm.health}: ${allHealth}`, `**⚔ ${hm.damage}: ${allDamage}**`, true)
     .addField(`\u200b`, `\u200b`, false)
     .addField(`${boss.name} (${boss.nameRus})`, `** **`, false)
-    .addField(`❤ Общая жизнь: ${bossHealth}`, `**⚔ Общая атака: ${bossDamage}**`, false)
+    .addField(`❤ ${hm.health}: ${bossHealth}`, `**⚔ ${hm.damage}: ${bossDamage}**`, false)
     .setColor(cyan)
     .setTimestamp()
     .setImage('attachment://fight.png')
@@ -110,7 +113,7 @@ module.exports = {
     let trues = [false, false]
     let filter = m => m.author.id === user1.id;
     message.delete()
-    let wait1 = await embed(message, `<@${user1.user.id}> вас приглашают в «Бой с Боссом», у вас 20 секунд.\nПринять: \`\`+\`\``, false)
+    let wait1 = await embed(message, `<@${user1.user.id}> ${b.invite}`, false)
     await message.channel.awaitMessages({
     filter,
     max: 1, // leave this the same
@@ -119,19 +122,19 @@ module.exports = {
     if (collected.first().content === '+') {
       await wait1.delete()
 
-      msg1 = await message.channel.send('Первый участник согласился.')
+      msg1 = await message.channel.send(b.got1)
       trues[0] = true
     } else {
-      return error(message, `Первый участник отказался.`);
+      return error(message, b.ref1);
     }
     console.log('collected :' + collected.first().content)
   }).catch(async() => {
     TIME = false
     wait1.delete()
-    return message.channel.send('Время вышло, ваши друзья не успели принять приглашение.')
+    return message.channel.send(b.timeError)
     });
     if(!TIME) return
-    let wait2 = await embed(message, `<@${user2.user.id}> вас приглашают в «Бой с Боссом», у вас 20 секунд.\nПринять: \`\`+\`\``, false)
+    let wait2 = await embed(message, `<@${user2.user.id}> ${b.invite}`, false)
     filter = m => m.author.id === user2.id;
     await message.channel.awaitMessages({
     filter,
@@ -141,21 +144,21 @@ module.exports = {
     if (collected.first().content === '+') {
       await wait2.delete()
 
-      msg2 = await message.channel.send('Второй участник согласился.')
+      msg2 = await message.channel.send(b.got2)
       trues[1] = true
     } else {
-      return error(message, `Второй участника отказался.`);
+      return error(message, b.ref2);
     }
     console.log('collected :' + collected.first().content)
   }).catch(async() => {
     wait2.delete()
-    return message.channel.send('Время вышло, ваши друзья не успели принять приглашение.')
+    return message.channel.send(b.timeError)
     });
 
   
     while (true) {
       if(trues[0] == true && trues[1] === true) {
-        const damn = await message.channel.send(`<a:dannloading:876008681479749662> Подключаю вас с боссом...`)
+        const damn = await message.channel.send(`<a:dannloading:876008681479749662> ${b.connect}..`)
         const CC = await makeCanvas(data1.url, data2.url, data3.url, boss.url)
         const att = new MessageAttachment(CC.toBuffer(), 'fight.png')
         damn.delete()
@@ -193,16 +196,16 @@ module.exports = {
           let endEmbed = new MessageEmbed()
           .setColor(cyan)
           .setTimestamp()
-          .setAuthor(`${boss.name} оказался сильнее.`)
-          .setTitle(`${message.author.username}, ${user1.user.username} и ${user2.user.username} проиграли.`)
+          .setAuthor(`${boss.name} ${b.turned}`)
+          .setTitle(`${message.author.username}, ${user1.user.username} ${and} ${user2.user.username} ${b.lost}.`)
           .setThumbnail(boss.url)
 
           let winEmbed = new MessageEmbed()
           .setColor(cyan)
           .setTimestamp()
-          .setAuthor(`${boss.name} сдался.`)
-          .setTitle(`${message.author.username}, ${user1.user.username} и ${user2.user.username} выиграли.`)
-          .setDescription(`Каждый получает по ${boss.reward} ${STAR}`)
+          .setAuthor(`${boss.name} ${b.gaveUp}`)
+          .setTitle(`${message.author.username}, ${user1.user.username} ${and} ${user2.user.username} ${b.won}.`)
+          .setDescription(`${b.gets} ${boss.reward} ${STAR}`)
           .setThumbnail(boss.url)
 
           if (winner){

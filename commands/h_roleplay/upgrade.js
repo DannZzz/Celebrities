@@ -12,23 +12,24 @@ const {error} = require('../../functions');
 
 module.exports = {
   config: {
-    name: "прокачать",
-    aliases: ['upgrade'],
-    category: 'h_roleplay',
-    description: "Прокачать уровень героя.",
-    usage: "(инфо | info)",
-    accessableby: "Для всех"
+    name: "upgrade",
+    aliases: ['update'],
+    category: 'h_roleplay'
   },
   run: async (bot, message, args) => {
     let limited = rateLimiter.take(message.author.id)
     if(limited) return
 
+    const getLang = require("../../models/serverSchema");
+    const LANG = await getLang.findOne({serverID: message.guild.id});
+    const {upgrade: u, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
+         
     const rp = await rpg.findOne({userID: message.author.id});
     const data = await bd.findOne({userID: message.author.id});
     const bal = data.stars;
 
     if(!rp || rp.item === null) {
-    return error(message, 'Вы не имеете героя.')
+    return error(message, hm.noHero)
     };
     let hero = heroes[rp.item]
     let firstLevel = 1;
@@ -36,25 +37,25 @@ module.exports = {
 
     let requiredValue = rp.level * levelCost;
 
-    const resp = ['инфо', 'info']
+    const resp = ['info']
 
     let addH = 250;
     let addD = 20;
 
-    if(args[0] && resp.includes(args[0])) {
+    if(args[0] && resp.includes(args[0].toLowerCase())) {
       const newEmb = new MessageEmbed()
       .setColor(cyan)
       .setTimestamp()
-      .setAuthor(`Информация о прокачке уровня до ${rp.level+1}`)
+      .setAuthor(`${u.info} ${rp.level+1}`)
       .setTitle(`${hero.name} (${hero.nameRus})`)
-      .setDescription(`**Стоимость прокачки: ${requiredValue} ${STAR}**`)
-      .addField(`❤ Общая жизнь:`, `${rp.health} + ${addH}`, true)
-      .addField(`⚔ Общая атака:`, `${rp.damage} + ${addD}`, true)
+      .setDescription(`**${u.cost} ${requiredValue} ${STAR}**`)
+      .addField(`❤ ${hm.health}`, `${rp.health} + ${addH}`, true)
+      .addField(`⚔ ${hm.damage}`, `${rp.damage} + ${addD}`, true)
       .setThumbnail(hero.url)
 
       return message.channel.send({embeds: [newEmb]})
     }
-    if (bal < requiredValue) return error(message, `У вас недостаточно денег.\nСтоимость прокачки до следующего уровня **${requiredValue}** ${STAR}.`)
+    if (bal < requiredValue) return error(message, `${u.err} — **${requiredValue}** ${STAR}.`)
     let a = rp.heroes.indexOf(rp.heroes.filter(a => a["name"] === rp.item))
     let b = rp.heroes[a];
 
@@ -76,10 +77,10 @@ module.exports = {
 
 
     let Embed = new MessageEmbed()
-    .setAuthor(`Уровень успешно прокачен до ${rp.level + 1}`)
+    .setAuthor(`${u.done} ${rp.level + 1}`)
     .setTitle(`${hero.name} (${hero.nameRus})`)
-    .addField(`❤ Общая жизнь:`, `${rp.health + addH}`, true)
-    .addField(`⚔ Общая атака:`, `${rp.damage + addD}`, true)
+    .addField(`❤ ${hm.health}`, `${rp.health + addH}`, true)
+    .addField(`⚔ ${hm.damage}`, `${rp.damage + addD}`, true)
     .setColor(cyan)
     .setThumbnail(hero.url)
 

@@ -1,29 +1,30 @@
 const { MessageEmbed } = require("discord.js");
 const { cyan } = require("../../JSON/colours.json");
 const moment = require('moment');
-const {error, embed, perms} = require('../../functions');
+const {error, embed, perms, firstUpperCase} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 5000);
+let rateLimiter = new RateLimiter(1, 3000);
 
 module.exports = {
     config: {
-        name: "участник",
+        name: "user",
         category: "b_info",
-        aliases: ["инфо", "уи", "user", "info"],
-        description: "Выдает информацию об участнике.",
-        usage: "[тег | никнейм | упоминание | ID]",
-        accessableby: "Для всех"
+        aliases: ["userinfo", "info"]
     },
     run: async (bot, message, args) => {
       let limited = rateLimiter.take(message.author.id)
       if(limited) return
+
+      const getLang = require("../../models/serverSchema");
+      const LANG = await getLang.findOne({serverID: message.guild.id});
+      const {user: u, notUser} = require(`../../languages/${LANG.lang}`);
 
         let member = await message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(r => r.user.username.toLowerCase() === args.join(' ').toLocaleLowerCase()) || message.guild.members.cache.find(r => r.displayName.toLowerCase() === args.join(' ').toLocaleLowerCase()) || message.member;
         let UIembed = new MessageEmbed()
         .setTimestamp()
         .setColor(cyan)
         if(!member)
-        return error(message, "Участник не найден");
+        return error(message, notUser);
 
         function statusToRus(ups){
           if(ups === "dnd"){
@@ -43,32 +44,32 @@ module.exports = {
       switch (activity.type) {
         case 'CUSTOM':
         activities.push(activity.state)
-          UIembed.setDescription(`**Польз. статус:** \`\`\`${activities}\`\`\``)
+          UIembed.setDescription(`${u.custom} \`\`\`${activities}\`\`\``)
           break;
         case 'PLAYING':
-          UIembed.addField(`**Играет в:**`, `\`\`\`${activity.name}\`\`\``, false);
+          UIembed.addField(u.playing, `\`\`\`${activity.name}\`\`\``, false);
           break;
         case 'LISTENING':
-          if (member.bot) {UIembed.addField("Слушает:", `\`\`\`${activity.name}\`\`\``, false);}
-          else {UIembed.addField(`Слушает:`, `\`\`\`${activity.state} -- ${activity.details}\`\`\``, false)};
+          if (member.bot) {UIembed.addField(u.listening, `\`\`\`${activity.name}\`\`\``, false);}
+          else {UIembed.addField(u.listening, `\`\`\`${activity.state} -- ${activity.details}\`\`\``, false)};
           break;//
         case 'WATCHING':
-            UIembed.addField(`**Смотрит:**`, `\`\`\`${activity.name}\`\`\``, false);
+            UIembed.addField(u.watching, `\`\`\`${activity.name}\`\`\``, false);
           break;
         case 'STREAMING':
-            UIembed.addField(`**Стримит:**`, `\`\`\`${activity.name}\`\`\``, false);
+            UIembed.addField(u.streaming, `\`\`\`${activity.name}\`\`\``, false);
           break;
       }}
 
 
 
-        UIembed.setTitle('Имя пользователя: \`\`\`' + member.user.tag + '\`\`\`')
-        UIembed.setAuthor('Информация об участнике')
-        UIembed.addField('Дата регистрации:', `\`\`\`${moment(member.user.createdAt).format('DD.MM.YYYY HH:mm')}\`\`\``, true)
-        UIembed.addField('Присоединился:', `\`\`\`${moment(member.joinedAt).format('DD.MM.YYYY HH:mm')}\`\`\``, true)
+        UIembed.setTitle(u.name + ' \`\`\`' + member.user.tag + '\`\`\`')
+        UIembed.setAuthor(u.author)
+        UIembed.addField(u.f1, `\`\`\`${moment(member.user.createdAt).format('DD.MM.YYYY HH:mm')}\`\`\``, true)
+        UIembed.addField(u.f2, `\`\`\`${moment(member.joinedAt).format('DD.MM.YYYY HH:mm')}\`\`\``, true)
         UIembed.addField('\u200B', '\u200B', true);
-        UIembed.addField('Кол-во ролей:', `\`\`\`${member.roles.cache.size-1}\`\`\``, true)
-        UIembed.addField('Самая высокая роль:', `\`\`\`${member.roles.highest.name}\`\`\``, true)
+        UIembed.addField(u.f3, `\`\`\`${member.roles.cache.size-1}\`\`\``, true)
+        UIembed.addField(u.f4, `\`\`\`${member.roles.highest.name}\`\`\``, true)
         UIembed.addField('\u200B', '\u200B', true);
         // UIembed.addField('Бот ли?:', `\`\`\`${booleanToRus(member.user.bot)}\`\`\``, true)
         // UIembed.addField('Статус:', `\`\`\`${statusToRus(member.user.presence.status)}\`\`\``, true)

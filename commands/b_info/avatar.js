@@ -1,13 +1,14 @@
+
 module.exports = {
   config: {
-    name: "аватар",
-    aliases: ["av", "avatar"],
-    category: "b_info",
-    description: "Показывает аватарку участника.",
-    usage: "[ник участника | упоминание | ID] (По желанию)",
-    accessableby: "Для всех"
+    name: "avatar",
+    aliases: ["av"],
+    category: "b_info"
   },
   run: async (bot, message, args) => {
+    const getLang = require("../../models/serverSchema");
+    const LANG = await getLang.findOne({serverID: message.guild.id});
+    const {avatar} = require(`../../languages/${LANG.lang}`);
 
     let user = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(r => r.user.username.toLowerCase() === args.join(' ').toLocaleLowerCase()) || message.guild.members.cache.find(r => r.displayName.toLowerCase() === args.join(' ').toLocaleLowerCase()) || message.member;
 
@@ -15,7 +16,7 @@ module.exports = {
       message.channel.send({ embeds: [
         {
 
-          title: `Аватар ${user.user.username}'`,
+          title: `${avatar.AVATAR} — ${user.user.username}'`,
 
           color: 0x00deff,
 
@@ -36,7 +37,7 @@ module.exports = {
       message.channel.send({embeds: [
         {
 
-          title: `Аватар ${user.user.username}`,
+          title: `${avatar.AVATAR} — ${user.user.username}`,
 
           color: 0x00deff,
 

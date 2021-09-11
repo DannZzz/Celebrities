@@ -36,9 +36,9 @@ module.exports = {
     rp = await rpg.findOne({userID: user.id})
     if(rp.heroes.length >= 2) return error(message, "Участник имеет достаточно героев.")
     if(!args[1]) return error(message, "Укажите подарок.")
-    const items = ["Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "PerfectDuo", "Eragon", "Ariel", "Archangel", "Darkangel"];
-    if (!items.includes(args[1])) return error(message, "Герой не найден.")
-    let giftType = heroes[args[01]]
+    const items = ["Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-Duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
+    if (!items.includes(args[1].toLowerCase())) return error(message, "Герой не найден.")
+    let giftType = heroes[args[01].toLowerCase()]
 
     await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: giftType.name}})
     await rpg.findOneAndUpdate({userID: user.id}, {$set: {health: giftType.health}})

@@ -2,21 +2,22 @@ const Discord = require('discord.js');
 const {greenlight, redlight, cyan} = require('../../JSON/colours.json');
 const {error} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 5000);
+let rateLimiter = new RateLimiter(1, 3000);
 
 module.exports = {
   config: {
-    name: "тыкать",
-    aliases: ['poke', 'тык'],
-    category: 'd_reaction',
-    description: "Тыкнуть участника!",
-    usage: "[ник участника | упоминание | ID]",
-    accessableby: "Для всех"
+    name: "poke",
+    aliases: '',
+    category: 'd_reaction'
   },
   run: async (bot, message, args) => {
     let limited = rateLimiter.take(message.author.id)
       if(limited) return
         
+      const getLang = require("../../models/serverSchema");
+      const LANG = await getLang.findOne({serverID: message.guild.id});
+      const {poke: p, specify} = require(`../../languages/${LANG.lang}`);   
+   
     try {
       const gifs = [
         "https://i.kym-cdn.com/photos/images/original/000/674/446/346.gif",
@@ -32,16 +33,15 @@ module.exports = {
         "https://i.pinimg.com/originals/ae/62/32/ae62324b1de9d2422a45557ac0551e48.gif",
       ]
         const random = Math.floor(Math.random() * gifs.length)
-        if(!args[0]) return error(message, "Укажи участника чтобы тикнуть его/ее.");
+        if(!args[0]) return error(message, specify);
         let member = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(r => r.user.username.toLowerCase() === args[0].toLocaleLowerCase()) || message.guild.members.cache.find(r => r.displayName.toLowerCase() === args[0].toLocaleLowerCase());
-        if (!member) return error(message, "Укажи участника чтобы тикнуть его/ее.");
-        if (member.id === message.author.id) return error(message, 'Ты не сможешь тикнуть себя.');
+        if (!member) return error(message, specify);
+        if (member.id === message.author.id) return error(message, p.error);
 
         const sembed = new Discord.MessageEmbed()
         .setColor(cyan)
-        .setDescription(`<@${message.author.id}> тыкнул(а) <@${member.user.id}>`)
+        .setDescription(`<@${message.author.id}> ${p.done} <@${member.user.id}>`)
         .setImage(gifs[random])
-        .setTimestamp()
         message.channel.send({embeds: [sembed]})
       } catch (e){
         console.log(e);

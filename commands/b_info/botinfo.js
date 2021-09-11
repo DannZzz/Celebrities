@@ -5,25 +5,27 @@ const moment = require('moment');
 
 module.exports = {
   config: {
-    name: "ботинфо",
+    name: "botinfo",
     category: "b_info",
-    aliases: ["бот", "bot", "botinfo"],
-    description: "Выдает информацию о боте.",
-    usage: "",
-    accessableby: "Для всех"
+    aliases: ["bot"]
   },
   run: async (bot, message, args) => {
+
+  const getLang = require("../../models/serverSchema");
+  const LANG = await getLang.findOne({serverID: message.guild.id});
+  const {botinfo} = require(`../../languages/${LANG.lang}`); 
+    
   let botAvatar = bot.user.displayAvatarUrl;
   const embed = new MessageEmbed()
 
-  .setAuthor('Информация о боте!')
+  .setAuthor(botinfo.title)
   .addFields(
-  { name: 'Название:', value: bot.user.tag },
-  { name: "Создано в ", value: moment(bot.user.createdAt).format('DD.MM.YYYY HH:mm') } )
-  .addField('Разработчик: ', DEV, true)
-  .addField('Префикс по умолчанию: ', PREFIX, true)
-  .addField('Чтобы приглашать меня нажми на:', `[ПРИГЛАШЕНИЕ](${botINVITE})`)
-  .addField('Наш Дискорд сервер:', `[OnlyChill](https://discord.gg/OnlyChill)`)
+  { name: botinfo.field1, value: bot.user.tag },
+  { name: botinfo.create, value: moment(bot.user.createdAt).format('DD.MM.YYYY HH:mm') } )
+  .addField(botinfo.dev, DEV, true)
+  .addField(botinfo.prefix, PREFIX, true)
+  .addField(botinfo.inv, `[${botinfo.link}](${botINVITE})`)
+  .addField(botinfo.support, `[OnlyChill](https://discord.gg/OnlyChill)`)
   .setThumbnail(bot.user.displayAvatarURL({ dynamic: true }))
   .setFooter("ID: " + bot.user.id)
   .setTimestamp()

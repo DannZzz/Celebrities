@@ -3,29 +3,30 @@ const {cyan} = require("../../JSON/colours.json");
 const serverModel = require("../../models/serverSchema");
 const {error, embed, perms} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 5000);
+let rateLimiter = new RateLimiter(1, 3000);
 
 module.exports = {
     config: {
-        name: "префикс",
-        description: "Поменять префикс сервера.",
-        usage: "[новый префикс]",
+        name: "prefix",
         category: "f_settings",
-        accessableby: "Нужна права: Управление сервером.",
-        aliases: ["prefix", "pr"]
+        aliases: ["pr"]
     },
     run: async (bot, message, args) => {
       let limited = rateLimiter.take(message.author.id)
       if(limited) return
 
-        if (!perms(message, "MANAGE_SERVER")) return error(`У вас недостаточно прав.`)
+      const getLang = require("../../models/serverSchema");
+      const LANG = await getLang.findOne({serverID: message.guild.id});
+      const {prefix: bb, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm} = require(`../../languages/${LANG.lang}`);   
+      
+        if (!perms(message, "ADMINISTRATOR")) return error(perm)
         let sd = await serverModel.findOne({ serverID: message.guild.id });
         if (!args[0]) {
 
           let b = sd.prefix;
           if (b) {
-        return embed(message, `👀 Префикс сервера: \`${b}\``);
-      } else return error("Пожалуйста, укажите новый префикс.");
+        return embed(message, `${bb.now} \`${b}\``);
+      } else return error(message, bb.err);
     }
 
         try {
@@ -34,11 +35,11 @@ module.exports = {
             let b = sd.prefix;
 
             if (a === b) {
-                return error("Этот префикс уже установлен.")
+                return error(message, bb.err1)
             } else {
                 await serverModel.findOneAndUpdate({serverID: message.guild.id}, {$set: {prefix: a}});
 
-                return embed(message, `Новый префикс сервера: ${a}`)
+                return embed(message, `${bb.done} ${a}`)
             }
         } catch (e) {
             console.log(e)

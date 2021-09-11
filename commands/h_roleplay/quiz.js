@@ -16,17 +16,20 @@ let rateLimiter = new RateLimiter(1, 5000);
 
 module.exports = {
   config: {
-    name: "викторина",
-    aliases: ['quiz'],
-    category: 'h_roleplay',
-    description: "Отвечать на вопросы и получать награды.",
-    usage: "",
-    accessableby: "Для всех"
+    name: "quiz",
+    aliases: '',
+    category: 'h_roleplay'
   },
   run: async (bot, message, args) => {
     
     let limited = rateLimiter.take(message.author.id)
     if(limited) return
+
+    const getLang = require("../../models/serverSchema");
+    const LANG = await getLang.findOne({serverID: message.guild.id});
+    const {quiz: q, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
+     
+    
     let rp = await rpg.findOne({userID: message.author.id});
     if (!rp) {const asd = await rpg.create({
       userID: message.author.id
@@ -60,11 +63,10 @@ module.exports = {
     const filter = m => m.author.id === message.author.id;
     let Emb = new MessageEmbed()
     .setColor(cyan)
-    .setTimestamp()
     .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
     let msg = await embed(message, `
-У вас 15 секунд.
-Вопрос:
+${q.time}
+${q.question}
 \`${getQuestion}\`
 
 :regional_indicator_a: | ${a}
@@ -87,12 +89,12 @@ module.exports = {
         } else if (!bag["vip2"] && rp.quizCount < 10) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
         }
-        return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — __${reward}__ ${STAR}.`)]})
+        return msg.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`)]})
 
       } else {
         await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
 
-        return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} Вы ответили неправильно.`)]})
+        return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`)]})
       }
     } else if (respB.includes(collected.first().content)) {
       userResponse = b
@@ -103,12 +105,12 @@ module.exports = {
         } else if (!bag["vip2"] && rp.quizCount < 10) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
         }
-         return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — __${reward}__ ${STAR}.`)]})
+         return msg.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`)]})
 
       } else {
         await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
 
-        return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} Вы ответили неправильно.`)]})
+        return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`)]})
       }
     } else if (respC.includes(collected.first().content)) {
       userResponse = c
@@ -119,12 +121,12 @@ module.exports = {
         } else if (!bag["vip2"] && rp.quizCount < 10) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
         }
-        return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — __${reward}__ ${STAR}.`)]})
+        return msg.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`)]})
 
       } else {
         await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
 
-        return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} Вы ответили неправильно.`)]})
+        return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`)]})
       }
         } else if (respD.includes(collected.first().content)) {
       userResponse = d
@@ -135,22 +137,22 @@ module.exports = {
         } else if (!bag["vip2"] && rp.quizCount < 10) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
         }
-        return msg.edit({embeds: [Emb.setDescription(`${AGREE} Вы ответили правильно, ваша награда — __${reward}__ ${STAR}.`)]})
+        return msg.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`)]})
 
       } else {
         await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
 
-        return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} Вы ответили неправильно.`)]})
+        return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`)]})
       }
     } else {
         await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
 
-      return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} Вы ответили неправильно.`)]});
+      return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`)]});
     }
     console.log('collected :' + collected.first().content)
   }).catch(async() => {
     await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
-    return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} Время вышло, попробуйте снова.`)]});
+    return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.err}`)]});
     });
 
   }
