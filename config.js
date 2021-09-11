@@ -1,4 +1,4 @@
-exports.PREFIX = '?';
+exports.PREFIX = '!!';
 
 exports.DEV = "Dann#0006"
 
@@ -14,9 +14,9 @@ exports.AME_API = '3229a6d1c6886228c8946c39e5a89f79e62ca7251c10a31fede7679ab8da3
 
 exports.giphy_API = 'afWlnBmAo2txNzxVgN4m4P34yNZN9PFt';
 
-exports.AGREE = '<:check:886261763803336704>';
+exports.AGREE = '<:check:886291083787636777>';
 
-exports.DISAGREE = '<:error:886261763660714065>';
+exports.DISAGREE = '<:cross:886291083909292073>';
 
 exports.CLAN = '<a:clancurrency:878337758458970172>';
 
