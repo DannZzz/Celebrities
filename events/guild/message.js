@@ -4,8 +4,8 @@ const profileModel = require("../../models/profileSchema");
 const serverModel = require("../../models/serverSchema");
 const memberModel = require("../../models/memberSchema");
 const begModel = require("../../models/begSchema");
-const vipModel = require("../../models/vipSchema");
 const rpg = require("../../models/rpgSchema");
+const vipModel = require("../../models/vipSchema");
 const customModel = require("../../models/customSchema");
 const queue2 = new Map();
 const queue3 = new Map();
@@ -17,6 +17,11 @@ const {cyan} = require('../../JSON/colours.json');
 
 module.exports = async (bot, messageCreate) => {
   let message = messageCreate;
+
+  const getLang = require("../../models/serverSchema");
+  const LANG = await getLang.findOne({serverID: message.guild.id});
+  const {afkMess} = require(`../../languages/${LANG.lang}`); 
+    
   let afkMember = message.mentions.members;
   if (afkMember && afkMember.length !== 0) {
     afkMember.forEach(async i => {
@@ -24,20 +29,13 @@ module.exports = async (bot, messageCreate) => {
       if (data && data.afkMessage && !message.author.bot) {
         const emb = new MessageEmbed()
         .setColor(cyan)
-        .setDescription(`Пользователь **${i.user.tag}** в данный момент в режиме АФК\nПо причине: **${data.afkMessage}**`)
+        .setDescription(afkMess(i.user.tag, data.afkMessage))
         message.channel.send({embeds: [emb]}).then((m) => setTimeout(() => m.delete(), 10000))
       }
     })
   }
     
-  try {
-    const user = await mongoCurrency.findUser(message.author.id, message.guild.id); // Get the user from the database.
-    if (!user) {
-      mongoCurrency.createUser(message.author.id, message.guild.id)
-    }
-  } catch (e) {
-    console.log(e);
-  }
+
     try {
       let memberData;
       let profileData;
@@ -51,7 +49,7 @@ module.exports = async (bot, messageCreate) => {
     })
     asd.save()
     }
-    
+
     vipData = await vipModel.findOne({ userID: message.author.id });
     if (!vipData) {
     let vip = await vipModel.create({
@@ -100,6 +98,7 @@ module.exports = async (bot, messageCreate) => {
         if(!serverData) {
           let server = await serverModel.create({
             serverID: message.guild.id,
+            lang: "en"
           })
         server.save()}
 
