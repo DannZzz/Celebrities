@@ -6,6 +6,8 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const mc = require('discordjs-mongodb-currency')
 const Levels = require("discord-xp");
+const dotenv = require('dotenv');
+dotenv.config()
 
 const MONGO = process.env.MONGO
 Levels.setURL(MONGO);
@@ -21,6 +23,7 @@ const profileModel = require("./models/profileSchema");
 const memberModel = require("./models/memberSchema");
 const begModel = require("./models/begSchema");
 const vipModel = require("./models/vipSchema");
+const rpg = require("./models/rpgSchema");
 
 bot.commands = new Collection();
 bot.aliases = new Collection();
@@ -39,6 +42,7 @@ bot.on("guildCreate", async guild => {
   if(!serverData) {
     let server = await serverModel.create({
       serverID: guild.id,
+      lang: "en"
     })
   server.save()}
 
@@ -63,6 +67,13 @@ bot.on("guildMemberAdd", async member => {
     }
     }
 
+    let rp = await rpg.findOne({userID: member.id});
+    if (!rp) {const asd = await rpg.create({
+      userID: member.id
+    })
+    asd.save()
+    }
+    
     let vipData = await vipModel.findOne({ userID: member.id });
     if (!vipData) {
     let vip = await vipModel.create({
@@ -112,6 +123,7 @@ bot.on('messageCreate', async message => {
           if(!serverData) {
             let server = await serverModel.create({
               serverID: message.guild.id,
+              lang: "en"
             })
           server.save()}
 
@@ -154,8 +166,12 @@ bot.on('messageCreate', async message => {
           console.log('error')
   };
   try {
+    const getLang = require("./models/serverSchema");
+    const LANG = await getLang.findOne({serverID: message.guild.id});
+    const {help: h, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`./languages/${LANG.lang}`); 
+    
       if (message.mentions.has(bot.user) && !message.mentions.has(message.guild.id)) {
-          return message.reply(`Мой префикс для этого сервера: **\`${prefix}\`**`)
+          return message.reply(`${h.t3} \`${prefix}\``)
       }
   } catch {
       return;
