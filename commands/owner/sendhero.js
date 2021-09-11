@@ -4,7 +4,7 @@ const heroes = require('../../JSON/heroes.json');
 const {greenlight, redlight} = require('../../JSON/colours.json');
 const { COIN, AGREE } = require('../../config');
 let ownerID = '382906068319076372';
-const {error, embed, perms} = require('../../functions');
+const {error, embed, perms, firstUpperCase} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 
@@ -37,8 +37,8 @@ module.exports = {
     if(rp.heroes.length >= 2) return error(message, "Участник имеет достаточно героев.")
     if(!args[1]) return error(message, "Укажите подарок.")
     const items = ["Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-Duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
-    if (!items.includes(args[1].toLowerCase())) return error(message, "Герой не найден.")
-    let giftType = heroes[args[01].toLowerCase()]
+    if (!items.includes(firstUpperCase(args[1].toLowerCase()))) return error(message, "Герой не найден.")
+    let giftType = heroes[firstUpperCase(args[01].toLowerCase())]
 
     await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: giftType.name}})
     await rpg.findOneAndUpdate({userID: user.id}, {$set: {health: giftType.health}})
