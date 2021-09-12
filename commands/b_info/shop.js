@@ -22,9 +22,11 @@ module.exports = {
       const LANG = await getLang.findOne({serverID: message.guild.id});
       const {shop, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`); 
       
-      
+    const pack = ["pack", "packs"]
+    
+    if (args[0] && pack.includes(args[0].toLowerCase())) return message.channel.send({embeds: [shop.items()]})
 
-      return message.channel.send({embeds: [shop.shop()]})
+    return message.channel.send({embeds: [shop.shop()]})
    
 
 
