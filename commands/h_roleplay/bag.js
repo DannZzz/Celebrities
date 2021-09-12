@@ -31,6 +31,7 @@ module.exports = {
 
     const emb = new MessageEmbed()
     .setAuthor(user.tag)
+    .setColor(cyan)
     .setThumbnail(user.displayAvatarURL({dynamic: true}))
     .setDescription(`
 **#1** ${items.box.emoji} : ${rp.items[0]["box"] || 0}
