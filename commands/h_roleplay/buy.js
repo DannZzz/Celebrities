@@ -65,7 +65,17 @@ module.exports = {
       if (bag.stars < item.cost) return error(message, noStar);
 
       await bd.updateOne({userID: user.id}, {$inc: {stars: -item.cost}});
-      await rpg.updateOne({userID: user.id}, {$inc: {[`items.0.${item.name}`]: 1}});
+
+      if (it == 1) await rpg.updateOne({userID: user.id}, {$inc: {box: 1}});
+      if (it == 2) await rpg.updateOne({userID: user.id}, {$inc: {hlt: 1}});
+      if (it == 3) await rpg.updateOne({userID: user.id}, {$inc: {dmg: 1}});
+      if (it == 4) await rpg.updateOne({userID: user.id}, {$inc: {lvl: 1}});
+      if (it == 5) await rpg.updateOne({userID: user.id}, {$inc: {meat: 1}});
+      if (it == 6) await rpg.updateOne({userID: user.id}, {$inc: {pack1: 1}});
+      if (it == 7) await rpg.updateOne({userID: user.id}, {$inc: {pack2: 1}});
+      if (it == 8) await rpg.updateOne({userID: user.id}, {$inc: {pack3: 1}});
+      
+      
 
       return message.react(AGREE)
     }

@@ -42,27 +42,30 @@ module.exports = {
         if (it == 8) item = ITEMS.pack3
         
         const rp = await rpg.findOne({userID: user.id});
-        if (rp.items[0][item.name] === 0 || rp.items[0][item.name] === undefined) return error(message, u.err);
+        if (rp[item.name] === 0 || rp[item.name] === undefined) return error(message, u.err);
 
         if (it == 1) {
             const random = Math.floor(Math.random() * 40);
             let prize;
             if ( random < 5 ) {
-                prize === ITEMS.lvl
+                prize = ITEMS.lvl;
+                await rpg.updateOne({userID: user.id}, {$inc: {lvl: 1}});
             } else if ( random < 10 ) {
-                prize === ITEMS.meat
+                prize = ITEMS.meat;
+                await rpg.updateOne({userID: user.id}, {$inc: {meat: 1}});
             } else if (random <= 20) {
-                prize === ITEMS.hlt
+                prize = ITEMS.hlt;
+                await rpg.updateOne({userID: user.id}, {$inc: {hlt: 1}});
             } else if ( random <= 40) {
-                prize === ITEMS.dmg
+                prize = ITEMS.dmg;
+                await rpg.updateOne({userID: user.id}, {$inc: {dmg: 1}});
             }
 
-            await rpg.updateOne({userID: user.id}, {$inc: {[`items.0.box`]: -1}});
-            await rpg.updateOne({userID: user.id}, {$inc: {[`items.0.${prize.name}`]: 1}});
+            await rpg.updateOne({userID: user.id}, {$inc: {box: -1}});
             return embed(message, u.boxDone + ` ${prize.emoji}`, false)
         } else if (it == 2) {
             if (!rp.item) return error(message, hm.noHero)
-            await rpg.updateOne({userID: user.id}, {$inc: {[`items.0.hlt`]: -1}});
+            await rpg.updateOne({userID: user.id}, {$inc: {hlt: -1}});
 
             let getItem = rp.heroes;
             if(getItem[0]["name"] === rp.item) {
@@ -74,7 +77,7 @@ module.exports = {
             return message.react(AGREE)
         } else if (it == 3) {
             if (!rp.item) return error(message, hm.noHero)
-            await rpg.updateOne({userID: user.id}, {$inc: {[`items.0.dmg`]: -1}});
+            await rpg.updateOne({userID: user.id}, {$inc: {dmg: -1}});
 
             let getItem = rp.heroes;
             if(getItem[0]["name"] === rp.item) {
@@ -86,7 +89,7 @@ module.exports = {
             return message.react(AGREE)
         } else if (it == 4) {
             if (!rp.item) return error(message, hm.noHero)
-            await rpg.updateOne({userID: user.id}, {$inc: {[`items.0.lvl`]: -1}});
+            await rpg.updateOne({userID: user.id}, {$inc: {lvl: -1}});
 
             let addH = 250;
             let addD = 20;
@@ -110,7 +113,7 @@ module.exports = {
             return message.react(AGREE)
         } else if (it == 5) {
             if (!rp.item) return error(message, hm.noHero)
-            await rpg.updateOne({userID: user.id}, {$inc: {[`items.0.meat`]: -1}});
+            await rpg.updateOne({userID: user.id}, {$inc: {meat: -1}});
 
             let getItem = rp.heroes;
             if(getItem[0]["name"] === rp.item) {
@@ -128,7 +131,7 @@ module.exports = {
 
             if (rp.heroes.length === 1 && rp.heroes[0].name === hero.name) return error(message, b.already)
 
-            await rpg.updateOne({userID: user.id}, {$inc: {[`items.0.pack1`]: -1}});
+            await rpg.updateOne({userID: user.id}, {$inc: {pack1: -1}});
             await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: hero.name}});
             await rpg.findOneAndUpdate({userID: user.id}, {$set: {health: hero.health}});
             await rpg.findOneAndUpdate({userID: user.id}, {$set: {level: 1}});
@@ -152,7 +155,7 @@ module.exports = {
 
             if (rp.heroes.length === 1 && rp.heroes[0].name === hero.name) return error(message, b.already)
 
-            await rpg.updateOne({userID: user.id}, {$inc: {[`items.0.pack2`]: -1}});
+            await rpg.updateOne({userID: user.id}, {$inc: {pack2: -1}});
             await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: hero.name}});
             await rpg.findOneAndUpdate({userID: user.id}, {$set: {health: hero.health}});
             await rpg.findOneAndUpdate({userID: user.id}, {$set: {level: 1}});
@@ -176,7 +179,7 @@ module.exports = {
 
             if (rp.heroes.length === 1 && rp.heroes[0].name === hero.name) return error(message, b.already)
 
-            await rpg.updateOne({userID: user.id}, {$inc: {[`items.0.pack3`]: -1}});
+            await rpg.updateOne({userID: user.id}, {$inc: {pack3: -1}});
             await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: hero.name}});
             await rpg.findOneAndUpdate({userID: user.id}, {$set: {health: hero.health}});
             await rpg.findOneAndUpdate({userID: user.id}, {$set: {level: 1}});

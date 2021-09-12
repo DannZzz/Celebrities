@@ -34,21 +34,21 @@ module.exports = {
     .setColor(cyan)
     .setThumbnail(user.displayAvatarURL({dynamic: true}))
     .setDescription(`
-**#1** ${items.box.emoji} : ${rp.items[0]["box"] || 0}
+**#1** ${items.box.emoji} : ${rp["box"] || 0}
 
-**#2** ${items.hlt.emoji} : ${rp.items[0]["hlt"] || 0}
+**#2** ${items.hlt.emoji} : ${rp["hlt"] || 0}
 
-**#3** ${items.dmg.emoji} : ${rp.items[0]["dmg"] || 0}
+**#3** ${items.dmg.emoji} : ${rp["dmg"] || 0}
 
-**#4** ${items.lvl.emoji} : ${rp.items[0]["lvl"] || 0}
+**#4** ${items.lvl.emoji} : ${rp["lvl"] || 0}
 
-**#5** ${items.meat.emoji} : ${rp.items[0]["meat"] || 0}
+**#5** ${items.meat.emoji} : ${rp["meat"] || 0}
 
-**#6** ${items.pack1.emoji} : ${rp.items[0]["pack1"] || 0}
+**#6** ${items.pack1.emoji} : ${rp["pack1"] || 0}
 
-**#7** ${items.pack2.emoji} : ${rp.items[0]["pack2"] || 0}
+**#7** ${items.pack2.emoji} : ${rp["pack2"] || 0}
 
-**#8** ${items.pack3.emoji} : ${rp.items[0]["pack3"] || 0}
+**#8** ${items.pack3.emoji} : ${rp["pack3"] || 0}
     `)
 
     return message.channel.send({embeds: [emb]})
