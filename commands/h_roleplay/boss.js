@@ -12,6 +12,7 @@ const {error, embed, perms} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 const Canvas = require("canvas")
+const items = require('../../JSON/items');
 
 module.exports = {
   config: {
@@ -205,7 +206,7 @@ module.exports = {
           .setTimestamp()
           .setAuthor(`${boss.name} ${b.gaveUp}`)
           .setTitle(`${message.author.username}, ${user1.user.username} ${and} ${user2.user.username} ${b.won}.`)
-          .setDescription(`${b.gets} ${boss.reward} ${STAR}`)
+          .setDescription(`${b.gets} ${boss.reward} ${STAR}, 1 ${items.meat.emoji}`)
           .setThumbnail(boss.url)
 
           if (winner){
@@ -213,6 +214,10 @@ module.exports = {
             await bd.findOneAndUpdate({userID: user1.id}, {$inc: {stars: boss.reward}})
             await bd.findOneAndUpdate({userID: user2.id}, {$inc: {stars: boss.reward}})
 
+            await rpg.findOneAndUpdate({userID: mUser.id}, {$inc: {meat: 1}})
+            await rpg.findOneAndUpdate({userID: user1.id}, {$inc: {meat: 1}})
+            await rpg.findOneAndUpdate({userID: user2.id}, {$inc: {meat: 1}})
+            
             await pd.findOneAndUpdate({userID: mUser.id}, {$set: {boss: Date.now()}})
             await pd.findOneAndUpdate({userID: user1.id}, {$set: {boss: Date.now()}})
             await pd.findOneAndUpdate({userID: user2.id}, {$set: {boss: Date.now()}})
