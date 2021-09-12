@@ -14,16 +14,15 @@ const rpgSchema = new mongoose.Schema({
   totalGames: { type: Number, default: 0 },
   surviveLevel: { type: Number, default: 0},
   quizCount: { type: Number, default: 1},
-  items: { type: Array, default: [{
-    hlt: 0,
-    dmg: 0,
-    box: 0,
-    lvl: 0,
-    meat: 0,
-    pack1: 0,
-    pack2: 0,
-    pack3: 0
-  }]}
+  hlt: {type: Number, default: 0},
+  dmg: {type: Number, default: 0},
+  box: {type: Number, default: 0},
+  lvl: {type: Number, default: 0},
+  meat: {type: Number, default: 0},
+  pack1: {type: Number, default: 0},
+  pack2: {type: Number, default: 0},
+  pack3: {type: Number, default: 0}
+
 });
 
 const model = mongoose.model("RpgModels", rpgSchema);
