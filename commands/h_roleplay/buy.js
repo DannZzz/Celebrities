@@ -4,11 +4,12 @@ const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed } = require("discord.js");
-const { COIN } = require("../../config");
+const { COIN, AGREE } = require("../../config");
 const { checkValue } = require("../../functions");
 const {error, embed, perms, firstUpperCase} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
+const ITEMS = require('../../JSON/items');
 
 module.exports = {
   config: {
@@ -24,7 +25,7 @@ module.exports = {
     const LANG = await getLang.findOne({serverID: message.guild.id});
     const {buy: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
    
-    const items = ["Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-Duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
+    const items = ["Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-Duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
     const user = message.author;
     const coinData = await pd.findOne({userID: user.id});
     let rp = await rpg.findOne({userID: user.id});
@@ -43,12 +44,32 @@ module.exports = {
     if (bag["vip2"] === true) { timeout = 86400000 * 4 / 2 } else {
       timeout = 86400000 * 4;
     }
-    if (author !== null && timeout - (Date.now() - author) > 0) {
-        let time = new Date(timeout - (Date.now() - author));
-
-        return error(message, b.time(time));
-    }
+    
     if (!args[0]) return error(message, b.specHero)
+
+    if (!isNaN(args[0])) {
+      const numbs = ["1", "2", "3", "4", "5", "6", "7", "8"];
+      if (!numbs.includes(args[0])) return error(message, b.itemErr);
+      let item;
+      const it = args[0]
+      if (it == 1) item = ITEMS.box
+      if (it == 2) item = ITEMS.hlt
+      if (it == 3) item = ITEMS.dmg
+      if (it == 4) item = ITEMS.lvl
+      if (it == 5) item = ITEMS.meat
+      if (it == 6) item = ITEMS.pack1
+      if (it == 7) item = ITEMS.pack2
+      if (it == 8) item = ITEMS.pack3
+      if (!item.cost) return error(message, b.noItem);
+
+      if (bag.stars < item.cost) return error(message, noStar);
+
+      await bd.updateOne({userID: user.id}, {$inc: {stars: -item.cost}});
+      await rpg.updateOne({userID: user.id}, {$inc: {[`items.0.${item.name}`]: 1}});
+
+      return message.react(AGREE)
+    }
+    
     if(args[0].toLowerCase() === "slot" || args[0].toLowerCase() === "place") {
       if(!profile.allowMultiHeroes) {
         if(bag.stars >= 2000) {
@@ -62,6 +83,13 @@ module.exports = {
         return error(message, b.errPlace)
       }
     }
+
+    if (author !== null && timeout - (Date.now() - author) > 0) {
+      let time = new Date(timeout - (Date.now() - author));
+
+      return error(message, b.time(time));
+    }
+    
     const type = firstUpperCase(args[0]);
     if (!items.includes(type)) return error(message, b.nh)
     if (rp.heroes.length !== 2 && rp.heroes.length < 2) {

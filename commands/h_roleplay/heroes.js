@@ -162,6 +162,16 @@ module.exports = {
     .addField(`${hh.cost} ${Countess.cost} ${cType(Countess.costType)}`, `**${hh.avail} ${Countess.available === "Да" ? hh.yes : hh.noavail}**`, true)
     .addField(`${hm.health} ${Countess.health} ❤`, `**${hm.damage} ${Countess.damage}** ⚔`, true)
     allDrags.push(ct)
+
+    const bl = heroes["Blazer"]
+    const ctt = new MessageEmbed()
+    .setColor(cyan)
+    .setTitle(`${bl.name} (${bl.nameRus}) ${cVip(bl.vip)}`)
+    .setThumbnail(bl.url)
+    .setDescription(LANG.lang === "en" ? bl.descriptionEN : bl.description)
+    .addField(`${hh.cost} ${bl.cost} ${cType(bl.costType)}`, `**${hh.avail} ${bl.available === "Да" ? hh.yes : hh.noavail}**`, true)
+    .addField(`${hm.health} ${bl.health} ❤`, `**${hm.damage} ${bl.damage}** ⚔`, true)
+    allDrags.push(ctt)
     
     const timeout = '100000'
     const userids = [message.author.id]
