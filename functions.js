@@ -2,6 +2,7 @@ const yes = ['yes', 'y', 'ye', 'yea', 'correct', 'да', 'Да'];
 const no = ['no', 'n', 'nah', 'nope', 'fuck off', 'нет', 'Нет', 'не'];
 const MONEY = ['', 'k', 'M', 'G', 'T', 'P', 'E'];
 const pd = require("./models/profileSchema");
+const bd = require("./models/begSchema");
 const inviteRegex = /(https?:\/\/)?(www\.|canary\.|ptb\.)?discord(\.gg|(app)?\.com\/invite|\.me)\/([^ ]+)\/?/gi;
 const botInvRegex = /(https?:\/\/)?(www\.|canary\.|ptb\.)?discord(app)\.com\/(api\/)?oauth2\/authorize\?([^ ]+)\/?/gi;
 const { DISAGREE, AGREE } = require('./config')
@@ -80,7 +81,6 @@ module.exports = {
   embed: function (msg, text= '', isEm = true) {
     const Emb = new MessageEmbed()
     .setColor(cyan)
-    .setTimestamp()
     .setAuthor(msg.author.username, msg.author.displayAvatarURL({dynamic: true}))
     if(isEm === true) {Emb.setDescription(`${AGREE} ${text}`)}
     else if (isEm === false) {
@@ -111,8 +111,9 @@ module.exports = {
   return bar;
   },
   checkValue: async function (user, val) {
-    let pr = await pd.findOne({userID: user.id});
-    if (pr.coins < val || isNaN(val)) return true;
+    const pr = await bd.findOne({userID: user.id});
+    if (pr.stars < val){ return true}
+    else {return false};
   },
 
   getMember(message, toFind = '') {
