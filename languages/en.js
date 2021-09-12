@@ -814,7 +814,7 @@ The more fish, the higher the price!
         "access": "For everyone",
         "error": "You can't kiss yorself.",
         "done": "kissed",
-        "allready": "This member already has someone.",
+        "already": "This member already has someone.",
         "fidelity": "Where is your fidelity?",
         "button1": "Refuse",
         "button2": "Agree",
