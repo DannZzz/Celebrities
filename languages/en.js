@@ -1,6 +1,7 @@
 const {MessageEmbed} = require("discord.js");
 const { COIN, BANK, STAR } = require('../config');
 const {greenlight, redlight, cyan} = require('../JSON/colours.json');
+const item = require('../JSON/items');
 
 module.exports = {   
     "previous": "Previous",
@@ -50,6 +51,25 @@ module.exports = {
         "notLeader": "You are not a clan leader.",
         "noApps": "There are no applications.",
         "noHero": "No hero"
+    },
+
+
+
+    "bag": {
+        "desc": "View your items.",
+        "usage": "",
+        "access": "For everyone",
+    },
+
+
+
+    "use": {
+        "desc": "Use an item.",
+        "usage": "[item number]",
+        "access": "For everyone",
+        "err": "You do not have this item.",
+        "boxDone": "You got:",
+        "hero": name => `You got hero - __${name}__`
     },
 
 
@@ -132,7 +152,7 @@ module.exports = {
 
     "shop": {
         "desc": "Bun Shop.",
-        "usage": "",
+        "usage": "[pack | packs]",
         "access": "For everyone",
         "shop": () => {
             return new MessageEmbed ()
@@ -143,7 +163,7 @@ module.exports = {
                 value: `Access to commands - AFK, embed, channel, levels (enabling the level system) and bio profile, and also increases the cost of fish (by 33%).`,
                 inline: false},
                 {name: `<a:vip2:867868958459166751> VIP 2`,
-                value: `Gives access to unique heroes, reduces **cooldow** for all commands **two** times, makes it possible to issue a rank card, profile picture, and also gives more bet limit for all games.`,
+                value: `Gives access to unique heroes, reduces **cooldown** for all commands **two** times, makes it possible to issue a rank card, profile picture, and also gives more bet limit for all games.`,
                 inline: false},{name: `Prices in dollars.`,
                     value: `• Vip 1 + 100 ${STAR} - 0,4$\n • Vip 2 + 200 ${STAR} - 1,37$\n • Hero **Zeus** - 2,73$\n • 10000 ${STAR } - 1,37$ (33% discount)\n • 3000 ${STAR} - 0,55$ (12% discount)\n • 1000 ${STAR} - 0,2$`,
                     inline: false},
@@ -153,6 +173,21 @@ module.exports = {
                 )
                 .setTimestamp ()
                 .setFooter ("Send your questions by command ?message")
+            },
+            "items": () => {
+                return new MessageEmbed ()
+                .setColor (cyan)
+                .setAuthor ("Buff Shop")
+                .addField(`**#1** ${item.box.emoji} Item Box: ${item.box.cost} ${STAR}`, `Gives a random item`)
+                .addField(`**#2** ${item.hlt.emoji} Potion of Health: ${item.hlt.cost} ${STAR}`, `Adds ${item.hlt.effect} health to the hero`)
+                .addField(`**#3** ${item.dmg.emoji} Potion of Attack: ${item.dmg.cost} ${STAR}`, `Adds ${item.dmg.effect} damage to the hero`)
+                .addField(`**#4** ${item.lvl.emoji} Potion of Level: Can be obtained by opening boxes.`, `Increases the level of the hero ${item.lvl.effect} times`)
+                .addField(`**#5** ${item.meat.emoji} Meat of Health: Obtainable by defeating bosses or opening boxes.`, `Adds ${item.dmg.effect} health to the hero`)
+                .addField(`Packs`, "** **")
+                .addField(`**#6** ${item.pack1.emoji} Common Pack: ${item.pack1.cost} ${STAR}`, `Open and get one of these common heroes: \`Dilan, Archangel, Selena, Kumbhakarna\``)
+                .addField(`**#7** ${item.pack2.emoji} Elite Pack: ${item.pack2.cost} ${STAR}`, `Unlock and get one of these elite heroes: \`Cthulhu, Perfect-Duo, Darkangel, Atalanta\``)
+                .addField(`**#8** ${item.pack3.emoji} VIP pack: ${item.pack3.cost} ${STAR}`, `Open and get one of these VIP heroes: \`Ariel, Athena, Blazer\``)
+                
             }
         },
 
@@ -395,10 +430,12 @@ module.exports = {
 
     "buy": {
         "desc": "Buy a hero.",
-        "usage": "[hero name]",
+        "usage": "[item number or hero name]",
         "access": "For everyone",
         "time": time => `You recently bought a hero.\nTry again in **${Math.round(Math.abs(time) / 86400000)} days ${time.getUTCHours()} hours.**.`,
-        "specHero": "Specify a hero name.",
+        "specHero": "Specify an item.",
+        "itemErr": "Item not found.",
+        "noItem": "This item is not available.",
         "nh": "Hero not found.",
         "vip": "This hero is available only for __VIP 2__ users.",
         "love": "You must be in love to buy this hero.",

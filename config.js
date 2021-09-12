@@ -1,6 +1,23 @@
-exports.PREFIX = '?';
+exports.PREFIX = '!!';
 
-exports.DEV = "Dann#0006"
+exports.DEV = "Dann#0006";
+
+exports.potDMG = "<:potionDamage:886478199645679686>";
+
+exports.potLVL = "<:potionLevel:886478200157401089>";
+
+exports.potHLT = "<:potionHealth:886478200413245460>";
+
+exports.meat = "<:meat:886478199494701077>";
+
+exports.box = "<:potionBox:886484959727091723>",
+
+exports.pack1 = "<:packCommon:886487932108701727>",
+
+exports.pack2 = "<:packElite:886488651549249556>",
+
+exports.pack3 = "<:packVip:886487931974467614>",
+
 
 exports.botINVITE = "https://discord.com/api/oauth2/authorize?client_id=726784476377514045&permissions=244210068727&scope=bot"
 

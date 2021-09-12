@@ -13,7 +13,17 @@ const rpgSchema = new mongoose.Schema({
   loses: { type: Number, default: 0 },
   totalGames: { type: Number, default: 0 },
   surviveLevel: { type: Number, default: 0},
-  quizCount: { type: Number, default: 1}
+  quizCount: { type: Number, default: 1},
+  items: { type: Array, default: [{
+    hlt: 0,
+    dmg: 0,
+    box: 0,
+    lvl: 0,
+    meat: 0,
+    pack1: 0,
+    pack2: 0,
+    pack3: 0
+  }]}
 });
 
 const model = mongoose.model("RpgModels", rpgSchema);

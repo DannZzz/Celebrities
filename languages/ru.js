@@ -1,6 +1,7 @@
 const {MessageEmbed} = require("discord.js");
 const { COIN, BANK, STAR } = require('../config');
 const {greenlight, redlight, cyan} = require('../JSON/colours.json');
+const item = require('../JSON/items');
 
 module.exports = {   
     "previous": "Предыдущая",
@@ -49,6 +50,25 @@ module.exports = {
         "notLeader": "Вы не лидер клана.",
         "noApps": "Нет заявок.",
         "noHero": "Нет героя"
+    },
+
+
+
+    "bag": {
+        "desc": "Посмотреть свои предметы.",
+        "usage": "",
+        "access": "Для всех",
+    },
+
+
+
+    "use": {
+        "desc": "Использовать предмет.",
+        "usage": "[номер предмета]",
+        "access": "Для всех",
+        "err": "Вы не имеете этот предмет.",
+        "boxDone": "Вам выпало:",
+        "hero": name => `Вы получили героя — __${name}__`,
     },
 
 
@@ -131,7 +151,7 @@ module.exports = {
 
     "shop": {
         "desc": "Магазин плюшек.",
-        "usage": "",
+        "usage": "[pack | packs]",
         "access": "Для всех",
         "shop": () => {
             return new MessageEmbed()
@@ -153,6 +173,21 @@ module.exports = {
             )
             .setTimestamp()
             .setFooter("Отправьте ваши вопросы командой ?сообщение")
+        },
+        "items": () => {
+            return new MessageEmbed()
+            .setColor(cyan)
+            .setAuthor("Магазин баффов")
+            .addField(`**#1** ${item.box.emoji} Ящик предметов: ${item.box.cost} ${STAR}`, `Даёт рандомный предмет`)
+            .addField(`**#2** ${item.hlt.emoji} Зелье жизни: ${item.hlt.cost} ${STAR}`, `Добавляет герою ${item.hlt.effect} единиц жизни`)
+            .addField(`**#3** ${item.dmg.emoji} Зелье атаки: ${item.dmg.cost} ${STAR}`, `Добавляет герою ${item.dmg.effect} единиц атаку`)
+            .addField(`**#4** ${item.lvl.emoji} Зелье уровня: Можно получить открывая ящики.`, `Увеличивает уровень героя ${item.lvl.effect} раз`)
+            .addField(`**#5** ${item.meat.emoji} Мясо жизни: Можно получить побеждая боссов или открывая ящики.`, `Добавляет герою ${item.dmg.effect} единиц атаку`)
+            .addField(`Паки`, "** **")
+            .addField(`**#6** ${item.pack1.emoji} Обычный пак: ${item.pack1.cost} ${STAR}`, `Откройте и получите одного из этих обычных героев: \`Дилан, Архангел, Селена, Кумбхакарна\``) 
+            .addField(`**#7** ${item.pack2.emoji} Элитный пак: ${item.pack2.cost} ${STAR}`, `Откройте и получите одного из этих элитных героев: \`Ктулху, Идеальный Дует, Даркангел, Аталанта\``)
+            .addField(`**#8** ${item.pack3.emoji} VIP пак: ${item.pack3.cost} ${STAR}`, `Откройте и получите одного из этих VIP героев: \`Ариэль, Афина, Эраг\``)
+            
         }
     },
 
@@ -395,10 +430,12 @@ module.exports = {
 
     "buy": {
         "desc": "Купить героя.",
-        "usage": "[название героя на английском]",
+        "usage": "[номер предмета или название героя на английском]",
         "access": "Для всех",
         "time": time => `Вы недавно купили новый герой.\nПопробуй еще раз через **${Math.round(Math.abs(time) / 86400000)} дней ${time.getUTCHours()} часа(-ов)**.`,
-        "specHero": "Укажите название героя.",
+        "specHero": "Укажите предмет.",
+        "itemErr": "Предмет не найден.",
+        "noItem": "Этот предмет не доступен.",
         "nh": "Герой не найден.",
         "vip": "Этот герой доступен только для __VIP 2__ пользователей.",
         "love": "Вы должны быть в любви, чтобы купить этого героя.",

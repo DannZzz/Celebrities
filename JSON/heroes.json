@@ -178,7 +178,7 @@
     "costType": "star",
     "url": "https://i.ibb.co/XFCSCQm/Atalanta.png",
     "descriptionEN": "Atalanta - In ancient Roman mythology, Atalanta was the strongest in the Middle Ages. She had two swords as attributes, which frightened the enemies of that time. Since the first victories, Atalanta began to be invented with a hood on her head and, sometimes, with a bare breast.",
-    "description": "Аталанта - в древнеримской мифологии Аталанта была самой сильной в средневековье. В качестве атрибутов имела два меча,что пугало врагов того времени. Начиная с первых побед Аталанта стала изобраться с капюшоном на голове и ,иногда, с обнаженной грудью.",
+    "description": "Аталанта - в древнеримской мифологии Аталанта была самой сильной в средневековье. В качестве атрибутов имела два меча,что пугало врагов того времени. Начиная с первых побед Аталанта стала изобраться с капюшоном на голове и, иногда, с обнаженной грудью.",
     "available": "Да",
     "vip": false,
     "upgradeCost": 60
@@ -192,9 +192,23 @@
     "costType": "star",
     "url": "https://i.ibb.co/LvKLWT1/Countess.png",
     "descriptionEN": "Countess of Death - One of the greatest countesses of the 17th century. Initially, she was good and kind, but the envious cursed her. The Countess became a vicious killer witch and wanted revenge. Her gaze is so cold and ferocious that only looking at her eyes can die. And no one can resist its power.",
-    "description": "Графиня смерти - Одна из самых величайших графинь 17 века. Изначально она была хорошой и доброй , но завистники прокляли ее. Графиня стала злостной ведьмой-убийцей и хотела  отомстить. Ее взгляд настолько холодный и свирепый ,что лишь посмотрев ей глаза можно умереть. А ее силе не может противостоять никто.",
+    "description": "Графиня смерти - Одна из самых величайших графинь 17 века. Изначально она была хорошой и доброй, но завистники прокляли ее. Графиня стала злостной ведьмой-убийцей и хотела  отомстить. Ее взгляд настолько холодный и свирепый, что лишь посмотрев ей глаза можно умереть. А ее силе не может противостоять никто.",
     "available": "Да",
     "vip": true,
     "upgradeCost": 60
+  },
+  "Blazer": {
+    "name": "Blazer",
+    "nameRus": "Блейзер",
+    "health": 4000,
+    "damage": 400,
+    "cost": 2000,
+    "costType": "star",
+    "url": "https://i.ibb.co/QJ6BvD3/Blazer.png",
+    "descriptionEN": "Blazer - A lava dragon that was caught by scientists when he was still young. A variety of experiments began to be put on him. The dragon accumulated anger in himself, when he was old enough he had the strength to break free. After breaking free, he began to take revenge. The impatient dragon killed everyone he saw, destroyed most of the villages. The more the dragon is angry, the more its power is manifested. After that, the dragon hid far in the mountains of Rome so that the inhabitants would not attack him.",
+    "description": "Блейзер - Лавовый дракон, который был пойман учёными когда был еще маленьким. Над ним начали ставить самые разные эксперименты. Дракон накапливал в себе злость, когда он достаточно вырос ему хватило сил что бы вырваться. После того как вырвался, он начал мстить. Нетерпевшийся дракон убивал всех кого видел, разрушал большинство деревень. Чем больше злить дракона тем больше проявляется его сила. После этого дракон затаился далеко в горах Рима, чтобы жители не нападали на него.",
+    "available": "Да",
+    "vip": true,
+    "upgradeCost": 70
   }
 }
