@@ -35,7 +35,7 @@ module.exports = async (bot, messageCreate) => {
     })
   }
     
-
+  
     try {
       let memberData;
       let profileData;
@@ -44,11 +44,14 @@ module.exports = async (bot, messageCreate) => {
       let vipData;
   try {
     let rp = await rpg.findOne({userID: message.author.id});
+    
     if (!rp) {const asd = await rpg.create({
       userID: message.author.id
     })
     asd.save()
     }
+    
+    if (rp && !rp.itemCount) await rpg.updateOne({userID: message.author.id}, {$set: {itemCount: 1}})
 
     vipData = await vipModel.findOne({ userID: message.author.id });
     if (!vipData) {
