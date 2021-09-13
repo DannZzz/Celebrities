@@ -168,7 +168,7 @@ module.exports = {
                     value: `• Vip 1 + 100 ${STAR} - 0,4$\n • Vip 2 + 200 ${STAR} - 1,37$\n • Hero **Zeus** - 2,73$\n • 10000 ${STAR } - 1,37$ (33% discount)\n • 3000 ${STAR} - 0,55$ (12% discount)\n • 1000 ${STAR} - 0,2$`,
                     inline: false},
                     {name: `Extra place for heroes.`,
-                    value: `• Cost: 2000 ${STAR}\n \`?buy place\``,
+                    value: `• Cost: Your place count * 2000 ${STAR}\n \`?buy place\``,
                     inline: false}
                 )
                 .setTimestamp ()
@@ -182,7 +182,7 @@ module.exports = {
                 .addField(`**#2** ${item.hlt.emoji} Potion of Health: ${item.hlt.cost} ${STAR}`, `Adds ${item.hlt.effect} health to the hero`)
                 .addField(`**#3** ${item.dmg.emoji} Potion of Attack: ${item.dmg.cost} ${STAR}`, `Adds ${item.dmg.effect} damage to the hero`)
                 .addField(`**#4** ${item.lvl.emoji} Potion of Level: Can be obtained by opening boxes.`, `Increases the level of the hero ${item.lvl.effect} times`)
-                .addField(`**#5** ${item.meat.emoji} Meat of Health: Obtainable by defeating bosses or opening boxes.`, `Adds ${item.dmg.effect} health to the hero`)
+                .addField(`**#5** ${item.meat.emoji} Meat of Health: Obtainable by defeating bosses or opening boxes.`, `Adds ${item.meat.effect} health to the hero`)
                 .addField(`Packs`, "** **")
                 .addField(`**#6** ${item.pack1.emoji} Common Pack: ${item.pack1.cost} ${STAR}`, `Open and get one of these common heroes: \`Dilan, Archangel, Selena, Kumbhakarna\``)
                 .addField(`**#7** ${item.pack2.emoji} Elite Pack: ${item.pack2.cost} ${STAR}`, `Unlock and get one of these elite heroes: \`Cthulhu, Perfect-Duo, Darkangel, Atalanta\``)
@@ -278,7 +278,7 @@ module.exports = {
 
     "replace": {
         "desc": "Replace your main character.",
-        "usage": "",
+        "usage": "[hero number]",
         "access": "For everyone",
         "done": "Your main hero is now",
         "err": "You have one hero."
