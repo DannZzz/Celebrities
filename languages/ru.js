@@ -54,6 +54,16 @@ module.exports = {
 
 
 
+    "reputation": {
+        "desc": "Поднять репутацию сервера.",
+        "usage": "",
+        "access": "Для всех",
+        "done": "Вы успешно подняли репутацию сервера.",
+        "time": time => `Попробуйте снова через **${time.getUTCHours()} часа(-ов) ${time.getMinutes()} минут.**`
+    },
+
+
+
     "bag": {
         "desc": "Посмотреть свои предметы.",
         "usage": "",
@@ -70,24 +80,6 @@ module.exports = {
         "boxDone": "Вам выпало:",
         "hero": name => `Вы получили героя — __${name}__`,
     },
-
-
-
-    "changelog": {
-        "desc": "Журнал изменений бота.",
-        "usage": "",
-        "access": "Для всех",
-        "get": version => {
-            return new MessageEmbed()
-            .setAuthor('Последние изменения бота.')
-            .setTitle(`Изменения команд.\nВерсия: ${version}`)
-            .setColor(cyan)
-            .setDescription(`Новые герои.\nТеперь бот доступен на двух языках.`)
-        },
-        "t1": "Предыдущая",
-        "t2": "Следующая"
-    },
-
 
 
     "language": {
@@ -184,9 +176,9 @@ module.exports = {
             .addField(`**#4** ${item.lvl.emoji} Зелье уровня: Можно получить открывая ящики.`, `Увеличивает уровень героя ${item.lvl.effect} раз`)
             .addField(`**#5** ${item.meat.emoji} Мясо жизни: Можно получить побеждая боссов или открывая ящики.`, `Добавляет герою ${item.meat.effect} единиц жизни`)
             .addField(`Паки`, "** **")
-            .addField(`**#6** ${item.pack1.emoji} Обычный пак: ${item.pack1.cost} ${STAR}`, `Откройте и получите одного из этих обычных героев: \`Дилан, Архангел, Селена, Кумбхакарна\``) 
-            .addField(`**#7** ${item.pack2.emoji} Элитный пак: ${item.pack2.cost} ${STAR}`, `Откройте и получите одного из этих элитных героев: \`Ктулху, Идеальный Дуэт, Даркангел, Аталанта\``)
-            .addField(`**#8** ${item.pack3.emoji} VIP пак: ${item.pack3.cost} ${STAR}`, `Откройте и получите одного из этих VIP героев: \`Ариэль, Афина, Блейзер\``)
+            .addField(`**#6** ${item.pack1.emoji} Обычный пак: ${item.pack1.cost} ${STAR}`, `Откройте и получите одного из этих обычных героев: \`${item.pack1.list.join(", ")}\``) 
+            .addField(`**#7** ${item.pack2.emoji} Элитный пак: ${item.pack2.cost} ${STAR}`, `Откройте и получите одного из этих элитных героев: \`${item.pack2.list.join(", ")}\``)
+            .addField(`**#8** ${item.pack3.emoji} VIP пак: ${item.pack3.cost} ${STAR}`, `Откройте и получите одного из этих VIP героев: \`${item.pack3.list.join(", ")}\``)
             
         }
     },

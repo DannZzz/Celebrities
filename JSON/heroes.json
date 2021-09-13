@@ -37,7 +37,7 @@
     "url": "https://i.ibb.co/YZVWh6f/Darius.jpg",
     "descriptionEN": "The golden Persian dragon, a great and witty warrior, is very clever in battles. He lives in caves in the distant mountains of the region of monsters, he loved gold so much that it became part of it, his scales, covered with gold, became impenetrable for ordinary weapons and weak magical influence, his flame can melt anything in a couple of moments. The common people called him: \"Darius\", from the Persian name Darayavush. Which meant: \"to hold, to have.\"",
     "description": "Золотой, персидский дракон, великий и остроумный воин, очень умён в боях. Обитает в пещерах в далёких горах региона монстров, настолько любил золото, что оно стало его частью, его чешуя, покрытая золотом, стала непробиваемой для обычного оружия и слабого магического влияния, его пламя может расплавить что угодно все за пару мгновений. В простонароде его назвали: «Дариус», от персидского имени Дараявуш. Которое обозначало: «держать, обладать».",
-    "available": "Подарок от разработчика",
+    "available": "Под",
     "vip": false,
     "upgradeCost": 30
   },
@@ -80,11 +80,11 @@
     "url": "https://i.ibb.co/RQLbCGr/Zeus.jpg",
     "descriptionEN": "Zeus is the god of lightning, his every movement creates a deadly lightning, buying this hero is the best way to separate.",
     "description": "Зевс — бог молнии, его каждое движение создаёт смертельную молнию, покупка этого героя лучший способ отделяться.",
-    "available": "При донате",
+    "available": "Донат",
     "vip": false,
     "upgradeCost": 70
   },
-  "Perfect-Duo": {
+  "Perfect-duo": {
     "name": "Perfect-Duo",
     "nameRus": "Идеальный Дуэт",
     "health": 3000,
@@ -210,5 +210,33 @@
     "available": "Да",
     "vip": true,
     "upgradeCost": 70
+  },
+  "Snake-woman": {
+    "name": "Snake-woman",
+    "nameRus": "Женщина-змея",
+    "health": 2000,
+    "damage": 70,
+    "cost": 400,
+    "costType": "star",
+    "url": "https://i.ibb.co/7RfSRjM/Snakewoman.jpg",
+    "descriptionEN": "Snake-woman — When she was still very young she was left in the forest. Then she was sheltered by a snake, she grew her until the girl grew up. When the girl grew up, she realized how grateful she was to the snake. And I decided to carry out a routine and become one with the snake. The ritual was successful and the serpent woman became one of the most powerful in the forest.",
+    "description": "Женщина-змея — Когда она была ещё очень мала её оставили в лесу. Тогда ее приютила змея , она ее ростила до тех пор пока девочка не выросла. Когда девушка выросла поняла как сильно благодарна змее. И решила провести рутиал и стать одним единым со змеей. Ритуал был успешен и женщина змея стала одной из самых сильных в лесу.",
+    "available": "Да",
+    "vip": false,
+    "upgradeCost": 30
+  },
+  "Mistress-forest": {
+    "name": "Mistress-forest",
+    "nameRus": "Повелительница леса",
+    "health": 1500,
+    "damage": 50,
+    "cost": 350,
+    "costType": "star",
+    "url": "https://i.ibb.co/8Njqg9z/Mistress-Forest.jpg",
+    "descriptionEN": "Mistress-Forest - Since childhood, she was the most common for everyone, but the girl literally could not live without a forest. The forest gave her great strength. The girl often ran into the forest and was scolded for this. Having made up her mind, she fled into the forest and stayed to live there. She grew up in the forest. All animals of the forest obey her. She is very strong due to the forest and her superpower is to send animals to the enemy.",
+    "description": "Повелительница леса — С самого детства была для всех самой обычной, но девочка в прямом смысле не могла жить без леса. Лес давал ей очень большую силу. Девочка часто сбегала в лес и ее за это ругали. Решившись она сбежала в лес и осталась там жить. Она выросла в лесу. Ей подчиняются все животные леса. Она очень сильна засчет леса а ее суперсила насылать на противника зверей.",
+    "available": "Да",
+    "vip": false,
+    "upgradeCost": 20
   }
 }

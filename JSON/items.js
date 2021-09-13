@@ -32,13 +32,13 @@ module.exports = {
         name: "pack1",
         emoji: pack1,
         cost: 350,
-        list: ["Dilan", "Archangel", "Selena", "Kumbhakarna"]
+        list: ["Mistress-forest", "Snake-woman", "Dilan", "Archangel", "Selena", "Kumbhakarna"]
     },
     pack2: {
         name: "pack2",
         emoji: pack2,
         cost: 1000,
-        list: ["Cthulhu", "Perfect-Duo", "Darkangel", "Atalanta"]
+        list: ["Cthulhu", "Perfect-duo", "Darkangel", "Atalanta"]
     },
     pack3: {
         name: "pack3",

@@ -8,6 +8,7 @@ const serverSchema = new mongoose.Schema({
   welcomeText: { type: String},
   welcomeChannel: { type: String},
   welcomeColor: { type: String},
+  rep: { type: Number, default: 0},
   welcomeImage: { type: String},
   shop: { type: Array, default: [] },
   rank: { type: Boolean, default: false},

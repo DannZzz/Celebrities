@@ -55,6 +55,16 @@ module.exports = {
 
 
 
+    "reputation": {
+        "desc": "Raise the reputation of the server.",
+        "usage": "",
+        "access": "For everyone",
+        "done": "You have successfully raised the server reputation.",
+        "time": time => `Try again in **${time.getUTCHours()} hours ${time.getMinutes()} minutes.**`
+    },
+
+
+
     "bag": {
         "desc": "View your items.",
         "usage": "",
@@ -72,24 +82,7 @@ module.exports = {
         "hero": name => `You got hero - __${name}__`
     },
 
-
-
-    "changelog": {
-        "desc": "Bot changelog.",
-        "usage": "",
-        "access": "For everyone",
-        "get": version => {
-            return new MessageEmbed ()
-            .setAuthor ('Bot last changes.')
-            .setTitle (`Command changes.\nVersion: ${version}`)
-            .setColor (cyan)
-            .setDescription (`New Heroes.\nBot is now available in two languages.`)
-        },
-        "t1": "Previous",
-        "t2": "Next"
-    },
-
-
+    
 
     "language": {
         "desc": "Change the bot language on the server.",
@@ -184,9 +177,9 @@ module.exports = {
                 .addField(`**#4** ${item.lvl.emoji} Potion of Level: Can be obtained by opening boxes.`, `Increases the level of the hero ${item.lvl.effect} times`)
                 .addField(`**#5** ${item.meat.emoji} Meat of Health: Obtainable by defeating bosses or opening boxes.`, `Adds ${item.meat.effect} health to the hero`)
                 .addField(`Packs`, "** **")
-                .addField(`**#6** ${item.pack1.emoji} Common Pack: ${item.pack1.cost} ${STAR}`, `Open and get one of these common heroes: \`Dilan, Archangel, Selena, Kumbhakarna\``)
-                .addField(`**#7** ${item.pack2.emoji} Elite Pack: ${item.pack2.cost} ${STAR}`, `Unlock and get one of these elite heroes: \`Cthulhu, Perfect-Duo, Darkangel, Atalanta\``)
-                .addField(`**#8** ${item.pack3.emoji} VIP pack: ${item.pack3.cost} ${STAR}`, `Open and get one of these VIP heroes: \`Ariel, Athena, Blazer\``)
+                .addField(`**#6** ${item.pack1.emoji} Common Pack: ${item.pack1.cost} ${STAR}`, `Open and get one of these common heroes: \`${item.pack1.list.join(", ")}\``)
+                .addField(`**#7** ${item.pack2.emoji} Elite Pack: ${item.pack2.cost} ${STAR}`, `Unlock and get one of these elite heroes: \`${item.pack2.list.join(", ")}\``)
+                .addField(`**#8** ${item.pack3.emoji} VIP pack: ${item.pack3.cost} ${STAR}`, `Open and get one of these VIP heroes: \`${item.pack3.list.join(", ")}\``)
                 
             }
         },
