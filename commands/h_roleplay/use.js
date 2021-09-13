@@ -47,10 +47,10 @@ module.exports = {
         if (it == 1) {
             const random = Math.floor(Math.random() * 40);
             let prize;
-            if ( random < 5 ) {
+            if ( random <= 2 ) {
                 prize = ITEMS.lvl;
                 await rpg.updateOne({userID: user.id}, {$inc: {lvl: 1}});
-            } else if ( random < 10 ) {
+            } else if ( random <= 5 ) {
                 prize = ITEMS.meat;
                 await rpg.updateOne({userID: user.id}, {$inc: {meat: 1}});
             } else if (random <= 20) {
