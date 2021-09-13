@@ -44,35 +44,35 @@ module.exports = {
       switch (activity.type) {
         case 'CUSTOM':
         activities.push(activity.state)
-          UIembed.setDescription(`${u.custom} \`\`\`${activities}\`\`\``)
+          UIembed.setDescription(`**${u.custom}:** ${activities}`)
           break;
         case 'PLAYING':
-          UIembed.addField(u.playing, `\`\`\`${activity.name}\`\`\``, false);
+          UIembed.addField("**"+u.playing+": **", `${activity.name}`, false);
           break;
         case 'LISTENING':
-          if (member.bot) {UIembed.addField(u.listening, `\`\`\`${activity.name}\`\`\``, false);}
-          else {UIembed.addField(u.listening, `\`\`\`${activity.state} -- ${activity.details}\`\`\``, false)};
+          if (member.bot) {UIembed.addField("**"+u.listening+": **", `${activity.name}`, false);}
+          else {UIembed.addField("**"+u.listening+": **", `${activity.state} -- ${activity.details}`, false)};
           break;//
         case 'WATCHING':
-            UIembed.addField(u.watching, `\`\`\`${activity.name}\`\`\``, false);
+            UIembed.addField("**"+u.watching+": **", `${activity.name}`, false);
           break;
         case 'STREAMING':
-            UIembed.addField(u.streaming, `\`\`\`${activity.name}\`\`\``, false);
+            UIembed.addField("**"+u.streaming+": **", `${activity.name}`, false);
           break;
       }}
 
 
 
-        UIembed.setTitle(u.name + ' \`\`\`' + member.user.tag + '\`\`\`')
+        UIembed.setTitle(u.name + ' ' + member.user.tag + '')
         UIembed.setAuthor(u.author)
-        UIembed.addField(u.f1, `\`\`\`${moment(member.user.createdAt).format('DD.MM.YYYY HH:mm')}\`\`\``, true)
-        UIembed.addField(u.f2, `\`\`\`${moment(member.joinedAt).format('DD.MM.YYYY HH:mm')}\`\`\``, true)
+        UIembed.addField(u.f1, `${moment(member.user.createdAt).format('DD.MM.YYYY HH:mm')}`, true)
+        UIembed.addField(u.f2, `${moment(member.joinedAt).format('DD.MM.YYYY HH:mm')}`, true)
         UIembed.addField('\u200B', '\u200B', true);
-        UIembed.addField(u.f3, `\`\`\`${member.roles.cache.size-1}\`\`\``, true)
-        UIembed.addField(u.f4, `\`\`\`${member.roles.highest.name}\`\`\``, true)
+        UIembed.addField(u.f3, `${member.roles.cache.size-1}`, true)
+        UIembed.addField(u.f4, `${member.roles.highest.name}`, true)
         UIembed.addField('\u200B', '\u200B', true);
-        // UIembed.addField('Бот ли?:', `\`\`\`${booleanToRus(member.user.bot)}\`\`\``, true)
-        // UIembed.addField('Статус:', `\`\`\`${statusToRus(member.user.presence.status)}\`\`\``, true)
+        // UIembed.addField('Бот ли?:', `${booleanToRus(member.user.bot)}`, true)
+        // UIembed.addField('Статус:', `${statusToRus(member.user.presence.status)}`, true)
         // UIembed.addField('\u200B', '\u200B', true);
 
 

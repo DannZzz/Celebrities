@@ -18,18 +18,12 @@ module.exports = {
 
           title: `${avatar.AVATAR} — ${user.user.username}'`,
 
-          color: 0x00deff,
+          color: 0x2f3136,
 
           image: {
             url: `${user.user.displayAvatarURL({dynamic: true})}` + '?size=4096'
           },
 
-          timestamp: new Date(),
-
-          footer: {
-            text: message.guild.name,
-            icon_url: message.guild.iconURL()
-          }
         }
       ]})
     }
@@ -39,18 +33,12 @@ module.exports = {
 
           title: `${avatar.AVATAR} — ${user.user.username}`,
 
-          color: 0x00deff,
+          color: 0x2f3136,
 
           image: {
             url: `${user.user.displayAvatarURL({ dynamic: true })}` + '?size=4096'
           },
 
-          timestamp: new Date(),
-
-          footer: {
-            text: message.guild.name,
-            icon_url: message.guild.iconURL()
-          }
 
         }
       ]})
