@@ -90,9 +90,9 @@ module.exports = {
           return error(message, noStar + ` ${2000 * (rp.itemCount || 1)} ${STAR}`)
         }
       } else if(!bag["vip2"] && rp.itemCount === 5) {
-        return error(message, b.errPlace)
-      } else {
         return error(message, vipTwo)
+      } else {
+        return error(message, b.errPlace)
       }
     }
 
