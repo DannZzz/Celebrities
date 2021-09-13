@@ -37,9 +37,9 @@ module.exports = {
     if (data1.marryID) {
       let mar = await marry.findOne({id: data1.marryID})
       if (member.id === mar.first) {
-        marData = `${(message.guild.members.cache.get(mar.second) ? message.guild.members.cache.get(mar.second) : bot.users.cache.get(mar.second).tag) || p.none} ${p.from} ${moment(mar.date).format('DD.MM.YYYY')}`;
+        marData = `${(message.guild.members.cache.get(mar.second) ? message.guild.members.cache.get(mar.second) : (bot.users.cache.get(mar.second) ? `${bot.users.cache.get(mar.second).tag || p.none} ${p.from} ${moment(mar.date).format('DD.MM.YYYY')}` : "?"))}`
       } else {
-        marData = `${(message.guild.members.cache.get(mar.first) ? message.guild.members.cache.get(mar.first) : bot.users.cache.get(mar.first).tag) || p.none} ${p.from} ${moment(mar.date).format('DD.MM.YYYY')}`;
+        marData = `${(message.guild.members.cache.get(mar.first) ? message.guild.members.cache.get(mar.first) : (bot.users.cache.get(mar.first) ? `${bot.users.cache.get(mar.first).tag || p.none} ${p.from} ${moment(mar.date).format('DD.MM.YYYY')}` : "?"))}`
       }
     } else {
       marData = '—'
@@ -63,7 +63,7 @@ module.exports = {
 
 
 
-      embed.addField(`**VIP** - ${vip}`, `${STAR} ${data.stars} ${devs.includes(member.id) ? "__Dev__" : ""}\n${p.quiz} ${rp.quizCount}\n${CL}\n${p.gg} ${marData}\n\n`)
+      embed.addField(`**VIP** - ${vip}`, `${STAR} ${data.stars} ${devs.includes(member.id) ? "__Dev__" : ""}\n${p.quiz} ${rp.quizCount}\n${CL}\n${p.gg} ${marData}\n<:heroes:886967552310407219> : ${rp.itemCount || 1}\n\n`)
       embed.addField(`__${p.fishes}__\n`,
     `\`\`\`${p.junk}(🔧) - ${data.junk}\n${p.common}(🐟) - ${data.common}\n${p.unc}(🐠) - ${data.uncommon}\n${p.rare}(🦑) - ${data.rare}\n${p.leg}(🐋) - ${data.legendary}\`\`\`\n`, true)
 

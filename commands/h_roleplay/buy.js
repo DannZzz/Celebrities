@@ -81,16 +81,18 @@ module.exports = {
     }
     
     if(args[0].toLowerCase() === "slot" || args[0].toLowerCase() === "place") {
-      if(!profile.allowMultiHeroes) {
-        if(bag.stars >= 2000) {
+      if(bag["vip2"] && rp.itemCount !== 10) {
+        if(bag.stars >= 2000 * (rp.itemCount || 1)) {
           await bd.updateOne({userID: message.author.id}, {$inc: {stars: -2000}})
-          await pd.updateOne({userID: message.author.id}, {$set: {allowMultiHeroes: true}})
+          await rpg.updateOne({userID: message.author.id}, {$inc: {itemCount: 1}})
           return embed(message, b.donePlace)
         } else {
-          return error(message, noStar)
+          return error(message, noStar + ` ${2000 * (rp.itemCount || 1)} ${STAR}`)
         }
-      } else {
+      } else if(!bag["vip2"] && rp.itemCount === 5) {
         return error(message, b.errPlace)
+      } else {
+        return error(message, vipTwo)
       }
     }
 
@@ -100,9 +102,8 @@ module.exports = {
       return error(message, b.time(time));
     }
     
-    const type = firstUpperCase(args[0]);
+    const type = firstUpperCase(args[0].toLowerCase());
     if (!items.includes(type)) return error(message, b.nh)
-    if (rp.heroes.length !== 2 && rp.heroes.length < 2) {
       const item = heroes[type]
 
       if (item.vip === true) {
@@ -113,9 +114,9 @@ module.exports = {
 
       if (item.marry === true && !coinData.marryID) return error(message, b.love)
 
-      if (rp.heroes.length === 1 && !coinData.allowMultiHeroes) return error(message, b.place)
-
-      if (rp.heroes.length === 1 && rp.heroes[0].name === type) return error(message, b.already)
+      if (rp.heroes.length === rp.itemCount) return error(message, b.place)
+      const idk = rp.heroes.find(x => x.name === type) 
+      if (idk) return error(message, b.already)
 
       if (item.costType === "star") {
         const stars = bag.stars
@@ -125,9 +126,6 @@ module.exports = {
         await bd.findOneAndUpdate({userID: user.id}, {$inc: {stars: -item.cost}});
         await pd.findOneAndUpdate({userID: user.id}, {$set: {drag: Date.now()}})
         await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: type}});
-        await rpg.findOneAndUpdate({userID: user.id}, {$set: {health: item.health}});
-        await rpg.findOneAndUpdate({userID: user.id}, {$set: {level: 1}});
-        await rpg.findOneAndUpdate({userID: user.id}, {$set: {damage: item.damage}});
 
         await rp.heroes.push({
           name: type,
@@ -142,10 +140,7 @@ module.exports = {
         return error(message, b.not);
       }
 
-    } else {
-      return error(message, b.err);
-
-    }
+   
     //
 
   }

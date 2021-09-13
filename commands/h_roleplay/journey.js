@@ -62,8 +62,10 @@ module.exports = {
     let enemyHealth = Math.floor(enemy.health * nowLevel);
     let enemyDamage = Math.floor(enemy.damage * nowLevel);
 
-    let myHealth = rp.health;
-    let myDamage = rp.damage;
+    const get = rp.heroes.find(x => x.name === rp.item)
+    
+    let myHealth = get.health;
+    let myDamage = get.damage;
     let win;
    
     
@@ -96,6 +98,7 @@ module.exports = {
     .addField(`❤ ${hm.health} ${enemyHealth}`, `**⚔ ${hm.damage} ${enemyDamage}**`, true)
     .setThumbnail(`https://media.giphy.com/media/SwUwZMPpgwHNQGIjI7/giphy.gif`)
     .setImage('attachment://fight.png')
+    
       
       let timeoutt;
         if (bag["vip2"] === true) { timeoutt = 1800000; } else {
@@ -133,6 +136,7 @@ module.exports = {
         }
       }
     
+      
 
 
     let winner;
@@ -145,6 +149,7 @@ module.exports = {
     if(hero.name === "Ariel" && enemy.name === "D'Wolf") {
       winner = hero
     }
+    
     
     let msgozv = new MessageEmbed()
     .setColor(cyan)

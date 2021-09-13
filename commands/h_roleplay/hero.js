@@ -25,32 +25,35 @@ module.exports = {
        
     const user = message.member;
     let rp = await rpg.findOne({userID: user.id});
-    if (!rp) return error(message, hm.noHero);
-    if (rp.item === null && rp.heroes && rp.heroes.length !== 0) {
-      await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: rp.heroes[0]["name"]}});
-      await rpg.findOneAndUpdate({userID: user.id}, {$set: {health: rp.heroes[0]["health"]}});
-      await rpg.findOneAndUpdate({userID: user.id}, {$set: {damage: rp.heroes[0]["damage"]}});
-      await rpg.findOneAndUpdate({userID: user.id}, {$set: {level: rp.heroes[0]["level"]}});
-    }
-    rp = await rpg.findOne({userID: user.id});
-    if(rp.item !== null) {
-      if ((rp.heroes && rp.heroes.length === 1 && rp.item !== rp.heroes[0]["name"]) || ((rp.heroes && rp.heroes.length === 0) || !rp.heroes)) {
-        await rp.heroes.push({
-                name: rp.item,
-                level: rp.level,
-                health: rp.health,
-                damage: rp.damage
-            })
-        rp.save()
-    }
+    if (rp && rp.item) {
+    // if (rp.item === null && rp.heroes && rp.heroes.length !== 0) {
+    //   await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: rp.heroes[0]["name"]}});
+    //   await rpg.findOneAndUpdate({userID: user.id}, {$set: {health: rp.heroes[0]["health"]}});
+    //   await rpg.findOneAndUpdate({userID: user.id}, {$set: {damage: rp.heroes[0]["damage"]}});
+    //   await rpg.findOneAndUpdate({userID: user.id}, {$set: {level: rp.heroes[0]["level"]}});
+    // }
+    // rp = await rpg.findOne({userID: user.id});
+    // if(rp.item !== null) {
+    //   if ((rp.heroes && rp.heroes.length === 1 && rp.item !== rp.heroes[0]["name"]) || ((rp.heroes && rp.heroes.length === 0) || !rp.heroes)) {
+    //     await rp.heroes.push({
+    //             name: rp.item,
+    //             level: rp.level,
+    //             health: rp.health,
+    //             damage: rp.damage
+    //         })
+    //     rp.save()
+    // }
+
+    const get = rp.heroes.find(x => x.name === rp.item)
+    
     const item = heroes[rp.item]
     let myHero = new MessageEmbed()
     .setAuthor(`${user.user.tag}`)
-    .setTitle(`${item.name} (${item.nameRus})\n${hm.level} ${rp.level}  ${h.journey}: ${rp.surviveLevel}`)
+    .setTitle(`${item.name} (${item.nameRus})\n${hm.level} ${get.level}  ${h.journey}: ${rp.surviveLevel}`)
     .setDescription(LANG.lang === "ru" ? item.description : item.descriptionEN)
     .setThumbnail(item.url)
-    .addField(`❤ ${hm.health}`, `${rp.health}`, true)
-    .addField(`⚔ ${hm.damage}`, `${rp.damage}`, true)
+    .addField(`❤ ${hm.health}`, `${get.health}`, true)
+    .addField(`⚔ ${hm.damage}`, `${get.damage}`, true)
     .addField(`🟡 ${h.all}`, `${rp.totalGames}`, false)
     .addField(`🟢 ${h.win}`, `${rp.wins}`, true)
     .addField(`🔴 ${h.lose}`, `${rp.loses}`, true)

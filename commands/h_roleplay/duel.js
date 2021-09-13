@@ -53,10 +53,13 @@ module.exports = {
     if (!mrp || mrp.item === null) return error(message, d.error2);
     if (!rp || rp.item === null) return error(message, d.error3);
 
-    let h1 = rp.health
-    let h2 = mrp.health
-    let d1 = rp.damage
-    let d2 = mrp.damage
+    const get1 = mrp.heroes.find(x => x.name === mrp.item)
+    const get2 = mrp.heroes.find(x => x.name === rp.item)
+
+    let h1 = get2.health
+    let h2 = get1.health
+    let d1 = get2.damage
+    let d2 = get1.damage
     let winner;
     let loser;
 
@@ -134,13 +137,12 @@ if(i.customId === buttonList[0].customId) {
     .setTitle(hm.battle)
     .setImage('attachment://fight.png')
     .setThumbnail('https://media.giphy.com/media/SwUwZMPpgwHNQGIjI7/giphy.gif')
-    .addField(`${mUser.username} (${LANG.lang === "ru" ? data1.nameRus : data1.name})`, `**${hm.level} ${mrp.level}**`, true)
-    .addField(`❤ ${hm.health} ${mrp.health}`, `**⚔ ${hm.damage} ${mrp.damage}**`, true)
+    .addField(`${mUser.username} (${LANG.lang === "ru" ? data1.nameRus : data1.name})`, `**${hm.level} ${get1.level}**`, true)
+    .addField(`❤ ${hm.health} ${get1.health}`, `**⚔ ${hm.damage} ${get1.damage}**`, true)
     .addField(`\u200b`, `\u200b`, false)
-    .addField(`${user.user.username} (${LANG.lang === "ru" ? data2.nameRus : data2.name})`, `**${hm.level} ${rp.level}**`, true)
-    .addField(`❤ ${hm.health} ${rp.health}`, `**⚔ ${hm.damage} ${rp.damage}**`, true)
+    .addField(`${user.user.username} (${LANG.lang === "ru" ? data2.nameRus : data2.name})`, `**${hm.level} ${get2.level}**`, true)
+    .addField(`❤ ${hm.health} ${get2.health}`, `**⚔ ${hm.damage} ${get2.damage}**`, true)
     .setColor(cyan)
-
   
 
     
@@ -189,14 +191,14 @@ if(i.customId === buttonList[0].customId) {
     await rpg.findOneAndUpdate({userID: loser.id}, {$inc: {loses: 1}})
 
     let winData = await rpg.findOne({userID: winner.id})
-
+    const get = mrp.heroes.find(x => x.name === winData.item)
     let hero = heroes[winData.item]
     let winEmb = new MessageEmbed()
     .setTitle(`${d.winner} ${winner.tag || winner.user.tag} (${LANG.lang === "ru" ? hero.nameRus : hero.name})`)
     .setDescription(`${d.among} ${user}, ${mUser}`)
     .setImage(hero.url)
     .setColor(cyan)
-    .addField(`❤ ${hm.health} ${winData.health}`, `**⚔ ${hm.damage} ${winData.damage}**`, true)
+    .addField(`❤ ${hm.health} ${get.health}`, `**⚔ ${hm.damage} ${get.damage}**`, true)
     .addField(`🏆 ${hm.winrate}`, `**${Math.trunc(winData.wins / winData.totalGames * 100) || '0'}%**`, true)
     msg.delete()
     return message.channel.send({embeds: [winEmb]})

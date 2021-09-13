@@ -72,21 +72,25 @@ module.exports = {
     
     const data1 = heroes[mItem];
     const data2 = heroes[item];
+    const get = mrp.heroes.find(x => x.name === mrp.item)
+    const myLevel = get.level;
+    const myHealth = get.health;
+    const myDamage = get.damage;
     let eLevel;
     const rand1 = Math.floor(Math.random() * 40);
     if (rand1 > 20) {
       if (rand1 > 27) {
-        eLevel = mrp.level + 2
+        eLevel = myLevel + 2
       } else if (rand1 > 35) {
-        eLevel = mrp.level + 4
+        eLevel = myLevel + 4
       } else {
-        eLevel = mrp.level + 1
+        eLevel = myLevel + 1
       }
     } else {
       if (rand1 > 10) {
-        eLevel = mrp.level - 1
+        eLevel = myLevel - 1
       } else if (rand1 >= 0) {
-        eLevel = mrp.level - 2
+        eLevel = myLevel - 2
       }
     }
     if (eLevel <= 1) eLevel = 2
@@ -94,9 +98,9 @@ module.exports = {
     let eDamage = ((eLevel - 1) * 20) + data2.damage;
     
     let h1 = eHealth
-    let h2 = mrp.health
+    let h2 = myHealth
     let d1 = eDamage
-    let d2 = mrp.damage
+    let d2 = myDamage
     let winner = false
 
     let damn = await message.channel.send(`<a:dannloading:876008681479749662> ${b.find}`);
@@ -108,8 +112,8 @@ module.exports = {
     .setTitle(hm.battle)
     .setImage('attachment://fight.png')
     .setThumbnail('https://media.giphy.com/media/SwUwZMPpgwHNQGIjI7/giphy.gif')
-    .addField(`${message.author.username} (${LANG.lang === "ru" ? data1.nameRus : data1.name})`, `**${hm.level} ${mrp.level}**`, true)
-    .addField(`❤ ${hm.health} ${mrp.health}`, `**⚔ ${hm.damage} ${mrp.damage}**`, true)
+    .addField(`${message.author.username} (${LANG.lang === "ru" ? data1.nameRus : data1.name})`, `**${hm.level} ${myLevel}**`, true)
+    .addField(`❤ ${hm.health} ${myHealth}`, `**⚔ ${hm.damage} ${myDamage}**`, true)
     .addField(`\u200b`, `\u200b`, false)
     .addField(`${LANG.lang === "ru" ? data2.nameRus : data2.name}`, `**${hm.level} ${+eLevel}**`, true)
     .addField(`❤ ${hm.health} ${h1}`, `**⚔ ${hm.damage} ${d1}**`, true)

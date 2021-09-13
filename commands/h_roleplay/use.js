@@ -68,24 +68,18 @@ module.exports = {
             await rpg.updateOne({userID: user.id}, {$inc: {hlt: -1}});
 
             let getItem = rp.heroes;
-            if(getItem[0]["name"] === rp.item) {
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.0.health`]: item.effect}});
-            } else if(getItem[1]["name"] === rp.item) {
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.1.health`]: item.effect}});
-            }
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {health: item.effect}});
+
+            let get = rp.heroes.findIndex(x => x.name === rp.item) 
+
+            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.health`]: item.effect}});
+            
             return message.react(AGREE)
         } else if (it == 3) {
             if (!rp.item) return error(message, hm.noHero)
             await rpg.updateOne({userID: user.id}, {$inc: {dmg: -1}});
 
-            let getItem = rp.heroes;
-            if(getItem[0]["name"] === rp.item) {
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.0.damage`]: item.effect}});
-            } else if(getItem[1]["name"] === rp.item) {
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.1.damage`]: item.effect}});
-            }
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {damage: item.effect}});
+            let get = rp.heroes.findIndex(x => x.name === rp.item)
+            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.damage`]: item.effect}});
             return message.react(AGREE)
         } else if (it == 4) {
             if (!rp.item) return error(message, hm.noHero)
@@ -94,48 +88,29 @@ module.exports = {
             let addH = 250;
             let addD = 20;
 
-            let getItem = rp.heroes;
-            if(getItem[0]["name"] === rp.item) {
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.0.health`]: addH}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.0.level`]: item.effect}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.0.damage`]: addD}});
-            } else if(getItem[1]["name"] === rp.item) {
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.1.health`]: addH}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.1.level`]: item.effect}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.1.damage`]: addD}});
-            }
-
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {level: item.effect}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {health: addH}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {damage: addD}});
-
+            let get = rp.heroes.findIndex(x => x.name === rp.item)
+            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.health`]: addH}});
+            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.level`]: item.effect}});
+            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.damage`]: addD}});
             
             return message.react(AGREE)
         } else if (it == 5) {
             if (!rp.item) return error(message, hm.noHero)
             await rpg.updateOne({userID: user.id}, {$inc: {meat: -1}});
 
-            let getItem = rp.heroes;
-            if(getItem[0]["name"] === rp.item) {
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.0.health`]: item.effect}});
-            } else if(getItem[1]["name"] === rp.item) {
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.1.health`]: item.effect}});
-            }
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {health: item.effect}});
+            let get = rp.heroes.findIndex(x => x.name === rp.item)
+            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.health`]: item.effect}});
+            
             return message.react(AGREE)
         } else if (it == 6) {
             const rand = Math.floor(Math.random() * item.list.length);
             const hero = heroes[item.list[rand]]
-            if (rp.heroes.length >= 2) return error(message, b.place)
-            if (rp.heroes.length === 1 && !profile.allowMultiHeroes) return error(message, b.place)
-
-            if (rp.heroes.length === 1 && rp.heroes[0].name === hero.name) return error(message, b.already)
+            if (rp.heroes.length === rp.itemCount) return error(message, b.place)
+            let get = rp.heroes.find(x => x.name === hero.name)
+            if (get) return error(message, b.already)
 
             await rpg.updateOne({userID: user.id}, {$inc: {pack1: -1}});
             await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: hero.name}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$set: {health: hero.health}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$set: {level: 1}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$set: {damage: hero.damage}});
 
             await rp.heroes.push({
             name: hero.name,
@@ -150,16 +125,12 @@ module.exports = {
         } else if (it == 7) {
             const rand = Math.floor(Math.random() * item.list.length);
             const hero = heroes[item.list[rand]]
-            if (rp.heroes.length >= 2) return error(message, b.place)
-            if (rp.heroes.length === 1 && !profile.allowMultiHeroes) return error(message, b.place)
-
-            if (rp.heroes.length === 1 && rp.heroes[0].name === hero.name) return error(message, b.already)
+            if (rp.heroes.length === rp.itemCount) return error(message, b.place)
+            let get = rp.heroes.find(x => x.name === hero.name)
+            if (get) return error(message, b.already)
 
             await rpg.updateOne({userID: user.id}, {$inc: {pack2: -1}});
             await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: hero.name}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$set: {health: hero.health}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$set: {level: 1}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$set: {damage: hero.damage}});
 
             await rp.heroes.push({
             name: hero.name,
@@ -174,16 +145,11 @@ module.exports = {
         } else if (it == 8) {
             const rand = Math.floor(Math.random() * item.list.length);
             const hero = heroes[item.list[rand]]
-            if (rp.heroes.length >= 2) return error(message, b.place)
-            if (rp.heroes.length === 1 && !profile.allowMultiHeroes) return error(message, b.place)
-
-            if (rp.heroes.length === 1 && rp.heroes[0].name === hero.name) return error(message, b.already)
-
+            if (rp.heroes.length === rp.itemCount) return error(message, b.place)
+            let get = rp.heroes.find(x => x.name === hero.name)
+            if (get) return error(message, b.already)
             await rpg.updateOne({userID: user.id}, {$inc: {pack3: -1}});
             await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: hero.name}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$set: {health: hero.health}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$set: {level: 1}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$set: {damage: hero.damage}});
 
             await rp.heroes.push({
             name: hero.name,
@@ -196,7 +162,7 @@ module.exports = {
             
             return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name))
         }
-
+s
     } else {
         error(message, cm.specN)
     }

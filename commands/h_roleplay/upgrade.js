@@ -34,10 +34,12 @@ module.exports = {
     let hero = heroes[rp.item]
     let firstLevel = 1;
     let levelCost = hero.upgradeCost;
-
-    let requiredValue = rp.level * levelCost;
+    const get = rp.heroes.find(x => x.name === rp.item)
+    let requiredValue = get.level * levelCost;
 
     const resp = ['info']
+    
+    const getIndex = rp.heroes.findIndex(x => x.name === rp.item)
 
     let addH = 250;
     let addD = 20;
@@ -46,11 +48,11 @@ module.exports = {
       const newEmb = new MessageEmbed()
       .setColor(cyan)
       .setTimestamp()
-      .setAuthor(`${u.info} ${rp.level+1}`)
+      .setAuthor(`${u.info} ${get.level+1}`)
       .setTitle(`${hero.name} (${hero.nameRus})`)
       .setDescription(`**${u.cost} ${requiredValue} ${STAR}**`)
-      .addField(`❤ ${hm.health}`, `${rp.health} + ${addH}`, true)
-      .addField(`⚔ ${hm.damage}`, `${rp.damage} + ${addD}`, true)
+      .addField(`❤ ${hm.health}`, `${get.health} + ${addH}`, true)
+      .addField(`⚔ ${hm.damage}`, `${get.damage} + ${addD}`, true)
       .setThumbnail(hero.url)
 
       return message.channel.send({embeds: [newEmb]})
@@ -58,29 +60,19 @@ module.exports = {
     if (bal < requiredValue) return error(message, `${u.err} — **${requiredValue}** ${STAR}.`)
     let a = rp.heroes.indexOf(rp.heroes.filter(a => a["name"] === rp.item))
     let b = rp.heroes[a];
-
-    let getItem = rp.heroes;
-    if(getItem[0]["name"] === rp.item) {
-      await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.0.health`]: addH}});
-      await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.0.level`]: 1}});
-      await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.0.damage`]: addD}});
-    } else if(getItem[1]["name"] === rp.item) {
-      await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.1.health`]: addH}});
-      await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.1.level`]: 1}});
-      await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.1.damage`]: addD}});
-    }
-
-    await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {level: 1}});
-    await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {health: addH}});
-    await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {damage: addD}});
+  
+    await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.${getIndex}.health`]: addH}});
+    await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.${getIndex}.level`]: 1}});
+    await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.${getIndex}.damage`]: addD}});
+    
     await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: -requiredValue}});
 
 
     let Embed = new MessageEmbed()
-    .setAuthor(`${u.done} ${rp.level + 1}`)
+    .setAuthor(`${u.done} ${get.level + 1}`)
     .setTitle(`${hero.name} (${hero.nameRus})`)
-    .addField(`❤ ${hm.health}`, `${rp.health + addH}`, true)
-    .addField(`⚔ ${hm.damage}`, `${rp.damage + addD}`, true)
+    .addField(`❤ ${hm.health}`, `${get.health + addH}`, true)
+    .addField(`⚔ ${hm.damage}`, `${get.damage + addD}`, true)
     .setColor(cyan)
     .setThumbnail(hero.url)
 

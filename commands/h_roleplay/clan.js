@@ -69,9 +69,9 @@ module.exports = {
         let asd;
         if (rpp && rpp.item) { 
           if (LANG.lang === "ru") {
-            asd =  `  <a:herodann:883382573231923201> ${heroes[rpp.item].nameRus} (${ccc.lvl} ${rpp.level})`
+            asd =  `  <a:herodann:883382573231923201> ${heroes[rpp.item].nameRus} (${ccc.lvl} ${await rpp.heroes.find(x => x.name === rpp.item).level})`
           } else {
-              asd =  `  <a:herodann:883382573231923201> ${rpp.item} (${ccc.lvl} ${rpp.level})`
+              asd =  `  <a:herodann:883382573231923201> ${rpp.item} (${ccc.lvl} ${await rpp.heroes.find(x => x.name === rpp.item).level})`
             }
           } else {
             asd = cm.noHero

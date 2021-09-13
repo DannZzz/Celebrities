@@ -68,8 +68,12 @@ module.exports = {
     if (!rp1 || rp1.item === null) return error(message, b.secondH);
     if (!rp2 || rp2.item === null) return error(message, b.thirdH);
 
-    let allHealth = rp1.health + rp2.health + mrp.health
-    let allDamage = rp1.damage + rp2.damage + mrp.damage
+    const get1 = mrp.heroes.find(x => x.name === mrp.item)
+    const get2 = mrp.heroes.find(x => x.name === rp1.item)
+    const get3 = mrp.heroes.find(x => x.name === rp2.item)
+    
+    let allHealth = get1.health + get2.health + get3.health
+    let allDamage = get1.damage + get2.damage + get3.damage
 
     let boss = enemies["FireWalker"]
 

@@ -26,15 +26,15 @@ module.exports = {
     const rp = await rpg.findOne({userID: message.author.id});
     if (!rp) return error(message, hm.noHero)
 
-    if ((rp.heroes && rp.heroes.length === 0 && rp.item !== rp.heroes[0]["name"]) && rp.item !== null) {
-        await rp.heroes.push({
-                name: rp.item,
-                level: rp.level,
-                health: rp.health,
-                damage: rp.damage
-            })
-        rp.save()
-    }
+    // if ((rp.heroes && rp.heroes.length === 0 && rp.item !== rp.heroes[0]["name"]) && rp.item !== null) {
+    //     await rp.heroes.push({
+    //             name: rp.item,
+    //             level: rp.level,
+    //             health: rp.health,
+    //             damage: rp.damage
+    //         })
+    //     rp.save()
+    // }
     
     const item = rp.heroes[0]
     const h = heroes[item.name];
@@ -50,28 +50,38 @@ module.exports = {
     if (rp.heroes.length === 1) {
         return message.channel.send({embeds: [hero]})
     } else {
-
+      let arr = rp.heroes.map((i) => {
+        const h1 = heroes[i.name];
+        return new MessageEmbed()
+        .setThumbnail(h1.url)
+        .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
+        .setTitle(`${h1.name} (${h1.nameRus})`)
+        .setDescription(h1.description)
+        .setColor(cyan)
+        .addField(`💯 ${hm.level} ${i.level}\n❤ ${hm.health} ${i.health}\n⚔ ${hm.damage} ${i.damage}`, `** **`)
+        
+      })
     
 
-    const item1 = rp.heroes[0]
-    const h1 = heroes[item1.name];
-    const hero1 = new MessageEmbed()
-    .setThumbnail(h1.url)
-    .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
-    .setTitle(`${h1.name} (${h1.nameRus})`)
-    .setDescription(h1.description)
-    .setColor(cyan)
-    .addField(`💯 ${hm.level} ${item1.level}\n❤ ${hm.health} ${item1.health}\n⚔ ${hm.damage} ${item1.damage}`, `** **`)
+    // const item1 = rp.heroes[0]
+    // const h1 = heroes[item1.name];
+    // const hero1 = new MessageEmbed()
+    // .setThumbnail(h1.url)
+    // .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
+    // .setTitle(`${h1.name} (${h1.nameRus})`)
+    // .setDescription(h1.description)
+    // .setColor(cyan)
+    // .addField(`💯 ${hm.level} ${item1.level}\n❤ ${hm.health} ${item1.health}\n⚔ ${hm.damage} ${item1.damage}`, `** **`)
     
-    const item2 = rp.heroes[1]
-    const h2 = heroes[item2.name];
-    const hero2 = new MessageEmbed()
-    .setThumbnail(h2.url)
-    .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
-    .setTitle(`${h2.name} (${h2.nameRus})`)
-    .setDescription(h2.description)
-    .setColor(cyan)
-    .addField(`💯 ${hm.level} ${item2.level}\n❤ ${hm.health} ${item2.health}\n⚔ ${hm.damage} ${item2.damage}`, `** **`)
+    // const item2 = rp.heroes[1]
+    // const h2 = heroes[item2.name];
+    // const hero2 = new MessageEmbed()
+    // .setThumbnail(h2.url)
+    // .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
+    // .setTitle(`${h2.name} (${h2.nameRus})`)
+    // .setDescription(h2.description)
+    // .setColor(cyan)
+    // .addField(`💯 ${hm.level} ${item2.level}\n❤ ${hm.health} ${item2.health}\n⚔ ${hm.damage} ${item2.damage}`, `** **`)
 
     const button1 = new MessageButton()
                 .setCustomId('previousbtn')
@@ -90,7 +100,7 @@ module.exports = {
 
           const userids = [message.author.id]
 
-          pagination(message, [hero1, hero2], buttonList, 100000, userids)
+          pagination(message, arr, buttonList, 100000, userids)
     }   
   }
 }

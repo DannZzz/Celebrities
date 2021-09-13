@@ -27,26 +27,18 @@ module.exports = {
     const rp = await rpg.findOne({userID: user.id});
     if (!rp && rp.item !== null) return error(message, hm.noHero);
     if (rp.heroes.length !== 1){
-      if (rp.heroes.length === 2) {
+      
+      if (!args[0] || isNaN(args[0]) || Math.round(args[0]) <= 0 || Math.round(args[0]) > rp.heroes.length) return error(message, cm.specN)
 
-        if(rp.item === rp.heroes[0]["name"]) {
-          await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: rp.heroes[1]["name"]}});
-          await rpg.findOneAndUpdate({userID: user.id}, {$set: {health: rp.heroes[1]["health"]}});
-          await rpg.findOneAndUpdate({userID: user.id}, {$set: {damage: rp.heroes[1]["damage"]}});
-          await rpg.findOneAndUpdate({userID: user.id}, {$set: {level: rp.heroes[1]["level"]}});
-        } else {
-          await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: rp.heroes[0]["name"]}});
-          await rpg.findOneAndUpdate({userID: user.id}, {$set: {health: rp.heroes[0]["health"]}});
-          await rpg.findOneAndUpdate({userID: user.id}, {$set: {damage: rp.heroes[0]["damage"]}});
-          await rpg.findOneAndUpdate({userID: user.id}, {$set: {level: rp.heroes[0]["level"]}});
-        }
+      
+      await rpg.updateOne({userID: message.author.id}, {$set: {item: rp.heroes[Math.round(args[0])-1].name}})  
         
       const rpp = await rpg.findOne({userID: message.author.id})  
         
       const item = heroes[rpp.item]
 
     return embed(message, `${r.done} - __${LANG.lang === "ru" ? item.nameRus : item.name}__.`);
-      }
+      
   } else {
     return error(message, r.err);
   }
