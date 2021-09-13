@@ -83,7 +83,7 @@ module.exports = {
     if(args[0].toLowerCase() === "slot" || args[0].toLowerCase() === "place") {
       if(bag["vip2"] && rp.itemCount !== 10) {
         if(bag.stars >= 2000 * (rp.itemCount || 1)) {
-          await bd.updateOne({userID: message.author.id}, {$inc: {stars: -2000}})
+          await bd.updateOne({userID: message.author.id}, {$inc: {stars: -(2000 * (rp.itemCount || 1))}})
           await rpg.updateOne({userID: message.author.id}, {$inc: {itemCount: 1}})
           return embed(message, b.donePlace)
         } else {
