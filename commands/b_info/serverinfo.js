@@ -29,7 +29,7 @@ module.exports = {
 
           const serverembed = new MessageEmbed()
 
-          .setAuthor(s.f1)
+          .setAuthor(`${s.f1} 🌟 ${LANG.rep}`)
           .setTitle(server.name)
           .setThumbnail(server.iconURL({dynamic: true}))
           .addField(s.f2, `\`\`\`T: ${server.channels.cache.filter(t => t.type === "GUILD_TEXT").size}\nV: ${server.channels.cache.filter(v => v.type === "GUILD_VOICE").size}\`\`\``, true)
