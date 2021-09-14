@@ -104,7 +104,7 @@ module.exports = {
     let fight = new MessageEmbed()
     .setTitle(hm.battle)
     .setThumbnail('https://media.giphy.com/media/SwUwZMPpgwHNQGIjI7/giphy.gif')
-    .addField(`${mUser.username} [${mrp.level}] (${data1.nameRus})\n${user1.user.username} [${rp1.level}] (${data2.nameRus})\n${user2.user.username} [${rp2.level}] (${data3.nameRus})`, `** **`, true)
+    .addField(`${mUser.username} [${get1.level}] (${data1.nameRus})\n${user1.user.username} [${get2.level}] (${data2.nameRus})\n${user2.user.username} [${get3.level}] (${data3.nameRus})`, `** **`, true)
     .addField(`❤ ${hm.health}: ${allHealth}`, `**⚔ ${hm.damage}: ${allDamage}**`, true)
     .addField(`\u200b`, `\u200b`, false)
     .addField(`${boss.name} (${boss.nameRus})`, `** **`, false)
