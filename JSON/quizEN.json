@@ -1,0 +1,62 @@
+[
+  {
+    "q": "What was the Turkish city of Istanbul called before 1930?",
+    "r": ["Constantinople", "Bursa", "Ani", "Konya"],
+    "a": "Constantinople"
+  },
+  {
+    "q": "From which US city do the band The Killers originate?",
+    "r": ["Las Vegas", "New York", "New Jersey", "Chicago"],
+    "a": "Las Vegas"
+  },
+  {
+    "q": "In which European country would you find the Rijksmuseum?",
+    "r": ["Netherlands", "Deutch", "France", "Spain"],
+    "a": "Netherlands"
+  },
+  {
+    "q": "How many permanent teeth does a dog have?",
+    "r": ["42", "44", "40", "41"],
+    "a": "42"
+  },
+  {
+    "q": "What does the Latin Tempus mean in English?",
+    "r": ["Time", "Table", "Teeth", "Tick"],
+    "a": "Time"
+  },
+  {
+    "q": "Which country in the world is believed to have the most miles of motorway?",
+    "r": ["China", "Turkey", "India", "Indonezia"],
+    "a": "China"
+  },
+  {
+    "q": "What is the capital city of Australia?",
+    "r": ["Canbera", "Helsinki", "Cuba", "Monaco"],
+    "a": "Canbera"
+  },
+  {
+    "q": "What language is spoken in Brazil?",
+    "r": ["Portuguese", "Spanish", "English", "Chinese"],
+    "a": "Portuguese"
+  },
+  {
+    "q": "How many notes are there in a musical scale?",
+    "r": ["7", "8", "6", "5"],
+    "a": "7"
+  },
+  {
+    "q": "What company is also the name of one of the longest rivers in the world?",
+    "r": ["Amazon", "Nile", "Congo", "Ganga"],
+    "a": "Amazon"
+  },
+  {
+    "q": "What is the tallest mountain in the world?",
+    "r": ["Mount Everest", "K2", "Tirich Mir", "Mount Gongga"],
+    "a": "Mount Everest"
+  },
+  {
+    "q": "What is the tallest mountain in the world?",
+    "r": ["Mount Everest", "K2", "Tirich Mir", "Mount Gongga"],
+    "a": "Mount Everest"
+  }
+]
