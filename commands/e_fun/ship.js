@@ -4,7 +4,7 @@ const {error, embed} = require('../../functions');
 module.exports = {
     config: {
         name: "ship",
-        aliases: ['love'],
+        aliases: ['love', 'шип'],
         category: 'e_fun',
     },
     run: async (bot, message, args) => {

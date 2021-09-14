@@ -8,7 +8,7 @@ let rateLimiter = new RateLimiter(1, 3000);
 module.exports = {
     config: {
       name: "trigger",
-      aliases: "",
+      aliases: ['триггер'],
       category: "e_fun"
     },
 

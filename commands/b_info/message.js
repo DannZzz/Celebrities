@@ -8,7 +8,7 @@ let rateLimiter = new RateLimiter(1, 3000);
 module.exports = {
   config: {
     name: 'message',
-    aliases: ["bug"],
+    aliases: ["bug", 'сообщение'],
     category: 'b_info'
   },
   run: async (bot, message, args) => {

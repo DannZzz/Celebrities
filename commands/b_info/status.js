@@ -8,7 +8,7 @@ module.exports = {
     config: {
         name: "status",
         category: "b_info",
-        aliases: ""
+        aliases: ['статус']
     },
     run: async (bot, message, args) => {
       let limited = rateLimiter.take(message.author.id)

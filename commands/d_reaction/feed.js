@@ -9,7 +9,7 @@ const {error} = require('../../functions');
 module.exports = {
   config: {
     name: "feed",
-    aliases: ['nom'],
+    aliases: ['nom', 'кормить'],
     category: 'd_reaction',
   },
   run: async (bot, message, args) => {

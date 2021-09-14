@@ -10,7 +10,7 @@ let rateLimiter = new RateLimiter(1, 3000);
 module.exports = {
   config: {
     name: "tickle",
-    aliases: "",
+    aliases: ['щекотать'],
     category: 'd_reaction'
   },
   run: async (bot, message, args) => {

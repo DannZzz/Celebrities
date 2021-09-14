@@ -8,7 +8,7 @@ module.exports = {
     config: {
         name: "server",
         category: "b_info",
-        aliases: ['serverinfo']
+        aliases: ['serverinfo', 'сервер']
     },
     run: async (bot, messageCreate, args) => {
       let message = messageCreate

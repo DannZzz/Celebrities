@@ -8,7 +8,7 @@ let rateLimiter = new RateLimiter(1, 3000);
 module.exports = {
     config: {
         name: "rip",
-        aliases: "",
+        aliases: ['рип'],
         category: 'e_fun'
     },
     run: async (bot, message, args) => {

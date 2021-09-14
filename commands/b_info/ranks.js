@@ -12,7 +12,7 @@ Levels.setURL(process.env.MONGO);
 module.exports = {
   config: {
     name: 'ranks',
-    aliases: '',
+    aliases: ['ранги'],
     category: 'b_info'
   },
   run: async (bot, message, args, ops) => {

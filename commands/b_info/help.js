@@ -11,7 +11,7 @@ let rateLimiter = new RateLimiter(1, 3000);
 module.exports = {
     config: {
       name: "help",
-      aliases: ['h'],
+      aliases: ['h', 'хелп'],
       category: "b_info",
     },
     run: async (bot, message, args) => {

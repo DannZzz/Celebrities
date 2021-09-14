@@ -13,7 +13,7 @@ const Canvas = require('canvas');
 module.exports = {
   config: {
     name: 'rank',
-    aliases: ['level'],
+    aliases: ['level', 'ранг'],
     category: 'b_info'
   },
   run: async (bot, message, args) => {

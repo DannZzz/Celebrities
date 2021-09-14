@@ -7,7 +7,7 @@ module.exports = {
   config: {
     name: "botinfo",
     category: "b_info",
-    aliases: ["bot"]
+    aliases: ["bot", "бот"]
   },
   run: async (bot, message, args) => {
 

@@ -14,7 +14,7 @@ Levels.setURL(process.env.MONGO);
 module.exports = {
   config: {
     name: 'reputation',
-    aliases: ["rep"],
+    aliases: ["rep", "репутация", 'реп'],
     category: 'b_info'
   },
   run: async (bot, message, args, ops) => {
