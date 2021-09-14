@@ -64,7 +64,7 @@ module.exports = {
     
     const mItem = mrp.item
     let item;
-    const enem = ["Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "PerfectDuo", "Eragon", "Ariel", "Archangel", "Darkangel"];
+    const enem = ["Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "PerfectDuo", "Eragon", "Ariel", "Archangel", "Darkangel"];
     const random = Math.floor(Math.random() * enem.length);
     item = enem[random]
     
@@ -156,8 +156,8 @@ module.exports = {
           await rpg.findOneAndUpdate({userID: winner.id}, {$inc: {wins: 1}})
           await bd.updateOne({userID: winner.id}, {$inc: {stars: value*2}});
           winData = await rpg.findOne({userID: winner.id});
-
-          let hero = heroes[winData.item]
+          winData = winData.heroes.find(x => x.name === winData.item)
+          let hero = heroes[winData.name]
           let it = heroes[item]
           let winEmb = new MessageEmbed()
           .setTitle(`${b.winner} ${winner.tag || winner.user.tag} (${LANG.lang === "ru" ? hero.nameRus : hero.name})`)
