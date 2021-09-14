@@ -155,8 +155,8 @@ module.exports = {
         if (winner) {
           await rpg.findOneAndUpdate({userID: winner.id}, {$inc: {wins: 1}})
           await bd.updateOne({userID: winner.id}, {$inc: {stars: value*2}});
-          winData = await rpg.findOne({userID: winner.id});
-          winData = winData.heroes.find(x => x.name === winData.item)
+          const WinData = await rpg.findOne({userID: winner.id});
+          winData = WinData.heroes.find(x => x.name === winData.item)
           let hero = heroes[winData.name]
           let it = heroes[item]
           let winEmb = new MessageEmbed()
@@ -165,7 +165,7 @@ module.exports = {
           .setImage(hero.url)
           .setColor(cyan)
           .addField(`❤ ${hm.health} ${winData.health}`, `**⚔ ${hm.damage} ${winData.damage}**`, true)
-          .addField(`${hm.reward} ${value * 2} ${STAR}`, `**🏆 ${hm.winrate} ${Math.trunc(winData.wins / winData.totalGames * 100) || '0'}%**`, true)
+          .addField(`${hm.reward} ${value * 2} ${STAR}`, `**🏆 ${hm.winrate} ${Math.trunc(WinData.wins / WinData.totalGames * 100) || '0'}%**`, true)
           msg.delete()
           return message.channel.send({embeds: [winEmb]})
         } else {
