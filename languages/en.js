@@ -55,6 +55,26 @@ module.exports = {
 
 
 
+    "give": {
+        "desc": "Give the hero to the member for the number of stars.",
+        "usage": "[hero name] [mention | ID] [price]",
+        "access": "For everyone",
+        "specH": "Specify a hero.",
+        "cost": "Enter the price.",
+        "noHero": "No hero found.",
+        "min": "The minimum amount is __100__.",
+        "not": "You cannot sell this hero.",
+        "double": "The price cannot be more than twice.",
+        "sure": (trans, cost) => `offers you a __${trans}__ hero for __${cost}__`,
+        "find": "Looking for a member...",
+        "place": "This member has enough heroes.",
+        "already": "This member already has this hero.",
+        "star": "This member does not have that many stars.",
+        "sell": (name, cost) => `You sold the hero: __${name}__ for __${cost}__(20% tax)`
+    },
+
+
+
     "reputation": {
         "desc": "Raise the reputation of the server.",
         "usage": "",
@@ -75,7 +95,7 @@ module.exports = {
 
     "use": {
         "desc": "Use an item.",
-        "usage": "[item number]",
+        "usage": "[item number] [number of items]",
         "access": "For everyone",
         "err": "You do not have this item.",
         "boxDone": "You got:",
