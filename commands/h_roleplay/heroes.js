@@ -4,7 +4,7 @@ const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const { MessageEmbed, MessageButton } = require("discord.js");
 const { COIN, STAR } = require("../../config");
-const {error, pagination} = require('../../functions');
+const {error, paginationBig} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 
@@ -44,19 +44,31 @@ module.exports = {
     const userids = [message.author.id]
     const button1 = new MessageButton()
           .setCustomId('previousbtn')
-          .setLabel(hh.t1)
-          .setStyle('DANGER');
+          .setEmoji("⏪")
+          .setStyle('SECONDARY');
+
+          const button0 = new MessageButton()
+          .setCustomId('0btn')
+          .setEmoji("⏮")
+          .setStyle('SECONDARY');
+
+          const buttonlast = new MessageButton()
+          .setCustomId('lastbtn')
+          .setEmoji("⏭")
+          .setStyle('SECONDARY');
 
           const button2 = new MessageButton()
           .setCustomId('nextbtn')
-          .setLabel(hh.t2)
-          .setStyle('SUCCESS');
+          .setStyle('SECONDARY')
+          .setEmoji("⏩");
 
     let buttonList = [
+        button0,
         button1,
-        button2
+        button2,
+        buttonlast
     ]
-    pagination(message, newdr, buttonList, timeout, userids)
+    paginationBig(message, newdr, buttonList, timeout, userids)
     function cAv(av) {
       if (av === "Да") {
         return hh.yes

@@ -4,7 +4,7 @@ const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageButton } = require("discord.js");
-const {error, pagination} = require('../../functions');
+const {error, paginationBig} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 
@@ -84,23 +84,35 @@ module.exports = {
     // .addField(`💯 ${hm.level} ${item2.level}\n❤ ${hm.health} ${item2.health}\n⚔ ${hm.damage} ${item2.damage}`, `** **`)
 
     const button1 = new MessageButton()
-                .setCustomId('previousbtn')
-                .setLabel(m.b1)
-                .setStyle('DANGER');
+    .setCustomId('previousbtn')
+    .setEmoji("⏪")
+    .setStyle('SECONDARY');
 
-                const button2 = new MessageButton()
-                .setCustomId('nextbtn')
-                .setLabel(m.b2)
-                .setStyle('SUCCESS');
+    const button0 = new MessageButton()
+    .setCustomId('0btn')
+    .setEmoji("⏮")
+    .setStyle('SECONDARY');
 
-          let buttonList = [
-              button1,
-              button2
-          ]
+    const buttonlast = new MessageButton()
+    .setCustomId('lastbtn')
+    .setEmoji("⏭")
+    .setStyle('SECONDARY');
+
+    const button2 = new MessageButton()
+    .setCustomId('nextbtn')
+    .setStyle('SECONDARY')
+    .setEmoji("⏩");
+
+    let buttonList = [
+      button0,
+      button1,
+      button2,
+      buttonlast
+    ]
 
           const userids = [message.author.id]
 
-          pagination(message, arr, buttonList, 100000, userids)
+          paginationBig(message, arr, buttonList, 100000, userids)
     }   
   }
 }
