@@ -54,7 +54,7 @@ module.exports = {
     if (!rp || rp.item === null) return error(message, d.error3);
 
     const get1 = mrp.heroes.find(x => x.name === mrp.item)
-    const get2 = mrp.heroes.find(x => x.name === rp.item)
+    const get2 = rp.heroes.find(x => x.name === rp.item)
 
     let h1 = get2.health
     let h2 = get1.health
