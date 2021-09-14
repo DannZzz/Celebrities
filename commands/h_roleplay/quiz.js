@@ -60,6 +60,8 @@ module.exports = {
       })
       asd.save()
     }
+    const vip1 = 10;
+    const vip2 = 15;
     bag = await bd.findOne({userID: message.author.id});
     const filter = m => m.author.id === message.author.id;
     let Emb = new MessageEmbed()
@@ -85,9 +87,9 @@ ${q.question}
       userResponse = a
       if (userResponse === getAnswer) {
         await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: reward}});
-        if (bag["vip2"] && rp.quizCount !== 10) {
+        if (bag["vip2"] && rp.quizCount !== vip2) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
-        } else if (!bag["vip2"] && rp.quizCount < 5) {
+        } else if (!bag["vip2"] && rp.quizCount < vip1) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
         }
         return msg.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`)]})
@@ -101,9 +103,9 @@ ${q.question}
       userResponse = b
       if (userResponse === getAnswer) {
         await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: reward}}); 
-        if (bag["vip2"] && rp.quizCount !== 10) {
+        if (bag["vip2"] && rp.quizCount !== vip2) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
-        } else if (!bag["vip2"] && rp.quizCount < 5) {
+        } else if (!bag["vip2"] && rp.quizCount < vip1) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
         }
          return msg.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`)]})
@@ -117,9 +119,9 @@ ${q.question}
       userResponse = c
       if (userResponse === getAnswer) {
         await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: reward}});
-        if (bag["vip2"] && rp.quizCount !== 10) {
+        if (bag["vip2"] && rp.quizCount !== vip2) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
-        } else if (!bag["vip2"] && rp.quizCount < 5) {
+        } else if (!bag["vip2"] && rp.quizCount < vip1) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
         }
         return msg.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`)]})
@@ -133,9 +135,9 @@ ${q.question}
       userResponse = d
       if (userResponse === getAnswer) {
         await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: reward}});
-        if (bag["vip2"] && rp.quizCount !== 10) {
+        if (bag["vip2"] && rp.quizCount !== vip2) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
-        } else if (!bag["vip2"] && rp.quizCount < 5) {
+        } else if (!bag["vip2"] && rp.quizCount < vip1) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
         }
         return msg.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`)]})

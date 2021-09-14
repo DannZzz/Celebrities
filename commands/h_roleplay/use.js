@@ -64,42 +64,51 @@ module.exports = {
             await rpg.updateOne({userID: user.id}, {$inc: {box: -1}});
             return embed(message, u.boxDone + ` ${prize.emoji}`, false)
         } else if (it == 2) {
+            let val = 1
+            if (args[1] && args[1].toLowerCase() === "all") val = rp[item.name] 
             if (!rp.item) return error(message, hm.noHero)
-            await rpg.updateOne({userID: user.id}, {$inc: {hlt: -1}});
+            await rpg.updateOne({userID: user.id}, {$inc: {hlt: -val}});
 
             let getItem = rp.heroes;
 
             let get = rp.heroes.findIndex(x => x.name === rp.item) 
 
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.health`]: item.effect}});
+            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.health`]: item.effect * val}});
             
             return message.react(AGREE)
         } else if (it == 3) {
+            let val = 1
+            if (args[1] && args[1].toLowerCase() === "all") val = rp[item.name] 
             if (!rp.item) return error(message, hm.noHero)
-            await rpg.updateOne({userID: user.id}, {$inc: {dmg: -1}});
+            await rpg.updateOne({userID: user.id}, {$inc: {dmg: -val}});
 
             let get = rp.heroes.findIndex(x => x.name === rp.item)
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.damage`]: item.effect}});
+            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.damage`]: item.effect * val}});
             return message.react(AGREE)
         } else if (it == 4) {
+            let val = 1
+            if (args[1] && args[1].toLowerCase() === "all") val = rp[item.name]
             if (!rp.item) return error(message, hm.noHero)
-            await rpg.updateOne({userID: user.id}, {$inc: {lvl: -1}});
+            await rpg.updateOne({userID: user.id}, {$inc: {lvl: -val}});
 
-            let addH = 250;
-            let addD = 20;
+            let addH = 250 * val;
+            let addD = 20 * val;
+            let leve = item.effect * val;
 
             let get = rp.heroes.findIndex(x => x.name === rp.item)
             await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.health`]: addH}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.level`]: item.effect}});
+            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.level`]: leve}});
             await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.damage`]: addD}});
             
             return message.react(AGREE)
         } else if (it == 5) {
+            let val = 1
+            if (args[1] && args[1].toLowerCase() === "all") valu= rp[item.name] 
             if (!rp.item) return error(message, hm.noHero)
-            await rpg.updateOne({userID: user.id}, {$inc: {meat: -1}});
+            await rpg.updateOne({userID: user.id}, {$inc: {meat: -val}});
 
             let get = rp.heroes.findIndex(x => x.name === rp.item)
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.health`]: item.effect}});
+            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.health`]: item.effect * val}});
             
             return message.react(AGREE)
         } else if (it == 6) {

@@ -51,6 +51,8 @@ module.exports = {
       const numbs = ["1", "2", "3", "4", "5", "6", "7", "8"];
       if (!numbs.includes(args[0])) return error(message, b.itemErr);
       let item;
+      let value = 1
+      if (args[1] || !isNaN(args[1])) value = Math.round(args[1]) 
       const it = args[0]
       if (it == 1) item = ITEMS.box
       if (it == 2) item = ITEMS.hlt
@@ -61,19 +63,19 @@ module.exports = {
       if (it == 7) item = ITEMS.pack2
       if (it == 8) item = ITEMS.pack3
       if (!item.cost) return error(message, b.noItem);
+      const getCost = value * item.cost
+      if (bag.stars < getCost) return error(message, noStar);
 
-      if (bag.stars < item.cost) return error(message, noStar);
+      await bd.updateOne({userID: user.id}, {$inc: {stars: -getCost}});
 
-      await bd.updateOne({userID: user.id}, {$inc: {stars: -item.cost}});
-
-      if (it == 1) await rpg.updateOne({userID: user.id}, {$inc: {box: 1}});
-      if (it == 2) await rpg.updateOne({userID: user.id}, {$inc: {hlt: 1}});
-      if (it == 3) await rpg.updateOne({userID: user.id}, {$inc: {dmg: 1}});
-      if (it == 4) await rpg.updateOne({userID: user.id}, {$inc: {lvl: 1}});
-      if (it == 5) await rpg.updateOne({userID: user.id}, {$inc: {meat: 1}});
-      if (it == 6) await rpg.updateOne({userID: user.id}, {$inc: {pack1: 1}});
-      if (it == 7) await rpg.updateOne({userID: user.id}, {$inc: {pack2: 1}});
-      if (it == 8) await rpg.updateOne({userID: user.id}, {$inc: {pack3: 1}});
+      if (it == 1) await rpg.updateOne({userID: user.id}, {$inc: {box: value}});
+      if (it == 2) await rpg.updateOne({userID: user.id}, {$inc: {hlt: value}});
+      if (it == 3) await rpg.updateOne({userID: user.id}, {$inc: {dmg: value}});
+      if (it == 4) await rpg.updateOne({userID: user.id}, {$inc: {lvl: value}});
+      if (it == 5) await rpg.updateOne({userID: user.id}, {$inc: {meat: value}});
+      if (it == 6) await rpg.updateOne({userID: user.id}, {$inc: {pack1: value}});
+      if (it == 7) await rpg.updateOne({userID: user.id}, {$inc: {pack2: value}});
+      if (it == 8) await rpg.updateOne({userID: user.id}, {$inc: {pack3: value}});
       
       
 
