@@ -11,7 +11,7 @@ module.exports = {
       config: {
         name: "welcome",
         category: "f_settings",
-        aliases: ["welcomer"]
+        aliases: ["welcomer", 'приветствие']
     },
     run: async (bot, message, args) => {
       let limited = rateLimiter.take(message.author.id)

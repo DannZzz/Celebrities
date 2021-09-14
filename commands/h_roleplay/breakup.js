@@ -11,7 +11,7 @@ const { cyan } = require('../../JSON/colours.json');
 module.exports = {
     config: {
         name: "break-up",
-        aliases: '',
+        aliases: ['развестись'],
         category: 'h_roleplay',
       },
     run: async (bot, message, args, ops) => {

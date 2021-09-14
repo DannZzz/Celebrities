@@ -9,7 +9,7 @@ let rateLimiter = new RateLimiter(1, 3000);
 module.exports = {
     config: {
       name: "language",
-      aliases: ["lang"],
+      aliases: ["lang", 'язык'],
       category: "b_info"
     },
     run: async (bot, message, args) => {

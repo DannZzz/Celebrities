@@ -14,7 +14,7 @@ const Canvas = require('canvas');
 module.exports = {
   config: {
     name: "journey",
-    aliases: ['аdventure', 'аdventures'],
+    aliases: ['аdventure', 'аdventures', 'приключения'],
     category: 'h_roleplay'
   },
   run: async (bot, message, args) => {
@@ -38,7 +38,7 @@ module.exports = {
     const nowLevel = rp.surviveLevel;
     const levelRewardAdd = 10;
     const levelReward = levelRewardAdd * nowLevel
-    const argsWords = ['info']
+    const argsWords = ['info', 'инфо']
 
     const hero = heroes[rp.item];
     let enemy;

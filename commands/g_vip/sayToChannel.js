@@ -7,7 +7,7 @@ module.exports = {
   config: {
     name: "channel",
     category: "g_vip",
-    aliases: "",
+    aliases: ['канал'],
   },
   run: async (bot, message, args) => {
     let limited = rateLimiter.take(message.author.id)

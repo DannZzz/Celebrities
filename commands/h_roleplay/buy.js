@@ -14,7 +14,7 @@ const ITEMS = require('../../JSON/items');
 module.exports = {
   config: {
     name: "buy",
-    aliases: ['get'],
+    aliases: ['get', "купить"],
     category: 'h_roleplay'
   },
   run: async (bot, message, args) => {

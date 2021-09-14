@@ -17,7 +17,7 @@ let rateLimiter = new RateLimiter(1, 5000);
 module.exports = {
   config: {
     name: "quiz",
-    aliases: '',
+    aliases: ['викторина'],
     category: 'h_roleplay'
   },
   run: async (bot, message, args) => {

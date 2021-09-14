@@ -17,7 +17,7 @@ const devs = ['382906068319076372'];
 module.exports = {
   config: {
     name: "clan",
-    aliases: "",
+    aliases: ['клан'],
     category: 'h_roleplay'
   },
   run: async (bot, message, args, ops) => {

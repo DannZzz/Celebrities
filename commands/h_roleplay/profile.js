@@ -17,7 +17,7 @@ const moment = require('moment');
 module.exports = {
   config: {
     name: 'profile',
-    aliases: '',
+    aliases: ['профиль'],
     category: 'h_roleplay'
   },
   run: async (bot, message, args) => {

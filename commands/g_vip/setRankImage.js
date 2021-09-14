@@ -13,7 +13,7 @@ module.exports = {
   config: {
     name: "rank-image",
     category: "g_vip",
-    aliases: ""
+    aliases: ['ранг-фон']
   },
   run: async (bot, message, args) => {
     let limited = rateLimiter.take(message.author.id)

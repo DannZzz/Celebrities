@@ -11,7 +11,7 @@ let rateLimiter = new RateLimiter(1, 5000);
 module.exports = {
   config: {
     name: "enemies",
-    aliases: '',
+    aliases: ['враги'],
     category: 'h_roleplay',
   },
   run: async (bot, message, args) => {

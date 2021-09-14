@@ -9,7 +9,7 @@ const {error, embed} = require('../../functions');
 module.exports = {
     config: {
         name: "daily",
-        aliases: ["day"],
+        aliases: ["day", 'ежедн'],
         category: "h_roleplay",
     },
     run: async (bot, message, args) => {

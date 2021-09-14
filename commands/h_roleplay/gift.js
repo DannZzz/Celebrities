@@ -9,7 +9,7 @@ module.exports = {
   config: {
     name: "gift",
     category: "h_roleplay",
-    aliases: ["present"],
+    aliases: ["present", 'подарок'],
   },
   run: async (bot, message, args, ops) => {
     let limited = rateLimiter.take(message.author.id)

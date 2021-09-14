@@ -13,7 +13,7 @@ module.exports = {
   config: {
     name: "profile-image",
     category: "g_vip",
-    aliases: "",
+    aliases: ['профиль-фон'],
   },
   run: async (bot, message, args) => {
     let limited = rateLimiter.take(message.author.id)

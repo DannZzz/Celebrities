@@ -14,7 +14,7 @@ let rateLimiter = new RateLimiter(1, 3000);
 module.exports = {
   config: {
     name: "join",
-    aliases: '',
+    aliases: ['вступить'],
     category: 'h_roleplay',
   },
   run: async (bot, message, args) => {

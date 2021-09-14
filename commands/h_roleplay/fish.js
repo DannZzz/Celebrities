@@ -18,7 +18,7 @@ function randomRange(min, max) {
 module.exports = {
     config: {
         name: 'fish',
-        aliases: ['catch-fish'],
+        aliases: ['catch-fish', 'рыбачить', 'рыба'],
         category: 'h_roleplay'
     },
     run: async (bot, message, args) => {

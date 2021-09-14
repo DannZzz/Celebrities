@@ -11,7 +11,7 @@ module.exports = {
       config: {
         name: "afk",
         category: "g_vip",
-        aliases: ""
+        aliases: ['афк']
     },
     run: async (bot, message, args) => {
         let limited = rateLimiter.take(message.author.id);

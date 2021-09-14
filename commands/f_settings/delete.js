@@ -9,7 +9,7 @@ module.exports = {
       config: {
         name: "delete",
         category: "f_settings",
-        aliases: ""
+        aliases: ['удалить']
     },
     run: async (bot, message, args) => {
       let limited = rateLimiter.take(message.author.id)

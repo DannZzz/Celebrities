@@ -15,7 +15,7 @@ const Canvas = require('canvas');
 module.exports = {
   config: {
     name: "battle",
-    aliases: '',
+    aliases: ["битва"],
     category: 'h_roleplay'
   },
   run: async (bot, message, args) => {

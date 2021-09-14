@@ -13,7 +13,7 @@ const {error} = require('../../functions');
 module.exports = {
   config: {
     name: "upgrade",
-    aliases: ['update'],
+    aliases: ['update', 'прокачать'],
     category: 'h_roleplay'
   },
   run: async (bot, message, args) => {
@@ -37,7 +37,7 @@ module.exports = {
     const get = rp.heroes.find(x => x.name === rp.item)
     let requiredValue = get.level * levelCost;
 
-    const resp = ['info']
+    const resp = ['info', 'инфо']
     
     const getIndex = rp.heroes.findIndex(x => x.name === rp.item)
 
