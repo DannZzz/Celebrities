@@ -156,7 +156,7 @@ module.exports = {
           await rpg.findOneAndUpdate({userID: winner.id}, {$inc: {wins: 1}})
           await bd.updateOne({userID: winner.id}, {$inc: {stars: value*2}});
           const WinData = await rpg.findOne({userID: winner.id});
-          winData = WinData.heroes.find(x => x.name === winData.item)
+          winData = WinData.heroes.find(x => x.name === WinData.item)
           let hero = heroes[winData.name]
           let it = heroes[item]
           let winEmb = new MessageEmbed()
