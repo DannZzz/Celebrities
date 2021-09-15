@@ -10,7 +10,7 @@ module.exports = {
     config: {
       name: "language",
       aliases: ["lang", 'язык'],
-      category: "b_info"
+      category: "f_settings"
     },
     run: async (bot, message, args) => {
       let limited = rateLimiter.take(message.author.id)
