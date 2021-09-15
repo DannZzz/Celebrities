@@ -44,6 +44,6 @@ module.exports = {
         name: "pack3",
         emoji: pack3,
         cost: 5000,
-        list: ["Blazer", "Ariel", "Athena"]
+        list: ["Hunter", "Blazer", "Ariel", "Athena"]
     }
 }

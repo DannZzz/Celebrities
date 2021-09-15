@@ -238,5 +238,19 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 20
+  },
+  "Hunter": {
+    "name": "Hunter",
+    "nameRus": "Охотник",
+    "health": 7000,
+    "damage": 250,
+    "cost": 2500,
+    "costType": "star",
+    "url": "https://i.ibb.co/8MmXtmS/Hunter.jpg",
+    "descriptionEN": "Dragon Hunter...\nHow many dragons are there in the world? How many dragon hunters are there in the world?",
+    "description": "Охотник за драконами...\nСколько в мире драконов? Сколько в мире охотников за драконами?",
+    "available": "Да",
+    "vip": true,
+    "upgradeCost": 100
   }
 }
