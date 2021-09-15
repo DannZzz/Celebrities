@@ -47,6 +47,7 @@
   "EaterSkull" : {
     "name": "EaterSkull",
     "nameRus": "Череп-Пожиратель",
+    "boss": true,
     "health": 15000,
     "damage": 1100,
     "reward": 100,
@@ -57,11 +58,23 @@
   "FireWalker" : {
     "name": "FireWalker",
     "nameRus": "Ходячий в огне",
+    "boss": true,
     "health": 25000,
     "damage": 2000,
     "reward": 200,
     "url": "https://i.ibb.co/kJtqDbh/Fire-Walker.jpg",
     "descriptionEN": "Fire, fire, and more fire!\nA huge large monster shines in flames. Team up with friends to win.",
     "description": "Огонь, огонь, и ещё раз огонь!\nОгромный большой монстр сияет в огне. Объединись с друзьями чтобы выиграть."
+  },
+  "Flor" : {
+    "name": "Flor",
+    "nameRus": "Флор",
+    "boss": true,
+    "health": 55000,
+    "damage": 5500,
+    "reward": 500,
+    "url": "https://i.ibb.co/Lrnt099/Flor.jpg",
+    "descriptionEN": "Flor — One of Thor's students. When he was still small, Thor himself noticed him. He invited him to study with him. Flor happily agreed. The little boy trained every day and gave all his strength. When the boy grew up he became very strong. But he began to direct his enormous forces to bad actions.",
+    "description": "Флор — Один из учеников Тора. Когда он был ещё мал его заметил сам Тор. Он ему предложил учиться у него. Флор с радостью согласился. Маленький мальчик тренировался каждый день и отдавал все свои силы. Когда мальчик вырос он стал очень сильным. Но свои огромные силы начал направлять на плохие действия."
   }
 }
