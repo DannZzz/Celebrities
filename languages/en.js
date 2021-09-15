@@ -225,6 +225,7 @@ module.exports = {
         "avail": "Available:",
         "nousage": "No usage.",
         "aliases": "Aliases:",
+        "dm": "Open your DM messages, and try again.",
         "noaliases": "There are no aliases.",
         "cmd": "Command:",
         "Desc": "Description:",
