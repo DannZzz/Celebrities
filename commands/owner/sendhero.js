@@ -34,17 +34,17 @@ module.exports = {
       newData.save()
     }
     rp = await rpg.findOne({userID: user.id})
-    if(rp.heroes.length >= 2) return error(message, "Участник имеет достаточно героев.")
+    if(rp.heroes.length === rp.itemCount) return error(message, "Участник имеет достаточно героев.")
+
+    
+    
     if(!args[1]) return error(message, "Укажите подарок.")
-    const items = ["Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-Duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
+    const items = ["Hunter", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
     if (!items.includes(firstUpperCase(args[1].toLowerCase()))) return error(message, "Герой не найден.")
     let giftType = heroes[firstUpperCase(args[01].toLowerCase())]
-
+    let get = rp.heroes.find(x => x.name === giftType) 
+    if (get) error(message, "Участник уже имеет этого героя.")
     await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: giftType.name}})
-    await rpg.findOneAndUpdate({userID: user.id}, {$set: {health: giftType.health}})
-    await rpg.findOneAndUpdate({userID: user.id}, {$set: {damage: giftType.damage}})
-    await rpg.findOneAndUpdate({userID: user.id}, {$set: {level: 1}})
-
     await rp.heroes.push({
       name: giftType.name,
       level: 1,
