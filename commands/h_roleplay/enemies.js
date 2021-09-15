@@ -3,7 +3,7 @@ const { cyan } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const { MessageEmbed, MessageButton } = require("discord.js");
-const { COIN, STAR } = require("../../config");
+const { COIN, STAR, LEFT, RIGHT, DLEFT, DRIGHT, CANCEL } = require("../../config");
 const {error, paginationBig} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
@@ -94,27 +94,33 @@ module.exports = {
     const pages = allEnemies
     const button1 = new MessageButton()
           .setCustomId('previousbtn')
-          .setEmoji("⏪")
+          .setEmoji(LEFT)
           .setStyle('SECONDARY');
 
           const button0 = new MessageButton()
           .setCustomId('0btn')
-          .setEmoji("⏮")
+          .setEmoji(DLEFT)
           .setStyle('SECONDARY');
 
           const buttonlast = new MessageButton()
           .setCustomId('lastbtn')
-          .setEmoji("⏭")
+          .setEmoji(DRIGHT)
           .setStyle('SECONDARY');
 
           const button2 = new MessageButton()
           .setCustomId('nextbtn')
           .setStyle('SECONDARY')
-          .setEmoji("⏩");
+          .setEmoji(RIGHT);
+
+          const cancel = new MessageButton()
+          .setCustomId('cancel')
+          .setStyle('SECONDARY')
+          .setEmoji(CANCEL);
 
     let buttonList = [
         button0,
         button1,
+        cancel,
         button2,
         buttonlast
     ]
