@@ -1,4 +1,4 @@
-exports.PREFIX = '?';
+exports.PREFIX = '!!';
 
 exports.DEV = "Dann#0006";
 
@@ -18,6 +18,15 @@ exports.pack2 = "<:packElite:886488651549249556>",
 
 exports.pack3 = "<:packVip:886487931974467614>",
 
+exports.LEFT = "<:leftarrow:887652944047116288>";
+
+exports.CANCEL = "<:cancel:887654747832746014>";
+
+exports.RIGHT = "<:rightarrow:887652943917101086>";
+
+exports.DLEFT = "<:leftchevron:887652944525287464>";
+
+exports.DRIGHT = "<:rightchevron:887652944353329162>";
 
 exports.botINVITE = "https://discord.com/api/oauth2/authorize?client_id=726784476377514045&permissions=244210068727&scope=bot"
 

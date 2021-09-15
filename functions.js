@@ -307,7 +307,8 @@ module.exports = {
       (i.customId === buttonList[0].customId ||
       i.customId === buttonList[1].customId ||
       i.customId === buttonList[2].customId ||
-      i.customId === buttonList[3].customId) &&
+      i.customId === buttonList[3].customId ||
+      i.customId === buttonList[4].customId) &&
       ids.includes(i.user.id);
 
     const collector = await curPage.createMessageComponentCollector({
@@ -316,6 +317,7 @@ module.exports = {
     });
 
     collector.on("collect", async (i) => {
+      let asd = false
       switch (i.customId) {
         case buttonList[0].customId:
           page = 0;
@@ -324,20 +326,37 @@ module.exports = {
           page = page > 0 ? --page : pages.length - 1;
           break;
         case buttonList[2].customId:
+          asd = true
+          break;  
+        case buttonList[3].customId:
           page = page + 1 < pages.length ? ++page : 0;
           break;
-        case buttonList[3].customId:
+        case buttonList[4].customId:
           page = pages.length-1;
           break;  
         default:
           break;
       }
+      
       await i.deferUpdate();
       await i.editReply({
         embeds: [pages[page].setFooter(`${page + 1} / ${pages.length}`)],
         components: [row],
       }).catch(()=>interaction.react('❌'));
       collector.resetTimer();
+      if (asd) {
+        const disabledRow = new MessageActionRow().addComponents(
+          buttonList[0].setDisabled(true),
+          buttonList[1].setDisabled(true),
+          buttonList[2].setDisabled(true),
+          buttonList[3].setDisabled(true),
+          buttonList[4].setDisabled(true)
+        );
+        curPage.edit({
+          embeds: [pages[page].setFooter(`${page + 1} / ${pages.length}`)],
+          components: [disabledRow],
+        });
+      }
     });
 
     collector.on("end", () => {
@@ -346,7 +365,8 @@ module.exports = {
           buttonList[0].setDisabled(true),
           buttonList[1].setDisabled(true),
           buttonList[2].setDisabled(true),
-          buttonList[3].setDisabled(true)
+          buttonList[3].setDisabled(true),
+          buttonList[4].setDisabled(true)
         );
         curPage.edit({
           embeds: [pages[page].setFooter(`${page + 1} / ${pages.length}`)],
