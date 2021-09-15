@@ -32,7 +32,7 @@ module.exports = {
         .setTitle(`${obj.name} (${obj.nameRus})`)
         .setThumbnail(obj.url)
         .setDescription(`${obj.boss ? "<:monsterboss:887750235646996570> Boss\n" : ""}${LANG.lang === "en" ? obj.descriptionEN : obj.description}`)
-        .addField(`❤ ${hm.health} ${obj.health} x ${asdd}`, `⚔ **${hm.damage} ${obj.damage} x ${asdd}**`, true)
+        .addField(`❤ ${hm.health} ${obj.boss ? obj.health : `${obj.health} x ${asdd}`}`, `⚔ **${hm.damage} ${obj.boss ? obj.damage : `${obj.damage} x ${asdd}`}**`, true)
         )
       
     }
