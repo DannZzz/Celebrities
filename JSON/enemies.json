@@ -2,8 +2,8 @@
   "Jorj" : {
     "name": "Jorj",
     "nameRus": "Жорж",
-    "health": 150,
-    "damage": 10,
+    "health": 200,
+    "damage": 20,
     "url": "https://i.ibb.co/mydPsWh/Jorj.jpg",
     "descriptionEN": "Jorj - are supernatural humanoid creatures who, according to Western European mythology, live in underground caves and cannot stand sunlight, known as goblins.",
     "description": "Жорж - сверхъестественное человекоподобные создания, живущие, согласно западноевропейской мифологии, в подземных пещерах и не переносящие солнечного света, известны как гоблины."
@@ -11,8 +11,8 @@
   "Cousin" : {
     "name": "Cousin",
     "nameRus": "Кузен",
-    "health": 300,
-    "damage": 25,
+    "health": 400,
+    "damage": 40,
     "url": "https://i.ibb.co/Tb3ZGHd/Cousin.jpg",
     "descriptionEN": "Cousin is a mythological creature in the traditions of the Slavs. Often it is an incubus - the hypostasis of a walking, fiery devil. D'Lord's right hand.",
     "description": "Кузен - мифологическое существо в преданиях славян. Часто является инкубом — ипостасью ходячего, огненного чёрта. Правая рука Д'Лорда."
@@ -20,8 +20,8 @@
   "Arthas" : {
     "name": "Arthas",
     "nameRus": "Артас",
-    "health": 500,
-    "damage": 40,
+    "health": 600,
+    "damage": 50,
     "url": "https://i.ibb.co/31C0tsb/Arthas.jpg",
     "descriptionEN": "Arthas is a legendary creature from Japanese mythology, an incredible embodiment of lightning. Arthas is an enemy of the people because of the storm lightning, thereby frightening the people. In Japanese mythology, it is said that Arthas is the enemy of the people not only because of lightning, but also because of the battles that they lost to him.",
     "description": "Артас — легендарное существо из японской мифологии, невероятное воплощение молнии. Артас враг народа из-за штормовых молний, тем самым пугает народ. В японской мифологии сказано, что Артас противник народа не только из-за молний,а ещё из-за битв которые они ему проигрывали."
@@ -29,8 +29,8 @@
   "D'Wolf" : {
     "name": "D'Wolf",
     "nameRus": "Д'Волк",
-    "health": 600,
-    "damage": 45,
+    "health": 800,
+    "damage": 70,
     "url": "https://i.ibb.co/jv3T0zv/D-039-Wolf.jpg",
     "descriptionEN": "D'Wolf - A dangerous animal? I don't think so.\nAn enchanted spirit that works for D'Lord. History suggests that D'Wolf used to be the most beautiful prince of the north.",
     "description": "Д'Волк — Опасное животное? Не думаю.\nЗаколдованный дух, который работает на Д'Лорда. История говорит о том, что раньше Д'Волк был самым прекрасным принцом севера."
@@ -38,8 +38,8 @@
   "D'Lord" : {
     "name": "D'Lord",
     "nameRus": "Д'Лорд",
-    "health": 800,
-    "damage": 50,
+    "health": 1100,
+    "damage": 110,
     "url": "https://i.ibb.co/Jm3XpXK/D-039-Lord.jpg",
     "descriptionEN": "D'Lord - the ancient Egyptian god of the moon, time, wisdom and culture, originally D'Lord and the good and wise spirit supposed in him, heralding the spilling of the Nile and destroying harmful reptiles.",
     "description": "Д'Лорд — древнеегипетский бог луны, времени, премудрости и культуры, первоначально Д'Лорд и предполагавшийся в нем благой и премудрый дух, возвещавший разлитие Нила и истреблявший вредных гадов."
