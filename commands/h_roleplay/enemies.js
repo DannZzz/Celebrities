@@ -21,9 +21,21 @@ module.exports = {
       const getLang = require("../../models/serverSchema");
       const LANG = await getLang.findOne({serverID: message.guild.id});
       const {enemies: e, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`); 
-      
-       
+      const asdd = hm.level.substring(0, hm.level.length-1)
     let allEnemies = []
+    let newdr = [];
+    for (let key in enemies) {
+      var obj = enemies[key];
+        newdr.push(
+        new MessageEmbed()
+        .setColor(cyan)
+        .setTitle(`${obj.name} (${obj.nameRus})`)
+        .setThumbnail(obj.url)
+        .setDescription(`${obj.boss ? "<:monsterboss:887750235646996570> Boss\n" : ""}${LANG.lang === "en" ? obj.descriptionEN : obj.description}`)
+        .addField(`❤ ${hm.health} ${obj.health} x ${asdd}`, `⚔ **${hm.damage} ${obj.damage} x ${asdd}**`, true)
+        )
+      
+    }
 
     const jorj = enemies["Jorj"]
     const enemy1 = new MessageEmbed()
@@ -124,7 +136,7 @@ module.exports = {
         button2,
         buttonlast
     ]
-    paginationBig(message, pages, buttonList, timeout, userids)
+    paginationBig(message, newdr, buttonList, timeout, userids)
 
 
   }

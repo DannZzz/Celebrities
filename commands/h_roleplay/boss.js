@@ -80,6 +80,7 @@ module.exports = {
     let allLevel = (mrp.level + rp1.level + rp2.level) / 3
 
     if(allLevel <= 27) boss = enemies["EaterSkull"]
+    if(allLevel >= 50) boss = enemies["Flor"]
 
     let bossHealth = boss.health
     let bossDamage = boss.damage
