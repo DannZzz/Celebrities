@@ -177,7 +177,7 @@ async function paginationBig(interaction, pages, buttonList, timeout = 120000, i
     })
     interaction.react("<:inbox:887742555603734528>")
   } catch (error) {
-    interaction.channel.send(text);
+    return interaction.channel.send(DISAGREE+" "+text);
   }
   //.then(() => .catch(() => );
   
