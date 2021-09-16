@@ -39,11 +39,7 @@ module.exports = {
     rp = await rpg.findOne({ userID: user.id });
     let bag = await bd.findOne({ userID: user.id });
     let profile = await pd.findOne({ userID: user.id });
-    const author = coinData.drag
-    let timeout;
-    if (bag["vip2"] === true) { timeout = 86400000 * (3 / 2) } else {
-      timeout = 86400000 * 3;
-    }
+    
     
     if (!args[0]) return error(message, b.specHero)
 
@@ -98,11 +94,7 @@ module.exports = {
       }
     }
 
-    if (author !== null && timeout - (Date.now() - author) > 0) {
-      let time = new Date(timeout - (Date.now() - author));
-
-      return error(message, b.time(time));
-    }
+   
     
     const type = firstUpperCase(args[0].toLowerCase());
     if (!items.includes(type)) return error(message, b.nh)
@@ -126,7 +118,6 @@ module.exports = {
           return error(message, b.error);
         }
         await bd.findOneAndUpdate({userID: user.id}, {$inc: {stars: -item.cost}});
-        await pd.findOneAndUpdate({userID: user.id}, {$set: {drag: Date.now()}})
         await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: type}});
 
         await rp.heroes.push({
