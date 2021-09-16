@@ -4,7 +4,7 @@ const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed } = require("discord.js");
-const { COIN, AGREE } = require("../../config");
+const { COIN, AGREE, STAR } = require("../../config");
 const { checkValue } = require("../../functions");
 const {error, embed, perms, firstUpperCase} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
@@ -46,6 +46,7 @@ module.exports = {
 
         if (it == 1) {
             const random = Math.floor(Math.random() * 40);
+            const randomStar = Math.ceil(Math.random() * 150);
             let prize;
             if ( random <= 2 ) {
                 prize = ITEMS.lvl;
@@ -62,7 +63,8 @@ module.exports = {
             }
 
             await rpg.updateOne({userID: user.id}, {$inc: {box: -1}});
-            return embed(message, u.boxDone + ` ${prize.emoji}`, false)
+            await bd.updateOne({userID: user.id}, {$inc: {stars: randomStar}})
+            return embed(message, u.boxDone + ` ${prize.emoji}, ${randomStar} ${STAR}`, false)
         } else if (it == 2) {
             let val = 1
             if (args[1] && args[1].toLowerCase() === "all") val = rp[item.name] 
