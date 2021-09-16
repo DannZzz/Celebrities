@@ -77,7 +77,7 @@ module.exports = {
 
     let boss = enemies["FireWalker"]
 
-    let allLevel = (mrp.level + rp1.level + rp2.level) / 3
+    let allLevel = (get1.level + get2.level + get3.level) / 3
 
     if(allLevel <= 27) boss = enemies["EaterSkull"]
     if(allLevel >= 50) boss = enemies["Flor"]

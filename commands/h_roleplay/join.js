@@ -58,11 +58,11 @@ module.exports = {
     if(rp.clanID !== null) return error(message, cm.clan);
     if (!getClan.appsStatus) return error(message, j.offed);
     if(getClan.space === members) return error(message, j.limit);
-
+    const get = rp.heroes.find(x => x.name === rp.item)
     await getClan.apps.unshift({
       tag: message.author.tag,
       hero: rp.item || cm.noHero,
-      level: rp.level,
+      level: get.level || "—",
       id: message.author.id
     })
     getClan.save()
