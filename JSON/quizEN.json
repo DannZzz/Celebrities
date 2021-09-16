@@ -55,8 +55,38 @@
     "a": "Mount Everest"
   },
   {
-    "q": "What is the tallest mountain in the world?",
-    "r": ["Mount Everest", "K2", "Tirich Mir", "Mount Gongga"],
-    "a": "Mount Everest"
+    "q": "How many countries still have the shilling as currency?",
+    "r": ["Four", "Three", "Six", "Five"],
+    "a": "Four"
+  },
+  {
+    "q": "What is the largest country in the world?",
+    "r": ["Russia", "China", "USA", "Canada"],
+    "a": "Russia"
+  },
+  {
+    "q": "What is the longest river in the world?",
+    "r": ["Nile", "Amazon", "Congo", "Ganga"],
+    "a": "Nile"
+  },
+  {
+    "q": "What is the hottest continent on Earth?",
+    "r": ["Australia", "Asia", "Africa", "South America"],
+    "a": "Africa"
+  },
+  {
+    "q": "In which year did Britain originally join the EEC, now known as the European Union?",
+    "r": ["1973", "1974", "1983", "1984"],
+    "a": "1973"
+  },
+  {
+    "q": "Which singer has the most UK Number One singles ever?",
+    "r": ["Elvis Presley", "Michael Jackson", "Miley Cyrus", "Ricky Martin"],
+    "a": "Elvis Presley"
+  },
+  {
+    "q": "Which footballer has the most Instagram followers in the world - as of 2020?",
+    "r": ["Cristiano Ronaldo", "Lionel Messi", "Neymar", "Manuel Neuer"],
+    "a": "Cristiano Ronaldo"
   }
 ]
