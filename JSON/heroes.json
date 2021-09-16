@@ -252,5 +252,19 @@
     "available": "Да",
     "vip": true,
     "upgradeCost": 100
+  },
+  "Broken": {
+    "name": "Broken",
+    "nameRus": "Разбитый",
+    "health": 5000,
+    "damage": 150,
+    "cost": "Не известна.",
+    "costType": "dev",
+    "url": "https://i.ibb.co/9twZbPm/Broken.jpg",
+    "descriptionEN": "Where is my heart...?\nWhere am I?\nWho am I?\n\nHere are the questions I ask myself when you are not around.",
+    "description": "Где моё сердце...?\nГде я?\nКто я?\n\nВот какие вопросы я себе задаю, когда тебя нет рядом.",
+    "available": "Под",
+    "vip": false,
+    "upgradeCost": 50
   }
 }
