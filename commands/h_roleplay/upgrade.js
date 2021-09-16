@@ -7,7 +7,7 @@ const { MessageEmbed } = require("discord.js");
 const { COIN, STAR } = require("../../config");
 const { checkValue } = require("../../functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 5000);
+let rateLimiter = new RateLimiter(1, 3000);
 const {error} = require('../../functions');
 
 module.exports = {
