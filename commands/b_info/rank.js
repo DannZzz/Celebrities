@@ -143,6 +143,6 @@ module.exports = {
     .setTitle(user.user.tag)
     .setImage('attachment://rank.png')
 
-    message.reply({embeds: [emb], files: [att]})
+    message.reply({content: `${user}`, files: [att]})
   }
 }
