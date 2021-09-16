@@ -190,7 +190,7 @@ module.exports = {
             return new MessageEmbed()
             .setColor(cyan)
             .setAuthor("Магазин баффов")
-            .addField(`**#1** ${item.box.emoji} Ящик предметов: ${item.box.cost} ${STAR}`, `Даёт рандомный предмет`)
+            .addField(`**#1** ${item.box.emoji} Ящик предметов: ${item.box.cost} ${STAR}`, `Даёт рандомный предмет, и до 150 звёзд`)
             .addField(`**#2** ${item.hlt.emoji} Зелье жизни: ${item.hlt.cost} ${STAR}`, `Добавляет герою ${item.hlt.effect} единиц жизни`)
             .addField(`**#3** ${item.dmg.emoji} Зелье атаки: ${item.dmg.cost} ${STAR}`, `Добавляет герою ${item.dmg.effect} единиц атаку`)
             .addField(`**#4** ${item.lvl.emoji} Зелье уровня: Можно получить открывая ящики.`, `Увеличивает уровень героя ${item.lvl.effect} раз`)
