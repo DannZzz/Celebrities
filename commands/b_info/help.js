@@ -4,7 +4,7 @@ const serverModel = require("../../models/serverSchema")
 const { stripIndents } = require("common-tags");
 const { cyan } = require("../../JSON/colours.json");
 const { DEV, AGREE, PREFIX, DISAGREE, LEFT, RIGHT, DLEFT, DRIGHT, CANCEL  } = require('../../config');
-const {firstUpperCase} = require("../../functions");
+const {paginationBig, firstUpperCase} = require("../../functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 
@@ -157,101 +157,3 @@ module.exports = {
 };
 
 
-async function paginationBig(interaction, pages, buttonList, timeout = 120000, ids, text) {
-  //if (!msg && !msg.channel) throw new Error("Channel is inaccessible.");
-  if (!pages) throw new Error("Pages are not given.");
-  if (!buttonList) throw new Error("Buttons are not given.");
-  if (buttonList[0].style === "LINK" || buttonList[1].style === "LINK")
-    throw new Error(
-      "Link buttons are not supported with discordjs-button-pagination"
-    );
-
-  let page = 0;
-
-  const row = new MessageActionRow().addComponents(buttonList);
-  let curPage;
-  try {
-    curPage = await interaction.author.send({
-      embeds: [pages[page].setFooter(`${page + 1} / ${pages.length}`)],
-      components: [row]
-    })
-    interaction.react("<:inbox:887742555603734528>")
-  } catch (error) {
-    return interaction.channel.send(DISAGREE+" "+text);
-  }
-  //.then(() => .catch(() => );
-  
-  const filter = (i) =>
-    (i.customId === buttonList[0].customId ||
-    i.customId === buttonList[1].customId ||
-    i.customId === buttonList[2].customId ||
-    i.customId === buttonList[3].customId ||
-    i.customId === buttonList[4].customId) &&
-    ids.includes(i.user.id);
-
-  const collector = await curPage.createMessageComponentCollector({
-    filter,
-    time: timeout,
-  });
-
-  collector.on("collect", async (i) => {
-    let asd = false
-    switch (i.customId) {
-      case buttonList[0].customId:
-        page = 0;
-        break;
-      case buttonList[1].customId:
-        page = page > 0 ? --page : pages.length - 1;
-        break;
-      case buttonList[2].customId:
-        asd = true
-        break;  
-      case buttonList[3].customId:
-        page = page + 1 < pages.length ? ++page : 0;
-        break;
-      case buttonList[4].customId:
-        page = pages.length-1;
-        break;  
-      default:
-        break;
-    }
-    
-    await i.deferUpdate();
-    await i.editReply({
-      embeds: [pages[page].setFooter(`${page + 1} / ${pages.length}`)],
-      components: [row],
-    }).catch(()=>interaction.react('❌'));
-    collector.resetTimer();
-    if (asd) {
-      const disabledRow = new MessageActionRow().addComponents(
-        buttonList[0].setDisabled(true),
-        buttonList[1].setDisabled(true),
-        buttonList[2].setDisabled(true),
-        buttonList[3].setDisabled(true),
-        buttonList[4].setDisabled(true)
-      );
-      curPage.edit({
-        embeds: [pages[page].setFooter(`${page + 1} / ${pages.length}`)],
-        components: [disabledRow],
-      });
-    }
-  });
-
-  collector.on("end", () => {
-    if (!curPage.deleted) {
-      const disabledRow = new MessageActionRow().addComponents(
-        buttonList[0].setDisabled(true),
-        buttonList[1].setDisabled(true),
-        buttonList[2].setDisabled(true),
-        buttonList[3].setDisabled(true),
-        buttonList[4].setDisabled(true)
-      );
-      curPage.edit({
-        embeds: [pages[page].setFooter(`${page + 1} / ${pages.length}`)],
-        components: [disabledRow],
-      });
-    }
-  });
-
-  return curPage;
-}
