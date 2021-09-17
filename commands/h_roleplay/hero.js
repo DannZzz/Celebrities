@@ -1,8 +1,7 @@
 const heroes = require('../../JSON/heroes.json');
 const { cyan } = require('../../JSON/colours.json');
-const pd = require("../../models/profileSchema");
-const bd = require("../../models/begSchema");
-const rpg = require("../../models/rpgSchema");
+const {rpgFind, serverFind} = require("../../functions/models");
+
 const { MessageEmbed } = require("discord.js");
 const {error} = require('../../functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
@@ -16,15 +15,14 @@ module.exports = {
   },
   run: async (bot, message, args) => {
 
-    const getLang = require("../../models/serverSchema");
-    const LANG = await getLang.findOne({serverID: message.guild.id});
+    const LANG = await serverFind(message.guild.id);
     const {hero: h, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
    
     let limited = rateLimiter.take(message.author.id)
       if(limited) return
        
     const user = message.member;
-    let rp = await rpg.findOne({userID: user.id});
+    let rp = await rpgFind(user.id)
     if (rp && rp.item) {
     // if (rp.item === null && rp.heroes && rp.heroes.length !== 0) {
     //   await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: rp.heroes[0]["name"]}});

@@ -1,7 +1,8 @@
 
-const { STAR } = require('../../config');
+const { STAR, box } = require('../../config');
 const profileModel = require("../../models/profileSchema");
 const begModel = require("../../models/begSchema");
+const rpg = require("../../models/rpgSchema");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 const {error, embed} = require('../../functions');
@@ -40,9 +41,9 @@ module.exports = {
         } else {
             await profileModel.findOneAndUpdate({userID: user.id}, {$set: {daily: Date.now()}})
 
-            embed(message, `${d.done} ${STAR}`)
+            embed(message, `${d.done} ${STAR} ${and} 1 ${box}`)
             await begModel.findOneAndUpdate({userID: user.id},{$inc: {stars: 10}})
-
+            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {box: 1}})
         }
     }
 }
