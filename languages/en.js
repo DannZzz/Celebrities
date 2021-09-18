@@ -60,6 +60,7 @@ module.exports = {
         "usage": "[mention | ID]",
         "access": "For Administrator",
         "no": "Please specify a channel.",
+        "all": "This channel is already enabled.",
         "err": "Not found."
     },
 
@@ -70,6 +71,7 @@ module.exports = {
         "usage": "[mention | ID]",
         "access": "For Administrator",
         "no": "Please specify a channel.",
+        "all": "This channel is already disabled.",
         "err": "Not found."
     },
 
@@ -80,6 +82,7 @@ module.exports = {
         "usage": "[command name]",
         "access": "For Administrator",
         "no": "Please specify a command.",
+        "all": "This command is already enabled.",
         "err": "Not found."
     },
 
@@ -90,6 +93,7 @@ module.exports = {
         "usage": "[command name]",
         "access": "For Administrator",
         "no": "Please specify a command.",
+        "all": "This command is already disabled.",
         "err": "Not found."
     },
 
