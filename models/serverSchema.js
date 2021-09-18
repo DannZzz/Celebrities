@@ -12,7 +12,9 @@ const serverSchema = new mongoose.Schema({
   welcomeImage: { type: String},
   shop: { type: Array, default: [] },
   rank: { type: Boolean, default: false},
-  lang: { type: String, default: "en"}
+  lang: { type: String, default: "en"},
+  disabled: { type: Array, default: []},
+  disabledChannels: { type: Array, default: []}
 });
 
 const model = mongoose.model("ServerModels", serverSchema);

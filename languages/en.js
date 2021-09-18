@@ -55,12 +55,52 @@ module.exports = {
 
 
 
+    "channel-enable": {
+        "desc": "Enable channel for commands.",
+        "usage": "[mention | ID]",
+        "access": "For Administrator",
+        "no": "Please specify a channel.",
+        "err": "Not found."
+    },
+
+
+
+    "channel-disable": {
+        "desc": "Disable channel for commands.",
+        "usage": "[mention | ID]",
+        "access": "For Administrator",
+        "no": "Please specify a channel.",
+        "err": "Not found."
+    },
+
+
+
+    "enable": {
+        "desc": "Enable command.",
+        "usage": "[command name]",
+        "access": "For Administrator",
+        "no": "Please specify a command.",
+        "err": "Not found."
+    },
+
+
+
+    "disable": {
+        "desc": "Disable the command.",
+        "usage": "[command name]",
+        "access": "For Administrator",
+        "no": "Please specify a command.",
+        "err": "Not found."
+    },
+
+
+
     "give": {
         "desc": "Give the hero to the member for the number of stars.",
         "usage": "[hero name] [mention | ID] [price]",
         "access": "For everyone",
         "specH": "Specify a hero.",
-        "cost": "Enter the price.",
+        "cost": "specify the price.",
         "noHero": "No hero found.",
         "min": "The minimum amount is __100__.",
         "not": "You cannot sell this hero.",
