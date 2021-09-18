@@ -44,6 +44,15 @@
     "descriptionEN": "D'Lord - the ancient Egyptian god of the moon, time, wisdom and culture, originally D'Lord and the good and wise spirit supposed in him, heralding the spilling of the Nile and destroying harmful reptiles.",
     "description": "Д'Лорд — древнеегипетский бог луны, времени, премудрости и культуры, первоначально Д'Лорд и предполагавшийся в нем благой и премудрый дух, возвещавший разлитие Нила и истреблявший вредных гадов."
   },
+  "Shibzdik's Dilan" : {
+    "name": "Shibzdik's Dilan",
+    "nameRus": "Дилан Шибздика",
+    "health": 1400,
+    "damage": 140,
+    "url": "https://i.ibb.co/dBrt7kd/shibzdik.jpg",
+    "descriptionEN": "Nostalgia of old heroes. One of the first heroes of the game, try to win.",
+    "description": "Ностальгия старых героев. Один из первых героев игры, попробуй победить."
+  },
   "EaterSkull" : {
     "name": "EaterSkull",
     "nameRus": "Череп-Пожиратель",
