@@ -121,7 +121,7 @@ module.exports = async (bot, messageCreate) => {
         let ss = new MessageEmbed().setColor("#2f3136").setTimestamp()
         const imunCmd = ["enable", "disable", "channel-enable", "channel-disable"]
         var commandfile = bot.commands.get(cmd) || bot.commands.get(bot.aliases.get(cmd))
-        if ((commandfile && !serverData.disabledChannels.includes(message.channel.id) && !serverData.disabled.includes(commandfile.config.name)) || imunCmd.includes(commandfile.config.name)) {commandfile.run(bot, message, args, ops, profileData)}//.catch(()=> message.react("❌"))}
+        if ((commandfile && !serverData.disabledChannels.includes(message.channel.id) && !serverData.disabled.includes(commandfile.config.name)) || (commandfile && imunCmd.includes(commandfile.config.name))) {commandfile.run(bot, message, args, ops, profileData)}//.catch(()=> message.react("❌"))}
         else if (!serverData.disabledChannels.includes(message.channel.id)) {await customModel.findOne({serverID: message.guild.id, command: cmd}, async(err, data) =>{
         if(err) throw error
         if(data) return message.channel.send({embeds: [ss.setDescription(data.content)]}).catch(()=> message.react("❌"));
