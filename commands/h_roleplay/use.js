@@ -46,7 +46,7 @@ module.exports = {
 
         if (it == 1) {
             const random = Math.floor(Math.random() * 40);
-            const randomStar = Math.ceil(Math.random() * 150);
+            const randomStar = Math.ceil(Math.random() * 100);
             let prize;
             if ( random <= 2 ) {
                 prize = ITEMS.lvl;

@@ -42,7 +42,9 @@ module.exports = {
 
     const hero = heroes[rp.item];
     let enemy;
-    if (nowLevel % 10 === 0) {
+    if (nowLevel % 20 === 0) {
+      enemy = enemies["Shibzdik's Dilan"]
+    } else if (nowLevel % 10 === 0) {
       enemy = enemies["D'Lord"]
     } else if (nowLevel % 7 === 0) {
       enemy = enemies["D'Wolf"];
