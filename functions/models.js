@@ -9,6 +9,18 @@ const server = require("../models/serverSchema");
 const vip = require("../models/vipSchema");
 
 module.exports = {
+    rpg,
+    bag,
+    clan,
+    custom,
+    marry,
+    profile,
+    member,
+    server,
+    vip,
+    addStar: async (id, amount) => {
+        await bag.updateOne({userID: id}, {$inc: {stars: Math.round(amount)}}).catch(() => false);
+    },
     rpgFind: async (id) => {
         const data = await rpg.findOne({userID: id});
         if (!data) {
