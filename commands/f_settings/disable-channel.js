@@ -16,7 +16,7 @@ module.exports = {
         if (!args[0]) return error(message, cd.no);
         const channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0]);
         if (!channel) return error(message, cd.err)
-        if (data.disabledChannels && data.disabledChannels.includes(channel.id)) return error(message, "already");
+        if (data.disabledChannels && data.disabledChannels.includes(channel.id)) return error(message, cd.all);
         data.disabledChannels.push(channel.id)
         await data.save()
         message.react(AGREE)

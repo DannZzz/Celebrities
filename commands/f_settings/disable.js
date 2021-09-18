@@ -16,7 +16,7 @@ module.exports = {
         if (!args[0]) return error(message, d.no);
         let command = bot.commands.get(bot.aliases.get(args[0].toLowerCase()) || args[0].toLowerCase())
         if (!command) return error(message, d.err);
-        if (data.disabled && data.disabled.includes(command.config.name)) return error(message, "already");
+        if (data.disabled && data.disabled.includes(command.config.name)) return error(message, d.all);
         data.disabled.push(command.config.name)
         await data.save()
         message.react(AGREE)
