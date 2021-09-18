@@ -191,7 +191,7 @@ if(i.customId === buttonList[0].customId) {
     await rpg.findOneAndUpdate({userID: loser.id}, {$inc: {loses: 1}})
 
     let winData = await rpg.findOne({userID: winner.id})
-    const get = mrp.heroes.find(x => x.name === winData.item)
+    const get = winData.heroes.find(x => x.name === winData.item)
     let hero = heroes[winData.item]
     let winEmb = new MessageEmbed()
     .setTitle(`${d.winner} ${winner.tag || winner.user.tag} (${LANG.lang === "ru" ? hero.nameRus : hero.name})`)
