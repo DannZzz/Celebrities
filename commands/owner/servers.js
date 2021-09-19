@@ -1,8 +1,8 @@
 const Discord = require("discord.js");
 let ownerID = '382906068319076372';
 const { MessageEmbed, MessageAttachment, MessageButton, MessageActionRow } = require('discord.js');
-const {greenlight, redlight, cyan} = require('../../JSON/colours.json');
-const {error, pagination} = require('../../functions');
+const {greenlight, redlight, main} = require('../../JSON/colours.json');
+const {error, pagination} = require("../../functions/functions");
 
 module.exports = {
   config: {
@@ -33,7 +33,7 @@ module.exports = {
           message.author.tag,
           message.author.displayAvatarURL({ dynamic: true })
         )
-        .setColor(cyan)
+        .setColor(main)
         .setFooter(bot.user.username)
         .setDescription(description);
 
@@ -80,7 +80,7 @@ module.exports = {
           message.author.tag,
           message.author.displayAvatarURL({ dynamic: true })
         )
-        .setColor(cyan)
+        .setColor(main)
         .setFooter(bot.user.username)
         .setTitle(`Page - ${page}/${Math.ceil(bot.guilds.cache.size / 10)}`)
         .setDescription(description);

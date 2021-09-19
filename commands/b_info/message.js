@@ -1,9 +1,7 @@
 const {MessageEmbed} = require('discord.js');
-const profileModel = require("../../models/profileSchema")
-const {cyan} = require('../../JSON/colours.json');
-const {error, embed, perms} = require('../../functions');
-const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 3000);
+const { main, none } = require("../../JSON/colours.json");
+const { profile, profileFind, serverFind } = require("../../functions/models");
+const {error, embed, perms} = require("../../functions/functions");
 
 module.exports = {
   config: {
@@ -12,18 +10,14 @@ module.exports = {
     category: 'b_info'
   },
   run: async (bot, message, args) => {
-    const getLang = require("../../models/serverSchema");
-    const LANG = await getLang.findOne({serverID: message.guild.id});
+    const LANG = await serverFind(message.guild.id);
     const {message: m} = require(`../../languages/${LANG.lang}`);
-
-    let limited = rateLimiter.take(message.author.id)
-    if(limited) return
-
+    
     let {member, channel} = message
-    const profileData = await profileModel.findOne({userID: member.id});
+    const profileData = await profileFind(member.id);
     const emb = new MessageEmbed()
     .setAuthor(message.author.tag, message.author.displayAvatarURL({dynamic: true}))
-    .setColor(cyan)
+    .setColor(none)
     .setTimestamp()
 
     let toGuild = bot.guilds.cache.get('731032795509686332');
@@ -44,7 +38,7 @@ module.exports = {
         `
       )]})
 
-      await profileModel.findOneAndUpdate({userID: member.id}, {$set: {bug: Date.now()}})
+      await profile.updateOne({userID: member.id}, {$set: {bug: Date.now()}})
     }
   }
 }

@@ -4,9 +4,9 @@ const begModel = require("../../models/begSchema");
 const serverModel = require("../../models/serverSchema");
 const fishes = require('../../JSON/fishes.json');
 const { MessageEmbed } = require('discord.js');
-const {greenlight, redlight, cyan} = require('../../JSON/colours.json');
+const {greenlight, redlight, main} = require('../../JSON/colours.json');
 const { COIN, BANK, STAR } = require('../../config');
-const {error, embed, perms} = require('../../functions');
+const {error, embed, perms} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 

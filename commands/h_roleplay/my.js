@@ -1,11 +1,11 @@
 const heroes = require('../../JSON/heroes.json');
-const { cyan } = require('../../JSON/colours.json');
+const { main } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { COIN, STAR, LEFT, RIGHT, DLEFT, DRIGHT, CANCEL } = require("../../config");
 const { MessageEmbed, MessageButton } = require("discord.js");
-const {error, paginationBig} = require('../../functions');
+const {error, paginationBig} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 
@@ -25,7 +25,7 @@ module.exports = {
    
     
     const rp = await rpg.findOne({userID: message.author.id});
-    if (!rp) return error(message, hm.noHero)
+    if (!rp || rp.heroes.length === 0) return error(message, hm.noHero)
 
     // if ((rp.heroes && rp.heroes.length === 0 && rp.item !== rp.heroes[0]["name"]) && rp.item !== null) {
     //     await rp.heroes.push({
@@ -44,7 +44,7 @@ module.exports = {
     .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
     .setTitle(`${h.name} (${h.nameRus})`)
     .setDescription(h.description)
-    .setColor(cyan)
+    .setColor(main)
     .addField(`💯 ${hm.level} ${item.level}\n❤ ${hm.health} ${item.health}\n⚔ ${hm.damage} ${item.damage}`, `** **`)
     .setFooter(`1 / 1`)
 
@@ -58,7 +58,7 @@ module.exports = {
         .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
         .setTitle(`${h1.name} (${h1.nameRus})`)
         .setDescription(h1.description)
-        .setColor(cyan)
+        .setColor(main)
         .addField(`💯 ${hm.level} ${i.level}\n❤ ${hm.health} ${i.health}\n⚔ ${hm.damage} ${i.damage}`, `** **`)
         
       })
@@ -71,7 +71,7 @@ module.exports = {
     // .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
     // .setTitle(`${h1.name} (${h1.nameRus})`)
     // .setDescription(h1.description)
-    // .setColor(cyan)
+    // .setColor(main)
     // .addField(`💯 ${hm.level} ${item1.level}\n❤ ${hm.health} ${item1.health}\n⚔ ${hm.damage} ${item1.damage}`, `** **`)
     
     // const item2 = rp.heroes[1]
@@ -81,7 +81,7 @@ module.exports = {
     // .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
     // .setTitle(`${h2.name} (${h2.nameRus})`)
     // .setDescription(h2.description)
-    // .setColor(cyan)
+    // .setColor(main)
     // .addField(`💯 ${hm.level} ${item2.level}\n❤ ${hm.health} ${item2.health}\n⚔ ${hm.damage} ${item2.damage}`, `** **`)
 
     const button1 = new MessageButton()

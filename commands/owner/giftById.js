@@ -1,9 +1,9 @@
 const begModel = require("../../models/begSchema");
 const {MessageEmbed} = require("discord.js");
-const {cyan} = require('../../JSON/colours.json');
+const {main} = require('../../JSON/colours.json');
 const { COIN, AGREE, STAR } = require('../../config');
 const ids = ['382906068319076372', '873237782825422968']
-const {error, embed, perms} = require('../../functions');
+const {error, embed, perms} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 
@@ -17,8 +17,7 @@ module.exports = {
     usage: "[ID] [кол-во монет] "
   },
   run: async (bot, message, args) => {
-    let limited = rateLimiter.take(message.author.id)
-      if(limited) return
+    
        
      if(!ids.includes(message.author.id)) return
     if (!args[0]) return error(message, "Укажите участника.");
@@ -35,7 +34,7 @@ module.exports = {
 
     const emb = new MessageEmbed()
     .setAuthor(message.author.tag, message.author.displayAvatarURL({dynamic: true}))
-    .setColor(cyan)
+    .setColor(main)
     .setTimestamp()
     
     if(!args[1]) return error(message, "Укажите кол-во монет, чтобы добавить.");

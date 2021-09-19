@@ -3,7 +3,7 @@ const {MessageEmbed} = require("discord.js");
 const {greenlight, redlight} = require('../../JSON/colours.json');
 const { COIN, AGREE } = require('../../config');
 let ownerID = '382906068319076372';
-const {error, embed, perms} = require('../../functions');
+const {error, embed, perms} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 
@@ -17,8 +17,7 @@ module.exports = {
     usage: "[ID] [сообщение] "
   },
   run: async (bot, message, args) => {
-    let limited = rateLimiter.take(message.author.id)
-      if(limited) return
+    
        
      if(message.member.user.id !== ownerID) return 
     if (!args[0]) return error(message, "Укажите участника.");

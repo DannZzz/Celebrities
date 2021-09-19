@@ -1,7 +1,7 @@
 const begModel = require("../../models/begSchema");
 const serverModel = require("../../models/serverSchema");
-const {error, embed, perms} = require('../../functions');
-const {greenlight, redlight, cyan} = require('../../JSON/colours.json');
+const {error, embed, perms} = require("../../functions/functions");
+const {greenlight, redlight, main} = require('../../JSON/colours.json');
 const { MessageEmbed, MessageAttachment, MessageButton, MessageActionRow } = require('discord.js');
 const {MONGO} = require('../../config');
 const { RateLimiter } = require('discord.js-rate-limiter');
@@ -16,8 +16,7 @@ module.exports = {
     aliases: ['уровни']
   },
   run: async (bot, message, args, ops) => {
-    let limited = rateLimiter.take(message.author.id)
-      if(limited) return
+    
 
       const getLang = require("../../models/serverSchema");
       const LANG = await getLang.findOne({serverID: message.guild.id});
@@ -55,7 +54,7 @@ module.exports = {
       
 
       const Emb = new MessageEmbed()
-      .setColor(cyan)
+      .setColor(main)
       .setTimestamp()
       .setAuthor(user.username, user.displayAvatarURL({dynamic: true}))
       .setTitle(b.sure)

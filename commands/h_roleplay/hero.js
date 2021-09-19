@@ -1,9 +1,9 @@
 const heroes = require('../../JSON/heroes.json');
-const { cyan } = require('../../JSON/colours.json');
+const { main } = require('../../JSON/colours.json');
 const {rpgFind, serverFind} = require("../../functions/models");
 
 const { MessageEmbed } = require("discord.js");
-const {error} = require('../../functions');
+const {error} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 
@@ -18,8 +18,7 @@ module.exports = {
     const LANG = await serverFind(message.guild.id);
     const {hero: h, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
    
-    let limited = rateLimiter.take(message.author.id)
-      if(limited) return
+    
        
     const user = message.member;
     let rp = await rpgFind(user.id)
@@ -56,7 +55,7 @@ module.exports = {
     .addField(`🟢 ${h.win}`, `${rp.wins}`, true)
     .addField(`🔴 ${h.lose}`, `${rp.loses}`, true)
     .addField(`🏆 ${hm.winrate}`, `${Math.trunc(rp.wins / rp.totalGames  * 100) || '0'}%`, true)
-    .setColor(cyan)
+    .setColor(main)
 
     return message.channel.send({embeds: [myHero]}).then(msg => setTimeout(()=>msg.delete(), 30 * 1000))
   } else {

@@ -1,3 +1,6 @@
+const { main } = require("../../JSON/colours.json");
+const {  } = require("../../functions/models");
+
 
 module.exports = {
   config: {
@@ -18,7 +21,7 @@ module.exports = {
 
           title: `${avatar.AVATAR} — ${user.user.username}'`,
 
-          color: 0x2f3136,
+          color: main,
 
           image: {
             url: `${user.user.displayAvatarURL({dynamic: true})}` + '?size=4096'
@@ -33,7 +36,7 @@ module.exports = {
 
           title: `${avatar.AVATAR} — ${user.user.username}`,
 
-          color: 0x2f3136,
+          color: main,
 
           image: {
             url: `${user.user.displayAvatarURL({ dynamic: true })}` + '?size=4096'

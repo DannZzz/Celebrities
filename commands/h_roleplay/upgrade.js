@@ -1,14 +1,14 @@
 const heroes = require('../../JSON/heroes.json');
-const { cyan } = require('../../JSON/colours.json');
+const { main } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed } = require("discord.js");
 const { COIN, STAR } = require("../../config");
-const { checkValue } = require("../../functions");
+const { checkValue } = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
-const {error} = require('../../functions');
+const {error} = require("../../functions/functions");
 
 module.exports = {
   config: {
@@ -46,7 +46,7 @@ module.exports = {
 
     if(args[0] && resp.includes(args[0].toLowerCase())) {
       const newEmb = new MessageEmbed()
-      .setColor(cyan)
+      .setColor(main)
       .setTimestamp()
       .setAuthor(`${u.info} ${get.level+1}`)
       .setTitle(`${hero.name} (${hero.nameRus})`)
@@ -73,7 +73,7 @@ module.exports = {
     .setTitle(`${hero.name} (${hero.nameRus})`)
     .addField(`❤ ${hm.health}`, `${get.health + addH}`, true)
     .addField(`⚔ ${hm.damage}`, `${get.damage + addD}`, true)
-    .setColor(cyan)
+    .setColor(main)
     .setThumbnail(hero.url)
 
     return message.channel.send({embeds: [Embed]})

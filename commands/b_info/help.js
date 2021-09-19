@@ -1,12 +1,10 @@
 const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
 const { readdirSync } = require("fs");
-const serverModel = require("../../models/serverSchema")
 const { stripIndents } = require("common-tags");
-const { cyan } = require("../../JSON/colours.json");
 const { DEV, AGREE, PREFIX, DISAGREE, LEFT, RIGHT, DLEFT, DRIGHT, CANCEL  } = require('../../config');
-const {paginationBig, firstUpperCase} = require("../../functions");
-const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 3000);
+const { main } = require("../../JSON/colours.json");
+const { server : s, serverFind } = require("../../functions/models");
+const {paginationBig} = require("../../functions/functions");
 
 module.exports = {
     config: {
@@ -15,19 +13,14 @@ module.exports = {
       category: "b_info",
     },
     run: async (bot, message, args) => {
-      let limited = rateLimiter.take(message.author.id)
-      if(limited) return
-
-
-      const getLang = require("../../models/serverSchema");
-      const LANG = await getLang.findOne({serverID: message.guild.id});
+      const LANG = await serverFind(message.guild.id);
       const {help: h, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`); 
       const cmd = require(`../../languages/${LANG.lang}`)  
    
         let prefix;
-        let serverData = await serverModel.findOne({ serverID: message.guild.id });
+        let serverData = await serverFind(message.guild.id);
         if(!serverData) {
-          let server = await serverModel.create({
+          let server = await s.create({
             serverID: message.guild.id,
           })
         server.save()}
@@ -35,7 +28,7 @@ module.exports = {
         prefix = serverData.prefix;
         let catArray = ['RPG', 'roleplay', 'rpg', 'информация', 'инфо', 'info', 'экономика', 'economy', 'реакционные', 'реакция', 'reaction', 'фан', 'fun', 'настройки', 'settings', 'VIP', 'vip']
         const embed = new MessageEmbed()
-            .setColor(cyan)
+            .setColor(main)
             .setAuthor(`${message.guild.me.displayName}`, message.guild.iconURL())
             .setThumbnail(bot.user.displayAvatarURL())
 
@@ -73,7 +66,7 @@ module.exports = {
               fkit.push(new MessageEmbed()
                 .setAuthor(`${h.t1} ${message.guild.me.displayName}\n${h.t2} ${PREFIX}\n${h.t3} ${prefix}`)
                 .setTitle(capitalise)
-                .setColor(cyan)
+                .setColor(main)
                 .setThumbnail(bot.user.displayAvatarURL())
                 .setDescription(dir.map( c =>`**${c.config.name} — [${c.config.aliases.join(", ") || h.noaliases}]**\n${cmd[c.config.name].desc}\n\`${cmd[c.config.name].usage || h.nousage}\``).join("\n"))
             )

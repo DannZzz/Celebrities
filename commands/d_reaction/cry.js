@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const {greenlight, redlight, cyan} = require('../../JSON/colours.json');
+const {greenlight, redlight, main} = require('../../JSON/colours.json');
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 
@@ -10,8 +10,7 @@ module.exports = {
     category: 'd_reaction'
   },
   run: async (bot, message, args) => {
-    let limited = rateLimiter.take(message.author.id)
-      if(limited) return
+
 
       const getLang = require("../../models/serverSchema");
       const LANG = await getLang.findOne({serverID: message.guild.id});
@@ -44,7 +43,7 @@ module.exports = {
 
         const random = Math.floor(Math.random() * gifs.length)
         const sembed = new Discord.MessageEmbed()
-        .setColor(cyan)
+        .setColor(main)
         .setDescription(m)
         .setImage(gifs[random])
         message.channel.send({embeds: [sembed]})

@@ -1,10 +1,10 @@
 const heroes = require('../../JSON/heroes.json');
-const { cyan } = require('../../JSON/colours.json');
+const { main } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const { MessageEmbed, MessageButton } = require("discord.js");
 const { COIN, STAR, LEFT, RIGHT, DLEFT, DRIGHT, CANCEL } = require("../../config");
-const {error, paginationBig} = require('../../functions');
+const {error, paginationBig} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 
@@ -15,8 +15,7 @@ module.exports = {
     category: 'h_roleplay',
   },
   run: async (bot, message, args) => {
-    let limited = rateLimiter.take(message.author.id)
-      if(limited) return
+    
       const getLang = require("../../models/serverSchema");
       const LANG = await getLang.findOne({serverID: message.guild.id});
       const {heroes: hh, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`); 
@@ -28,7 +27,7 @@ module.exports = {
 
         newdr.push(
         new MessageEmbed()
-        .setColor(cyan)
+        .setColor(main)
         .setTitle(`${obj.name} (${obj.nameRus}) ${cMar(obj.marry)} ${cVip(obj.vip)}`)
         .setThumbnail(obj.url)
         .setDescription(LANG.lang === "en" ? obj.descriptionEN : obj.description)

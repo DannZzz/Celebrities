@@ -1,5 +1,4 @@
-const {progressBar} = require("../../functions.js")
-const {error, embed} = require('../../functions');
+const {error, embed, progressBar} = require('../../functions/functions');
 
 module.exports = {
     config: {

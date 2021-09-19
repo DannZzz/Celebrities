@@ -1,5 +1,5 @@
 const {server, serverFind} = require("../../functions/models");
-const {error, embed, perms} = require("../../functions");
+const {error, embed, perms} = require("../../functions/functions");
 const {AGREE} = require("../../config")
 
 module.exports = {

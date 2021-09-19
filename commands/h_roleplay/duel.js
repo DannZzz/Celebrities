@@ -1,13 +1,13 @@
 const heroes = require('../../JSON/heroes.json');
-const { cyan } = require('../../JSON/colours.json');
+const { main } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment, MessageActionRow, MessageButton } = require("discord.js");
 const { COIN } = require("../../config");
-const { checkValue } = require("../../functions");
+const { checkValue } = require("../../functions/functions");
 const mc = require('discordjs-mongodb-currency');
-const {error, embed, perms} = require('../../functions');
+const {error, embed, perms} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 const Canvas = require('canvas');
@@ -19,8 +19,7 @@ module.exports = {
     category: 'h_roleplay'
   },
   run: async (bot, message, args) => {
-    let limited = rateLimiter.take(message.author.id)
-      if(limited) return
+    
 
       const getLang = require("../../models/serverSchema");
       const LANG = await getLang.findOne({serverID: message.guild.id});
@@ -85,7 +84,7 @@ let buttonList = [
 ]
 
 const Emb = new MessageEmbed()
-.setColor(cyan)
+.setColor(main)
 .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
 .setDescription(`<@${user.user.id}> ${d.invite}`)
 
@@ -142,7 +141,7 @@ if(i.customId === buttonList[0].customId) {
     .addField(`\u200b`, `\u200b`, false)
     .addField(`${user.user.username} (${LANG.lang === "ru" ? data2.nameRus : data2.name})`, `**${hm.level} ${get2.level}**`, true)
     .addField(`❤ ${hm.health} ${get2.health}`, `**⚔ ${hm.damage} ${get2.damage}**`, true)
-    .setColor(cyan)
+    .setColor(main)
   
 
     
@@ -197,7 +196,7 @@ if(i.customId === buttonList[0].customId) {
     .setTitle(`${d.winner} ${winner.tag || winner.user.tag} (${LANG.lang === "ru" ? hero.nameRus : hero.name})`)
     .setDescription(`${d.among} ${user}, ${mUser}`)
     .setImage(hero.url)
-    .setColor(cyan)
+    .setColor(main)
     .addField(`❤ ${hm.health} ${get.health}`, `**⚔ ${hm.damage} ${get.damage}**`, true)
     .addField(`🏆 ${hm.winrate}`, `**${Math.trunc(winData.wins / winData.totalGames * 100) || '0'}%**`, true)
     msg.delete()

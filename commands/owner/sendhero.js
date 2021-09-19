@@ -4,7 +4,7 @@ const heroes = require('../../JSON/heroes.json');
 const {greenlight, redlight} = require('../../JSON/colours.json');
 const { COIN, AGREE } = require('../../config');
 let ownerID = '382906068319076372';
-const {error, embed, perms, firstUpperCase} = require('../../functions');
+const {error, embed, perms, firstUpperCase} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 
@@ -18,8 +18,7 @@ module.exports = {
     usage: "[ID] [название] "
   },
   run: async (bot, message, args) => {
-    let limited = rateLimiter.take(message.author.id)
-      if(limited) return
+    
        
     try {
     if (message.member.user.id !== ownerID) return 
@@ -42,8 +41,8 @@ module.exports = {
     const items = ["Hunter", "Broken", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
     if (!items.includes(firstUpperCase(args[1].toLowerCase()))) return error(message, "Герой не найден.")
     let giftType = heroes[firstUpperCase(args[01].toLowerCase())]
-    let get = rp.heroes.find(x => x.name === giftType) 
-    if (get) error(message, "Участник уже имеет этого героя.")
+    let get = rp.heroes.find(x => x.name === giftType.name) 
+    if (get) return error(message, "Участник уже имеет этого героя.")
     await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: giftType.name}})
     await rp.heroes.push({
       name: giftType.name,

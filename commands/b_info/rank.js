@@ -1,11 +1,7 @@
 const { MessageEmbed, MessageAttachment } = require('discord.js');
-const {greenlight, redlight, cyan} = require('../../JSON/colours.json');
-const { COIN, BANK, STAR } = require('../../config');
-const vipModel = require("../../models/vipSchema");
-const serverModel = require("../../models/serverSchema");
-const {error, embed, perms} = require('../../functions');
-const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 3000);
+const { main, none } = require("../../JSON/colours.json");
+const { profile, profileFind, serverFind, vipFind } = require("../../functions/models");
+const {error, embed, perms} = require("../../functions/functions");
 const Levels = require("discord-xp");
 Levels.setURL(process.env.MONGO);
 const Canvas = require('canvas');
@@ -17,19 +13,15 @@ module.exports = {
     category: 'b_info'
   },
   run: async (bot, message, args) => {
-    let limited = rateLimiter.take(message.author.id)
-    if(limited) return
-
-    const getLang = require("../../models/serverSchema");
-    const LANG = await getLang.findOne({serverID: message.guild.id});
+    const LANG = await serverFind(message.guild.id);
     const {rank: r} = require(`../../languages/${LANG.lang}`);
     
-    let server = await serverModel.findOne({serverID: message.guild.id})
+    let server = await serverFind(message.guild.id);
 
     if (!server.rank) return error(message, r.offed);
 
     let user = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(r => r.user.username.toLowerCase() === args.join(' ').toLocaleLowerCase()) || message.guild.members.cache.find(r => r.displayName.toLowerCase() === args.join(' ').toLocaleLowerCase()) || message.member;
-    let vip = await vipModel.findOne({userID: user.id})
+    let vip = await vipFind(user.id);
     if (user.user.bot) return error(message, r.notBot);
     let person = await Levels.fetch(user.id, message.guild.id, true)
     if (!person) return error(message, r.error);
@@ -137,11 +129,6 @@ module.exports = {
     
     //message.reply({ files: [{ attachment: canvas.toBuffer(), name: 'rankcard.png' }] });
     const att = new MessageAttachment(canvas.toBuffer(), 'rank.png')
-    const emb = new MessageEmbed()
-    .setColor(cyan)
-    .setFooter(message.guild.name, message.guild.iconURL({dynamic: true}))
-    .setTitle(user.user.tag)
-    .setImage('attachment://rank.png')
 
     message.reply({content: `${user}`, files: [att]})
   }

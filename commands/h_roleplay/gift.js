@@ -3,7 +3,7 @@ const bd = require("../../models/begSchema");
 const pd = require("../../models/profileSchema");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
-const {error, embed} = require('../../functions');
+const {error, embed} = require("../../functions/functions");
 
 module.exports = {
   config: {

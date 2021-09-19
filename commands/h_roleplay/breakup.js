@@ -2,11 +2,11 @@ const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const marry = require("../../models/marry");
 const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
-const {error, embed, perms} = require('../../functions');
+const {error, embed, perms} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 const { STAR } = require('../../config');
 let rateLimiter = new RateLimiter(1, 3000);
-const { cyan } = require('../../JSON/colours.json');
+const { main } = require('../../JSON/colours.json');
 
 module.exports = {
     config: {
@@ -49,7 +49,7 @@ module.exports = {
       ]
 
       const Emb = new MessageEmbed()
-      .setColor(cyan)
+      .setColor(main)
       .setTimestamp()
       .setAuthor(user.username, user.displayAvatarURL({dynamic: true}))
       .setDescription(`${bu.sure} ${STAR}`)

@@ -1,8 +1,8 @@
 const Discord = require('discord.js');
-const {cyan} = require('../../JSON/colours.json');
+const {main} = require('../../JSON/colours.json');
 const nekoclient = require('nekos.life');
 const neko = new nekoclient();
-const { error } = require('../../functions');
+const { error } = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 
@@ -29,7 +29,7 @@ module.exports = {
         const GIF = await neko.sfw.tickle();
 
         const sembed = new Discord.MessageEmbed()
-        .setColor(cyan)
+        .setColor(main)
         .setDescription(`<@${message.author.id}> ${t.done} <@${member.user.id}>!`)
         .setImage(GIF.url)
         message.channel.send({embeds: [sembed]})

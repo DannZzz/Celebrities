@@ -4,11 +4,11 @@ const profileModel = require("../../models/profileSchema");
 const begModel = require("../../models/begSchema");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
-const {error, embed} = require('../../functions');
+const {error, embed} = require("../../functions/functions");
 const {
     greenlight,
     redlight,
-    cyan
+    main
   } = require('../../JSON/colours.json');
 
 function randomRange(min, max) {
@@ -22,8 +22,7 @@ module.exports = {
         category: 'h_roleplay'
     },
     run: async (bot, message, args) => {
-      let limited = rateLimiter.take(message.author.id)
-      if(limited) return
+      
 
       const getLang = require("../../models/serverSchema");
       const LANG = await getLang.findOne({serverID: message.guild.id});
@@ -75,7 +74,7 @@ module.exports = {
         if (args[0] === 'list') {
 
             let lEmbed = new MessageEmbed()
-                .setColor(cyan)
+                .setColor(main)
                 .setTimestamp()
                 .setTitle(f.title)
                 .setDescription(f.list())

@@ -1,13 +1,9 @@
 const { MessageEmbed, MessageAttachment, MessageButton, MessageActionRow } = require('discord.js');
-const {greenlight, redlight, cyan} = require('../../JSON/colours.json');
-const { COIN, BANK, STAR } = require('../../config');
-const serverModel = require("../../models/serverSchema");
-const {error, pagination} = require('../../functions');
-const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 3000);
 const Levels = require("discord-xp");
 Levels.setURL(process.env.MONGO);
-
+const { main, none } = require("../../JSON/colours.json");
+const { profile, profileFind, serverFind, vipFind } = require("../../functions/models");
+const {error, embed, perms} = require("../../functions/functions");
 
 module.exports = {
   config: {
@@ -16,12 +12,8 @@ module.exports = {
     category: 'b_info'
   },
   run: async (bot, message, args, ops) => {
-    let limited = rateLimiter.take(message.author.id)
-    if(limited) return
-
-  const getLang = require("../../models/serverSchema");
-  const LANG = await getLang.findOne({serverID: message.guild.id});
-  const {ranks, next, previous} = require(`../../languages/${LANG.lang}`); 
+  const LANG = await serverFind(message.guild.id);
+  const {ranks, next, previous, clanModel: cm} = require(`../../languages/${LANG.lang}`); 
     
     
     let server = await serverModel.findOne({serverID: message.guild.id})
@@ -29,7 +21,7 @@ module.exports = {
     let embed = new MessageEmbed()
     .setTimestamp()
     .setAuthor(`${message.guild.name}\n${ranks.f1}`)
-    .setColor(cyan)
+    .setColor(main)
 
     if (!server.rank) return error(message, ranks.f2);
 
@@ -47,10 +39,10 @@ module.exports = {
         del = ['delete'];
       }
        
-      if(!message.member.permissions.has("ADMINISTRATOR")) return error(message, "У вас недостаточно прав.");
+      if(!message.member.permissions.has("ADMINISTRATOR")) return error(message, perm);
 
       if(del.includes(args[0])) {
-        if (!args[1] || isNaN(args[1]) || Math.round(args[1]) <= 0 || Math.round(args[1]) > 30) return error(message, 'Укажите ранг участника(до 30).');
+        if (!args[1] || isNaN(args[1]) || Math.round(args[1]) <= 0 || Math.round(args[1]) > 30) return error(message, cm.specN);
         const a = led[Math.round(args[1])-1]
         const button1 = new MessageButton()
       .setCustomId('previousbtn')
@@ -70,7 +62,7 @@ module.exports = {
       
 
       const Emb = new MessageEmbed()
-      .setColor(cyan)
+      .setColor(main)
       .setTimestamp()
       .setAuthor(user.username, user.displayAvatarURL({dynamic: true}))
       .setTitle(ranks.serious)
@@ -159,24 +151,24 @@ module.exports = {
       if (led.length <= 20){
         page1 =  new MessageEmbed()
         .setDescription(lb.slice(0, 10).join("\n\n"))
-        .setColor(cyan)
+        .setColor(main)
         .setTimestamp()
         page2 =  new MessageEmbed()
         .setDescription(lb.slice(10, 20).join("\n\n"))
-        .setColor(cyan)
+        .setColor(main)
         .setTimestamp()
       } else if (led.length <= 30) {
         page1 =  new MessageEmbed()
         .setDescription(lb.slice(0, 10).join("\n\n"))
-        .setColor(cyan)
+        .setColor(main)
         .setTimestamp()
         page2 =  new MessageEmbed()
         .setDescription(lb.slice(10, 20).join("\n\n"))
-        .setColor(cyan)
+        .setColor(main)
         .setTimestamp()
         page3 =  new MessageEmbed()
         .setDescription(lb.slice(20, 30).join("\n\n"))
-        .setColor(cyan)
+        .setColor(main)
         .setTimestamp()
       }
       let pages = [page1, page2, page3]

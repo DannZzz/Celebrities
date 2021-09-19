@@ -5,7 +5,7 @@ const begModel = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
-const {error, embed} = require('../../functions');
+const {error, embed} = require("../../functions/functions");
 
 module.exports = {
     config: {
@@ -14,8 +14,7 @@ module.exports = {
         category: "h_roleplay",
     },
     run: async (bot, message, args) => {
-      let limited = rateLimiter.take(message.author.id)
-      if(limited) return
+      
         let user = message.member;
 
         const getLang = require("../../models/serverSchema");

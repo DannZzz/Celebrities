@@ -1,7 +1,7 @@
 const {MessageEmbed} = require('discord.js');
-const {cyan} = require("../../JSON/colours.json");
+const {main} = require("../../JSON/colours.json");
 const serverModel = require("../../models/serverSchema");
-const {error, embed, perms} = require('../../functions');
+const {error, embed, perms} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 
@@ -12,8 +12,7 @@ module.exports = {
         aliases: ["pr", 'префикс']
     },
     run: async (bot, message, args) => {
-      let limited = rateLimiter.take(message.author.id)
-      if(limited) return
+      
 
       const getLang = require("../../models/serverSchema");
       const LANG = await getLang.findOne({serverID: message.guild.id});

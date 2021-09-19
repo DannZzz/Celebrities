@@ -1,5 +1,6 @@
 const { MessageEmbed } = require("discord.js");
-const { cyan } = require("../../JSON/colours.json");
+const { main } = require("../../JSON/colours.json");
+const { serverFind } = require("../../functions/models");
 const {PREFIX, DEV, botINVITE} = require("../../config");
 const moment = require('moment');
 
@@ -11,8 +12,7 @@ module.exports = {
   },
   run: async (bot, message, args) => {
 
-  const getLang = require("../../models/serverSchema");
-  const LANG = await getLang.findOne({serverID: message.guild.id});
+  const LANG = await serverFind(message.guild.id);
   const {botinfo} = require(`../../languages/${LANG.lang}`); 
     
   let botAvatar = bot.user.displayAvatarUrl;
@@ -29,7 +29,7 @@ module.exports = {
   .setThumbnail(bot.user.displayAvatarURL({ dynamic: true }))
   .setFooter("ID: " + bot.user.id)
   .setTimestamp()
-  .setColor(cyan)
+  .setColor(main)
 
   message.channel.send({embeds: [embed]});
   }

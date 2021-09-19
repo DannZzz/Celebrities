@@ -1,14 +1,14 @@
 const heroes = require('../../JSON/heroes.json');
 const enemies = require('../../JSON/enemies.json');
-const { cyan } = require('../../JSON/colours.json');
+const { main } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment, MessageButton, MessageActionRow } = require("discord.js");
 const { COIN, STAR, AGREE } = require("../../config");
-const { checkValue } = require("../../functions");
+const { checkValue } = require("../../functions/functions");
 const mc = require('discordjs-mongodb-currency');
-const {error, embed, perms, firstUpperCase} = require('../../functions');
+const {error, embed, perms, firstUpperCase} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 const Canvas = require("canvas")
@@ -69,7 +69,7 @@ module.exports = {
       ]
 
       const Emb = new MessageEmbed()
-      .setColor(cyan)
+      .setColor(main)
       .setAuthor(user.username, user.displayAvatarURL({dynamic: true}))
       .setDescription(`${member}, ${msg.guild.members.cache.get(user.id)} ${g.sure(trans, cost)} ${STAR}`)
 

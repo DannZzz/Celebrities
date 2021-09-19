@@ -1,13 +1,13 @@
 const heroes = require('../../JSON/heroes.json');
 const enemies = require('../../JSON/enemies.json');
-const { cyan } = require('../../JSON/colours.json');
+const { main } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const clan = require("../../models/clanSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
 const { COIN, STAR, CLAN } = require("../../config");
-const {error, embed, perms, firstUpperCase} = require('../../functions');
+const {error, embed, perms, firstUpperCase} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 const { update } = require('../../models/profileSchema');
 let rateLimiter = new RateLimiter(1, 3000);
@@ -81,7 +81,7 @@ module.exports = {
       
       
       let myClan = new MessageEmbed()
-      .setColor(cyan)
+      .setColor(main)
       .setTitle(`📊 __#${mc.ID}__ — ${mc.name}`)
       .setDescription(`👑 ${cm.leader} ${message.guild.members.cache.get(mc.owner) ? message.guild.members.cache.get(mc.owner) : bot.users.cache.get(mc.owner).tag}\n📈 ${cm.level} __${mc.level}__\n💰 ${cm.budget} __${mc.budget}__ ${CLAN}\n🎁 ${cm.reward} __${mc.level * 30}__ ${mc.reward !== null && (86400 * 1000) - (Date.now() - mc.reward) > 0 ? "<:disagree:870586968734580767>" : "<:agree:870586969606979664>"}${mc.description !== null ? "\n\n" + mc.description : ''}\n\n**${cm.members} - ${a.length } / ${mc.space}**\n${b.length !== 0 ? b.join("\n") : cm.noMembers}`)
       
@@ -119,7 +119,7 @@ module.exports = {
     
     if (helps.includes(resp)) {
       const helpEmb = new MessageEmbed()
-      .setColor(cyan)
+      .setColor(main)
       .setTimestamp()
       .setTitle(cc.actions)
       .setDescription(cc.helpCommand(STAR, CLAN))
@@ -216,7 +216,7 @@ module.exports = {
       const arr = c.apps.map(({tag, hero, level}, p=0) => `\`${p+1}.\` ${cc.appType.m} __${tag}__\n${cc.appType.h} __${hero}__\n${cc.appType.l} __${level}__`)
 
       const emb = new MessageEmbed()
-      .setColor(cyan)
+      .setColor(main)
       .setTimestamp()
       .setAuthor(cc.apps)
       .setDescription(arr.join("\n\n"))
@@ -274,7 +274,7 @@ module.exports = {
       if (c.level === 10) return error(message, cc.upLimit)
       if (args[1] && args[1] === "info") {
         const emb = new MessageEmbed()
-        .setColor(cyan)
+        .setColor(main)
         .setTimestamp()
         .setAuthor(cc.upInfoTitle)
         .setDescription(cc.upInfo(cost, CLAN, c.space, c.level+1))
@@ -341,7 +341,7 @@ module.exports = {
       ]
 
       const Emb = new MessageEmbed()
-      .setColor(cyan)
+      .setColor(main)
       .setTimestamp()
       .setAuthor(user.username, user.displayAvatarURL({dynamic: true}))
       .setTitle(cc.quest)
@@ -454,7 +454,7 @@ module.exports = {
       ]
 
       const Emb = new MessageEmbed()
-      .setColor(cyan)
+      .setColor(main)
       .setTimestamp()
       .setAuthor(user.username, user.displayAvatarURL({dynamic: true}))
       .setTitle(cc.leaveQuest)
@@ -584,7 +584,7 @@ module.exports = {
       const users = await rpg.find({clanID: getCl.ID}).exec()
 
       const send = new MessageEmbed()
-      .setColor(cyan)
+      .setColor(main)
       .setAuthor(cc.mTitle)
       .setFooter(bot.users.cache.get(getCl.owner).tag, bot.users.cache.get(getCl.owner).displayAvatarURL({dynamic: true}))
       users.forEach((user) => {

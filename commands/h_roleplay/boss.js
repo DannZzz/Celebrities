@@ -1,14 +1,14 @@
 const heroes = require('../../JSON/heroes.json');
 const enemies = require('../../JSON/enemies.json');
-const { cyan } = require('../../JSON/colours.json');
+const { main } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment } = require("discord.js");
 const { COIN, STAR } = require("../../config");
-const { checkValue } = require("../../functions");
+const { checkValue } = require("../../functions/functions");
 const mc = require('discordjs-mongodb-currency');
-const {error, embed, perms} = require('../../functions');
+const {error, embed, perms} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 const Canvas = require("canvas")
@@ -110,7 +110,7 @@ module.exports = {
     .addField(`\u200b`, `\u200b`, false)
     .addField(`${boss.name} (${boss.nameRus})`, `** **`, false)
     .addField(`❤ ${hm.health}: ${bossHealth}`, `**⚔ ${hm.damage}: ${bossDamage}**`, false)
-    .setColor(cyan)
+    .setColor(main)
     .setTimestamp()
     .setImage('attachment://fight.png')
 
@@ -200,14 +200,14 @@ module.exports = {
           }
 
           let endEmbed = new MessageEmbed()
-          .setColor(cyan)
+          .setColor(main)
           .setTimestamp()
           .setAuthor(`${boss.name} ${b.turned}`)
           .setTitle(`${message.author.username}, ${user1.user.username} ${and} ${user2.user.username} ${b.lost}.`)
           .setThumbnail(boss.url)
 
           let winEmbed = new MessageEmbed()
-          .setColor(cyan)
+          .setColor(main)
           .setTimestamp()
           .setAuthor(`${boss.name} ${b.gaveUp}`)
           .setTitle(`${message.author.username}, ${user1.user.username} ${and} ${user2.user.username} ${b.won}.`)

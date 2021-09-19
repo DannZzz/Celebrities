@@ -1,13 +1,13 @@
 const heroes = require('../../JSON/heroes.json');
-const { cyan } = require('../../JSON/colours.json');
+const { main } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment } = require("discord.js");
 const { COIN, STAR } = require("../../config");
-const { checkValue } = require("../../functions");
+const { checkValue } = require("../../functions/functions");
 const mc = require('discordjs-mongodb-currency');
-const {error, embed, perms} = require('../../functions');
+const {error, embed, perms} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 const Canvas = require('canvas');
@@ -19,8 +19,7 @@ module.exports = {
     category: 'h_roleplay'
   },
   run: async (bot, message, args) => {
-    let limited = rateLimiter.take(message.author.id)
-      if(limited) return
+    
        
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
@@ -117,7 +116,7 @@ module.exports = {
     .addField(`\u200b`, `\u200b`, false)
     .addField(`${LANG.lang === "ru" ? data2.nameRus : data2.name}`, `**${hm.level} ${+eLevel}**`, true)
     .addField(`❤ ${hm.health} ${h1}`, `**⚔ ${hm.damage} ${d1}**`, true)
-    .setColor(cyan)
+    .setColor(main)
 
    
       let msg = await message.channel.send({embeds: [myHero], files: [att]});
@@ -163,7 +162,7 @@ module.exports = {
           .setTitle(`${b.winner} ${winner.tag || winner.user.tag} (${LANG.lang === "ru" ? hero.nameRus : hero.name})`)
           .setDescription(`${b.between} ${message.member}, ${it.name}(A.I)`)
           .setImage(hero.url)
-          .setColor(cyan)
+          .setColor(main)
           .addField(`❤ ${hm.health} ${winData.health}`, `**⚔ ${hm.damage} ${winData.damage}**`, true)
           .addField(`${hm.reward} ${value * 2} ${STAR}`, `**🏆 ${hm.winrate} ${Math.trunc(WinData.wins / WinData.totalGames * 100) || '0'}%**`, true)
           msg.delete()
@@ -177,7 +176,7 @@ module.exports = {
           .setTitle(`${b.winner} ${hero.name} A.I (${LANG.lang === "ru" ? hero.nameRus : hero.name})`)
           .setDescription(`${b.between} ${message.member}, ${hero.name}(A.I)`)
           .setImage(hero.url)
-          .setColor(cyan)
+          .setColor(main)
           .addField(`❤ ${hm.health} ${eHealth}`, `**⚔ ${hm.damage} ${eDamage}**`, true)
           msg.delete()
           return message.channel.send({embeds: [winEmb]})

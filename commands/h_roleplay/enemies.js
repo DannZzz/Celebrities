@@ -1,10 +1,10 @@
 const enemies = require('../../JSON/enemies.json');
-const { cyan } = require('../../JSON/colours.json');
+const { main } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const { MessageEmbed, MessageButton } = require("discord.js");
 const { COIN, STAR, LEFT, RIGHT, DLEFT, DRIGHT, CANCEL } = require("../../config");
-const {error, paginationBig} = require('../../functions');
+const {error, paginationBig} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 
@@ -15,8 +15,7 @@ module.exports = {
     category: 'h_roleplay',
   },
   run: async (bot, message, args) => {
-    let limited = rateLimiter.take(message.author.id)
-      if(limited) return
+    
 
       const getLang = require("../../models/serverSchema");
       const LANG = await getLang.findOne({serverID: message.guild.id});
@@ -28,7 +27,7 @@ module.exports = {
       var obj = enemies[key];
         newdr.push(
         new MessageEmbed()
-        .setColor(cyan)
+        .setColor(main)
         .setTitle(`${obj.name} (${obj.nameRus})`)
         .setThumbnail(obj.url)
         .setDescription(`${obj.boss ? "<:monsterboss:887750235646996570> Boss\n" : ""}${LANG.lang === "en" ? obj.descriptionEN : obj.description}`)
@@ -39,7 +38,7 @@ module.exports = {
 
     const jorj = enemies["Jorj"]
     const enemy1 = new MessageEmbed()
-    .setColor(cyan)
+    .setColor(main)
     .setTitle(`${jorj.name} (${jorj.nameRus})`)
     .setThumbnail(jorj.url)
     .setDescription(LANG.lang === "en" ? jorj.descriptionEN : jorj.description)
@@ -48,7 +47,7 @@ module.exports = {
 
     const cousin = enemies["Cousin"]
     const enemy2 = new MessageEmbed()
-    .setColor(cyan)
+    .setColor(main)
     .setTitle(`${cousin.name} (${cousin.nameRus})`)
     .setThumbnail(cousin.url)
     .setDescription(LANG.lang === "en" ? cousin.descriptionEN : cousin.description)
@@ -57,7 +56,7 @@ module.exports = {
 
     const arthas = enemies["Arthas"]
     const enemy3 = new MessageEmbed()
-    .setColor(cyan)
+    .setColor(main)
     .setTitle(`${arthas.name} (${arthas.nameRus})`)
     .setThumbnail(arthas.url)
     .setDescription(LANG.lang === "en" ? arthas.descriptionEN : arthas.description)
@@ -66,7 +65,7 @@ module.exports = {
 
     const dwolf = enemies["D'Wolf"]
     const enemyWolf = new MessageEmbed()
-    .setColor(cyan)
+    .setColor(main)
     .setTitle(`${dwolf.name} (${dwolf.nameRus})`)
     .setThumbnail(dwolf.url)
     .setDescription(LANG.lang === "en" ? dwolf.descriptionEN : dwolf.description)
@@ -75,7 +74,7 @@ module.exports = {
 
     const dLord = enemies["D'Lord"]
     const enemy4 = new MessageEmbed()
-    .setColor(cyan)
+    .setColor(main)
     .setTitle(`${dLord.name} (${dLord.nameRus})`)
     .setThumbnail(dLord.url)
     .setDescription(LANG.lang === "en" ? dLord.descriptionEN : dLord.description)
@@ -84,7 +83,7 @@ module.exports = {
 
     const eaterSkull = enemies["EaterSkull"]
     const enemy5 = new MessageEmbed()
-    .setColor(cyan)
+    .setColor(main)
     .setTitle(`${e.boss} ${eaterSkull.name} (${eaterSkull.nameRus})`)
     .setThumbnail(eaterSkull.url)
     .setDescription(LANG.lang === "en" ? eaterSkull.descriptionEN : eaterSkull.description)
@@ -93,7 +92,7 @@ module.exports = {
 
     const fireWalker = enemies["FireWalker"]
     const enemy6 = new MessageEmbed()
-    .setColor(cyan)
+    .setColor(main)
     .setTitle(`${e.boss} ${fireWalker.name} (${fireWalker.nameRus})`)
     .setThumbnail(fireWalker.url)
     .setDescription(LANG.lang === "en" ? fireWalker.descriptionEN : fireWalker.description)

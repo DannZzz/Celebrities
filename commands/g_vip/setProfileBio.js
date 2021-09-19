@@ -1,10 +1,10 @@
 const begModel = require("../../models/begSchema");
 const { MessageEmbed } = require('discord.js');
-const {greenlight, redlight, cyan} = require('../../JSON/colours.json');
+const {greenlight, redlight, main} = require('../../JSON/colours.json');
 const { COIN, BANK, STAR } = require('../../config');
 const profileModel = require("../../models/profileSchema");
 const vipModel = require("../../models/vipSchema");
-const {error, embed, perms} = require('../../functions');
+const {error, embed, perms} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 
@@ -15,8 +15,7 @@ module.exports = {
     aliases: ['био']
   },
   run: async (bot, message, args) => {
-    let limited = rateLimiter.take(message.author.id)
-      if(limited) return
+    
       const getLang = require("../../models/serverSchema");
       const LANG = await getLang.findOne({serverID: message.guild.id});
       const {bio: b, specify, specifyT, vipOne, vipTwo, maxLimit, perm} = require(`../../languages/${LANG.lang}`);   

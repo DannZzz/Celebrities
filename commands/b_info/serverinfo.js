@@ -1,8 +1,8 @@
 const { MessageEmbed } = require("discord.js");
-const { cyan } = require("../../JSON/colours.json");
-const omg = require("../../models/customSchema");
+const { main, none } = require("../../JSON/colours.json");
+const { profile, profileFind, serverFind, bagFind, custom: omg } = require("../../functions/models");
+const {error, embed, perms} = require("../../functions/functions");
 const moment = require('moment');
-const {error, embed, perms, firstUpperCase} = require('../../functions');
 
 module.exports = {
     config: {
@@ -12,8 +12,8 @@ module.exports = {
     },
     run: async (bot, messageCreate, args) => {
       let message = messageCreate
-      const getLang = require("../../models/serverSchema");
-      const LANG = await getLang.findOne({serverID: message.guild.id});
+
+      const LANG = await serverFind(message.guild.id);
       const {server: s} = require(`../../languages/${LANG.lang}`);
     
         try {
@@ -50,7 +50,7 @@ module.exports = {
           .setFooter('ID: ' + server.id)
 
           .setTimestamp()
-          .setColor(cyan)
+          .setColor(main)
 
           const data = await omg.find({serverID: message.guild.id});
           const filteredData = data.filter(function({command}) {

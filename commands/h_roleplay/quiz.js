@@ -1,15 +1,15 @@
 const quiz = require('../../JSON/quiz.json');
-const { cyan } = require('../../JSON/colours.json');
+const { main } = require('../../JSON/colours.json');
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed } = require("discord.js");
 const { COIN, STAR, AGREE, DISAGREE } = require("../../config");
-const { shuffle } = require("../../functions");
+const { shuffle } = require("../../functions/functions");
 const respA = ['A', 'а', "1"]
 const respB = ['B', 'b', "2"]
 const respC = ['C', 'c', "3"]
 const respD = ['D', 'd', "4"]
-const {error, embed, perms} = require('../../functions');
+const {error, embed, perms} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 
@@ -65,7 +65,7 @@ module.exports = {
     bag = await bd.findOne({userID: message.author.id});
     const filter = m => m.author.id === message.author.id;
     let Emb = new MessageEmbed()
-    .setColor(cyan)
+    .setColor(main)
     .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
     let msg = await embed(message, `
 ${q.time}

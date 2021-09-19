@@ -6,7 +6,7 @@ const clan = require("../../models/clanSchema");
 const marry = require("../../models/marry");
 const fishes = require('../../JSON/fishes.json');
 const { MessageEmbed } = require('discord.js');
-const {greenlight, redlight, cyan} = require('../../JSON/colours.json');
+const {greenlight, redlight, main} = require('../../JSON/colours.json');
 const { COIN, BANK, STAR} = require('../../config');
 const vipModel = require("../../models/vipSchema");
 const Levels = require("discord-xp");
@@ -29,7 +29,7 @@ module.exports = {
     let person = await Levels.fetch(member.user.id, message.guild.id, true)
     let embed = new MessageEmbed()
     .setTimestamp()
-    .setColor(cyan)
+    .setColor(main)
     .setAuthor(`${p.pr} ` + member.user.tag , member.user.displayAvatarURL({dynamic: true}))
 
     const data1 = await pd.findOne({userID: member.id});

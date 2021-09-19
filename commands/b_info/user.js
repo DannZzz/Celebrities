@@ -1,7 +1,7 @@
 const { MessageEmbed } = require("discord.js");
-const { cyan } = require("../../JSON/colours.json");
+const { main } = require("../../JSON/colours.json");
 const moment = require('moment');
-const {error, embed, perms, firstUpperCase} = require('../../functions');
+const {error, embed, perms, firstUpperCase} = require('../../functions/functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 
@@ -12,8 +12,6 @@ module.exports = {
         aliases: ["userinfo", "info", 'участник']
     },
     run: async (bot, message, args) => {
-      let limited = rateLimiter.take(message.author.id)
-      if(limited) return
 
       const getLang = require("../../models/serverSchema");
       const LANG = await getLang.findOne({serverID: message.guild.id});
@@ -22,7 +20,7 @@ module.exports = {
         let member = await message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(r => r.user.username.toLowerCase() === args.join(' ').toLocaleLowerCase()) || message.guild.members.cache.find(r => r.displayName.toLowerCase() === args.join(' ').toLocaleLowerCase()) || message.member;
         let UIembed = new MessageEmbed()
         .setTimestamp()
-        .setColor(cyan)
+        .setColor(main)
         if(!member)
         return error(message, notUser);
 

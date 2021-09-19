@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
-const {greenlight, redlight, cyan} = require('../../JSON/colours.json');
-const {error, embed, perms} = require('../../functions');
+const {greenlight, redlight, main} = require('../../JSON/colours.json');
+const {error, embed, perms} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 
@@ -11,8 +11,7 @@ module.exports = {
         aliases: ['статус']
     },
     run: async (bot, message, args) => {
-      let limited = rateLimiter.take(message.author.id)
-      if(limited) return
+      
 
       const getLang = require("../../models/serverSchema");
       const LANG = await getLang.findOne({serverID: message.guild.id});
@@ -37,7 +36,7 @@ module.exports = {
             if (activity.type === 'CUSTOM') {
                 const embed = new MessageEmbed()
                     .setAuthor(user.user.username, user.user.displayAvatarURL({ dynamic: true }))
-                    .setColor(cyan)
+                    .setColor(main)
                     .addField("** **", `${s.custom} -\n${activity.state}`)
                     .setThumbnail(user.user.displayAvatarURL())
                     .setFooter(message.guild.name, message.guild.iconURL())
@@ -52,7 +51,7 @@ module.exports = {
 
                 const sembed = new MessageEmbed()
                     .setAuthor(`${user.user.username}'s Activity`)
-                    .setColor(cyan)
+                    .setColor(main)
                     .setThumbnail(image)
                     .addField(s.type, s.playing)
                     .addField(s.game, `${name1}`)

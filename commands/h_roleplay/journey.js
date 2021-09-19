@@ -1,12 +1,12 @@
 const heroes = require('../../JSON/heroes.json');
 const enemies = require('../../JSON/enemies.json');
-const { cyan } = require('../../JSON/colours.json');
+const { main } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment } = require("discord.js");
 const { COIN, STAR } = require("../../config");
-const {error, embed, perms} = require('../../functions');
+const {error, embed, perms} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 const Canvas = require('canvas');
@@ -75,7 +75,7 @@ module.exports = {
     if (args[0] && argsWords.includes(args[0])) {
 
       const levMes = new MessageEmbed()
-      .setColor(cyan)
+      .setColor(main)
       .setAuthor(`${user.username}, ${j.now} ${nowLevel}`)
       .setTitle(`${j.enemy} — ${enemy.name} (${enemy.nameRus})`)
       .setDescription(enemy.description)
@@ -90,7 +90,7 @@ module.exports = {
     const att = new MessageAttachment(CC.toBuffer(), 'fight.png')
     
     const lonely = new MessageEmbed()
-    .setColor(cyan)
+    .setColor(main)
     .setTimestamp()//
     .setTitle(hm.battle)
     .addField(`${user.username}`, `(${hero.nameRus})`, true)
@@ -154,11 +154,11 @@ module.exports = {
     
     
     let msgozv = new MessageEmbed()
-    .setColor(cyan)
+    .setColor(main)
     .setTitle("Сценарий.")
     .setDescription(`**${enemy.nameRus}:** Эй! **${user.username}**, мой лорд ждёт тебя.`)
     let emb = new MessageEmbed()
-    .setColor(cyan)
+    .setColor(main)
     .setTimestamp()
     if(winner === hero){
       emb
