@@ -5,7 +5,7 @@ module.exports = {
         name: "dmg",
         emoji: potDMG,
         effect: 4,
-        cost: 50
+        cost: 150
     },
     lvl: {
         name: "lvl",
@@ -16,7 +16,7 @@ module.exports = {
         name: "hlt",
         emoji: potHLT,
         effect: 20,
-        cost: 50
+        cost: 150
     },
     meat: {
         name: "meat",
@@ -26,7 +26,7 @@ module.exports = {
     box: {
         name: "box",
         emoji: box,
-        cost: 100
+        cost: 250
     },
     pack1: {
         name: "pack1",
