@@ -12,8 +12,10 @@ const queue3 = new Map();
 const queue = new Map();
 const games = new Map();
 const mongoCurrency = require('discordjs-mongodb-currency');
-const {error, embed} = require('../../functions');
-const {cyan} = require('../../JSON/colours.json');
+const {error, embed} = require("../../functions/functions");
+const {main, none} = require('../../JSON/colours.json');
+const { RateLimiter } = require('discord.js-rate-limiter');
+let rateLimiter = new RateLimiter(1, 2000);
 
 module.exports = async (bot, messageCreate) => {
   let message = messageCreate;
@@ -28,7 +30,7 @@ module.exports = async (bot, messageCreate) => {
       const data = await profileModel.findOne({userID: i.id})
       if (data && data.afkMessage && !message.author.bot) {
         const emb = new MessageEmbed()
-        .setColor(cyan)
+        .setColor(none)
         .setDescription(afkMess(i.user.tag, data.afkMessage))
         message.channel.send({embeds: [emb]}).then((m) => setTimeout(() => m.delete(), 10000))
       }
@@ -109,9 +111,10 @@ module.exports = async (bot, messageCreate) => {
 
         let args = message.content.slice(prefix.length).trim().split(/ +/g);
         let cmd = args.shift().toLowerCase();
-
+      
         if (!message.content.startsWith(prefix)) return;
-
+        const current = rateLimiter.take(message.author.id);
+        if (current) return
         let ops = {
             queue2: queue2,
             queue: queue,
