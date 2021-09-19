@@ -38,7 +38,6 @@ module.exports = {
         .setColor(main)
         .setDescription(`<@${message.author.id}> ${s.done}`)
         .setImage(gifs[random])
-        .setTimestamp()
         message.channel.send({embeds: [sembed]})
       } catch (e){
         console.log(e);

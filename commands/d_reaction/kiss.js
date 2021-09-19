@@ -54,7 +54,6 @@ module.exports = {
   
         const Emb = new MessageEmbed()
         .setColor(main)
-        .setTimestamp()
         .setAuthor(user.username, user.displayAvatarURL({dynamic: true}))
         .setDescription(`${k.question} ${member}`)
   
