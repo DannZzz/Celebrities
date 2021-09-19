@@ -89,7 +89,7 @@ module.exports = {
       } else if (cost.endsWith("₽") && LANG.lang === "ru") {
         return cost
       } else if (cost.endsWith("₽") && LANG.lang === "en") {
-        return "2,73$"
+        return "1,1$"
       } else {
         return hh.nocost
       }
