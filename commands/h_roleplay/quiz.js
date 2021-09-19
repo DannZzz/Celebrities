@@ -1,5 +1,5 @@
 const quiz = require('../../JSON/quiz.json');
-const { main } = require('../../JSON/colours.json');
+const { main, reddark, greenlight } = require('../../JSON/colours.json');
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed } = require("discord.js");
@@ -92,12 +92,12 @@ ${q.question}
         } else if (!bag["vip2"] && rp.quizCount < vip1) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
         }
-        return msg.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`)]})
+        return msg.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`).setColor(greenlight)]})
 
       } else {
         await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
 
-        return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`)]})
+        return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`).setColor(reddark)]})
       }
     } else if (respB.includes(collected.first().content)) {
       userResponse = b
@@ -108,12 +108,12 @@ ${q.question}
         } else if (!bag["vip2"] && rp.quizCount < vip1) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
         }
-         return msg.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`)]})
+         return msg.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`).setColor(greenlight)]})
 
       } else {
         await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
 
-        return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`)]})
+        return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`).setColor(reddark)]})
       }
     } else if (respC.includes(collected.first().content)) {
       userResponse = c
@@ -124,12 +124,12 @@ ${q.question}
         } else if (!bag["vip2"] && rp.quizCount < vip1) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
         }
-        return msg.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`)]})
+        return msg.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`).setColor(greenlight)]})
 
       } else {
         await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
 
-        return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`)]})
+        return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`).setColor(reddark)]})
       }
         } else if (respD.includes(collected.first().content)) {
       userResponse = d
@@ -140,17 +140,17 @@ ${q.question}
         } else if (!bag["vip2"] && rp.quizCount < vip1) {
           await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
         }
-        return msg.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`)]})
+        return msg.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`).setColor(greenlight)]})
 
       } else {
         await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
 
-        return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`)]})
+        return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`).setColor(reddark)]})
       }
     } else {
         await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
 
-      return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`)]});
+      return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`).setColor(reddark)]});
     }
     console.log('collected :' + collected.first().content)
   }).catch(async() => {
