@@ -6,6 +6,8 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const mc = require('discordjs-mongodb-currency')
 const Levels = require("discord-xp");
+const dotenv = require('dotenv');
+dotenv.config()
 
 const MONGO = process.env.MONGO
 Levels.setURL(MONGO);

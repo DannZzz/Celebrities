@@ -1,6 +1,6 @@
 const {MessageEmbed} = require("discord.js");
 const { COIN, BANK, STAR } = require('../config');
-const {greenlight, redlight, cyan} = require('../JSON/colours.json');
+const {greenlight, redlight, main} = require('../JSON/colours.json');
 const item = require('../JSON/items');
 
 module.exports = {   
@@ -189,7 +189,7 @@ module.exports = {
         "access": "Для всех",
         "donate": () => {
             return new MessageEmbed()
-            .setColor(cyan)
+            .setColor(main)
             .addFields(
                 {name: `Поддерживать разработчика, и купить премиум доступ.`,
                 value: '**[Ссылка на донат](https://www.donationalerts.com/r/danndevbot)**',
@@ -211,7 +211,7 @@ module.exports = {
         "access": "Для всех",
         "shop": () => {
             return new MessageEmbed()
-            .setColor(cyan)
+            .setColor(main)
             .setAuthor("Вся информация о переводах: ?donate")
             .addFields(
                 {name: `<a:vip1:867868958877810748> VIP 1`,
@@ -232,7 +232,7 @@ module.exports = {
         },
         "items": () => {
             return new MessageEmbed()
-            .setColor(cyan)
+            .setColor(main)
             .setAuthor("Магазин баффов")
             .addField(`**#1** ${item.box.emoji} Ящик предметов: ${item.box.cost} ${STAR}`, `Даёт рандомный предмет, и до 150 звёзд`)
             .addField(`**#2** ${item.hlt.emoji} Зелье жизни: ${item.hlt.cost} ${STAR}`, `Добавляет герою ${item.hlt.effect} единиц жизни`)
@@ -1059,7 +1059,7 @@ module.exports = {
         "button2": "Удалить",
         "sure": "Вы уверены, что хотите отключить и сбросить систему рангов?",
         "canceled": "Действие успешно отклонено.",
-        "done": "'Система уровней успешно сброшена и отключена.",
+        "done": "Система уровней успешно сброшена и отключена.",
         "done1": "Система рангов и так отключена.",
         "done2": "Система рангов теперь включена.",
         "done3": "Система рангов и так включена.",

@@ -4,15 +4,17 @@
     "purplelight": "#c481fb",
     "orange": "#ffa500",
     "gold": "#daa520",
-    "reddark": "#8e2430",
-    "redlight": "#2f3136",
+    "reddark": "#CF3333",
+    "redlight": "#ff0000",
     "bluedark": "#3b5998",
-    "cyan": "#2f3136",
+    "cyan": "#00ffff",
     "bluelight": "#ace9e7",
     "aqua": "#33a1ee",
     "pink": "#ff9dbb",
     "greendark": "#2ac075",
-    "greenlight": "#2f3136",
+    "greenlight": "#84B354",
     "white": "#f9f9f6",
-    "cream": "#ffdab9"
+    "cream": "#ffdab9",
+    "main": "#D9C0C0",
+    "none": "#2f3136"
   }

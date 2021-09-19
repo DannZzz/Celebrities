@@ -1,6 +1,6 @@
 const {MessageEmbed} = require("discord.js");
 const { COIN, BANK, STAR } = require('../config');
-const {greenlight, redlight, cyan} = require('../JSON/colours.json');
+const {greenlight, redlight, main} = require('../JSON/colours.json');
 const item = require('../JSON/items');
 
 module.exports = {   
@@ -191,7 +191,7 @@ module.exports = {
         "access": "For everyone",
         "donate": () => {
             return new MessageEmbed ()
-            .setColor (cyan)
+            .setColor (main)
             .addFields (
                 {name: `Support the developer, and buy premium access.`,
                 value: '**[Link to donate](https://www.donationalerts.com/r/danndevbot)**',
@@ -213,7 +213,7 @@ module.exports = {
         "access": "For everyone",
         "shop": () => {
             return new MessageEmbed ()
-            .setColor (cyan)
+            .setColor (main)
             .setAuthor ("All information about transfers: ?donate")
             .addFields (
                 {name: `<a:vip1:867868958877810748> VIP 1`,
@@ -233,7 +233,7 @@ module.exports = {
             },
             "items": () => {
                 return new MessageEmbed ()
-                .setColor (cyan)
+                .setColor (main)
                 .setAuthor ("Buff Shop")
                 .addField(`**#1** ${item.box.emoji} Item Box: ${item.box.cost} ${STAR}`, `Gives a random item and up to 150 stars`)
                 .addField(`**#2** ${item.hlt.emoji} Potion of Health: ${item.hlt.cost} ${STAR}`, `Adds ${item.hlt.effect} health to the hero`)
