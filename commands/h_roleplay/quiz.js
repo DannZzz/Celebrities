@@ -2,7 +2,7 @@ const quiz = require('../../JSON/quiz.json');
 const { main, reddark, greenlight } = require('../../JSON/colours.json');
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
 const { COIN, STAR, AGREE, DISAGREE } = require("../../config");
 const { shuffle } = require("../../functions/functions");
 const respA = ['A', 'а', "1"]
@@ -62,101 +62,182 @@ module.exports = {
     }
     const vip1 = 10;
     const vip2 = 15;
+
     bag = await bd.findOne({userID: message.author.id});
-    const filter = m => m.author.id === message.author.id;
     let Emb = new MessageEmbed()
     .setColor(main)
     .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
-    let msg = await embed(message, `
+   
+
+   const A = "<:a_:889404071763652688>";
+   const B = "<:b_:889404071923056670>";
+   const C = "<:c_:889404071944019978>";
+   const D = "<:d_:889404071654592562>";
+   
+    
+   const button0 = new MessageButton()
+   .setCustomId('previousbtn')
+   .setEmoji(A)
+   .setStyle('SECONDARY');
+
+   const button1 = new MessageButton()
+   .setCustomId('0btn')
+   .setEmoji(B)
+   .setStyle('SECONDARY');
+
+   const button2 = new MessageButton()
+   .setCustomId('lastbtn')
+   .setEmoji(C)
+   .setStyle('SECONDARY');
+
+   const button3 = new MessageButton()
+   .setCustomId('nextbtn')
+   .setStyle('SECONDARY')
+   .setEmoji(D);
+
+    let buttonList = [
+    button0,
+    button1,
+    button2,
+    button3
+]
+
+    
+    const row = new MessageActionRow().addComponents(buttonList);
+    const curPage = await message.reply({
+      embeds: [Emb.setDescription(`
 ${q.time}
 ${q.question}
 \`${getQuestion}\`
+      
+${A} | ${a}
 
-:regional_indicator_a: | ${a}
-:regional_indicator_b: | ${b}
-:regional_indicator_c: | ${c}
-:regional_indicator_d: | ${d}
-   `, false);
-    await message.channel.awaitMessages({
-    filter, 
-    max: 1, // leave this the same
-    time: 15000,
-    errors: ['time'] // time in MS. there are 1000 MS in a second
-  }).then(async (collected) => {
-    if (respA.includes(collected.first().content)) {
-      userResponse = a
-      if (userResponse === getAnswer) {
-        await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: reward}});
-        if (bag["vip2"] && rp.quizCount !== vip2) {
-          await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
-        } else if (!bag["vip2"] && rp.quizCount < vip1) {
-          await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
-        }
-        return msg.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`).setColor(greenlight)]})
+${B} | ${b}
 
-      } else {
-        await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
+${C} | ${c}
 
-        return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`).setColor(reddark)]})
-      }
-    } else if (respB.includes(collected.first().content)) {
-      userResponse = b
-      if (userResponse === getAnswer) {
-        await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: reward}}); 
-        if (bag["vip2"] && rp.quizCount !== vip2) {
-          await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
-        } else if (!bag["vip2"] && rp.quizCount < vip1) {
-          await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
-        }
-         return msg.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`).setColor(greenlight)]})
-
-      } else {
-        await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
-
-        return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`).setColor(reddark)]})
-      }
-    } else if (respC.includes(collected.first().content)) {
-      userResponse = c
-      if (userResponse === getAnswer) {
-        await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: reward}});
-        if (bag["vip2"] && rp.quizCount !== vip2) {
-          await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
-        } else if (!bag["vip2"] && rp.quizCount < vip1) {
-          await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
-        }
-        return msg.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`).setColor(greenlight)]})
-
-      } else {
-        await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
-
-        return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`).setColor(reddark)]})
-      }
-        } else if (respD.includes(collected.first().content)) {
-      userResponse = d
-      if (userResponse === getAnswer) {
-        await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: reward}});
-        if (bag["vip2"] && rp.quizCount !== vip2) {
-          await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
-        } else if (!bag["vip2"] && rp.quizCount < vip1) {
-          await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
-        }
-        return msg.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`).setColor(greenlight)]})
-
-      } else {
-        await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
-
-        return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`).setColor(reddark)]})
-      }
-    } else {
-        await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
-
-      return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`).setColor(reddark)]});
-    }
-    console.log('collected :' + collected.first().content)
-  }).catch(async() => {
-    await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
-    return msg.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.err}`)]});
+${D} | ${d}
+         `)],
+      components: [row],fetchReply: true,
     });
+  
+    const filter = (i) =>
+      (i.customId === buttonList[0].customId ||
+      i.customId === buttonList[1].customId ||
+      i.customId === buttonList[2].customId ||
+      i.customId === buttonList[3].customId) &&
+      i.user.id === message.author.id;
+  
+    const collector = await curPage.createMessageComponentCollector({
+      filter,
+      time: 15000,
+    });
+    let asdd = true
+    collector.on("collect", async (i) => {
+      switch (i.customId) {
+        case buttonList[0].customId:
+          userResponse = a
+          if (userResponse === getAnswer) {
+            await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: reward}});
+            if (bag["vip2"] && rp.quizCount !== vip2) {
+              await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
+            } else if (!bag["vip2"] && rp.quizCount < vip1) {
+              await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
+            }
+            curPage.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`).setColor(greenlight)]})
 
+          } else {
+            await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
+
+            curPage.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`).setColor(reddark)]})
+          }
+          break;
+        case buttonList[1].customId:
+          userResponse = b
+          if (userResponse === getAnswer) {
+            await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: reward}}); 
+            if (bag["vip2"] && rp.quizCount !== vip2) {
+              await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
+            } else if (!bag["vip2"] && rp.quizCount < vip1) {
+              await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
+            }
+            curPage.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`).setColor(greenlight)]})
+
+          } else {
+            await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
+
+            curPage.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`).setColor(reddark)]})
+          }
+          break;
+        case buttonList[2].customId:
+          userResponse = c
+          if (userResponse === getAnswer) {
+            await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: reward}});
+            if (bag["vip2"] && rp.quizCount !== vip2) {
+              await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
+            } else if (!bag["vip2"] && rp.quizCount < vip1) {
+              await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
+            }
+            curPage.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`).setColor(greenlight)]})
+
+          } else {
+            await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
+
+            curPage.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`).setColor(reddark)]})
+          }
+          break;
+        case buttonList[3].customId:
+          userResponse = d
+          if (userResponse === getAnswer) {
+            await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: reward}});
+            if (bag["vip2"] && rp.quizCount !== vip2) {
+              await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
+            } else if (!bag["vip2"] && rp.quizCount < vip1) {
+              await rpg.updateOne({userID: message.author.id}, {$inc: {quizCount: 1}});
+            }
+            curPage.edit({embeds: [Emb.setDescription(`${AGREE} ${q.done} — __${reward}__ ${STAR}.`).setColor(greenlight)]})
+
+          } else {
+            await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
+
+            curPage.edit({embeds: [Emb.setDescription(`${DISAGREE} ${q.else}`).setColor(reddark)]})
+          }
+          break;
+        default:
+          break;
+      }
+      await i.deferUpdate();
+      const disabledRow = new MessageActionRow().addComponents(
+        buttonList[0].setDisabled(true),
+        buttonList[1].setDisabled(true),
+        buttonList[2].setDisabled(true),
+        buttonList[3].setDisabled(true)
+  
+      );
+      asdd = false
+      await i.editReply({
+        components: [disabledRow],
+      }).catch(()=>interaction.react('❌'));
+      return collector.stop();
+    });
+  
+    collector.on("end", async () => {
+      if (!curPage.deleted && asdd) {
+        const disabledRow = new MessageActionRow().addComponents(
+          buttonList[0].setDisabled(true),
+          buttonList[1].setDisabled(true),
+          buttonList[2].setDisabled(true),
+          buttonList[3].setDisabled(true)
+    
+        );
+        await rpg.updateOne({userID: message.author.id}, {$set: {quizCount: 1}});
+        curPage.edit({
+          embeds: [Emb.setDescription(`${DISAGREE} ${q.err}`).setColor(reddark)],
+          components: [disabledRow],
+        });
+      }
+    });
+  
   }
 };
+
