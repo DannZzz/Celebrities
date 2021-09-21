@@ -135,7 +135,7 @@ module.exports = {
             mrp.heroes.splice(mrp.heroes.indexOf(getHero), 1)
             mrp.save()
             mrp = await rpg.findOne({userID: user.id});
-            if (mrp.item === trans) await rpg.updateOne({userID: user.id}, {$set: {item: mrp.heroes[0].name}});
+            if (mrp.item === trans) await rpg.updateOne({userID: user.id}, {$set: {item: mrp.heroes[0] ? mrp.heroes[0].name : undefined}});
              
             message.channel.send(`${g.sell(trans, Math.floor(cost/100*80))} ${STAR}`)
         }, a * 1000)
