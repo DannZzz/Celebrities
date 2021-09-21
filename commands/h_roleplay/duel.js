@@ -7,7 +7,7 @@ const { MessageEmbed, MessageAttachment, MessageActionRow, MessageButton } = req
 const { COIN } = require("../../config");
 const { checkValue } = require("../../functions/functions");
 const mc = require('discordjs-mongodb-currency');
-const {error, embed, perms} = require("../../functions/functions");
+const {error, embed, perms, roundFunc} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 const Canvas = require('canvas');
@@ -198,7 +198,7 @@ if(i.customId === buttonList[0].customId) {
     .setImage(hero.url)
     .setColor(main)
     .addField(`❤ ${hm.health} ${get.health}`, `**⚔ ${hm.damage} ${get.damage}**`, true)
-    .addField(`🏆 ${hm.winrate}`, `**${Math.trunc(winData.wins / winData.totalGames * 100) || '0'}%**`, true)
+    .addField(`🏆 ${hm.winrate}`, `**${roundFunc(winData.wins / winData.totalGames * 100) || '0'}%**`, true)
     msg.delete()
     return message.channel.send({embeds: [winEmb]})
   }, 25000)

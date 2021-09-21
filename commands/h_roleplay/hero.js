@@ -3,7 +3,7 @@ const { main } = require('../../JSON/colours.json');
 const {rpgFind, serverFind} = require("../../functions/models");
 
 const { MessageEmbed } = require("discord.js");
-const {error} = require("../../functions/functions");
+const {error, roundFunc} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 
@@ -23,23 +23,10 @@ module.exports = {
     const user = message.member;
     let rp = await rpgFind(user.id)
     if (rp && rp.item) {
-    // if (rp.item === null && rp.heroes && rp.heroes.length !== 0) {
-    //   await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: rp.heroes[0]["name"]}});
-    //   await rpg.findOneAndUpdate({userID: user.id}, {$set: {health: rp.heroes[0]["health"]}});
-    //   await rpg.findOneAndUpdate({userID: user.id}, {$set: {damage: rp.heroes[0]["damage"]}});
-    //   await rpg.findOneAndUpdate({userID: user.id}, {$set: {level: rp.heroes[0]["level"]}});
-    // }
-    // rp = await rpg.findOne({userID: user.id});
-    // if(rp.item !== null) {
-    //   if ((rp.heroes && rp.heroes.length === 1 && rp.item !== rp.heroes[0]["name"]) || ((rp.heroes && rp.heroes.length === 0) || !rp.heroes)) {
-    //     await rp.heroes.push({
-    //             name: rp.item,
-    //             level: rp.level,
-    //             health: rp.health,
-    //             damage: rp.damage
-    //         })
-    //     rp.save()
-    // }
+    if (rp.item === null && rp.heroes && rp.heroes.length !== 0) await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: rp.heroes[0]["name"]}});
+
+    rp = await rpgFind(user.id);
+    
 
     const get = rp.heroes.find(x => x.name === rp.item)
     
@@ -54,7 +41,7 @@ module.exports = {
     .addField(`🟡 ${h.all}`, `${rp.totalGames}`, false)
     .addField(`🟢 ${h.win}`, `${rp.wins}`, true)
     .addField(`🔴 ${h.lose}`, `${rp.loses}`, true)
-    .addField(`🏆 ${hm.winrate}`, `${Math.trunc(rp.wins / rp.totalGames  * 100) || '0'}%`, true)
+    .addField(`🏆 ${hm.winrate}`, `${roundFunc(rp.wins / rp.totalGames  * 100) || '0'}%`, true)
     .setColor(main)
 
     return message.channel.send({embeds: [myHero]}).then(msg => setTimeout(()=>msg.delete(), 30 * 1000))
