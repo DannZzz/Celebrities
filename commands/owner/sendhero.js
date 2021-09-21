@@ -38,7 +38,7 @@ module.exports = {
     
     
     if(!args[1]) return error(message, "Укажите подарок.")
-    const items = ["Hunter", "Broken", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
+    const items = ["Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Hunter", "Broken", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
     if (!items.includes(firstUpperCase(args[1].toLowerCase()))) return error(message, "Герой не найден.")
     let giftType = heroes[firstUpperCase(args[01].toLowerCase())]
     let get = rp.heroes.find(x => x.name === giftType.name) 
