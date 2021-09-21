@@ -25,15 +25,15 @@ module.exports = {
             const sliced = dataRPG.slice(0, 20);
             const mapped = sliced.map((data, pos) => {
                 try {
-                    const name = bot.users.cache.get(data.userID) ? (m.guild.members.cache.get(data.userID) ? m.guild.members.cache.get(data.userID) : bot.users.cache.get(data.userID).tag) : "none";
+                    const name = bot.users.cache.get(data.userID) ? bot.users.cache.get(data.userID).tag : (LANG.lang === "ru" ? "Неизвестный" : "Unknown");
                     const getCurrentHero = data.heroes.find(x => x.name === data.item);
                     const getWR = `${roundFunc(data.wins / data.totalGames  * 100, 1) || '0'}%`
                     const heroData = heroes[getCurrentHero.name];
                     let heroName = heroData.name
                     if (LANG.lang === "ru") heroName = heroData.nameRus
-                    return `${pos+1}. ${name} | ${h.all} **${data.totalGames}** | 🏆 ${getWR}  | <a:herodann:883382573231923201> — ${heroName} (${hm.level} ${getCurrentHero.level})`
+                    return `${pos+1}. **${name}** | ${h.all} **${data.totalGames}** | 🏆 ${getWR}  | <a:herodann:883382573231923201> — ${heroName} (${hm.level} ${getCurrentHero.level})`
                 } catch {
-                    return `${pos+1}. ${LANG.lang === "ru" ? "Неизвестный" : "Unknown"}`
+                    return `${pos+1}. **${LANG.lang === "ru" ? "Неизвестный" : "Unknown"}**`
                 }
                
             });
