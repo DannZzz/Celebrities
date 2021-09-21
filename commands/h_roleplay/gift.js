@@ -21,26 +21,11 @@ module.exports = {
     let a = Math.round(Math.random() * 6) + 1
     ops.queue.set(message.author.id, {name: "pay"})
 
-    if (!args[0]) return error(message, specify); ops.queue.delete(message.author.id);
     const user2 = message.member;
-    let user = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(r => r.user.username.toLowerCase() === args[0].toLocaleLowerCase()) || message.guild.members.cache.find(r => r.displayName.toLowerCase() === args[0].toLocaleLowerCase());
-    if (user.user.id === user2.id) return error(message, g.error1); ops.queue.delete(message.author.id);
-    if (!user) return error(message, notUser); ops.queue.delete(message.author.id);
-    if(!args[1]) return error(message, g.error2); ops.queue.delete(message.author.id);
-    const data = await pd.findOne({userID: user2.id})
-    const data1 = await pd.findOne({userID: user.id})
-    if (!data.marryID) return error(message, g.error3); ops.queue.delete(message.author.id);
-    if(!data1.marryID || data.marryID !== data1.marryID) return error(message, g.error4); ops.queue.delete(message.author.id);
-    
     const bag = await bd.findOne({userID: user2.id})
-    let value = Math.floor(args[1])
-    if (!bag["vip1"] && value > 50) {
-        return error(message, g.vip1);
-      } else if (!bag["vip2"] && value > 150) {
-        return error(message, g.vip2);
-      } else if (bag["vip2"] && value > 500) {
-        return error(message, g.vipError);
-      }
+
+    const data = await pd.findOne({userID: user2.id})
+    
     let author = data.gift;
     let timeout;
     if (bag["vip2"] === true) { timeout = 43200 * 1000; } else {
@@ -51,6 +36,21 @@ module.exports = {
 
         return error(message,g.time(time));
     } 
+    if (!args[0]) return error(message, specify); ops.queue.delete(message.author.id);
+    let user = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(r => r.user.username.toLowerCase() === args[0].toLocaleLowerCase()) || message.guild.members.cache.find(r => r.displayName.toLowerCase() === args[0].toLocaleLowerCase());
+    if (user.user.id === user2.id) return error(message, g.error1); ops.queue.delete(message.author.id);
+    if (!user) return error(message, notUser); ops.queue.delete(message.author.id);
+    if(!args[1]) return error(message, g.error2); ops.queue.delete(message.author.id);
+    
+    let value = Math.floor(args[1])
+    if (!bag["vip1"] && value > 500) {
+        return error(message, g.vip1);
+      } else if (!bag["vip2"] && value > 1000) {
+        return error(message, g.vip2);
+      } else if (bag["vip2"] && value > 2500) {
+        return error(message, g.vipError);
+      }
+    
     if(isNaN(args[1])) return error(message, g.error2); ops.queue.delete(message.author.id);
 
     let msg = await message.channel.send(`<a:dannloading:876008681479749662> ${g.doing}`)

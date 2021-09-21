@@ -129,6 +129,7 @@ module.exports = {
             
             rp.heroes.push(getHero)
             rp.save()
+            if (rp.heroes.length === 0) await rpg.updateOne({userID: member.id}, {$set: {item: getHero.name}});
             await bd.updateOne({userID: member.id}, {$inc: {stars: -cost}});
             await bd.updateOne({userID: user.id}, {$inc: {stars: Math.floor(cost/100*80)}});
             mrp.heroes.splice(mrp.heroes.indexOf(getHero), 1)

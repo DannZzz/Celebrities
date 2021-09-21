@@ -47,11 +47,11 @@ module.exports = {
     
     if (value < 1) return error(message, b.min);
 
-    if (!bag["vip1"] && value > 10) {
+    if (!bag["vip1"] && value > 50) {
       return error(message, b.vip1);
-    } else if (!bag["vip2"] && value > 50) {
+    } else if (!bag["vip2"] && value > 100) {
       return error(message, b.vip2);
-    } else if (bag["vip2"] && value > 120) {
+    } else if (bag["vip2"] && value > 250) {
       return error(message, b.vipError);
     }
 
