@@ -49,6 +49,8 @@ module.exports = {
 **#7** ${items.pack2.emoji} : ${rp["pack2"] || 0}
 
 **#8** ${items.pack3.emoji} : ${rp["pack3"] || 0}
+
+**#9** ${items.tempPack.emoji} : ${rp["tempPack"] || 0}
     `)
 
     return message.channel.send({embeds: [emb]})

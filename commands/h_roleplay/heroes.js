@@ -81,6 +81,8 @@ module.exports = {
         return hh.donate
       } else if (av === "Под") {
         return hh.noavail
+      } else if (av === "пак") {
+        return hh.pack
       }
     }
     function cCost(cost) {
@@ -104,9 +106,9 @@ module.exports = {
     }
     function cType(type) {
       if(type === 'star') {return STAR}
-       else if (type === 'dev'){
+       else {
         return ''
-      }
+      } 
     }
   }
 };

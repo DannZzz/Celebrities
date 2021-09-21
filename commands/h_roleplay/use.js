@@ -28,7 +28,7 @@ module.exports = {
     const user = message.author;
     const profile = await pd.findOne({userID: user.id});
     if (!isNaN(args[0])) {
-        const numbs = ["1", "2", "3", "4", "5", "6", "7", "8"];
+        const numbs = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
         if (!numbs.includes(args[0])) return error(message, b.itemErr);
         let item;
         const it = args[0]
@@ -40,6 +40,7 @@ module.exports = {
         if (it == 6) item = ITEMS.pack1
         if (it == 7) item = ITEMS.pack2
         if (it == 8) item = ITEMS.pack3
+        if (it == 9) item = ITEMS.tempPack
         
         const rp = await rpg.findOne({userID: user.id});
         if (rp[item.name] === 0 || rp[item.name] === undefined) return error(message, u.err);
@@ -160,6 +161,25 @@ module.exports = {
             let get = rp.heroes.find(x => x.name === hero.name)
             if (get) return error(message, b.already)
             await rpg.updateOne({userID: user.id}, {$inc: {pack3: -1}});
+            await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: hero.name}});
+
+            await rp.heroes.push({
+            name: hero.name,
+            health: hero.health,
+            damage: hero.damage,
+            level: 1
+            })
+            rp.save()
+        
+            
+            return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name))
+        } else if (it == 9) {
+            const rand = Math.floor(Math.random() * item.list.length);
+            const hero = heroes[item.list[rand]]
+            if (rp.heroes.length === rp.itemCount) return error(message, b.place)
+            let get = rp.heroes.find(x => x.name === hero.name)
+            if (get) return error(message, b.already)
+            await rpg.updateOne({userID: user.id}, {$inc: {tempPack: -1}});
             await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: hero.name}});
 
             await rp.heroes.push({

@@ -24,7 +24,7 @@ module.exports = {
     const LANG = await getLang.findOne({serverID: message.guild.id});
     const {buy: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
    
-    const items = ["Broken", "Hunter", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
+    const items = ["Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Broken", "Hunter", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
     const user = message.author;
     const coinData = await pd.findOne({userID: user.id});
     let rp = await rpg.findOne({userID: user.id});
@@ -43,7 +43,7 @@ module.exports = {
     if (!args[0]) return error(message, b.specHero)
 
     if (!isNaN(args[0])) {
-      const numbs = ["1", "2", "3", "4", "5", "6", "7", "8"];
+      const numbs = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
       if (!numbs.includes(args[0])) return error(message, b.itemErr);
       let item;
       let value = 1
@@ -57,6 +57,7 @@ module.exports = {
       if (it == 6) item = ITEMS.pack1
       if (it == 7) item = ITEMS.pack2
       if (it == 8) item = ITEMS.pack3
+      if (it == 9) item = ITEMS.tempPack
       if (!item.cost) return error(message, b.noItem);
       const getCost = value * item.cost
       if (bag.stars < getCost) return error(message, noStar);
@@ -71,6 +72,7 @@ module.exports = {
       if (it == 6) await rpg.updateOne({userID: user.id}, {$inc: {pack1: value}});
       if (it == 7) await rpg.updateOne({userID: user.id}, {$inc: {pack2: value}});
       if (it == 8) await rpg.updateOne({userID: user.id}, {$inc: {pack3: value}});
+      if (it == 9) await rpg.updateOne({userID: user.id}, {$inc: {tempPack: value}});
       
       
 
