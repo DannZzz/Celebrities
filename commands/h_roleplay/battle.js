@@ -63,7 +63,7 @@ module.exports = {
     
     const mItem = mrp.item
     let item;
-    const enem = ["Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "PerfectDuo", "Eragon", "Ariel", "Archangel", "Darkangel"];
+    const enem = ["Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
     const random = Math.floor(Math.random() * enem.length);
     item = enem[random]
     
