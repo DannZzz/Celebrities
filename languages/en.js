@@ -217,12 +217,12 @@ module.exports = {
             .setAuthor ("All information about transfers: ?donate")
             .addFields (
                 {name: `<a:vip1:867868958877810748> VIP 1`,
-                value: `Access to commands - AFK, embed, channel, levels (enabling the level system) and bio profile, and also increases the cost of fish (by 33%).`,
+                value: `Access to commands - AFK, embed, channel, levels (enabling the level system) and bio profile, and also increases the cost of fish (by 33%), increases the max value of gift to 1000, and also increases the bet of batlle.`,
                 inline: false},
                 {name: `<a:vip2:867868958459166751> VIP 2`,
-                value: `Gives access to unique heroes, reduces **cooldown** for all commands **two** times, makes it possible to issue a rank card, profile picture, and also gives more bet limit for all games.`,
+                value: `Gives access to unique heroes, reduces **cooldown** for all commands **two** times, makes it possible to issue a rank card, profile picture, and also gives more bet limit for all games, increases the max value of gift to 2500.`,
                 inline: false},{name: `Prices in dollars.`,
-                    value: `• Vip 1 + 100 ${STAR} - 0,2$\n • Vip 2 + 200 ${STAR} - 0,55$\n • Hero **Zeus** - 1,1$\n • 10000 ${STAR } - 1,1$ (47% discount)\n • 3000 ${STAR} - 0,4$ (33% discount)\n • 1000 ${STAR} - 0,2$`,
+                    value: `• Vip 1 + 1000 ${STAR} - 0,2$\n • Vip 2 + 2000 ${STAR} - 0,55$\n • Hero **Zeus** - 1,1$\n • 10000 ${STAR } - 1,1$ (47% discount)\n • 3000 ${STAR} - 0,4$ (33% discount)\n • 1000 ${STAR} - 0,2$`,
                     inline: false},
                     {name: `Extra place for heroes.`,
                     value: `• Cost: Your place count * 2000 ${STAR}\n \`?buy place\``,
@@ -365,9 +365,9 @@ module.exports = {
         "find": "Looking for an enemy...",
         "bet": "Enter your bet.",
         "min": "Minimum bet **1**.",
-        "vip1": "Maximum rate **10**!\nOr buy __VIP 1__",
-        "vip2": "Maximum rate **50**!\nOr buy __VIP 2__",
-        "vipError": "Maximum bet **120 **!",
+        "vip1": "Maximum rate **50**!\nOr buy __VIP 1__",
+        "vip2": "Maximum rate **100**!\nOr buy __VIP 2__",
+        "vipError": "Maximum bet **250 **!",
         "winner": "Winner:",
         "between": "Battle between",
     },
@@ -458,7 +458,7 @@ module.exports = {
 
 
     "gift": {
-        "desc": "Give stars to your soul mate.",
+        "desc": "Give stars to member.",
         "usage": "[username | mention | ID] [number of stars]",
         "access": "For everyone",
         "error1": "You cannot give gifts to yourself.",
