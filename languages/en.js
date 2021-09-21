@@ -55,6 +55,16 @@ module.exports = {
 
 
 
+    "leaderboard": {
+        "desc": "Get all leaderboards.",
+        "usage": "[type]",
+        "access": "For everyone",
+        "no": "Please specify a type of leaderboard(`total`).",
+        "total": "Top 20 heroes",
+    },
+
+
+
     "channel-enable": {
         "desc": "Enable channel for commands.",
         "usage": "[mention | ID]",
