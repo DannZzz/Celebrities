@@ -12,7 +12,10 @@ const {  MessageActionRow,
 const {main, none, greenlight, reddark} = require('./../JSON/colours.json')
 
 module.exports = {
-  
+  roundFunc: function (num, precision = 1) {
+    precision = Math.pow(10, precision)
+    return Math.round(num * precision) / precision
+  }, 
   perms: function (msg, perm) {
     return msg.member.permissions.has(perm)
   },
