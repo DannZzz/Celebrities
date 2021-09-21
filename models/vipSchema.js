@@ -3,11 +3,15 @@ const mongoose = require("mongoose");
 
 const vipSchema = new mongoose.Schema({
   userID: { type: String, require: false, unique: true },
-  profileBio: {type: String, default: null},
-  profileImage: {type: String, default: null},
-  profileThumbnail: {type: String, default: null},
-  rankImage: { type: String, default: null},
-  rankColor: { type: String, default: null}
+  profileBio: {type: String, default: undefined},
+  profileImage: {type: String, default: undefined},
+  profileThumbnail: {type: String, default: undefined},
+  rankImage: { type: String, default: undefined},
+  rankColor: { type: String, default: undefined},
+  vkLink: { type: String, default: undefined},
+  discordLink: { type: String, default: undefined},
+  youtubeLink: { type: String, default: undefined},
+  instagramLink: { type: String, default: undefined}
 });
 
 const model = mongoose.model("VipModels", vipSchema);

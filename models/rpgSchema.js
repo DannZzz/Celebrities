@@ -19,7 +19,8 @@ const rpgSchema = new mongoose.Schema({
   meat: {type: Number, default: 0},
   pack1: {type: Number, default: 0},
   pack2: {type: Number, default: 0},
-  pack3: {type: Number, default: 0}
+  pack3: {type: Number, default: 0},
+  tempPack: { type: Number, default: 0}
 
 });
 

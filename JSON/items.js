@@ -45,5 +45,11 @@ module.exports = {
         emoji: pack3,
         cost: 5000,
         list: ["Hunter", "Blazer", "Ariel", "Athena"]
+    },
+    tempPack: {
+        name: "tempPack",
+        emoji: "<:egyptPack:889904478508167198>",
+        cost: 6500,
+        list: ["Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses"]
     }
 }

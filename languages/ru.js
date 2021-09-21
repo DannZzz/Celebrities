@@ -1,6 +1,7 @@
 const {MessageEmbed} = require("discord.js");
 const { COIN, BANK, STAR } = require('../config');
 const {greenlight, redlight, main} = require('../JSON/colours.json');
+const heroes = require('../JSON/heroes.json');
 const item = require('../JSON/items');
 
 module.exports = {   
@@ -175,6 +176,7 @@ module.exports = {
         "donate": "Донат",
         "noavail": "Подарок от разработчика",
         "nocost": "Не известна",
+        "pack": "Временный пак",
         "yes": "Да",
         "t1": "Предыдущая",
         "t2": "Следующая",
@@ -250,9 +252,10 @@ module.exports = {
             .addField(`**#4** ${item.lvl.emoji} Зелье уровня: Можно получить открывая ящики.`, `Увеличивает уровень героя ${item.lvl.effect} раз`)
             .addField(`**#5** ${item.meat.emoji} Мясо жизни: Можно получить побеждая боссов или открывая ящики.`, `Добавляет герою ${item.meat.effect} единиц жизни`)
             .addField(`Паки`, "** **")
-            .addField(`**#6** ${item.pack1.emoji} Обычный пак: ${item.pack1.cost} ${STAR}`, `Откройте и получите одного из этих обычных героев: \`${item.pack1.list.join(", ")}\``) 
-            .addField(`**#7** ${item.pack2.emoji} Элитный пак: ${item.pack2.cost} ${STAR}`, `Откройте и получите одного из этих элитных героев: \`${item.pack2.list.join(", ")}\``)
-            .addField(`**#8** ${item.pack3.emoji} VIP пак: ${item.pack3.cost} ${STAR}`, `Откройте и получите одного из этих VIP героев: \`${item.pack3.list.join(", ")}\``)
+            .addField(`**#6** ${item.pack1.emoji} Обычный пак: ${item.pack1.cost} ${STAR}`, `Откройте и получите одного из этих обычных героев: \`${item.pack1.list.map(i => heroes[i].nameRus).join(", ")}\``) 
+            .addField(`**#7** ${item.pack2.emoji} Элитный пак: ${item.pack2.cost} ${STAR}`, `Откройте и получите одного из этих элитных героев: \`${item.pack2.list.map(i => heroes[i].nameRus).join(", ")}\``)
+            .addField(`**#8** ${item.pack3.emoji} VIP пак: ${item.pack3.cost} ${STAR}`, `Откройте и получите одного из этих VIP героев: \`${item.pack3.list.map(i => heroes[i].nameRus).join(", ")}\``)
+            .addField(`**#9** ${item.tempPack.emoji} Пак Древнеегипетских богов: ${item.tempPack.cost} ${STAR} __доступен до 31.10.2021__`, `Откройте и получите одного из этих временных героев: \`${item.tempPack.list.map(i => heroes[i].nameRus).join(", ")}\``)
             
         }
     },

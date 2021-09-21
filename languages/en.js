@@ -176,6 +176,7 @@ module.exports = {
         "avail": "Available:",
         "donate": "Donate",
         "noavail": "Gift from the developer",
+        "pack": "Temporary pack",
         "nocost": "Unknown",
         "yes": "Yes",
         "t1": "Previous",
@@ -254,6 +255,7 @@ module.exports = {
                 .addField(`**#6** ${item.pack1.emoji} Common Pack: ${item.pack1.cost} ${STAR}`, `Open and get one of these common heroes: \`${item.pack1.list.join(", ")}\``)
                 .addField(`**#7** ${item.pack2.emoji} Elite Pack: ${item.pack2.cost} ${STAR}`, `Unlock and get one of these elite heroes: \`${item.pack2.list.join(", ")}\``)
                 .addField(`**#8** ${item.pack3.emoji} VIP pack: ${item.pack3.cost} ${STAR}`, `Open and get one of these VIP heroes: \`${item.pack3.list.join(", ")}\``)
+                .addField(`**#9** ${item.tempPack.emoji} Pak of Ancient Egyptian gods: ${item.tempPack.cost} ${STAR} __available until 10/31/2021__`, `Open and get one of these Temporary heroes: \`${item.tempPack.list.join(", ")}\``)
                 
             }
         },
