@@ -42,7 +42,7 @@ module.exports = {
       switch (activity.type) {
         case 'CUSTOM':
         activities.push(activity.state)
-          UIembed.setDescription(`**${u.custom}:** ${activities}`)
+          UIembed.addField(`**${u.custom}:**`, activity.state)
           break;
         case 'PLAYING':
           UIembed.addField("**"+u.playing+": **", `${activity.name}`, false);
@@ -63,12 +63,11 @@ module.exports = {
 
         UIembed.setTitle(u.name + ' ' + member.user.tag + '')
         UIembed.setAuthor(u.author)
-        UIembed.addField(u.f1, `${moment(member.user.createdAt).format('DD.MM.YYYY HH:mm')}`, true)
-        UIembed.addField(u.f2, `${moment(member.joinedAt).format('DD.MM.YYYY HH:mm')}`, true)
-        UIembed.addField('\u200B', '\u200B', true);
-        UIembed.addField(u.f3, `${member.roles.cache.size-1}`, true)
-        UIembed.addField(u.f4, `${member.roles.highest.name}`, true)
-        UIembed.addField('\u200B', '\u200B', true);
+        UIembed.setDescription(`
+        **${u.f1}** ${moment(member.user.createdAt).format('DD.MM.YYYY HH:mm')}
+**${u.f2}** ${moment(member.joinedAt).format('DD.MM.YYYY HH:mm')}
+**${u.f3}** ${member.roles.cache.size-1}
+**${u.f4}** ${member.roles.highest.name}`)
         // UIembed.addField('Бот ли?:', `${booleanToRus(member.user.bot)}`, true)
         // UIembed.addField('Статус:', `${statusToRus(member.user.presence.status)}`, true)
         // UIembed.addField('\u200B', '\u200B', true);
