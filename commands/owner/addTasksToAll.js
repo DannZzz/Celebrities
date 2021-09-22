@@ -15,8 +15,8 @@ module.exports = {
         
         const taskData = {
             idName: "spendStars",
-            EN: `Написать ${ques} сообщений`,
-            RU: `Make ${ques} messages.`,
+            EN: `Make ${ques} messages.`,
+            RU: `Написать ${ques} сообщений`,
             goal: ques,
             status: false,
             doneEN: `You successfully did the task, your reward - ${rew} ` + STAR,
