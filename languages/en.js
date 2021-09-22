@@ -704,7 +704,9 @@ The more fish, the higher the price!
         "gaveUp": "gave up.",
         "gets": "Everyone gets",
         "lost": "lost",
-        "won": "won"
+        "won": "won",
+        "button1": "Refuse",
+        "button2": "Agree"
     },
 
     
