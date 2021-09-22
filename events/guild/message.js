@@ -1,4 +1,4 @@
-const { PREFIX, DISAGREE } = require('../../config');
+const { PREFIX, DISAGREE, STAR } = require('../../config');
 const { MessageEmbed } = require('discord.js')
 const profileModel = require("../../models/profileSchema");
 const serverModel = require("../../models/serverSchema");
@@ -36,6 +36,9 @@ module.exports = async (bot, messageCreate) => {
       }
     })
   }
+
+
+  
     
   
     try {
@@ -96,6 +99,34 @@ module.exports = async (bot, messageCreate) => {
   } catch (err) {
     console.log(err);
   }
+  const current = rateLimiter.take(message.author.id);
+  if (current) return
+
+  await rpg.updateOne({userID: message.author.id}, {$inc: {spendTask: 1}});
+  const getUser = await rpg.findOne({userID: message.author.id});
+  if (getUser.spendTask === getUser.tasks[0].goal && getUser.tasks[0].status === false) {
+    const ques = 3000;
+    const rew = 10000;
+    const task1 = getUser.task1 || 1;
+    const taskData = {
+      idName: "spendStars",
+      EN: `Написать ${ques * task1} сообщений`,
+      RU: `Make ${ques * task1} messages.`,
+      goal: ques * task1,
+      status: false,
+      doneEN: `You successfully did the task, your reward - ${rew * task1} ` + STAR,
+      doneRU: `Вы успешно выполнили задание, ваша наград - ${rew * task1} ` + STAR,
+      reward: rew * task1,
+  } 
+
+ 
+    await rpg.updateOne({userID: message.author.id}, {$set: {spendTask: 0}});
+    await rpg.updateOne({userID: message.author.id}, {$inc: {task1: 1}});
+    await rpg.updateOne({userID: message.author.id}, {$set: {["tasks.0"]: taskData}});
+    await begModel.updateOne({userID: message.author.id}, {$inc: {stars: taskData.reward-rew}})
+    embed(message, LANG.lang === "ru" ? getUser.tasks[0].doneRU : getUser.tasks[0].doneEN, false)
+  }
+
         if (message.author.bot || message.channel.type === "DM") return;
 
         let prefix;
@@ -113,8 +144,10 @@ module.exports = async (bot, messageCreate) => {
         let cmd = args.shift().toLowerCase();
       
         if (!message.content.startsWith(prefix)) return;
-        const current = rateLimiter.take(message.author.id);
-        if (current) return
+        
+
+       
+        
         let ops = {
             queue2: queue2,
             queue: queue,

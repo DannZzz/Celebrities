@@ -54,6 +54,14 @@ module.exports = {
     },
 
 
+    
+    "tasks": {
+        "desc": "Get your tasks.",
+        "usage": "",
+        "access": "For everyone", 
+    },
+
+
 
     "leaderboard": {
         "desc": "Get all leaderboards.",
@@ -693,7 +701,7 @@ The more fish, the higher the price!
         "error1": "Specify another member.",
         "secondH": "The second member doesn't have a hero.",
         "thirdH": "The third member doesn't have a hero.",
-        "invite": "You are invited to fight the boss, you have 20 seconds to accept\nAccept: \`+\`",
+        "invite": "You are invited to fight the boss, you have 20 seconds to accept\n\`Press on your nickname\`",
         "got1": "The first member agreed.",
         "got2": "The second member agreed.",
         "ref1": "The first member refused.",

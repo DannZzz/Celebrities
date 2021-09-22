@@ -20,7 +20,12 @@ const rpgSchema = new mongoose.Schema({
   pack1: {type: Number, default: 0},
   pack2: {type: Number, default: 0},
   pack3: {type: Number, default: 0},
-  tempPack: { type: Number, default: 0}
+  tempPack: { type: Number, default: 0},
+  tasks: {type: Array, default: []},
+  tasksCount: { type: Number, default: 0},
+  spendTask: { type: Number, default: 0},
+  spencAll: { type: Number, default: 0},
+  task1: { type: Number, default: 1}
 
 });
 
