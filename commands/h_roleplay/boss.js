@@ -26,8 +26,7 @@ module.exports = {
     const LANG = await getLang.findOne({serverID: message.guild.id});
     const {boss: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and} = require(`../../languages/${LANG.lang}`);   
    
-    let limited = rateLimiter.take(message.author.id)
-    if(limited) return error(message, b.wait)
+     error(message, b.wait)
  
        
     const bag = await bd.findOne({ userID: message.author.id });
@@ -140,6 +139,7 @@ module.exports = {
     const newEmbed = new MessageEmbed()
     .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
     .setDescription(`${user1} ${and} ${user2} ${b.invite}`)
+    .setColor(main)
 
     const waitingMsg = await message.channel.send({embeds: [newEmbed], components: [row1, row2]});
     const collector1 = await waitingMsg.createMessageComponentCollector({
