@@ -1,6 +1,8 @@
-exports.PREFIX = '?';
+exports.PREFIX = '!!';
 
 exports.DEV = "Dann#0006";
+
+exports.devID = ["382906068319076372"];
 
 exports.potDMG = "<:potionDamage:886478199645679686>";
 
@@ -46,4 +48,4 @@ exports.DISAGREE = '<:cross:886291083909292073>';
 
 exports.CLAN = '<a:clancurrency:878337758458970172>';
 
-exports.VERSION = '3.1.1';
+exports.VERSION = '3.0.1';
