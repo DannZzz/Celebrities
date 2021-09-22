@@ -122,20 +122,22 @@ module.exports = {
             const get = rp.heroes.find(x => x.name === trans)
             if (get) return error(msg, g.already);
             if (memberData.stars < cost) return error(msg, g.star);
-    
-    
-            
-            
             
             rp.heroes.push(getHero)
             rp.save()
             if (rp.heroes.length === 0) await rpg.updateOne({userID: member.id}, {$set: {item: getHero.name}});
+
             await bd.updateOne({userID: member.id}, {$inc: {stars: -cost}});
             await bd.updateOne({userID: user.id}, {$inc: {stars: Math.floor(cost/100*80)}});
+
             mrp.heroes.splice(mrp.heroes.indexOf(getHero), 1)
             mrp.save()
             mrp = await rpg.findOne({userID: user.id});
-            if (mrp.item === trans) await rpg.updateOne({userID: user.id}, {$set: {item: mrp.heroes[0] ? mrp.heroes[0].name : undefined}});
+            if (mrp.heroes.length === 0) {
+              await rpg.updateOne({userID: user.id}, {$set: {item: undefined}});
+            } else {
+              await rpg.updateOne({userID: user.id}, {$set: {item: mrp.heroes[0].name}});
+            }
              
             message.channel.send(`${g.sell(trans, Math.floor(cost/100*80))} ${STAR}`)
         }, a * 1000)

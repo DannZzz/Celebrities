@@ -4,8 +4,8 @@ const { main } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
-const { MessageEmbed, MessageAttachment } = require("discord.js");
-const { COIN, STAR } = require("../../config");
+const { MessageEmbed, MessageAttachment, MessageButton, MessageActionRow } = require("discord.js");
+const { COIN, STAR, AGREE } = require("../../config");
 const { checkValue } = require("../../functions/functions");
 const mc = require('discordjs-mongodb-currency');
 const {error, embed, perms} = require("../../functions/functions");
@@ -99,8 +99,21 @@ module.exports = {
     let msg2;
     let TIME = true;
 
-    const CC = await makeCanvas(data1.url, data2.url, data3.url, boss.url)
-    const att = new MessageAttachment(CC.toBuffer(), 'fight.png')
+    const button1 = new MessageButton()
+        .setCustomId('previousbtn')
+        .setLabel(user1.user.username)
+        .setStyle('PRIMARY')
+        .setEmoji(AGREE)
+  
+        const button2 = new MessageButton()
+        .setCustomId('nextbtn')
+        .setLabel(user2.user.username)
+        .setStyle('PRIMARY')
+        .setEmoji(AGREE)
+  
+        
+
+    
     
     let fight = new MessageEmbed()
     .setTitle(hm.battle)
@@ -117,59 +130,75 @@ module.exports = {
     
 
     let trues = [false, false]
-    let filter = m => m.author.id === user1.id;
-    message.delete()
-    let wait1 = await embed(message, `<@${user1.user.id}> ${b.invite}`, false)
-    await message.channel.awaitMessages({
-    filter,
-    max: 1, // leave this the same
-    time: 20000 // time in MS. there are 1000 MS in a second
-  }).then(async (collected) => {
-    if (collected.first().content === '+') {
-      await wait1.delete()
+    const filter1 = (i) => i.customId === button1.customId && i.user.id === user1.id;
 
-      msg1 = await message.channel.send(b.got1)
-      trues[0] = true
-    } else {
-      return error(message, b.ref1);
-    }
-    console.log('collected :' + collected.first().content)
-  }).catch(async() => {
-    TIME = false
-    wait1.delete()
-    return message.channel.send(b.timeError)
-    });
-    if(!TIME) return
-    let wait2 = await embed(message, `<@${user2.user.id}> ${b.invite}`, false)
-    filter = m => m.author.id === user2.id;
-    await message.channel.awaitMessages({
-    filter,
-    max: 1, // leave this the same
-    time: 20000 // time in MS. there are 1000 MS in a second
-  }).then(async (collected) => {
-    if (collected.first().content === '+') {
-      await wait2.delete()
+    const filter2 = (i) => i.customId === button2.customId && i.user.id === user2.id;
+    
+    const row1 = new MessageActionRow().addComponents([button1]);
+    const row2 = new MessageActionRow().addComponents([button2]);
 
-      msg2 = await message.channel.send(b.got2)
-      trues[1] = true
-    } else {
-      return error(message, b.ref2);
-    }
-    console.log('collected :' + collected.first().content)
-  }).catch(async() => {
-    wait2.delete()
-    return message.channel.send(b.timeError)
+    const newEmbed = new MessageEmbed()
+    .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
+    .setDescription(`${user1} ${and} ${user2} ${b.invite}`)
+
+    const waitingMsg = await message.channel.send({embeds: [newEmbed], components: [row1, row2]});
+    const collector1 = await waitingMsg.createMessageComponentCollector({
+      filter: filter1,
+      time: 20000,
+      });
+    const collector2 = await waitingMsg.createMessageComponentCollector({
+      filter: filter2,
+      time: 20000,
+      });  
+
+
+    collector1.on("collect", async (i) => {
+      switch (i.customId) {
+        case button1.customId:
+          trues[0] = true;
+          embed(message, b.got1)
+          break;
+        default:
+          break;  
+      }
     });
 
-  
-    while (true) {
+
+    collector2.on("collect", async (i) => {
+      switch (i.customId) {
+        case button2.customId:
+          trues[1] = true;
+          embed(message, b.got2)
+          break;
+        default:
+          break;  
+      }
+    });
+    let asd = false
+    collector1.on("end", () => {
+      if (!waitingMsg.deleted) {
+        const disabledRow = new MessageActionRow().addComponents(
+          button2.setDisabled(true),
+          button1.setDisabled(true)
+        );
+        waitingMsg.edit({
+          components: [disabledRow],
+        });
+      }
+      asd = true
+    });
+    // let boolean = false;
+    // setTimeout(() => boolean = true, 60*1000)
+
+    while ((trues[0] === false || trues[1] === false) && asd !== true) {await delay(1000)}
+    if (asd && !(trues[0] == true && trues[1] === true)) return error(message, b.timeError)
       if(trues[0] == true && trues[1] === true) {
+        waitingMsg.delete()
         const damn = await message.channel.send(`<a:dannloading:876008681479749662> ${b.connect}..`)
         const CC = await makeCanvas(data1.url, data2.url, data3.url, boss.url)
         const att = new MessageAttachment(CC.toBuffer(), 'fight.png')
         damn.delete()
-        msg1.delete()
-        msg2.delete()
+        
         let newmsg = await message.channel.send({embeds: [fight.setImage('attachment://fight.png')], files: [att]});
         setTimeout(async function() {
           let rand = Math.floor(Math.random() * 32)
@@ -235,11 +264,10 @@ module.exports = {
           }
 
         }, 20000)
-        break;
       } else {
-        continue;
+        return error(message, b.timeError);
       }
-    }
+    
 
   }
 };
