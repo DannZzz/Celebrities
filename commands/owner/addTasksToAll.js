@@ -8,6 +8,7 @@ module.exports = {
         aliases: ''
     },
     run: async (bot, msg, args) => {
+        msg.react(AGREE)
         if(!devID.includes(msg.author.id)) return
 
         const ques = 3000;
