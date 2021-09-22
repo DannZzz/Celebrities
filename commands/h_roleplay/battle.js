@@ -95,7 +95,10 @@ module.exports = {
     if (eLevel <= 1) eLevel = 2
     let eHealth = ((eLevel - 1) * 250) + data2.health;
     let eDamage = ((eLevel - 1) * 20) + data2.damage;
-    
+    if (myHealth / 2 > eHealth) {
+      eHealth += eHealth;
+      eDamage += (eDamage / 2)
+    }
     let h1 = eHealth
     let h2 = myHealth
     let d1 = eDamage
