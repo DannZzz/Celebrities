@@ -18,8 +18,6 @@ module.exports = {
     category: 'h_roleplay'
   },
   run: async (bot, message, args) => {
-    let limited = rateLimiter.take(message.author.id)
-    if(limited) return
 
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
@@ -180,6 +178,7 @@ module.exports = {
             let get = rp.heroes.find(x => x.name === hero.name)
             if (get) return error(message, b.already)
             await rpg.updateOne({userID: user.id}, {$inc: {tempPack: -1}});
+            await rpg.updateOne({userID: user.id}, {$inc: {openedPacks: 1}});
             await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: hero.name}});
 
             await rp.heroes.push({
