@@ -9,7 +9,7 @@ const { checkValue } = require("../../functions/functions");
 const mc = require('discordjs-mongodb-currency');
 const {error, embed, perms, roundFunc} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 5000);
+let rateLimiter = new RateLimiter(1, 10000);
 const Canvas = require('canvas');
 
 module.exports = {
@@ -21,6 +21,9 @@ module.exports = {
   run: async (bot, message, args, ops) => {
     const current = ops.games.get(message.author.id);
     if (current) return
+
+    const curr = rateLimiter.take(message.author.id);
+    if (curr) return
        
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
