@@ -6,6 +6,8 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const mc = require('discordjs-mongodb-currency')
 const Levels = require("discord-xp");
+const dotenv = require('dotenv');
+dotenv.config()
 
 const MONGO = process.env.MONGO
 Levels.setURL(MONGO);
@@ -34,6 +36,8 @@ bot.categories = fs.readdirSync("./commands/");
 ['command'].forEach((handler) => {
   require(`./handler/${handler}`)(bot);
 });
+
+bot.on('error',function(err){})
 
 bot.on("guildCreate", async guild => {
   let serverData = await serverModel.findOne({ serverID: guild.id });
@@ -105,6 +109,66 @@ bot.on("guildMemberAdd", async member => {
   memberr.save()};
 })
 
+
+bot.on('messageCreate', async message => {
+      let memberData;
+      let profileData;
+      let serverData;
+      let begData;
+      let vipData;
+    try {
+    let rp = await rpg.findOne({userID: message.author.id});
+
+    if (!rp) {const asd = await rpg.create({
+      userID: message.author.id
+    })
+    asd.save()
+    }
+
+    if (rp && !rp.itemCount) await rpg.updateOne({userID: message.author.id}, {$set: {itemCount: 1}})
+
+    vipData = await vipModel.findOne({ userID: message.author.id });
+    if (!vipData) {
+    let vip = await vipModel.create({
+      userID: message.author.id
+    })
+    vip.save()}
+
+    memberData = await memberModel.findOne({ userID: message.author.id, serverID: message.guild.id });
+    if (!memberData) {
+    let member = await memberModel.create({
+      userID: message.author.id,
+      serverID: message.guild.id
+    })
+    member.save()}
+
+    begData = await begModel.findOne({ userID: message.author.id });
+    if (!begData) {
+      let beg = await begModel.create({
+        userID: message.author.id
+      })
+      beg.save()
+    }
+
+    profileData = await profileModel.findOne({ userID: message.author.id });
+    if (!profileData) {
+      let profile = await profileModel.create({
+        userID: message.author.id,
+        serverID: message.guild.id,
+        coins: 1000,
+        bank: 0,
+        slots: 0,
+        rob: 0,
+        fish: 0,
+        work: 0,
+        daily: 0
+      });
+      profile.save();
+    }
+    } catch (err) {
+    console.log(err);
+    }
+});
 
 bot.on('messageCreate', async message => {
   let memberData = await memberModel.findOne({ userID: message.author.id, serverID: message.guild.id });
