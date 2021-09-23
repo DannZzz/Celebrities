@@ -109,7 +109,7 @@ module.exports = {
         if (bag.stars < value) return error(message, noStar);
         if (10 > value) return error(message, cc.min(STAR));
         value = Math.floor(value / 2)
-        await bd.updateOne({userID: user.id}, {$inc: {stars: Math.round(resp)}});
+        await bd.updateOne({userID: user.id}, {$inc: {stars: -Math.round(resp)}});
         await clan.updateOne({ID: rp.clanID}, {$inc: {budget: value}});
         return embed(message, cc.done(value, CLAN));
       }, a * 1000)
