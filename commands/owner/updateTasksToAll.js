@@ -4,7 +4,7 @@ const {STAR, AGREE, DISAGREE, devID} = require('../../config')
 
 module.exports = {
     config: {
-        name: "addtask",
+        name: "updatetask",
         aliases: ''
     },
     run: async (bot, msg, args) => {
@@ -23,7 +23,7 @@ module.exports = {
             doneRU: `Вы успешно выполнили задание, ваша награда - ${rew} ` + STAR,
             reward: rew,
         }
-
+        
         ques = 2;
         rew = 2000;
 
@@ -38,10 +38,9 @@ module.exports = {
             reward: rew,
         }
 
-
         await rpg.updateMany({tasks: {$exists: false}}, {$set: {tasks: []}})
-        await rpg.updateMany({["tasks.1"]: {$exists: false}}, {$set: {task2: 1, ["tasks.1"]: packData, openedPacks: 0}});
-       
+        await rpg.updateMany({["tasks.0"]: {$exists: false}}, {$set: {["tasks.0"]: taskData, task1: 1, spendTask: 0}});
+   
         msg.react(AGREE)
     }
 }
