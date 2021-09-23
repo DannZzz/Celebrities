@@ -21,8 +21,7 @@ module.exports = {
     category: 'h_roleplay'
   },
   run: async (bot, message, args, ops) => {
-    let limited = rateLimiter.take(message.author.id)
-    if(limited) return
+    
 
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
@@ -110,7 +109,7 @@ module.exports = {
         if (bag.stars < value) return error(message, noStar);
         if (10 > value) return error(message, cc.min(STAR));
         value = Math.floor(value / 2)
-        await bd.updateOne({userID: user.id}, {$inc: {stars: -value}});
+        await bd.updateOne({userID: user.id}, {$inc: {stars: Math.round(resp)}});
         await clan.updateOne({ID: rp.clanID}, {$inc: {budget: value}});
         return embed(message, cc.done(value, CLAN));
       }, a * 1000)
