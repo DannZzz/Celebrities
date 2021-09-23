@@ -18,8 +18,9 @@ module.exports = {
     aliases: ["битва"],
     category: 'h_roleplay'
   },
-  run: async (bot, message, args) => {
-    
+  run: async (bot, message, args, ops) => {
+    const current = ops.games.get(message.author.id);
+    if (current) return
        
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
@@ -30,8 +31,8 @@ module.exports = {
 
     let author = profileData.random;
     let timeout;
-    if (bag["vip2"] === true) { timeout = 70 * 1000; } else {
-      timeout = 140 * 1000;
+    if (bag["vip2"] === true) { timeout = 100 * 1000; } else {
+      timeout = 180 * 1000;
     }
     if (author !== null && timeout - (Date.now() - author) > 0) {
         let time = new Date(timeout - (Date.now() - author));
@@ -60,7 +61,7 @@ module.exports = {
     const mrp = await rpg.findOne({userID: message.author.id});
 
     if (!mrp || mrp.item === null) return error(message, hm.noHero);
-    
+    ops.games.set(message.author.id, {game: "battle"})
     const mItem = mrp.item
     let item;
     const enem = ["Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Broken", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
@@ -154,6 +155,7 @@ module.exports = {
 
       setTimeout(async() => {
         let winData
+        ops.games.delete(message.author.id)
         if (winner) {
           await rpg.findOneAndUpdate({userID: winner.id}, {$inc: {wins: 1}})
           await bd.updateOne({userID: winner.id}, {$inc: {stars: value*2}});
