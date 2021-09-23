@@ -16,22 +16,32 @@ module.exports = {
         const {tasks: t, buy: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
 
         const data = await rpgFind(user.id);
-        if(!data || data.tasks.length === 0) return error(msg, "Не имеете заданий.");
-        const {spendTask: cur, tasks} = data;
-        const goal = tasks[0].goal;
-        const progress = customBar(cur, goal, 20, "█", "-")
+        if(!data || !data.tasks || data.tasks.length === 0) return msg.react(DISAGREE);
+
         const emb = new MessageEmbed()
         .setColor(main)
         .setAuthor(msg.author.username, msg.author.displayAvatarURL({dynamic: true}))
-        .addField(`1. ${LANG.lang === "ru" ? data.tasks[0].RU : data.tasks[0].EN}`, `${cur} ${progress} — ${tasks[0].reward} ${STAR}`)
+
+        const {spendTask: cur, openedPacks: bp, tasks} = data;
         
-        msg.channel.send({embeds: [emb]})
+      
+            tasks.forEach((val, i) => {
+                let dat = [cur, bp];
+                
+                const goal = val.goal;
+                const progress = customBar(dat[i], goal, 10, "█", "▁");
+                emb.addField(`${i+1}. ${LANG.lang === "ru" ? val.RU : val.EN}`, `${dat[i]} ${progress} — ${val.reward} ${STAR}`);
+            })
+       
+        
+        
+        msg.channel.send({embeds: [emb]});
     }
 }
 
 function customBar(perc, ofMaxValue, size, line = '❤', slider = '🖤') {
-    if (!perc) throw new Error('Perc value is either not provided or invalid');
-    if (!perc && perc !== 0) throw new Error('Perc value is either not provided or invalid');
+    // if (!perc) throw new Error('Perc value is either not provided or invalid');
+    // if (!perc && perc !== 0) throw new Error('Perc value is either not provided or invalid');
     if (isNaN(perc)) throw new Error('Perc value is not an integer');
     if (isNaN(ofMaxValue)) throw new Error('ofMaxValue value is not an integer');
     if (isNaN(size)) throw new Error('Size is not an integer');
@@ -45,4 +55,4 @@ function customBar(perc, ofMaxValue, size, line = '❤', slider = '🖤') {
   
     const bar = ' ' + progressText + emptyProgressText + ' |' + percentageText; // Creating the bar
     return bar;
-}
+};
