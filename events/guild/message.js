@@ -46,7 +46,7 @@ module.exports = async (bot, messageCreate) => {
   try {
     await rpg.updateOne({userID: message.author.id}, {$inc: {spendTask: 1}});
     let getUser = await rpg.findOne({userID: message.author.id});
-    if (getUser.spendTask === getUser.tasks[0].goal && getUser.tasks[0].status === false) {
+    if (getUser.spendTask >= getUser.tasks[0].goal && getUser.tasks[0].status === false) {
       await rpg.updateOne({userID: message.author.id}, {$inc: {task1: 1}});
       getUser = await rpg.findOne({userID: message.author.id});
       const ques = 3000;
@@ -68,6 +68,30 @@ module.exports = async (bot, messageCreate) => {
       await rpg.updateOne({userID: message.author.id}, {$set: {["tasks.0"]: taskData}});
       await begModel.updateOne({userID: message.author.id}, {$inc: {stars: taskData.reward-rew}})
       embed(message, LANG.lang === "ru" ? getUser.tasks[0].doneRU : getUser.tasks[0].doneEN, false)
+    }
+
+    if (getUser.openedPacks >= getUser.tasks[1].goal && getUser.tasks[1].status === false) {
+      await rpg.updateOne({userID: message.author.id}, {$inc: {task2: 1}});
+      getUser = await rpg.findOne({userID: message.author.id});
+      const ques = 2;
+      const rew = 2000;
+      const task1 = getUser.task2 || 1;
+      const taskData = {
+        idName: "spendStars",
+        EN: `Use ${ques * task1} Egyptian packs.`,
+        RU: `Открой ${ques * task1} Египетских паков.`,
+        goal: ques * task1,
+        status: false,
+        doneEN: `You successfully did the task, your reward - ${rew * task1 - rew} ` + STAR,
+        doneRU: `Вы успешно выполнили задание, ваша награда - ${rew * task1 - rew} ` + STAR,
+        reward: rew * task1,
+    } 
+  
+   
+      await rpg.updateOne({userID: message.author.id}, {$set: {openedPacks: 0}});
+      await rpg.updateOne({userID: message.author.id}, {$set: {["tasks.1"]: taskData}});
+      await begModel.updateOne({userID: message.author.id}, {$inc: {stars: taskData.reward-rew}})
+      embed(message, LANG.lang === "ru" ? getUser.tasks[1].doneRU : getUser.tasks[1].doneEN, false)
     }
   } catch {
     console.log("error")

@@ -24,8 +24,10 @@ const rpgSchema = new mongoose.Schema({
   tasks: {type: Array, default: []},
   tasksCount: { type: Number, default: 0},
   spendTask: { type: Number, default: 0},
-  spencAll: { type: Number, default: 0},
-  task1: { type: Number, default: 1}
+  spendAll: { type: Number, default: 0},
+  task1: { type: Number, default: 1},
+  task2: { type: Number, default: 1},
+  openedPacks: { type: Number, default: 0},
 
 });
 
