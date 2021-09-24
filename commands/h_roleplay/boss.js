@@ -24,10 +24,7 @@ module.exports = {
    
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
-    const {boss: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and} = require(`../../languages/${LANG.lang}`);   
-   
-     error(message, b.wait)
- 
+    const {boss: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and} = require(`../../languages/${LANG.lang}`);
        
     const bag = await bd.findOne({ userID: message.author.id });
     const profileData = await pd.findOne({ userID: message.author.id });
