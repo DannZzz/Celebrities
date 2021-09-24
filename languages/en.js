@@ -68,7 +68,8 @@ module.exports = {
         "usage": "[type]",
         "access": "For everyone",
         "no": "Please specify a type of leaderboard(`total`).",
-        "total": "Top 20 heroes",
+        "games": "Top by games",
+        "journey": "Adventure Top"
     },
 
 
@@ -619,6 +620,8 @@ The more fish, the higher the price!
             \`clan reward\` — Get daily golds.
             \`clan leave\` — Leave the clan.
             \`clan delete\` — Delete a clan.
+            \`clan message\` — Send a message to every member of the clan.
+            \`clan give (amount)\` — Use budget and give some golds to every member.
             `
             return text;
         },

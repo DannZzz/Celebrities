@@ -1,8 +1,14 @@
-exports.PREFIX = 'a!';
+exports.PREFIX = '!!';
 
 exports.DEV = "Dann#0006";
 
 exports.devID = ["382906068319076372"];
+
+exports.MEDAL = {
+    "gold": "<:goldenmedal:890956638582878218>",
+    "silver": "<:silvermedal:890956638759030798>",
+    "bronze": "<:bronzemedal:890956638826160198>"
+}
 
 exports.potDMG = "<:potionDamage:886478199645679686>";
 
