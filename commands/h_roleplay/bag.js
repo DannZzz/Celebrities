@@ -18,8 +18,7 @@ module.exports = {
     category: 'h_roleplay'
   },
   run: async (bot, message, args) => {
-    let limited = rateLimiter.take(message.author.id)
-    if(limited) return
+    
 
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
@@ -33,25 +32,17 @@ module.exports = {
     .setAuthor(user.tag)
     .setColor(main)
     .setThumbnail(user.displayAvatarURL({dynamic: true}))
-    .setDescription(`
-**#1** ${items.box.emoji} : ${rp["box"] || 0}
-
-**#2** ${items.hlt.emoji} : ${rp["hlt"] || 0}
-
-**#3** ${items.dmg.emoji} : ${rp["dmg"] || 0}
-
-**#4** ${items.lvl.emoji} : ${rp["lvl"] || 0}
-
-**#5** ${items.meat.emoji} : ${rp["meat"] || 0}
-
-**#6** ${items.pack1.emoji} : ${rp["pack1"] || 0}
-
-**#7** ${items.pack2.emoji} : ${rp["pack2"] || 0}
-
-**#8** ${items.pack3.emoji} : ${rp["pack3"] || 0}
-
-**#9** ${items.tempPack.emoji} : ${rp["tempPack"] || 0}
-    `)
+    
+    .addField(`**#1** ${items.box.emoji} :`, `${rp["box"] || 0}`, true)
+    .addField(`**#2** ${items.hlt.emoji} :`, `${rp["hlt"] || 0}`, true)
+    .addField(`**#3** ${items.dmg.emoji} :`, `${rp["dmg"] || 0}`, true)
+    .addField(`**#4** ${items.lvl.emoji} :`, `${rp["lvl"] || 0}`, true)
+    .addField(`**#5** ${items.meat.emoji}:`, `${rp["meat"] || 0}`, true)
+    .addField(`**#6** ${items.pack1.emoji} :`, `${rp["pack1"] || 0}`, true)
+    .addField(`**#7** ${items.pack2.emoji} :`, `${rp["pack2"] || 0}`, true)
+    .addField(`**#8** ${items.pack3.emoji} :`, `${rp["pack3"] || 0}`, true)
+    .addField(`**#9** ${items.tempPack.emoji} :`, `${rp["tempPack"] || 0}`, true)
+      
 
     return message.channel.send({embeds: [emb]})
   }

@@ -22,8 +22,7 @@ module.exports = {
     const LANG = await getLang.findOne({serverID: message.guild.id});
     const {join: j, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
    
-    let limited = rateLimiter.take(message.author.id)
-    if(limited) return
+    
 
     const data = await pd.findOne({userID: message.author.id})
     const user = message.author;
@@ -62,7 +61,7 @@ module.exports = {
     await getClan.apps.unshift({
       tag: message.author.tag,
       hero: rp.item || cm.noHero,
-      level: get.level || "—",
+      level: get ? get.level : "—",
       id: message.author.id
     })
     getClan.save()

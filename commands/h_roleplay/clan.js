@@ -6,7 +6,7 @@ const bd = require("../../models/begSchema");
 const clan = require("../../models/clanSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
-const { COIN, STAR, CLAN } = require("../../config");
+const { COIN, STAR, CLAN, AGREE } = require("../../config");
 const {error, embed, perms, firstUpperCase} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 const { update } = require('../../models/profileSchema');
@@ -56,7 +56,8 @@ module.exports = {
     const leave = ['leave'];
     const up = ['up'];
     const down = ['down'];
-    const mess = ["message"]
+    const mess = ["message"];
+    const give = ["give"];
     
     if (!args[0]) {
       const mc = await clan.findOne({ID: rp.clanID});
@@ -594,6 +595,25 @@ module.exports = {
         
      })
      return embed(message, cc.mDone)
+    } else if(give.includes(resp)) {
+      if (rp.clanID === null) return error(message, cm.noClan);
+      let getCl = await clan.findOne({ID: rp.clanID});
+      if(message.author.id !== getCl.owner) return error(message, cm.notLeader);
+      let budget = getCl.budget;
+      if (args[1] && !isNaN(args[1]) && args[1] <= budget) {budget = Math.floor(args[1])};
+      const space = await rpg.find({clanID: getCl.ID}).exec();
+      if (budget < space.length) return message.react(DISAGREE);
+      let value = Math.round(budget / space.length);
+      if (value <= 0) value = 1;
+      
+      await clan.updateOne({ID: getCl.ID}, {$inc: {budget: -budget}});
+      space.forEach(async (data) => {
+        await bd.updateOne({userID: data.userID}, {$inc: {stars: value}});
+      })
+
+    
+      message.react(AGREE)
+
     } else {
       return error(message, cc.actionError);
     }
