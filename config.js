@@ -1,4 +1,4 @@
-exports.PREFIX = '!!';
+exports.PREFIX = 'a!';
 
 exports.DEV = "Dann#0006";
 
