@@ -55,7 +55,7 @@ module.exports = {
             try {
                 const name = bot.users.cache.get(data.userID) ? bot.users.cache.get(data.userID).tag : (LANG.lang === "ru" ? "Неизвестный" : "Unknown");
                 
-                return `\n${emoji} ${position}**${name}** | ${hm.level} ${data.surviveLevel || 1}`
+                return `\n${emoji} ${position}**${name}** | ${hm.level} ${data.surviveLevel-1 || 0}`
             } catch {
                 return `\n${emoji} ${position}**${LANG.lang === "ru" ? "Неизвестный" : "Unknown"}**`
             }
