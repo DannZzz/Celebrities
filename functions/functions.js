@@ -36,7 +36,9 @@ module.exports = {
     .setColor(reddark)
     .setAuthor(msg.author.username, msg.author.displayAvatarURL({dynamic: true}))
     .setDescription(`${DISAGREE} ${text}`)
-    return msg.reply({embeds: [Emb]}).then(message => setTimeout(() => message.delete(), 10000))
+
+    msg.react(DISAGREE)
+    return msg.reply({embeds: [Emb]}).then(message => setTimeout(() => message.delete(), 15000))
   },
   progressBar: function (perc, ofMaxValue, size, line = '❤', slider = '🖤') {
   if (!perc) throw new Error('Perc value is either not provided or invalid');
