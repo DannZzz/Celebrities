@@ -1,4 +1,4 @@
-exports.PREFIX = '?';
+exports.PREFIX = '!!';
 
 exports.DEV = "Dann#0006";
 
@@ -36,7 +36,7 @@ exports.COIN = '<a:danndollar:875448360830644225>';
 
 exports.BANK = '<a:dannbank:864469749400600586>';
 
-exports.STAR = '<a:dannstar:875453906283528282>';
+exports.STAR = '<:gold:890928423818641419>';
 
 exports.AME_API = '3229a6d1c6886228c8946c39e5a89f79e62ca7251c10a31fede7679ab8da35794c44a5beacd17993117918809096fec0aac9a1c973d3a42d7eb638eda77b6692';
 

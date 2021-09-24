@@ -19,7 +19,7 @@ module.exports = {
     "and": "and",
     "buttonYes": "Yes",
     "buttonNo": "No",
-    "noStar": "You don't have enough stars.",
+    "noStar": "You don't have enough golds.",
 
     "afkMess": (name, res) => `User **${name}** is currently in AFK mode\nBy reason: **${res}**`,
     
@@ -58,7 +58,7 @@ module.exports = {
     "tasks": {
         "desc": "Get your tasks.",
         "usage": "",
-        "access": "For everyone", 
+        "access": "For everyone",
     },
 
 
@@ -118,7 +118,7 @@ module.exports = {
 
 
     "give": {
-        "desc": "Give the hero to the member for the number of stars.",
+        "desc": "Give the hero to the member for the number of golds.",
         "usage": "[hero name] [mention | ID] [price]",
         "access": "For everyone",
         "specH": "Specify a hero.",
@@ -131,7 +131,7 @@ module.exports = {
         "find": "Looking for a member...",
         "place": "This member has enough heroes.",
         "already": "This member already has this hero.",
-        "star": "This member does not have that many stars.",
+        "star": "This member does not have that many golds.",
         "sell": (name, cost) => `You sold the hero: __${name}__ for __${cost}__(20% tax)`
     },
 
@@ -254,7 +254,7 @@ module.exports = {
                 return new MessageEmbed ()
                 .setColor (main)
                 .setAuthor ("Buff Shop")
-                .addField(`**#1** ${item.box.emoji} Item Box: ${item.box.cost} ${STAR}`, `Gives a random item and up to 150 stars`)
+                .addField(`**#1** ${item.box.emoji} Item Box: ${item.box.cost} ${STAR}`, `Gives a random item and up to 150 golds`)
                 .addField(`**#2** ${item.hlt.emoji} Potion of Health: ${item.hlt.cost} ${STAR}`, `Adds ${item.hlt.effect} health to the hero`)
                 .addField(`**#3** ${item.dmg.emoji} Potion of Attack: ${item.dmg.cost} ${STAR}`, `Adds ${item.dmg.effect} damage to the hero`)
                 .addField(`**#4** ${item.lvl.emoji} Potion of Level: Can be obtained by opening boxes.`, `Increases the level of the hero ${item.lvl.effect} times`)
@@ -306,7 +306,7 @@ module.exports = {
         "access": "For everyone",
         "info": "Information about leveling up to",
         "cost": "Upgrade cost:",
-        "err": "You don't have enough stars.\nCost of leveling up to the next level",
+        "err": "You don't have enough golds.\nCost of leveling up to the next level",
         "done": "Level successfully upped to"
     },
 
@@ -317,7 +317,7 @@ module.exports = {
         "usage": "[username | mention | ID]",
         "access": "For everyone",
         "err": "You are not married.",
-        "err1": "You have not enough stars - 150",
+        "err1": "You have not enough golds - 150",
         "sure": "Are you sure you want to part? You will pay 150 for this",
         "action": "The action was successfully rejected.",
         "done": "you are now free..."
@@ -434,7 +434,7 @@ module.exports = {
         "err1": "You are already married.",
         "time": time => `Try again in **${Math.round(Math.abs (time) / 86400000)} days**.`,
         "err2": "This member already has a partner.",
-        "err3": "You have not enough stars - 150",
+        "err3": "You have not enough golds - 150",
         "sure": "Offers you his hand and heart",
         "ref": "refused.",
         "done": "got married."
@@ -478,11 +478,11 @@ module.exports = {
 
 
     "gift": {
-        "desc": "Give stars to member.",
-        "usage": "[username | mention | ID] [number of stars]",
+        "desc": "Give golds to member.",
+        "usage": "[username | mention | ID] [number of golds]",
         "access": "For everyone",
         "error1": "You cannot give gifts to yourself.",
-        "error2": "Enter the number of stars to gift.",
+        "error2": "Enter the number of golds to gift.",
         "error3": "You must get married first.",
         "error4": "This is not your soul mate.",
         "vip1": "Maximum amount **50**!\nOr buy __VIP 1__",
@@ -521,7 +521,7 @@ module.exports = {
         "already": "You already have this hero.",
         "donePlace": "You successfuly bought an extra slot for heroes.",
         "errPlace": "You already have an extra slot.",
-        "error": "You don't have enough stars, or the hero is not available.",
+        "error": "You don't have enough golds, or the hero is not available.",
         "done": name => `You have successfully bought — __${name}__.`,
         "not": "The hero is not available.",
         "err": "You already have enough heroes, first kill one to buy a new one."
@@ -563,7 +563,7 @@ The more fish, the higher the price!
 
 
     "daily": {
-        "desc": "10 stars and 1 box daily.",
+        "desc": "10 golds and 1 box daily.",
         "usage": "",
         "access": "For everyone",
         "time": time => `You have already collected your daily prize.\nTry again in **${time.getUTCHours()} hours ${time.getMinutes()} minutes.**`,
@@ -602,7 +602,7 @@ The more fish, the higher the price!
         "actions": "All available functions!",
         "helpCommand": (star, clan) => {
             const text = `
-            \`clan (number)\` - Drop stars to the clan budget. (__2 ${star}__ = __1 ${clan}__)
+            \`clan (number)\` - Drop golds to the clan budget. (__2 ${star}__ = __1 ${clan}__)
             \`clan create [name]\` - Create your own clan (price 5000 ${star})
             \`clan kick [member number]\` - Kick a member out of the clan.
             \`clan up [member number]\` - Promote member.
@@ -616,7 +616,7 @@ The more fish, the higher the price!
             \`clan upgrade (info)\` — Upgrade the clan.
             \`clan description [текст]\` — Description for the clan.
             \`clan logo [ссылка на лого]\` — Logo for the clan.
-            \`clan reward\` — Get daily stars.
+            \`clan reward\` — Get daily golds.
             \`clan leave\` — Leave the clan.
             \`clan delete\` — Delete a clan.
             `
