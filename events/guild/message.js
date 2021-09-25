@@ -11,6 +11,7 @@ const queue2 = new Map();
 const queue3 = new Map();
 const queue = new Map();
 const games = new Map();
+const buying = new Map();
 const mongoCurrency = require('discordjs-mongodb-currency');
 const {error, embed} = require("../../functions/functions");
 const {main, none} = require('../../JSON/colours.json');
@@ -128,7 +129,8 @@ module.exports = async (bot, messageCreate) => {
             queue2: queue2,
             queue: queue,
             queue3: queue3,
-            games: games
+            games: games,
+            buying: buying
         }
         let ss = new MessageEmbed().setColor("#2f3136").setTimestamp()
         const imunCmd = ["enable", "disable", "channel-enable", "channel-disable"]
