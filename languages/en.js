@@ -509,7 +509,7 @@ module.exports = {
 
     "buy": {
         "desc": "Buy a hero.",
-        "usage": "[item number or hero name]",
+        "usage": "[item number or hero]",
         "access": "For everyone",
         "time": time => `You recently bought a hero.\nTry again in **${Math.round(Math.abs(time) / 86400000)} days ${time.getUTCHours()} hours.**.`,
         "specHero": "Specify an item.",
@@ -525,6 +525,7 @@ module.exports = {
         "error": "You don't have enough golds, or the hero is not available.",
         "done": name => `You have successfully bought — __${name}__.`,
         "not": "The hero is not available.",
+        "pick": "Choose a hero",
         "err": "You already have enough heroes, first kill one to buy a new one."
     },
 
