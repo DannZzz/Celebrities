@@ -6,6 +6,8 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const mc = require('discordjs-mongodb-currency')
 const Levels = require("discord-xp");
+const dotenv = require('dotenv');
+dotenv.config()
 
 const MONGO = process.env.MONGO
 Levels.setURL(MONGO);
@@ -251,9 +253,8 @@ setInterval(() => {
   // if there's a date in localstorage and it's equal to the above: 
   // inferring a day has yet to pass since both dates are equal.
   let botTime = await botData.findOne({name: "main"}) || date;
-  if( botTime == date || timeTwo !== "00") 
-      return false;
-
+  if ( botTime == date ) return false;
+  if ( timeTwo !== "00" ) return false;
   // this portion of logic occurs when a day has passed
   await botData.updateOne({name: "main"}, {$set: {timeToNull: date}})
   return true;
