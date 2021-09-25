@@ -35,7 +35,7 @@ module.exports = {
           }
 
         }
-
+try {
         const activities = [];
     for (const activity of member.presence.activities.values()) {
       switch (activity.type) {
@@ -57,7 +57,9 @@ module.exports = {
             UIembed.addField("**"+u.streaming+" **", `${activity.name}`, false);
           break;
       }}
-
+} catch {
+  console.log("user no activity");
+}
 
 
         UIembed.setTitle(u.name + ' ' + member.user.tag + '')
