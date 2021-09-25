@@ -241,7 +241,11 @@ module.exports = {
           } 
       }
   
+    } else {
+      return error(message, `\`${LANG.prefix}buy hero\``);
     }
+
+
     
   }
 };
