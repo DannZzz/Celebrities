@@ -41,20 +41,20 @@ module.exports = {
       switch (activity.type) {
         case 'CUSTOM':
         activities.push(activity.state)
-          UIembed.addField(`**${u.custom}:**`, activity.state)
+          UIembed.addField(`**${u.custom}**`, activity.state)
           break;
         case 'PLAYING':
-          UIembed.addField("**"+u.playing+": **", `${activity.name}`, false);
+          UIembed.addField("**"+u.playing+" **", `${activity.name}`, false);
           break;
         case 'LISTENING':
-          if (member.bot) {UIembed.addField("**"+u.listening+": **", `${activity.name}`, false);}
-          else {UIembed.addField("**"+u.listening+": **", `${activity.state} -- ${activity.details}`, false)};
+          if (member.bot) {UIembed.addField("**"+u.listening+" **", `${activity.name}`, false);}
+          else {UIembed.addField("**"+u.listening+" **", `${activity.state} -- ${activity.details}`, false)};
           break;//
         case 'WATCHING':
-            UIembed.addField("**"+u.watching+": **", `${activity.name}`, false);
+            UIembed.addField("**"+u.watching+" **", `${activity.name}`, false);
           break;
         case 'STREAMING':
-            UIembed.addField("**"+u.streaming+": **", `${activity.name}`, false);
+            UIembed.addField("**"+u.streaming+" **", `${activity.name}`, false);
           break;
       }}
 
