@@ -1,15 +1,14 @@
-const heroes = require('../../JSON/heroes.json');
-const { main } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
-const bd = require("../../models/begSchema");
-const rpg = require("../../models/rpgSchema");
-const { MessageEmbed } = require("discord.js");
-const { COIN, AGREE, STAR } = require("../../config");
-const { checkValue } = require("../../functions/functions");
-const {error, embed, perms, firstUpperCase} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 const ITEMS = require('../../JSON/items');
+const { serverFind, bagFind, rpgFind, bag : bd, rpg, profileFind } = require("../../functions/models");
+const { error, embed } = require("../../functions/functions");
+const { main, none } = require("../../JSON/colours.json");
+const heroes = require("../../JSON/heroes.json");
+const {tempPack: tm} = require("../../JSON/items");
+const { AGREE, DISAGREE, STAR } = require("../../config");
+const { MessageEmbed, MessageSelectMenu, MessageActionRow } = require("discord.js");
 
 module.exports = {
   config: {
@@ -17,12 +16,12 @@ module.exports = {
     aliases: ['get', "купить"],
     category: 'h_roleplay'
   },
-  run: async (bot, message, args) => {
+  run: async (bot, message, args, ops) => {
     
 
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
-    const {buy: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
+    const {quiz, heroes: hh, buy: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
    
     const items = ["Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Broken", "Hunter", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
     const user = message.author;
@@ -35,6 +34,7 @@ module.exports = {
       });
       newData.save()
     }
+    const heros = ["hero", "герой"];
     rp = await rpg.findOne({ userID: user.id });
     let bag = await bd.findOne({ userID: user.id });
     let profile = await pd.findOne({ userID: user.id });
@@ -96,46 +96,152 @@ module.exports = {
     }
 
    
+    if ( heros.includes(args[0].toLowerCase())) {
+      const curr = ops.buying.get(message.author.id);
+      if (curr) return
+      ops.buying.set(message.author.id, {action: "buying"});
+      let bool = false;
+      const msg = message;
+      const user = msg.author;
+      const server = msg.guild;
+      const serverData = await serverFind(server.id);
+      const ln = serverData.lang;
+      const coinData = await profileFind(user.id);
+      const rp = await rpgFind(user.id);
+      const bag = await bagFind(user.id);
+      
+      const { buy: b, heroModel: hm, heroes: hh } = require(`../../languages/${ln}`);
+
+      const heroArr = [];
+      for (let item in heroes) {
+          var hero = heroes[item];
+          heroArr.push({
+              label: `${ln === "en" ? hero.name : hero.nameRus} ${cMar(hero.marry)} ${cVip(hero.vip)}`,
+              value: hero.name,
+              description: `${hh.cost} ${cCost(hero.cost)}`,
+              emoji: cType(hero.costType, hero.available)
+          })
+
+      }
+      const emb = new MessageEmbed()
+      .setColor(none)
+      
+      const cont = ln === "ru" ? "https://i.ibb.co/z2Q3srW/buyRU.gif" : "https://i.ibb.co/4ZtRfsw/buyEN.gif";
+      
+      const select = new MessageActionRow()
+          .addComponents(
+              new MessageSelectMenu()
+                  .setCustomId("first-menu")
+                  .setPlaceholder(b.pick)
+                  .addOptions([heroArr])
+          )
+
+      const filter = (i) => i.isSelectMenu() && i.user.id === user.id;
+      const mms = await msg.channel.send({content: cont, components: [select]});
+      
+      const collector = await mms.createMessageComponentCollector({
+          filter,
+          max: "1",
+          time: 45000
+      });
+      collector.on("collect", async (i) => {
+          const val = i.values[0];
+          const item = heroes[val];
+          i.deferUpdate();
+          if (!mms.deleted) mms.delete();
+          bool = true;
+          ops.buying.delete(message.author.id);
+          if (item.vip === true) {
+              if(bag["vip2"] !== true) {
+              return error(msg, b.vip);
+              }
+          }
+
+          if (item.marry === true && !coinData.marryID) return error(msg, b.love)
+
+          if (rp.heroes.length === rp.itemCount) return error(msg, b.place)
+          const idk = rp.heroes.find(x => x.name === val) 
+          if (idk) return error(msg, b.already)
+
+          if (item.costType === "star") {
+              const stars = bag.stars
+              if (item.cost > stars) {
+              return error(msg, b.error);
+              }
+              await bd.findOneAndUpdate({userID: user.id}, {$inc: {stars: -item.cost}});
+              await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: val}});
+
+              await rp.heroes.push({
+              name: val,
+              health: item.health,
+              damage: item.damage,
+              level: 1
+              })
+              rp.save()
+              
+              return embed(msg, b.done(ln === "ru" ? item.nameRus : item.name));
+          } else {
+              return error(msg, b.not);
+          }
+          
+          
+      });
+
+      collector.on("end", async (i) => {
+        if (!bool) {
+          if (!mms.deleted) mms.delete()
+          ops.buying.delete(message.author.id);
+          return error(msg, quiz.err)
+        }      
+      })
+
+
+
+
+      function cAv(av) {
+          if (av === "Да") {
+            return hh.yes
+          } else if (av === "Донат") {
+            return hh.donate
+          } else if (av === "Под") {
+            return hh.noavail
+          } else if (av === "пак") {
+            return hh.pack
+          }
+        }
+        function cCost(cost) {
+          if (!isNaN(cost)) {
+            return cost
+          } else if (cost.endsWith("₽") && ln === "ru") {
+            return cost
+          } else if (cost.endsWith("₽") && ln === "en") {
+            return "1,1$"
+          } else {
+            return hh.nocost
+          }
+        }
+        function cMar(bool) {
+          let res = bool ? '💞' : ''
+          return res;
+        }
+        function cVip(bool) {
+          let res = bool ? '-VIP-' : ''
+          return res;
+        }
+        function cType(type, ava) {
+          if(type === 'star') {return STAR}
+           else {
+               if(ava === "пак") {
+                   return tm.emoji;
+               } else if (ava === "Под") {
+                   return "<:danncrown:880492405390979132>";
+               } else if (ava === "Донат") {
+                   return "💵";
+               }
+          } 
+      }
+  
+    }
     
-    const type = firstUpperCase(args[0].toLowerCase());
-    if (!items.includes(type)) return error(message, b.nh)
-      const item = heroes[type]
-
-      if (item.vip === true) {
-        if(bag["vip2"] !== true) {
-          return error(message, b.vip);
-        }
-      }
-
-      if (item.marry === true && !coinData.marryID) return error(message, b.love)
-
-      if (rp.heroes.length === rp.itemCount) return error(message, b.place)
-      const idk = rp.heroes.find(x => x.name === type) 
-      if (idk) return error(message, b.already)
-
-      if (item.costType === "star") {
-        const stars = bag.stars
-        if (item.cost > stars) {
-          return error(message, b.error);
-        }
-        await bd.findOneAndUpdate({userID: user.id}, {$inc: {stars: -item.cost}});
-        await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: type}});
-
-        await rp.heroes.push({
-          name: type,
-          health: item.health,
-          damage: item.damage,
-          level: 1
-        })
-        rp.save()
-        
-        return embed(message, b.done(LANG.lang === "ru" ? item.nameRus : item.name));
-      } else {
-        return error(message, b.not);
-      }
-
-   
-    //
-
   }
 };
