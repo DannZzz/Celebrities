@@ -15,7 +15,7 @@ const profileSchema = new mongoose.Schema({
   boss: { type: Number, default: 0},
   join: { type: Number, default: 0},
   afkMessage: { type: String, default: null} ,
-  random: { type: Number, default: 0}
+  random: { type: Number, default: 0},
 });
 
 const model = mongoose.model("ProfileModels", profileSchema);

@@ -6,6 +6,8 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const mc = require('discordjs-mongodb-currency')
 const Levels = require("discord-xp");
+const dotenv = require('dotenv');
+dotenv.config()
 
 const MONGO = process.env.MONGO
 Levels.setURL(MONGO);
@@ -22,6 +24,7 @@ const memberModel = require("./models/memberSchema");
 const begModel = require("./models/begSchema");
 const vipModel = require("./models/vipSchema");
 const rpg = require("./models/rpgSchema");
+const botData = require("./models/bot");
 
 bot.commands = new Collection();
 bot.aliases = new Collection();
@@ -241,5 +244,32 @@ bot.on('messageCreate', async message => {
 process.on('unhandledRejection', error => {
   console.log('Test error:', error);
 });
+
+setInterval(() => {
+  async function hasOneDayPassed() {
+  // get today's date. eg: "7/37/2007"
+  var date = new Date().toLocaleDateString("ru-RU", {timeZone: "Europe/Moscow"});
+  var timeTwo = new Date().toLocaleTimeString("ru-RU", {timeZone: "Europe/Moscow"}).substring(0, 2);
+  // if there's a date in localstorage and it's equal to the above: 
+  // inferring a day has yet to pass since both dates are equal.
+  let botTime = await botData.findOne({name: "main"}) || date;
+  if( botTime == date || timeTwo !== "00") 
+      return false;
+
+  // this portion of logic occurs when a day has passed
+  await botData.updateOne({name: "main"}, {$set: {timeToNull: date}})
+  return true;
+}
+
+
+// some function which should run once a day
+async function runOncePerDay(){
+  if( !hasOneDayPassed() ) return false;
+
+  // your code below
+  await memberModel.updateMany({}, {$set: {messages: 0}})
+}
+runOncePerDay()
+}, 1000 * 60 * 5)
 
 bot.login(process.env.TOKEN)

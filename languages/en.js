@@ -846,7 +846,8 @@ The more fish, the higher the price!
         "f1": "Created at:",
         "f2": "Joined at:",
         "f3": "Count of the roles:",
-        "f4": "The highest role:"
+        "f4": "The highest role:",
+        "f5": "Number of messages within one day:"
     },
 
 
