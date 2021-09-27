@@ -1,0 +1,32 @@
+{
+    "free": {
+        "name": "free",
+        "nameRus": "бесплатная",
+        "available": "yes",
+        "cost": 0,
+        "maxSpace": 50000,
+        "maxGiveAmount": 5000,
+        "percentage": 9,
+        "emoji": "<:freecard:891584423529701376>"
+    },
+    "premium": {
+        "name": "premium",
+        "nameRus": "премиум",
+        "available": "yes",
+        "cost": 35000,
+        "maxSpace": 300000,
+        "maxGiveAmount": 20000,
+        "percentage": 6,
+        "emoji": "<:premiumcard:891584423156404285>"
+    },
+    "gold": {
+        "name": "gold",
+        "nameRus": "золотая",
+        "available": "vip2",
+        "cost": 150000,
+        "maxSpace": 1000000,
+        "maxGiveAmount": 100000,
+        "percentage": 3,
+        "emoji": "<:goldencard:891584423173173308>"
+    }
+}

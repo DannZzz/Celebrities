@@ -20,10 +20,108 @@ module.exports = {
     "buttonYes": "Yes",
     "buttonNo": "No",
     "noStar": "You don't have enough golds.",
+    "cardcooldown": "Please end the actions with the cards.",
 
     "afkMess": (name, res) => `User **${name}** is currently in AFK mode\nBy reason: **${res}**`,
     
 
+
+    "cardClass": {
+        "specCode": "Please enter another card number. \`0123-4567\`",
+        "specAmount": "Please enter the amount.",
+        "already": "You already have this card.",
+        "done1": "Map was created successfully!",
+        "choose": "Select the desired card",
+        "custom1": "dep",
+        "noCard": "You have no card.",
+        "custom2": "giving",
+        "min": "The minimum amount is 1",
+        "dm": "Open your personal account.",
+        "findError": "Card not found.",
+        "addContent": "Select a card to pay.",
+        "max": "There is not that much space on the specified map.",
+        "maxGive": "The maximum transfer amount for this card is",
+        "typePin": "Enter the pin code of your card, you have 30 seconds.\nEnter \`cancel\` to reject the action.",
+        "declined": "The action was successfully declined.",
+        "done2": "Payment completed.",
+        "timeOut": "Time out.",
+        "custom3": "closing",
+        "contentClose": "Select the card to close.",
+        "closed": "The card has been closed successfully.",
+        "bal": "Balance:",
+        "custom4": "dep",
+        "specDep": "Please enter the card you want to recharge.",
+        "wait": "Please wait.",
+        "another": "Please enter another card.",
+        "custom5": "with",
+        "cont": "Specify the card from which you want to withdraw."
+    },
+
+
+
+    "cards": {
+        "desc": "Look at your credit cards.",
+        "usage": "",
+        "access": "For everyone",
+        "number": "Number:",
+        "balance": "Balance:",
+        "createdAt": "Created at",
+        "maxSpace": "Max. space:",
+        "maxAmount": "Max. amount of transfers:",
+        "perc": "Percentage:"
+    },
+
+
+
+    "close": {
+        "desc": "Close the credit card.",
+        "usage": "",
+        "access": "For everyone",
+    },
+
+
+
+    "gcard": {
+        "desc": "Replenish the credit card.",
+        "usage": "[amount]",
+        "access": "For everyone",
+    },
+
+
+
+    "take": {
+        "desc": "Take credits from the card.",
+        "usage": "[amount]",
+        "access": "For everyone",
+    },
+
+
+
+    "open": {
+        "desc": "Open a credit card.",
+        "usage": "",
+        "access": "For everyone",
+        "cost": "Cost:"
+    },
+
+
+
+    "pins": {
+        "desc": "Get the pin codes of your credi cards.",
+        "usage": "",
+        "access": "For everyone",
+    },
+
+
+
+    "send": {
+        "desc": "Send golds to another cred card.",
+        "usage": "[card number] <amount>",
+        "access": "For everyone",
+    },
+    
+    
+    
     "heroModel": {
         "health": "Health:",
         "damage": "Damage:",
@@ -284,6 +382,7 @@ module.exports = {
         "vip": "VIP",
         "rpg": "Role Playing Game (RPG)",
         "react": "Reactive",
+        "cards": "Cards and Teams",
         "fun": "Fun",
         "settings": "Settings",
         "Usage": "Usage:",

@@ -7,6 +7,7 @@ const member = require("../models/memberSchema");
 const profile = require("../models/profileSchema");
 const server = require("../models/serverSchema");
 const vip = require("../models/vipSchema");
+const card = require("../models/cards");
 
 module.exports = {
     rpg,
@@ -18,6 +19,15 @@ module.exports = {
     member,
     server,
     vip,
+    card,
+    cardFind: async (id, name) => {
+        const data = await card.findOne({userID: id, name: name});
+        if (!data) {
+            return false
+        } else {
+            return data;
+        };
+    },
     addStar: async (id, amount) => {
         await bag.updateOne({userID: id}, {$inc: {stars: Math.round(amount)}}).catch(() => false);
     },
