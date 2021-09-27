@@ -36,7 +36,7 @@ module.exports = {
         "noCard": "You have no card.",
         "custom2": "giving",
         "min": "The minimum amount is 1",
-        "dm": "Open your personal account.",
+        "dm": "Open your DM.",
         "findError": "Card not found.",
         "addContent": "Select a card to pay.",
         "max": "There is not that much space on the specified map.",
