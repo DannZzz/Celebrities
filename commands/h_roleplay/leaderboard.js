@@ -8,7 +8,7 @@ const heroes = require('../../JSON/heroes.json');
 module.exports = {
     config: {
         name: "leaderboard",
-        category: "g_vip",
+        category: "h_roleplay",
         aliases: ['lb', "top", "топ"],
       },
     run: async (bot, message, args) => {
