@@ -6,7 +6,6 @@ const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment } = require("discord.js");
 const { COIN, STAR } = require("../../config");
 const { checkValue } = require("../../functions/functions");
-const mc = require('discordjs-mongodb-currency');
 const {error, embed, perms, roundFunc} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 10000);

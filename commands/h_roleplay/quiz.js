@@ -22,8 +22,7 @@ module.exports = {
   },
   run: async (bot, message, args) => {
     
-    let limited = rateLimiter.take(message.author.id)
-    if(limited) return
+    
 
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});

@@ -58,7 +58,10 @@ module.exports = {
               }
               else if (category === "f_settings") {
                 category = h.settings
-              } 
+              }
+              else if (category === "cards") {
+                category = h.cards
+              }  
 
             if (category === "owner") return 
 

@@ -7,7 +7,7 @@ const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment, MessageButton, MessageActionRow } = require("discord.js");
 const { COIN, STAR, AGREE } = require("../../config");
 const { checkValue } = require("../../functions/functions");
-const mc = require('discordjs-mongodb-currency');
+;
 const {error, embed, perms, firstUpperCase} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
@@ -26,8 +26,7 @@ module.exports = {
     const LANG = await getLang.findOne({serverID: message.guild.id});
     const {give: g, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, buttonNo, buttonYes} = require(`../../languages/${LANG.lang}`);   
    
-    let limited = rateLimiter.take(message.author.id)
-    if(limited) return 
+     
     const user = message.author
     const now = ops.queue.get(user.id);
     if (now) return

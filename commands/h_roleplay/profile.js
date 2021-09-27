@@ -1,18 +1,13 @@
-const pd = require("../../models/profileSchema");
-const memberModel = require("../../models/memberSchema");
-const begModel = require("../../models/begSchema");
-const rpg = require("../../models/rpgSchema");
-const clan = require("../../models/clanSchema");
-const marry = require("../../models/marry");
-const fishes = require('../../JSON/fishes.json');
-const { MessageEmbed } = require('discord.js');
-const {greenlight, redlight, main} = require('../../JSON/colours.json');
+
+const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js');
+const {main} = require('../../JSON/colours.json');
 const { COIN, BANK, STAR} = require('../../config');
-const vipModel = require("../../models/vipSchema");
 const Levels = require("discord-xp");
 Levels.setURL(process.env.MONGO);
 const devs = ["382906068319076372"];
 const moment = require('moment');
+const {serverFind, vip, bagFind, marry, rpg, profile, clanFind, profileFind, rpgFind, vipFind } = require("../../functions/models");
+const YTchannelInfo = require("yt-channel-info");
 
 module.exports = {
   config: {
@@ -21,8 +16,7 @@ module.exports = {
     category: 'h_roleplay'
   },
   run: async (bot, message, args) => {
-    const getLang = require("../../models/serverSchema");
-    const LANG = await getLang.findOne({serverID: message.guild.id});
+    const LANG = await serverFind(message.guild.id);
     const {profile: p, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
    
     let member = await message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(r => r.user.username.toLowerCase() === args.join(' ').toLocaleLowerCase()) || message.guild.members.cache.find(r => r.displayName.toLowerCase() === args.join(' ').toLocaleLowerCase()) || message.member;
@@ -32,7 +26,7 @@ module.exports = {
     .setColor(main)
     .setAuthor(`${p.pr} ` + member.user.tag , member.user.displayAvatarURL({dynamic: true}))
 
-    const data1 = await pd.findOne({userID: member.id});
+    const data1 = await profileFind(member.id);
     let marData;
     if (data1.marryID) {
       let mar = await marry.findOne({id: data1.marryID})
@@ -44,10 +38,10 @@ module.exports = {
     } else {
       marData = '—'
     }
-    let data = await begModel.findOne({ userID: member.id });
-    let rp = await rpg.findOne({ userID: member.id });
+    let data = await bagFind(member.id);
+    let rp = await rpgFind(member.id);
     let vip = '**0** <a:vip:867867143915438100>'
-    let checkVip = await vipModel.findOne({ userID: member.id })
+    let checkVip = await vipFind(member.id)
     if(data["vip1"] && data["vip2"]) vip ="**2** <a:vip2:867868958459166751>";
     else if (data["vip1"]) vip = '**1** <a:vip1:867868958877810748>';
 
@@ -55,7 +49,7 @@ module.exports = {
     if(data["vip1"] && checkVip.profileImage !== null && data["vip2"]) embed.setImage(checkVip.profileImage);
     let CL;
     if (rp && rp.clanID) {
-      let cll = await clan.findOne({ID: rp.clanID});
+      let cll = await clanFind(rp.clanID);
       CL = `${p.clan} **${cll.name}** | ${p.level} __${cll.level}__`
     } else {
       CL = p.noclan
@@ -68,8 +62,56 @@ module.exports = {
     `\`\`\`${p.junk}(🔧) - ${data.junk}\n${p.common}(🐟) - ${data.common}\n${p.unc}(🐠) - ${data.uncommon}\n${p.rare}(🦑) - ${data.rare}\n${p.leg}(🐋) - ${data.legendary}\`\`\`\n`, true)
 
 
-    if(data["vip1"] && checkVip.profileBio !== null) embed.addField(p.bio ,checkVip.profileBio, true);
+    if(data["vip1"] && checkVip.profileBio !== null) embed.addField(p.bio, checkVip.profileBio, true);
 
-    message.channel.send({embeds: [embed]})
+    let buttonList = []
+    if (checkVip.vkLink) {
+      const link = checkVip.vkLink.substring(8, checkVip.vkLink.length);
+      const button1 = new MessageButton()
+      .setLabel(link)
+      .setStyle("LINK")
+      .setURL(checkVip.vkLink)
+      .setEmoji("<:VK:889579417804886116>")
+      buttonList.push(button1)
+    }
+
+    if (checkVip.discordLink) {
+      const link = checkVip.discordLink.substring(8, checkVip.discordLink.length);
+      const button2 = new MessageButton()
+      .setLabel(link)
+      .setStyle("LINK")
+      .setURL(checkVip.discordLink)
+      .setEmoji("<:discord:889581995129192518>")
+      buttonList.push(button2)
+    }
+
+    if (checkVip.youtubeLink) {
+      const link = checkVip.youtubeLink;
+      const res = link.substring(32, link.length);
+      const get = await YTchannelInfo.getChannelInfo(res);
+      const button3 = new MessageButton()
+      .setLabel(`youtube/${get.author}`)
+      .setStyle("LINK")
+      .setURL(link)
+      .setEmoji("<:youtube:889594031116521503>")
+      buttonList.push(button3) 
+    }
+
+    if (checkVip.instagramLink) {
+      const link = checkVip.instagramLink;
+      const res = link.substring(26, link.length-1);
+      const button4 = new MessageButton()
+      .setLabel(`instagram/${res}`)
+      .setStyle("LINK")
+      .setURL(link)
+      .setEmoji("<:instagram:889609379517698108>")
+      buttonList.push(button4) 
+    }
+    
+    const row = new MessageActionRow().addComponents(buttonList);
+    buttonList.length !== 0 ? message.channel.send({embeds: [embed], components: [row]}) : message.channel.send({embeds: [embed]})
+   
+    
   }
 }
+

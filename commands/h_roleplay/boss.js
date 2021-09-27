@@ -6,8 +6,8 @@ const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment, MessageButton, MessageActionRow } = require("discord.js");
 const { COIN, STAR, AGREE } = require("../../config");
-const { checkValue, delay} = require("../../functions/functions");
-const mc = require('discordjs-mongodb-currency');
+const { checkValue } = require("../../functions/functions");
+;
 const {error, embed, perms} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
@@ -24,7 +24,8 @@ module.exports = {
    
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
-    const {boss: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and} = require(`../../languages/${LANG.lang}`);
+    const {boss: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and} = require(`../../languages/${LANG.lang}`);   
+ 
        
     const bag = await bd.findOne({ userID: message.author.id });
     const profileData = await pd.findOne({ userID: message.author.id });

@@ -12,8 +12,7 @@ module.exports = {
     aliases: ["present", 'подарок'],
   },
   run: async (bot, message, args, ops) => {
-    let limited = rateLimiter.take(message.author.id)
-    if(limited) return
+    
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
     const {gift: g, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
