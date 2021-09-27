@@ -8,7 +8,7 @@ const { MessageEmbed, MessageAttachment, MessageButton, MessageActionRow } = req
 const { COIN, STAR, AGREE } = require("../../config");
 const { checkValue } = require("../../functions/functions");
 ;
-const {error, embed, perms} = require("../../functions/functions");
+const {error, embed, perms, delay} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 const Canvas = require("canvas")
