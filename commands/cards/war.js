@@ -36,7 +36,7 @@ module.exports = {
     
     if (!args[0]) return error(msg, cm.specN), ops.games.delete(msg.author.id);;
     if (!args[1] || isNaN(args[1])) return error(msg, w.bet), ops.games.delete(msg.author.id);;
-    if (Math.round(args[1]) > 50000) return error(msg, w.betError+` ${CLAN}`), ops.games.delete(msg.author.id);;
+    if (Math.round(args[1]) > 50000 || Math.round(args[1]) <= 10) return error(msg, w.betError+` ${CLAN}`), ops.games.delete(msg.author.id);;
     await Team(msg).startBattle(args[0], Math.round(args[1]))
     return setTimeout( () => {
       ops.games.delete(msg.author.id);
