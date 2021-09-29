@@ -98,7 +98,7 @@ class TeamClass {
         const target = await clanFind(targetID);
         if (!target) return error(this.msg, cm.notClan);
 
-        if (target.ID === my.ID) return error(this.msg, cm.notClan)
+        if (target.ID === my.ID) return error(this.msg, cm.notClan);
         //return this.channel.send({files: [att], embeds: [emb.setImage("attachment://fight.png")]})
         
         const targetOwner = this.server.members.cache.get(target.owner);
@@ -199,8 +199,8 @@ class TeamClass {
                     await clan.updateOne({ID: my.ID}, {$inc: {budget: -bet, total: 1}});
                     await clan.updateOne({ID: target.ID}, {$inc: {budget: -bet, total: 1}});
 
-                    await clan.updateOne({ID: my.ID}, {$set: {war: new Date(Date.now() + 3600000)}});
-                    await clan.updateOne({ID: target.ID}, {$set: {war: new Date(Date.now() + 3600000)}});
+                    await clan.updateOne({ID: my.ID}, {$set: {war: new Date(Date.now() + 86400000)}});
+                    await clan.updateOne({ID: target.ID}, {$set: {war: new Date(Date.now() + 86400000)}});
                     
                     const msg = await this.channel.send({embeds: [emb.setImage("attachment://fight.png")], files: [att]})
                     damn.delete();
