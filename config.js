@@ -1,4 +1,4 @@
-exports.PREFIX = '!!';
+exports.PREFIX = 'a!';
 
 exports.DEV = "Dann#0006";
 
@@ -9,6 +9,8 @@ exports.MEDAL = {
     "silver": "<:silvermedal:890956638759030798>",
     "bronze": "<:bronzemedal:890956638826160198>"
 }
+
+exports.HERO = "<a:herodann:883382573231923201>";
 
 exports.potDMG = "<:potionDamage:886478199645679686>";
 
