@@ -98,7 +98,7 @@ class TeamClass {
         const target = await clanFind(targetID);
         if (!target) return error(this.msg, cm.notClan);
 
-        
+        if (target.ID === my.ID) return error(this.msg, cm.notClan)
         //return this.channel.send({files: [att], embeds: [emb.setImage("attachment://fight.png")]})
         
         const targetOwner = this.server.members.cache.get(target.owner);

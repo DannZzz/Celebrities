@@ -1,10 +1,12 @@
 const {Client, MessageEmbed, Collection, Intents} = require('discord.js');
 const voiceCollection = new Collection();
 const {PREFIX} = require('./config')
-const bot = new Client({restGlobalRateLimit: 50, restWsBridgeTimeout: 0, shards: "auto", restTimeOffset: 0, allowedMentions: { parse: [], repliedUser: false}, intents: [Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+const bot = new Client({restGlobalRateLimit: 50, restWsBridgeTimeout: 0, shards: "auto", restTimeOffset: 0, allowedMentions: { parse: [], repliedUser: false}, intents: [Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] });
 const fs = require('fs');
 const mongoose = require('mongoose');
 const Levels = require("discord-xp");
+const dotenv = require('dotenv');
+dotenv.config()
 
 const MONGO = process.env.MONGO
 Levels.setURL(MONGO);
