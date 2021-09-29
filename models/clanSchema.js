@@ -10,9 +10,13 @@ const clanSchema = new mongoose.Schema({
   budget: { type: Number, default: 0},
   apps: { type: Array, default: []},
   staff: { type: Array, default: []},
-  logo: { type: String, default: null},
-  description: { type: String, default: null},
-  appsStatus: { type: Boolean, default: true}
+  logo: { type: String, default: undefined},
+  description: { type: String, default: undefined},
+  appsStatus: { type: Boolean, default: true},
+  team: { type: Array, default: []},
+  total: {type: Number, default: 0},
+  wins: {type: Number, default: 0},
+  war: {type: Date, default: undefined},
 });
 
 const model = mongoose.model("clans", clanSchema);

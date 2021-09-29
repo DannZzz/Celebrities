@@ -152,6 +152,50 @@ module.exports = {
     },
 
 
+
+    "teamModel": {
+        "noTeam": "Your clan does not have a military team.",
+        "kicked": "The member was successfully kicked.",
+        "gg": "Team is full!",
+        "done1": "The member was successfully added to the team.",
+        "notThisLeader": "The leader of this clan is not on this server.",
+        "thisClanNotTeam": "This clan does not have a war team.",
+        "youBudget": "You don't have enough rubies.",
+        "targetBudget": "This clan doesn't have that many rubies.",
+        "declined": "The leader of this clan declined.",
+        "winner": "Winner",
+        "req": bet => `your clan has been challenged to __ ${bet}__.`,
+        "waiting": "Wait..."
+    },
+
+
+
+    "tchange": {
+        "desc": "Change clan name.",
+        "usage": "[member number | clear]",
+        "access": "For everyone",
+        "check": "Enter the number or `clear`"
+    },
+
+
+
+    "team": {
+        "desc": "View the clan's team.",
+        "usage": "",
+        "access": "For everyone"
+    },
+
+
+
+    "war": {
+        "desc": "Start a clan war.",
+        "usage": "[clan number] <bet>",
+        "access": "For everyone",
+        "bet": "Enter your bet.",
+        "betError": "Maximum bet - 50,000"
+    },
+
+
     
     "tasks": {
         "desc": "Get your tasks.",
