@@ -8,8 +8,6 @@ const { COIN } = require("../../config");
 const { checkValue } = require("../../functions/functions");
 ;
 const {error, embed, perms, roundFunc} = require("../../functions/functions");
-const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 5000);
 const Canvas = require('canvas');
 
 module.exports = {

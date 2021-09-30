@@ -2,9 +2,10 @@ const pd = require("../../models/profileSchema");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 const ITEMS = require('../../JSON/items');
-const { serverFind, bagFind, rpgFind, bag : bd, rpg, profileFind } = require("../../functions/models");
-const { error, embed } = require("../../functions/functions");
+const { serverFind, bagFind, rpgFind, bag : bd, rpg, profileFind, card, cardFind } = require("../../functions/models");
+const { error, embed, firstUpperCase, delay } = require("../../functions/functions");
 const { main, none } = require("../../JSON/colours.json");
+const cards = require("../../JSON/cards.json");
 const heroes = require("../../JSON/heroes.json");
 const {tempPack: tm} = require("../../JSON/items");
 const { AGREE, DISAGREE, STAR } = require("../../config");
@@ -21,9 +22,9 @@ module.exports = {
 
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
-    const {quiz, heroes: hh, buy: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
+    const {cardClass: cc, quiz, heroes: hh, buy: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
    
-    const items = ["Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Broken", "Hunter", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
+    //const items = ["Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Broken", "Hunter", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
     const user = message.author;
     const coinData = await pd.findOne({userID: user.id});
     let rp = await rpg.findOne({userID: user.id});
@@ -38,26 +39,120 @@ module.exports = {
     rp = await rpg.findOne({ userID: user.id });
     let bag = await bd.findOne({ userID: user.id });
     let profile = await pd.findOne({ userID: user.id });
+    const menuArray = [];
+    if (!args[0]) {
+      for (let itemm in ITEMS) {
+        const item = ITEMS[itemm]
+        menuArray.push({
+          label: LANG.lang === "en" ? item.NAMEEN : item.NAME,
+          description: `${LANG.lang === "en" ? "Cost:" : "Цена:"} ${item.cost || "—"}`,
+          value: item.name,
+          emoji: item.emoji
+        });
     
-    
-    if (!args[0]) return error(message, b.specHero)
+      }
 
-    if (!isNaN(args[0])) {
-      const numbs = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
-      if (!numbs.includes(args[0])) return error(message, b.itemErr);
-      let item;
-      let value = 1
-      if (args[1] || !isNaN(args[1])) value = Math.round(args[1]) 
-      const it = args[0]
-      if (it == 1) item = ITEMS.box
-      if (it == 2) item = ITEMS.hlt
-      if (it == 3) item = ITEMS.dmg
-      if (it == 4) item = ITEMS.lvl
-      if (it == 5) item = ITEMS.meat
-      if (it == 6) item = ITEMS.pack1
-      if (it == 7) item = ITEMS.pack2
-      if (it == 8) item = ITEMS.pack3
-      if (it == 9) item = ITEMS.tempPack
+      const row = new MessageActionRow()
+      .addComponents(
+        new MessageSelectMenu()
+         .setCustomId("gettingItem")
+         .setPlaceholder(b.specHero)
+         .addOptions([menuArray])
+      );
+
+      const first = await message.channel.send({content: "ㅤ", components: [row]})
+
+      const collector = message.channel.createMessageComponentCollector({
+        filter: i => i.isSelectMenu() && i.user.id === message.author.id,
+        time: 30000,
+        max: "1"
+      })
+      let bool = false;
+      collector.on("collect", async i => {
+        bool = true;
+        first.delete();
+        collector.stop();
+
+        const need = ITEMS[i.values[0]];
+        if (!need.cost) return error(message, b.noItem);
+        const req = await message.channel.send(b.req);
+        const newCollector = message.channel.createMessageCollector({
+          filter: m => m.author.id === message.author.id,
+          time: 20000
+        });
+        let bool2 = false;
+        newCollector.on("collect", async m => {
+          if (!isNaN(m.content) && Math.round(m.content) >= 1) {
+            m.delete();
+            req.delete()
+            bool2 = true;
+            newCollector.stop();
+            const count = Math.round(m.content);
+            const amount = count * need.cost;
+
+            const newRow = await getCardMenu(message);
+
+            const newMsg = await message.channel.send({content: b.need+` ${amount} ${STAR}`, components: [newRow]});
+
+            const lastCollector = await message.channel.createMessageComponentCollector({
+              filter: i => i.isSelectMenu() && i.user.id === message.author.id,
+              time: 30000,
+              max: "1"
+            });
+            let bool3 = false;
+            lastCollector.on("collect", async i => {
+              bool3 = true;
+              lastCollector.stop();
+              newMsg.delete();
+              const val = i.values[0];
+              if (val === "golds") {
+                const random = Math.ceil(Math.random() * 5);
+                const mm = await message.channel.send(cc.wait);
+                await delay(random * 1000)
+                mm.delete();
+                const myData = await bagFind(message.author.id);
+                if (myData.stars < amount) return error(message, noStar);
+                await rpg.updateOne({userID: message.author.id}, {$inc: {[need.name]: count}});
+                await bd.updateOne({userID: message.author.id}, {$inc: {stars: -amount}});
+                return embed(message, cc.done2);
+              } else {
+                const random = Math.ceil(Math.random() * 5);
+                const mm = await message.channel.send(cc.wait);
+                await delay(random * 1000)
+                mm.delete();
+                let data = await cardFind(message.author.id, val);
+                if (data.amount < amount) return error(message, noStar);
+                await rpg.updateOne({userID: message.author.id}, {$inc: {[need.name]: count}});
+                await card.updateOne({userID: message.author.id, code: data.code}, {$inc: {amount: -amount}});
+                return embed(message, cc.done2);
+              }
+            });
+
+            lastCollector.on("end", () => {
+              if (!bool3) {
+                newMsg.delete();
+                return error(message, cc.timeOut)}
+            })
+
+          }
+        });
+
+        newCollector.on("end", () => {
+          if (!bool2) {
+            req.delete();
+            return error(message, cc.timeOut)}
+        })
+
+      })
+
+      collector.on("end", () => {
+        if (!bool) {
+          first.delete();
+          return error(message, cc.timeOut)}
+      })
+
+        
+      return      
       if (!item.cost) return error(message, b.noItem);
       const getCost = value * item.cost
       if (bag.stars < getCost) return error(message, noStar);
@@ -78,8 +173,8 @@ module.exports = {
 
       return message.react(AGREE)
     }
-    
-    if(args[0].toLowerCase() === "slot" || args[0].toLowerCase() === "place") {
+    const slots = ["slot", "place", "слот", "место"];
+    if(slots.includes(args[0].toLowerCase())) {
       if((bag["vip2"] && rp.itemCount !== 10) || (!bag["vip2"] && rp.itemCount !== 5)) {
         if(bag.stars >= 2000 * (rp.itemCount || 1)) {
           await bd.updateOne({userID: message.author.id}, {$inc: {stars: -(2000 * (rp.itemCount || 1))}})
@@ -249,3 +344,40 @@ module.exports = {
     
   }
 };
+
+async function getCardMenu(msg) {
+  const ln = await serverFind(msg.guild.id);
+  const { cardClass: cc } = require(`../../languages/${ln.lang}`);
+
+  const mine = await card.find({userID: msg.author.id}).exec();
+  let options = [];
+  if (mine && mine.length !== 0) {
+      options.push(mine.map(data => {
+          const cardName = cards[data.name];
+          return {
+              label: ln.lang === "en" ? firstUpperCase(cardName.name) + " Card" : firstUpperCase(cardName.nameRus) + " Карта",
+              value: cardName.name,
+              description: `${cc.bal} ${data.amount}`,
+              emoji: cardName.emoji
+          }
+      }));
+  }
+
+  const myData = await bagFind(msg.author.id);
+  options.unshift(
+      {
+          label: ln.lang === "en" ? "Golds": "Голды",
+          value: "golds",
+          description: `${cc.bal} ${myData.stars}`,
+          emoji: STAR
+      }
+  )
+  
+  return new MessageActionRow()
+      .addComponents(
+          new MessageSelectMenu()
+          .setCustomId("buying")
+          .setPlaceholder(cc.chs)
+          .addOptions([options])
+      )
+}

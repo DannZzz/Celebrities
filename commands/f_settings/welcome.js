@@ -42,13 +42,13 @@ module.exports = {
           return error(message, b.done4)
         }
       } else if (option === 'help') {
-        return message.channel.send(`
+        return embed(message, `
           \`${b.now}\`
 ${b.image} - ${serverData.welcomeImage ? `[${b.LINK}](${serverData.welcomeImage})` : `\`${b.not}\``}
 ${b.text} - \`${serverData.welcomeText || b.not}\`
 ${b.channel} - ${message.guild.channels.cache.get(serverData.welcomeChannel) || `\`${b.not}\``}
 ${b.color} - \`${serverData.welcomeColor || b.not}\`
-          `)
+          `, false)
       }
       if (!args[1]) return error(message, b.spec)
       const prop = args.splice(1).join(' ');

@@ -25,7 +25,9 @@ module.exports = {
 
     for (let data in cards) {
         const cardData = cards[data];
-        emb.addField(`${cardData.emoji} ${firstUpperCase(sd.lang === "ru" ? `${cardData.nameRus} карта` : `${cardData.name} card`)}`, `${cd.maxSpace} ${cardData.maxSpace}\n${cd.maxAmount} ${cardData.maxGiveAmount}\n${cd.perc} ${cardData.percentage}%`)
+        if (cardData.name !== "VIP") {
+            emb.addField(`${cardData.emoji} ${firstUpperCase(sd.lang === "ru" ? `${cardData.nameRus} карта` : `${cardData.name} card`)}`, `${cd.maxSpace} ${cardData.maxSpace}\n${cd.maxAmount} ${cardData.maxGiveAmount}\n${cd.perc} ${cardData.percentage}%`)
+        }
     }    
     
     const row = await getCardMenu(msg, {custom: "opening", placeHolder: cc.choose});
@@ -70,12 +72,14 @@ async function getCardMenu(msg, {
     let options = [];
     for (let data in cards) {
         const cardName = cards[data];
-        options.push({
-            label: `${ln.lang === "en" ? `${firstUpperCase(cardName.name)} Card` : `${firstUpperCase(cardName.nameRus)} Карта`} ${cardName.available === "yes" ? " " : "VIP 2"}`,
-            value: cardName.name,
-            description: `${open.cost} ${cardName.cost}`,
-            emoji: cardName.emoji
-        })
+        if (cardName.name !== "VIP") {
+            options.push({
+                label: `${ln.lang === "en" ? `${firstUpperCase(cardName.name)} Card` : `${firstUpperCase(cardName.nameRus)} Карта`} ${cardName.available === "yes" ? " " : "VIP 2"}`,
+                value: cardName.name,
+                description: `${open.cost} ${cardName.cost}`,
+                emoji: cardName.emoji
+            })
+        }
     }
     
     return new MessageActionRow()
