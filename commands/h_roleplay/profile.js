@@ -22,7 +22,6 @@ module.exports = {
     let member = await message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(r => r.user.username.toLowerCase() === args.join(' ').toLocaleLowerCase()) || message.guild.members.cache.find(r => r.displayName.toLowerCase() === args.join(' ').toLocaleLowerCase()) || message.member;
     let person = await Levels.fetch(member.user.id, message.guild.id, true)
     let embed = new MessageEmbed()
-    .setTimestamp()
     .setColor(main)
     .setAuthor(`${p.pr} ` + member.user.tag , member.user.displayAvatarURL({dynamic: true}))
 
