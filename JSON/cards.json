@@ -28,5 +28,15 @@
         "maxGiveAmount": 2000000,
         "percentage": 3,
         "emoji": "<:goldencard:891584423173173308>"
+    },
+    "VIP": {
+        "name": "VIP",
+        "nameRus": "VIP",
+        "available": "no",
+        "cost": 1e9999999,
+        "maxSpace": 1e9999999,
+        "maxGiveAmount": 1e9999999,
+        "percentage": 0,
+        "emoji": "<:vipcard:893111946902114304>"
     }
 }

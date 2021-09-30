@@ -32,6 +32,7 @@ module.exports = {
         "already": "You already have this card.",
         "done1": "Map was created successfully!",
         "choose": "Select the desired card",
+        "chs": "Choose your payment method",
         "custom1": "dep",
         "noCard": "You have no card.",
         "custom2": "giving",
@@ -652,10 +653,12 @@ module.exports = {
 
     "buy": {
         "desc": "Buy a hero.",
-        "usage": "[item number or hero]",
+        "usage": "[slot or hero]",
         "access": "For everyone",
         "time": time => `You recently bought a hero.\nTry again in **${Math.round(Math.abs(time) / 86400000)} days ${time.getUTCHours()} hours.**.`,
         "specHero": "Specify an item.",
+        "req": "How many items you want?\nExample: `3`",
+        "need": "You need - ",
         "itemErr": "Item not found.",
         "noItem": "This item is not available.",
         "nh": "Hero not found.",
