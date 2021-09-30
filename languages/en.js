@@ -74,6 +74,15 @@ module.exports = {
 
 
 
+    "link": {
+        "desc": "Add site links to profile.",
+        "usage": "[site name] [link]",
+        "access": "For everyone",
+        "link": "Specify a site name."
+    },
+
+
+
     "close": {
         "desc": "Close the credit card.",
         "usage": "",
