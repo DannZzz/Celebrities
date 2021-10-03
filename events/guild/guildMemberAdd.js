@@ -5,6 +5,7 @@ const begModel = require("../../models/begSchema");
 const vipModel = require("../../models/vipSchema");
 const rpg = require("../../models/rpgSchema");
 const botData = require("../../models/bot");
+const {MessageEmbed} = require("discord.js");
 
 module.exports = async (bot, member) => {
     let sd = await serverModel.findOne({serverID: member.guild.id})
