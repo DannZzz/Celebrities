@@ -33,27 +33,27 @@ module.exports = {
 
       if (args[0] === '1') {
         fish_sell = bag.junk;
-        cost = 1
+        cost = 10 / 2;
         rarity = fishes['junk']
       }
       else if (args[0] === '2') {
         fish_sell = bag.common;
-        cost = 2
+        cost = 20 / 2;
         rarity = fishes['common']
       }
       else if (args[0] === '3') {
         fish_sell = bag.uncommon;
-        cost = 3
+        cost = 30 / 2;
         rarity = fishes['uncommon']
       }
       else if (args[0] === '4') {
         fish_sell = bag.rare;
-        cost = 4
+        cost = 40 / 2;
         rarity = fishes['rare']
       }
       else if (args[0] === '5') {
         fish_sell = bag.legendary;
-        cost = 5
+        cost = 50 / 2;
         rarity = fishes['legendary']
       } else {
         return error(message, `${s.err} **${sd.prefix}fish list**`);

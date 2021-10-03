@@ -1,9 +1,11 @@
 const {serverFind, rpgFind, bagFind, rpg} = require("../../functions/models");
 const {error, embed, roundFunc, pagination} = require("../../functions/functions");
-const {MEDAL, LEFT, RIGHT} = require("../../config");
+const {MEDAL, LEFT, RIGHT, LEAGUE, STAR} = require("../../config");
 const {MessageEmbed, MessageButton} = require("discord.js");
 const {greenlight, redlight, main} = require('../../JSON/colours.json');
 const heroes = require('../../JSON/heroes.json');
+const Rate = require("../../functions/rateClass");
+const {stripIndents} = require("common-tags")
 
 module.exports = {
     config: {
@@ -61,7 +63,34 @@ module.exports = {
             }
            
         });
+
+        const cupRPG = await rpg.find({"league.rate": {$exists: true}}).sort([["league.rate", "descending"]]).exec();
+        const sliced0 = cupRPG.slice(0, 10);
+        const mapped0 = await Promise.all(sliced0.map(async (data, pos) => {
+            let emoji;
+            if (pos === 0) emoji = MEDAL.gold;
+            if (pos === 1) emoji = MEDAL.silver;
+            if (pos === 2) emoji = MEDAL.bronze;
+            if (!emoji) emoji = "";
+            let position = pos + 1 +". ";
+            if (emoji) position = "";
+            
+            const league = await Rate(message).rateData(data.league.rate || 0);
+            const name = bot.users.cache.get(data.userID) ? bot.users.cache.get(data.userID).tag : (LANG.lang === "ru" ? "Неизвестный" : "Unknown");
+            return `\n${emoji} ${position}**${name}** | ${league}`;
+        }))
+        
         // ending arrays
+
+        const lg = Rate(message).fetch().reverse();
+        const text = lg.map(i => `\n${i.emoji} ${LANG.lang === "en" ? i.nameEn : i.name}: ${i.max} ${LEAGUE.cup} - ${i.reward} ${STAR}`)
+
+        const Embed0 = new MessageEmbed()
+        .setTitle(LANG.lang === "en" ? "Top of Rate" : "Топ по рейтингу")
+        .setColor(main)
+        .setThumbnail(bot.user.displayAvatarURL())
+        .setDescription(`${text.join("")}\n\n`+mapped0.join("\n"))
+
         const Embed1 = new MessageEmbed()
         .setTitle(lb.games)
         .setColor(main)
@@ -84,7 +113,7 @@ module.exports = {
         .setEmoji(RIGHT)
         .setStyle("SECONDARY")
         
-        pagination(m, [Embed1, Embed2], [button1, button2], 100000, [m.author.id])
+        return pagination(m, [Embed0, Embed1, Embed2], [button1, button2], 100000, [m.author.id])
         
     }
 }

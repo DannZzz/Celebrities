@@ -4,12 +4,13 @@ const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment } = require("discord.js");
-const { COIN, STAR } = require("../../config");
+const { COIN, STAR, LEAGUE } = require("../../config");
 const { checkValue } = require("../../functions/functions");
 const {error, embed, perms, roundFunc} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 10000);
 const Canvas = require('canvas');
+const Rate = require("../../functions/rateClass");
 
 module.exports = {
   config: {
@@ -61,6 +62,8 @@ module.exports = {
     if(value > bag.stars) return error(message, noStar);
 
     const mrp = await rpg.findOne({userID: message.author.id});
+    const rate = mrp.league.rate || 0;
+    const league = mrp.league.id || 0;
 
     if (!mrp || mrp.item === null) return error(message, hm.noHero);
     ops.games.set(message.author.id, {game: "battle"})
@@ -100,7 +103,7 @@ module.exports = {
     let eDamage = ((eLevel - 1) * 20) + data2.damage;
     if (myHealth / 2 > eHealth) {
       eHealth += eHealth;
-      eDamage += (eDamage / 2)
+      eDamage += eDamage
     }
     let h1 = eHealth
     let h2 = myHealth
@@ -159,6 +162,8 @@ module.exports = {
         let winData
         ops.games.delete(message.author.id)
         if (winner) {
+          const winCup = Rate(message).winRewardGenerator(league);
+          await Rate(message).rateUpdate(message.author.id, winCup);
           await rpg.findOneAndUpdate({userID: winner.id}, {$inc: {wins: 1}})
           await bd.updateOne({userID: winner.id}, {$inc: {stars: value*2}});
           const WinData = await rpg.findOne({userID: winner.id});
@@ -171,17 +176,17 @@ module.exports = {
           .setImage(hero.url)
           .setColor(main)
           .addField(`❤ ${hm.health} ${winData.health}`, `**⚔ ${hm.damage} ${winData.damage}**`, true)
-          .addField(`${hm.reward} ${value * 2} ${STAR}`, `**🏆 ${hm.winrate} ${roundFunc(WinData.wins / WinData.totalGames * 100) || '0'}%**`, true)
+          .addField(`${hm.reward} ${value * 2} ${STAR} +${winCup} ${LEAGUE.cup}`, `**🏆 ${hm.winrate} ${roundFunc(WinData.wins / WinData.totalGames * 100) || '0'}%**`, true)
           msg.delete()
           return message.channel.send({embeds: [winEmb]})
         } else {
           await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {loses: 1}})
-          
+          await Rate(message).rateUpdate(message.author.id, -45);
 
           let hero = heroes[item]
           let winEmb = new MessageEmbed()
           .setTitle(`${b.winner} ${hero.name} A.I (${LANG.lang === "ru" ? hero.nameRus : hero.name})`)
-          .setDescription(`${b.between} ${message.member}, ${hero.name}(A.I)`)
+          .setDescription(`${b.between} ${message.member}, ${hero.name}(A.I) -${45} ${LEAGUE.cup}`)
           .setImage(hero.url)
           .setColor(main)
           .addField(`❤ ${hm.health} ${eHealth}`, `**⚔ ${hm.damage} ${eDamage}**`, true)

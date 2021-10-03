@@ -4,11 +4,12 @@ const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment, MessageActionRow, MessageButton } = require("discord.js");
-const { COIN } = require("../../config");
-const { checkValue } = require("../../functions/functions");
-;
+const { COIN, LEAGUE } = require("../../config");
+
 const {error, embed, perms, roundFunc} = require("../../functions/functions");
 const Canvas = require('canvas');
+const Rate = require("../../functions/rateClass");
+const {rpgFind} = require("../../functions/models");
 
 module.exports = {
   config: {
@@ -29,8 +30,8 @@ module.exports = {
 
     let author = profileData.rpg;
     let timeout;
-    if (bag["vip2"] === true) { timeout = 70 * 1000; } else {
-      timeout = 140 * 1000;
+    if (bag["vip2"] === true) { timeout = 180 * 1000; } else {
+      timeout = 360 * 1000;
     }
     if (author !== null && timeout - (Date.now() - author) > 0) {
         let time = new Date(timeout - (Date.now() - author));
@@ -183,6 +184,15 @@ if(i.customId === buttonList[0].customId) {
 
 
   setTimeout(async() => {
+    const us1 = await rpgFind(winner.id);
+    const us2 = await rpgFind(loser.id);
+
+    const member1 = message.guild.members.cache.get(winner.id);
+    const member2 = message.guild.members.cache.get(loser.id);
+        
+    const winCup = Rate(message).winRewardGenerator(us1.league.id || 0);
+    await Rate(message).rateUpdate(winner.id, winCup);
+    await Rate(message).rateUpdate(loser.id, -45);
 
     await rpg.findOneAndUpdate({userID: winner.id}, {$inc: {wins: 1}})
     await rpg.findOneAndUpdate({userID: loser.id}, {$inc: {loses: 1}})
@@ -192,7 +202,7 @@ if(i.customId === buttonList[0].customId) {
     let hero = heroes[winData.item]
     let winEmb = new MessageEmbed()
     .setTitle(`${d.winner} ${winner.tag || winner.user.tag} (${LANG.lang === "ru" ? hero.nameRus : hero.name})`)
-    .setDescription(`${d.among} ${user}, ${mUser}`)
+    .setDescription(`${d.among} ${user}, ${mUser}\n${member1}: +${winCup} ${LEAGUE.cup}\n${member2}: -45 ${LEAGUE.cup}`)
     .setImage(hero.url)
     .setColor(main)
     .addField(`❤ ${hm.health} ${get.health}`, `**⚔ ${hm.damage} ${get.damage}**`, true)
