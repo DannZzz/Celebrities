@@ -4,11 +4,19 @@ exports.DEV = "Dann#0006";
 
 exports.devID = ["382906068319076372"];
 
+exports.LEAGUE = {
+    "bronze": "<:bronze:894195219791233044>",
+    "silver": "<:silver:894195219854155807>",
+    "golden": "<:golden:894195219719942264>",
+    "platinum": "<:platinum:894195219715735582>",
+    "cup": "<:trophy:893462172678627338>"
+};
+
 exports.MEDAL = {
     "gold": "<:goldenmedal:890956638582878218>",
     "silver": "<:silvermedal:890956638759030798>",
     "bronze": "<:bronzemedal:890956638826160198>"
-}
+};
 
 exports.HERO = "<a:herodann:883382573231923201>";
 

@@ -18,14 +18,15 @@ const {main, none} = require('../../JSON/colours.json');
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 2000);
 let msgLimiter = new RateLimiter(1, 2000);
+const Rate = require("../../functions/rateClass.js");
 
 module.exports = async (bot, messageCreate) => {
   let message = messageCreate;
-
+  if (message.author.bot) return
   const getLang = require("../../models/serverSchema");
   const LANG = await getLang.findOne({serverID: message.guild.id});
   const {afkMess} = require(`../../languages/${LANG.lang}`); 
-    
+  
   let afkMember = message.mentions.members;
   if (afkMember && afkMember.length !== 0) {
     afkMember.forEach(async i => {
@@ -62,8 +63,8 @@ module.exports = async (bot, messageCreate) => {
           RU: `Написать ${ques * task1} сообщений.`,
           goal: ques * task1,
           status: false,
-          doneEN: `You successfully did the task, your reward - ${rew * task1 - rew} ` + STAR,
-          doneRU: `Вы успешно выполнили задание, ваша награда - ${rew * task1 - rew} ` + STAR,
+          doneEN: `You successfully did the task, your reward - ${rew * task1} ` + STAR,
+          doneRU: `Вы успешно выполнили задание, ваша награда - ${rew * task1} ` + STAR,
           reward: rew * task1,
       } 
     
@@ -86,8 +87,8 @@ module.exports = async (bot, messageCreate) => {
           RU: `Открой ${ques * task1} Египетских паков.`,
           goal: ques * task1,
           status: false,
-          doneEN: `You successfully did the task, your reward - ${rew * task1 - rew} ` + STAR,
-          doneRU: `Вы успешно выполнили задание, ваша награда - ${rew * task1 - rew} ` + STAR,
+          doneEN: `You successfully did the task, your reward - ${rew * task1} ` + STAR,
+          doneRU: `Вы успешно выполнили задание, ваша награда - ${rew * task1} ` + STAR,
           reward: rew * task1,
       } 
     

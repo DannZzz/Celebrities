@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-
 const rpgSchema = new mongoose.Schema({
   userID: { type: String, require: false, unique: true },
   item: { type: String, default: null },
@@ -28,6 +27,12 @@ const rpgSchema = new mongoose.Schema({
   task1: { type: Number, default: 1},
   task2: { type: Number, default: 1},
   openedPacks: { type: Number, default: 0},
+  league: { type: Object, default: {
+    id: 0,
+    rate: 0,
+    rewardId: 0,
+    maxRate: 0
+  }}
 
 });
 

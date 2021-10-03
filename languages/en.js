@@ -732,7 +732,7 @@ The more fish, the higher the price!
         "desc": "Go to battle with a member.",
         "usage": "[nickname | mention | ID]",
         "access": "For everyone",
-        "time": time => `Try again in *${time.getMinutes()} minutes ${time.getSeconds()} seconds**.`,
+        "time": time => `Try again in **${time.getMinutes()} minutes ${time.getSeconds()} seconds**.`,
         "bot": "Fight the bot...hmm",
         "error1": "Please enter another member.",
         "error2": "You don't have a hero.",
