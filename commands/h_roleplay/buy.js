@@ -218,6 +218,7 @@ module.exports = {
           })
 
       }
+      heroArr.splice(0, 1)
       const emb = new MessageEmbed()
       .setColor(none)
       
