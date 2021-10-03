@@ -68,13 +68,13 @@ class rateClass {
         const l = league || 0;
         switch (l) {
             case 0:
-                return 40;
+                return 50;
             case 1:
-                return 35;
+                return 45;
             case 2:
-                return 30;
+                return 40;
             case 3:
-                return 25;
+                return 30;
             case 4:
                 return 20;
             default:
