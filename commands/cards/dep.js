@@ -9,7 +9,8 @@ module.exports = {
   config: {
     name: "gcard",
     aliases: ['пополнить'],
-    category: 'cards'
+    category: 'cards',
+    cooldown: 15
   },
   run: async (bot, msg, args) => {
     const sd = await serverFind(msg.guild.id);

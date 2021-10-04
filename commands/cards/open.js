@@ -9,7 +9,8 @@ module.exports = {
   config: {
     name: "open",
     aliases: ['create', 'создать', "открыть"],
-    category: 'cards'
+    category: 'cards',
+    cooldown: 45
   },
   run: async (bot, msg, args) => {
     const sd = await serverFind(msg.guild.id);

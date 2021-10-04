@@ -8,7 +8,8 @@ module.exports = {
   config: {
     name: "close",
     aliases: ['закрыть'],
-    category: 'cards'
+    category: 'cards',
+    cooldown: 45
   },
   run: async (bot, msg, args) => {
     Card(msg).closeCard()
