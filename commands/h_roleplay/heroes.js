@@ -3,7 +3,7 @@ const { main } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const { MessageEmbed, MessageButton } = require("discord.js");
-const { COIN, STAR, LEFT, RIGHT, DLEFT, DRIGHT, CANCEL } = require("../../config");
+const { COIN, STAR, LEFT, RIGHT, DLEFT, DRIGHT, CANCEL, heroType } = require("../../config");
 const {error, paginationBig} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
@@ -28,7 +28,7 @@ module.exports = {
         newdr.push(
         new MessageEmbed()
         .setColor(main)
-        .setTitle(`${obj.name} (${obj.nameRus}) ${cMar(obj.marry)} ${cVip(obj.vip)}`)
+        .setTitle(`${heroType[obj.type]} ${obj.name} (${obj.nameRus}) ${cMar(obj.marry)} ${cVip(obj.vip)}`)
         .setThumbnail(obj.url)
         .setDescription(LANG.lang === "en" ? obj.descriptionEN : obj.description)
         .addField(`${hh.cost} ${cCost(obj.cost)} ${cType(obj.costType)}`, `**${hh.avail} ${cAv(obj.available)}**`, true)
@@ -39,7 +39,7 @@ module.exports = {
 
     
     
-    const timeout = '100000'
+    const timeout = 100000;
     const userids = [message.author.id]
     const button1 = new MessageButton()
           .setCustomId('previousbtn')

@@ -3,7 +3,7 @@ const { main } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
-const { COIN, STAR, LEFT, RIGHT, DLEFT, DRIGHT, CANCEL } = require("../../config");
+const { COIN, STAR, LEFT, RIGHT, DLEFT, DRIGHT, CANCEL, heroType } = require("../../config");
 const { MessageEmbed, MessageButton } = require("discord.js");
 const {error, paginationBig} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
@@ -56,7 +56,7 @@ module.exports = {
         return new MessageEmbed()
         .setThumbnail(h1.url)
         .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
-        .setTitle(`${h1.name} (${h1.nameRus})`)
+        .setTitle(`${heroType[h1.type]} ${h1.name} (${h1.nameRus})`)
         .setDescription(h1.description)
         .setColor(main)
         .addField(`💯 ${hm.level} ${i.level}\n❤ ${hm.health} ${i.health}\n⚔ ${hm.damage} ${i.damage}`, `** **`)

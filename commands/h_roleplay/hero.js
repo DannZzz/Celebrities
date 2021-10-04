@@ -1,7 +1,7 @@
 const heroes = require('../../JSON/heroes.json');
 const { main } = require('../../JSON/colours.json');
 const {rpgFind, serverFind} = require("../../functions/models");
-
+const {heroType} = require("../../config");
 const { MessageEmbed } = require("discord.js");
 const {error, roundFunc} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
@@ -33,7 +33,7 @@ module.exports = {
     const item = heroes[rp.item]
     let myHero = new MessageEmbed()
     .setAuthor(`${user.user.tag}`)
-    .setTitle(`${item.name} (${item.nameRus})\n${hm.level} ${get.level}  ${h.journey}: ${rp.surviveLevel}`)
+    .setTitle(`${heroType[item.type]} ${item.name} (${item.nameRus})\n${hm.level} ${get.level}  ${h.journey}: ${rp.surviveLevel}`)
     .setDescription(LANG.lang === "ru" ? item.description : item.descriptionEN)
     .setThumbnail(item.url)
     .addField(`❤ ${hm.health}`, `${get.health}`, true)
