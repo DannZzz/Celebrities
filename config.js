@@ -4,6 +4,14 @@ exports.DEV = "Dann#0006";
 
 exports.devID = ["382906068319076372"];
 
+exports.heroType = {
+    common: "<:common:894640637377413140>",
+    elite: "<:elite:894640638111412235>",
+    furious: "<:furious:894640638014918707>",
+    mythical: "<:mythical:894640637373214751>",
+    private: "<:private:894640637998153828>"
+}
+
 exports.LEAGUE = {
     "bronze": "<:bronze:894195219791233044>",
     "silver": "<:silver:894195219854155807>",
@@ -46,7 +54,7 @@ exports.DLEFT = "<:leftchevron:887652944525287464>";
 
 exports.DRIGHT = "<:rightchevron:887652944353329162>";
 
-exports.botINVITE = "https://discord.com/api/oauth2/authorize?client_id=726784476377514045&permissions=244210068727&scope=bot"
+exports.botINVITE = "https://discord.com/api/oauth2/authorize?client_id=726784476377514045&permissions=275952036961&scope=bot"
 
 exports.COIN = '<a:danndollar:875448360830644225>';
 

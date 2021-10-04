@@ -143,6 +143,11 @@ module.exports = {
         "reward": "Gain:",
         "noHero": "You don't have a hero.",
         "notHero": "Hero not found.",
+        "common": "Common",
+        "elite": "Elite",
+        "furious": "Furious",
+        "mythical": "Mythical",
+        "private": "Private"
     },
 
 
