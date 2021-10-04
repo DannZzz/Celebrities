@@ -242,15 +242,17 @@ module.exports = {
         time: 20000
       })
 
+      const server = msg.guild;
+      const serverData = await serverFind(server.id);
+      const ln = serverData.lang;
+
       collectorType.on("collect", async (i) => {
         firstMsg.delete();
         i.deferUpdate();
         bool0 = true;
         collectorType.stop();
         const user = msg.author;
-        const server = msg.guild;
-        const serverData = await serverFind(server.id);
-        const ln = serverData.lang;
+        
         const coinData = await profileFind(user.id);
         const rp = await rpgFind(user.id);
         const bag = await bagFind(user.id);
