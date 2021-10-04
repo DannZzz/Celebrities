@@ -18,7 +18,8 @@ module.exports = {
   config: {
     name: "boss",
     aliases: ['босс'],
-    category: 'h_roleplay'
+    category: 'h_roleplay',
+    cooldown: 15
   },
   run: async (bot, message, args) => {
    
@@ -81,7 +82,9 @@ module.exports = {
 
     let bossHealth = boss.health
     let bossDamage = boss.damage
-
+    if (allHealth / 2 > bossHealth) bossHealth += bossHealth;
+    if (allDamage / 2 > bossDamage) bossDamage += bossDamage;
+    
     let winner;
     let loser;
 

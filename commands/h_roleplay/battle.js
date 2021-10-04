@@ -16,14 +16,10 @@ module.exports = {
   config: {
     name: "battle",
     aliases: ["битва"],
-    category: 'h_roleplay'
+    category: 'h_roleplay',
+    cooldown: 10
   },
   run: async (bot, message, args, ops) => {
-    const current = ops.games.get(message.author.id);
-    if (current) return
-
-    const curr = rateLimiter.take(message.author.id);
-    if (curr) return
        
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
@@ -66,7 +62,6 @@ module.exports = {
     const league = mrp.league.id || 0;
 
     if (!mrp || mrp.item === null) return error(message, hm.noHero);
-    ops.games.set(message.author.id, {game: "battle"})
     const mItem = mrp.item
     let item;
     const enem = ["Zero", "Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Broken", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
@@ -160,7 +155,6 @@ module.exports = {
 
       setTimeout(async() => {
         let winData
-        ops.games.delete(message.author.id)
         if (winner) {
           const winCup = Rate(message).winRewardGenerator(league);
           await Rate(message).rateUpdate(message.author.id, winCup);

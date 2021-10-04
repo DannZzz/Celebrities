@@ -15,7 +15,8 @@ module.exports = {
   config: {
     name: "use",
     aliases: ['использовать'],
-    category: 'h_roleplay'
+    category: 'h_roleplay',
+    cooldown: 1.5
   },
   run: async (bot, message, args) => {
 

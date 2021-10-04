@@ -5,8 +5,6 @@ const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment, MessageActionRow, MessageButton } = require("discord.js");
 const { COIN, LEAGUE } = require("../../config");
-const { RateLimiter } = require('discord.js-rate-limiter');
-let duelRate = new RateLimiter(1, 17000);
 const {error, embed, perms, roundFunc} = require("../../functions/functions");
 const Canvas = require('canvas');
 const Rate = require("../../functions/rateClass");
@@ -16,15 +14,14 @@ module.exports = {
   config: {
     name: "duel",
     aliases: ['fight', "pvp", 'дуэл', 'бой'],
-    category: 'h_roleplay'
+    category: 'h_roleplay',
+    cooldown: 17
   },
   run: async (bot, message, args) => {
-    const asd = duelRate.take(message.author.id);
-    if (asd) return
 
-      const getLang = require("../../models/serverSchema");
-      const LANG = await getLang.findOne({serverID: message.guild.id});
-      const {duel: d, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
+    const getLang = require("../../models/serverSchema");
+    const LANG = await getLang.findOne({serverID: message.guild.id});
+    const {duel: d, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
    
        
     const bag = await bd.findOne({ userID: message.author.id });
