@@ -191,7 +191,7 @@ class CardClass {
 
     async addMoney(code, amount) {
         const ln = await serverFind(this.msg.guild.id);
-        const { cardClass: cc, noStar } = require(`../languages/${ln.lang}`);
+        const { cardClass: cc, noStar, cardFix } = require(`../languages/${ln.lang}`);
 
         const row = await getCardMenu(this.msg, {
             custom: cc.custom2,
@@ -199,7 +199,7 @@ class CardClass {
         });
         if (!row) return error(this.msg, cc.noCard);
         if (amount <= 0) return error(this.msg, cc.min);
-        const target = await cardModel.findOne({code: code});
+        let target = await cardModel.findOne({code: code});
         if (!target) return error(this.msg, cc.findError);
         
 
@@ -245,26 +245,30 @@ class CardClass {
                     mess.delete();
                     msgCollector.stop();
 
-                    const random = Math.ceil(Math.random() * 5);
-                    const m = await this.msg.channel.send(cc.wait);
-                    await delay(random * 1000)
-                    m.delete();
-                            
+                    const random = randomRange(60, 180)
+                    this.msg.react(AGREE);
+                    await embed(this.msg, cardFix).then( (msg) => setTimeout(() => msg.delete(), 10000));
+                    await delay(random * 1000);
                     data = await cardFind(this.user.id, val);
+                    target = await cardModel.findOne({code: code});
+
+                    if(!target) return this.msg.react(DISAGREE);
+                    if (!data) return this.msg.react(DISAGREE);
+
                     cardData = cards[val];
-                    if (data.amount < amount) return error(this.msg, noStar);
+                    if (data.amount < amount) return this.msg.react(DISAGREE);
                     total = Math.floor(amount);
                     if (cardData.percentage !== 0) total = Math.floor(amount) - (Math.floor(amount) * cardData.percentage / 100);
         
                     targetData = cards[target.name];
-                    if (Math.floor(amount) > cardData.maxGiveAmount) return error(this.msg, cc.maxGive);
-                    if (target.amount + total > targetData.maxSpace) return error(this.msg, cc.max);
+                    if (Math.floor(amount) > cardData.maxGiveAmount) return this.msg.react(DISAGREE);
+                    if (target.amount + total > targetData.maxSpace) return this.msg.react(DISAGREE);
 
                     
                     await cardModel.updateOne({code: target.code}, {$inc: {amount: total}});
                     await cardModel.updateOne({code: data.code}, {$inc: {amount: -Math.floor(amount)}});
                     
-                    return embed(this.msg, cc.done2);
+                    return
                 }
 
 

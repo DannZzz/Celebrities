@@ -21,6 +21,8 @@ module.exports = {
     "buttonNo": "No",
     "noStar": "You don't have enough golds.",
     "cardcooldown": "Please end the actions with the cards.",
+    "cooldown": (time, cmd) => `Wait __${time}__ seconds, before using __${cmd}__.`,
+    "cardFix": "Your payment will be completed within a few minutes.",
 
     "afkMess": (name, res) => `User **${name}** is currently in AFK mode\nBy reason: **${res}**`,
     

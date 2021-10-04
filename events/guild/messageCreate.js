@@ -1,5 +1,5 @@
 const { PREFIX, DISAGREE, STAR } = require('../../config');
-const { MessageEmbed } = require('discord.js')
+const { MessageEmbed, Collection } = require('discord.js')
 const profileModel = require("../../models/profileSchema");
 const serverModel = require("../../models/serverSchema");
 const memberModel = require("../../models/memberSchema");
@@ -20,12 +20,14 @@ let rateLimiter = new RateLimiter(1, 2000);
 let msgLimiter = new RateLimiter(1, 2000);
 const Rate = require("../../functions/rateClass.js");
 
+const cooldowns = new Map();
+
 module.exports = async (bot, messageCreate) => {
   let message = messageCreate;
   if (message.author.bot) return
   const getLang = require("../../models/serverSchema");
   const LANG = await getLang.findOne({serverID: message.guild.id});
-  const {afkMess} = require(`../../languages/${LANG.lang}`); 
+  const {afkMess, perm, cooldown: cd} = require(`../../languages/${LANG.lang}`); 
   
   let afkMember = message.mentions.members;
   if (afkMember && afkMember.length !== 0) {
@@ -137,15 +139,38 @@ module.exports = async (bot, messageCreate) => {
         let ss = new MessageEmbed().setColor("#2f3136").setTimestamp()
         const imunCmd = ["enable", "disable", "channel-enable", "channel-disable"]
         var commandfile = bot.commands.get(cmd) || bot.commands.get(bot.aliases.get(cmd))
-
+        
+      
         if (
           (commandfile && 
           !serverData.disabledChannels.includes(message.channel.id) && 
           !serverData.disabled.includes(commandfile.config.name)) || 
           (commandfile && imunCmd.includes(commandfile.config.name))
           ) {
-            const current = rateLimiter.take(message.author.id);
-            if (current && commandfile.config.name !== "battle") return
+            var command = commandfile.config;
+            
+            if (!message.member.permissions.has(command.permissions || [])) return error(message, perm)
+            
+            if(!cooldowns.has(command.name)) {
+              cooldowns.set(command.name, new Collection());
+            }
+            
+            const currentTime = Date.now();
+            const time_stamps = cooldowns.get(command.name);
+            const cooldownAmount = (command.cooldown || 3) * 1000;
+
+            if (time_stamps.has(message.author.id)) {
+              const expire = time_stamps.get(message.author.id) + cooldownAmount;
+
+              if (currentTime < expire) {
+                const time = (expire - currentTime) / 1000;
+
+                return error(message, cd(time.toFixed(1), command.name));
+              }
+            }
+
+            time_stamps.set(message.author.id, currentTime);
+            setTimeout(() => time_stamps.delete(message.author.id), cooldownAmount);
             
             commandfile.run(bot, message, args, ops)
           }//.catch(()=> message.react("❌"))}

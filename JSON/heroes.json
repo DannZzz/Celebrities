@@ -356,12 +356,12 @@
     "nameRus": "Зеро",
     "health": 30000,
     "damage": 2000,
-    "cost": 350000,
-    "costType": "star",
+    "cost": "Не известна.",
+    "costType": "dev",
     "url": "https://i.ibb.co/Kzd2YDN/Zero.jpg",
     "descriptionEN": "Zero - Dragon Lightning, powerful and rare in fighting, his light is everywhere. Legend says that Zero is very kind and won't hurt anyone, but what can you think about seeing such a huge monster?",
     "description": "Зеро - Дракон Молния, мощный и редкий дракой, его свет везде. Легенда говорит что Зеро очень добрый, и не повредит никого, но о чем можно подумать увидев такого огромного монстра?",
-    "available": "Да",
+    "available": "Под",
     "vip": true,
     "upgradeCost": 1500
   }
