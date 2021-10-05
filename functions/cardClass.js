@@ -118,7 +118,8 @@ class CardClass {
             const random = randomRange(5, 10)
             const m = await this.msg.channel.send(cc.wait);
             await delay(random * 1000)
-            
+            data = await cardFind(this.user.id, val);
+            cardData = cards[val];
             if (cardData.percentage !== 0) total = Math.round(am - (am * cardData.percentage / 100));
             if (total + data.amount > cardData.maxSpace) return error(this.msg, cc.max);
             const bd = await bagFind(this.user.id);
@@ -171,6 +172,8 @@ class CardClass {
             const random = randomRange(5, 10)
             const m = await this.msg.channel.send(cc.wait);
             await delay(random * 1000)
+            data = await cardFind(this.user.id, val);
+            cardData = cards[val];
             if (cardData.percentage !== 0) total = Math.round(am - (am * cardData.percentage / 100));
             if (am > data.amount) return error(this.msg, noStar);
 
