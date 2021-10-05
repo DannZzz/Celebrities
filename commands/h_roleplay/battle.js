@@ -17,9 +17,13 @@ module.exports = {
     name: "battle",
     aliases: ["битва"],
     category: 'h_roleplay',
-    cooldown: 10
+    cooldown: 20
   },
   run: async (bot, message, args, ops) => {
+    const now = ops.games.get(message.author.id);
+    if (now) return;
+    ops.games.set(message.author.id, {battling: "on"});
+    setTimeout(() => ops.games.delete(message.author.id), 30000)
        
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
