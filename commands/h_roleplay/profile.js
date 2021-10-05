@@ -61,7 +61,7 @@ module.exports = {
     `\`\`\`${p.junk}(🔧) - ${data.junk}\n${p.common}(🐟) - ${data.common}\n${p.unc}(🐠) - ${data.uncommon}\n${p.rare}(🦑) - ${data.rare}\n${p.leg}(🐋) - ${data.legendary}\`\`\`\n`, true)
 
 
-    if(data["vip1"] && checkVip.profileBio !== null) embed.addField(p.bio, checkVip.profileBio, true);
+    if(data["vip1"] && checkVip.profileBio) embed.addField(p.bio, checkVip.profileBio, true);
 
     let buttonList = []
     if (checkVip.vkLink) {
