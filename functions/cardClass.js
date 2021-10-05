@@ -115,10 +115,10 @@ class CardClass {
             let cardData = cards[val];
             const am = Math.floor(amount);
             let total = am;
-            const random = Math.ceil(Math.random() * 5);
+            const random = randomRange(5, 10)
             const m = await this.msg.channel.send(cc.wait);
             await delay(random * 1000)
-            m.delete();
+            
             if (cardData.percentage !== 0) total = Math.round(am - (am * cardData.percentage / 100));
             if (total + data.amount > cardData.maxSpace) return error(this.msg, cc.max);
             const bd = await bagFind(this.user.id);
@@ -128,6 +128,7 @@ class CardClass {
             await cd.updateOne({name: val, userID: data.userID}, {$inc: {amount: total}});
 
             this.msg.react(AGREE)
+            m.delete();
             embed(this.msg, `${am} --> ${total} (${cardData.percentage}%)`, false)
         });
 
@@ -167,10 +168,9 @@ class CardClass {
             let cardData = cards[val];
             const am = Math.floor(amount);
             let total = am;
-            const random = Math.ceil(Math.random() * 5);
+            const random = randomRange(5, 10)
             const m = await this.msg.channel.send(cc.wait);
             await delay(random * 1000)
-            m.delete();
             if (cardData.percentage !== 0) total = Math.round(am - (am * cardData.percentage / 100));
             if (am > data.amount) return error(this.msg, noStar);
 
@@ -178,6 +178,7 @@ class CardClass {
             await cd.updateOne({name: val, userID: data.userID}, {$inc: {amount: -am}});
 
             this.msg.react(AGREE)
+            m.delete();
             embed(this.msg, `${am} --> ${total} (${cardData.percentage}%)`, false)
         });
 
