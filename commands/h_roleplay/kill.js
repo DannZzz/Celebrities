@@ -53,7 +53,7 @@ module.exports = {
         rp.heroes.pop();
         rp.save();
       }
-      const item = heroes[item]
+      const item = heroes[rp.item]
     
     
 
