@@ -93,8 +93,8 @@ module.exports = {
             if (!rp.item) return error(message, hm.noHero)
             await rpg.updateOne({userID: user.id}, {$inc: {lvl: -val}});
 
-            let addH = 250 * val;
-            let addD = 20 * val;
+            let addH = 500 * val;
+            let addD = 40 * val;
             let leve = item.effect * val;
 
             let get = rp.heroes.findIndex(x => x.name === rp.item)

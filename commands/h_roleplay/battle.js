@@ -98,16 +98,16 @@ module.exports = {
       }
     }
     if (eLevel <= 1) eLevel = 2
-    let eHealth = ((eLevel - 1) * 250) + data2.health;
-    let eDamage = ((eLevel - 1) * 20) + data2.damage;
+    let eHealth = ((eLevel - 1) * 500) + data2.health;
+    let eDamage = ((eLevel - 1) * 40) + data2.damage;
     if (myHealth / 2 > eHealth) {
-      eHealth += eHealth;
-      eDamage += eDamage
+      eHealth += eHealth + (500*(eLevel / 1.5));
+      eDamage += eDamage + (40*(eLevel / 1.5));
     }
-    let h1 = eHealth
-    let h2 = myHealth
-    let d1 = eDamage
-    let d2 = myDamage
+    let h1 = Math.round(eHealth)
+    let h2 = Math.round(myHealth)
+    let d1 = Math.round(eDamage)
+    let d2 = Math.round(myDamage)
     let winner = false
 
     let damn = await message.channel.send(`<a:dannloading:876008681479749662> ${b.find}`);

@@ -41,7 +41,7 @@ module.exports = {
             await profileModel.findOneAndUpdate({userID: user.id}, {$set: {daily: Date.now()}})
 
             embed(message, `${d.done} ${STAR} ${and} 1 ${box}`)
-            await begModel.findOneAndUpdate({userID: user.id},{$inc: {stars: 10}})
+            await begModel.findOneAndUpdate({userID: user.id},{$inc: {stars: 100}})
             await rpg.findOneAndUpdate({userID: user.id}, {$inc: {box: 1}})
         }
     }

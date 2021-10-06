@@ -39,8 +39,8 @@ module.exports = {
     
     const getIndex = rp.heroes.findIndex(x => x.name === rp.item)
 
-    let addH = 250;
-    let addD = 20;
+    let addH = 500;
+    let addD = 40;
 
     if(args[0] && resp.includes(args[0].toLowerCase())) {
       const newEmb = new MessageEmbed()
