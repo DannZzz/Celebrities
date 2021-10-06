@@ -24,7 +24,7 @@ module.exports = {
         .setThumbnail(user.displayAvatarURL({dynamic: true}))
       const text = arr.forEach( card => {
         const cardData = cards[card.name]
-        emb.addField(`${cardData.emoji} ${firstUpperCase(sd.lang === "ru" ? `${cardData.nameRus} карта` : `${cardData.name} card`)}\n${cd.number} ${card.code}`, `${cd.balance} \`${card.amount}\` | ${cd.createdAt} ${card.createdAt.toLocaleDateString("ru-ru", {timeZone: "Europe/Moscow"})}\n${cd.maxSpace} ${cardData.maxSpace}\n${cd.maxAmount} ${cardData.maxGiveAmount}\n${cd.perc} ${cardData.percentage}%`)
+        emb.addField(`${cardData.emoji} ${firstUpperCase(sd.lang === "ru" ? `${cardData.nameRus} карта` : `${cardData.name} card`)}\n${cd.number} ${card.code}`, `${cd.balance} \`${Math.round(card.amount)}\` | ${cd.createdAt} ${card.createdAt.toLocaleDateString("ru-ru", {timeZone: "Europe/Moscow"})}\n${cd.maxSpace} ${cardData.maxSpace}\n${cd.maxAmount} ${cardData.maxGiveAmount}\n${cd.perc} ${cardData.percentage}%`)
       })
       
       return msg.channel.send({embeds: [emb]})
