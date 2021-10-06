@@ -17,7 +17,7 @@ module.exports = {
     name: "battle",
     aliases: ["битва"],
     category: 'h_roleplay',
-    cooldown: 20
+    cooldown: 30
   },
   run: async (bot, message, args, ops) => {
     const now = ops.games.get(message.author.id);
@@ -44,12 +44,8 @@ module.exports = {
     }
     let a = Math.round(Math.random() * 6) + 1
     let mgs = await message.channel.send(`<a:dannloading:876008681479749662> ${b.find}`)
-    const now1 = ops.games.get(message.author.id);
-    if (now1) return;
     setTimeout(async function(){
     mgs.delete()
-    const now2 = ops.games.get(message.author.id);
-    if (now2) return;
     if(!args[0] || isNaN(args[0])) return error(message, b.bet);
     let value = Math.floor(args[0])
     
