@@ -390,7 +390,7 @@ module.exports = {
             .setColor(main)
             .addFields(
                 {name: `Поддерживать разработчика, и купить премиум доступ.`,
-                value: '**[Ссылка на донат](https://www.donationalerts.com/r/adanasupport)**',
+                value: '**[Ссылка на донат](https://www.donationalerts.com/r/adanadiscord)**',
                 inline: false},
                 {name: `Всё, что нужно указать!`,
                 value: '• Ваш ID\n• Что именно вы хотите, например **Vip 1** или **Vip 2**.',
