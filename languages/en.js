@@ -749,7 +749,7 @@ The more fish, the higher the price!
         "usage": "",
         "access": "For everyone",
         "time": time => `You have already collected your daily prize.\nTry again in **${time.getUTCHours()} hours ${time.getMinutes()} minutes.**`,
-        "done": "Your daily prize: 10"
+        "done": "Your daily prize: 100"
     },
 
     
