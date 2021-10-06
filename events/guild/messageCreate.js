@@ -14,7 +14,7 @@ const games = new Map();
 const buying = new Map();
 const cards = new Map();
 const {error, embed} = require("../../functions/functions");
-const {main, none} = require('../../JSON/colours.json');
+const {main, none, reddark} = require('../../JSON/colours.json');
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 2000);
 let msgLimiter = new RateLimiter(1, 2000);
@@ -147,6 +147,10 @@ module.exports = async (bot, messageCreate) => {
           !serverData.disabled.includes(commandfile.config.name)) || 
           (commandfile && imunCmd.includes(commandfile.config.name))
           ) {
+
+            const EMB = new MessageEmbed()
+            .setColor(reddark)
+
             var command = commandfile.config;
             
             if (!message.member.permissions.has(command.permissions || [])) return error(message, perm)
@@ -165,7 +169,7 @@ module.exports = async (bot, messageCreate) => {
               if (currentTime < expire) {
                 const time = (expire - currentTime) / 1000;
 
-                return error(message, cd(time.toFixed(1), command.name));
+                return message.reply({embeds: [EMB.setDescription(cd(time.toFixed(1), command.name))]}).then(msg => setTimeout(() => msg.delete(), 10000))
               }
             }
 

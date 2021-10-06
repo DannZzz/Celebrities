@@ -8,6 +8,7 @@ const profile = require("../models/profileSchema");
 const server = require("../models/serverSchema");
 const vip = require("../models/vipSchema");
 const card = require("../models/cards");
+const promocodes = require("../models/promocodes");
 
 module.exports = {
     rpg,
@@ -20,6 +21,15 @@ module.exports = {
     server,
     vip,
     card,
+    promocodes,
+    promoFind: async (code) => {
+        const data = await promocodes.findOne({code: code});
+        if (!data) {
+            return false
+        } else {
+            return data;
+        };
+    },
     cardFind: async (id, name) => {
         const data = await card.findOne({userID: id, name: name});
         if (!data) {

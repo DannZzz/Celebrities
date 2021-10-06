@@ -34,11 +34,18 @@ module.exports = {
   error: function (msg, text = 'Ошибка') {
     const Emb = new MessageEmbed()
     .setColor(reddark)
-    .setAuthor(msg.author.username, msg.author.displayAvatarURL({dynamic: true}))
+    //.setAuthor(msg.author.username, msg.author.displayAvatarURL({dynamic: true}))
     .setDescription(`${DISAGREE} ${text}`)
 
+    const button = new MessageButton()
+      .setStyle("LINK")
+      .setLabel("Commands")
+      .setURL("https://adanabot.github.io/pages/commands.html")
+
+    const row = new MessageActionRow().addComponents([button]);
+    
     msg.react(DISAGREE)
-    return msg.reply({embeds: [Emb]}).then(message => setTimeout(() => message.delete(), 10000))
+    return msg.reply({embeds: [Emb], components: [row]}).then(message => setTimeout(() => message.delete(), 30000))
   },
   progressBar: function (perc, ofMaxValue, size, line = '❤', slider = '🖤') {
   if (!perc) throw new Error('Perc value is either not provided or invalid');

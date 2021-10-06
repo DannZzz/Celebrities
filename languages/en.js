@@ -28,6 +28,24 @@ module.exports = {
     
 
 
+    "promoClass": {
+        "noCode": "Please enter a promo code.",
+        "noPromo": "This promo code does not exist.",
+        "noAvailable": "This promo code is no longer available.",
+        "already": "You have already used this promo code.",
+        "done": "You have successfully used the promo code, your reward"
+    },
+
+
+
+    "promocode": {
+        "desc": "Use promo code.",
+        "usage": "[promo code]",
+        "access": "For everyone",
+    },
+    
+
+
     "cardClass": {
         "specCode": "Please enter another card number. \`0123-4567\`",
         "specAmount": "Please enter the amount.",
