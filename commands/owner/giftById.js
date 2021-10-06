@@ -1,7 +1,7 @@
 const begModel = require("../../models/begSchema");
 const {MessageEmbed} = require("discord.js");
 const {main} = require('../../JSON/colours.json');
-const { COIN, AGREE, STAR } = require('../../config');
+const { COIN, AGREE, STAR, DISAGREE } = require('../../config');
 const ids = ['382906068319076372', '873237782825422968']
 const {error, embed, perms} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
@@ -9,7 +9,7 @@ let rateLimiter = new RateLimiter(1, 5000);
 
 module.exports = {
   config: {
-    name: "giftstars",
+    name: "addstars",
     description: "",
     category: "",
     aliases: "",
@@ -49,7 +49,7 @@ module.exports = {
       `
     )]})
     message.react(`${AGREE}`)
-    let msg = user.send({embeds: [embed(message, `**У вас подарок от разработчика!🎉**\n\n||---**${Math.floor(args[1])}** ${STAR}---||`, "dm")]}).catch(()=> message.react('❌'))
+    let msg = user.send({embeds: [embed(message, `**New Gift!🎉**\n\n||${Math.floor(args[1])} ${STAR}||`, "dm")]}).catch(()=> message.react(DISAGREE))
 
 
 
