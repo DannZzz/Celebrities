@@ -391,7 +391,7 @@ module.exports = {
             .setColor (main)
             .addFields (
                 {name: `Support the developer, and buy premium access.`,
-                value: '**[Link to donate](https://www.donationalerts.com/r/danndevbot)**',
+                value: '**[Link to donate](https://www.donationalerts.com/r/adanasupport)**',
                 inline: false},
                 {name: `Everything you need to specify!`,
                 value: '• Your ID\n • What exactly do you want, for example **Vip 1** or **Vip 2**.',
