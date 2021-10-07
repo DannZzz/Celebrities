@@ -419,7 +419,7 @@ module.exports = {
                 {name: `<a:vip2:867868958459166751> VIP 2`,
                 value: `Gives access to unique heroes, reduces **cooldown** for all commands **two** times, makes it possible to issue a rank card, profile picture, and also gives more bet limit for all games, increases the max value of gift to 2500.`,
                 inline: false},{name: `Prices in dollars.`,
-                    value: `• Vip 1 + 10000 ${STAR} - 0,2$\n • Vip 2 + 20000 ${STAR} - 0,41$\n • Hero **Zeus** - 1,1$\n • 100000 ${STAR } - 1,1$ (47% discount)\n • 30000 ${STAR} - 0,4$ (33% discount)\n • 10000 ${STAR} - 0,2$`,
+                    value: `• Vip 1 + 10000 ${STAR} - 0,2$\n • Vip 2 + 20000 ${STAR} - 0,41$\n • Hero **Toothless** - 0,55$\n • Hero **Zeus** - 0,26$\n • 100000 ${STAR } - 1,1$ (47% discount)\n • 30000 ${STAR} - 0,4$ (33% discount)\n • 10000 ${STAR} - 0,2$\n • Donate-box (20k-100k) - 0,2$`,
                     inline: false},
                     {name: `Extra place for heroes.`,
                     value: `• Cost: Your place count * 2000 ${STAR}\n \`?buy place\``,
