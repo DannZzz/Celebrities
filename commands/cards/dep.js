@@ -10,7 +10,7 @@ module.exports = {
     name: "gcard",
     aliases: ['пополнить'],
     category: 'cards',
-    cooldown: 15
+    cooldown: 30
   },
   run: async (bot, msg, args, ops) => {
     const sd = await serverFind(msg.guild.id);
