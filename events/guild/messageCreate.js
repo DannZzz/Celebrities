@@ -152,7 +152,7 @@ module.exports = async (bot, messageCreate) => {
             .setColor(reddark)
 
             const getCardCooldown = ops.cards.get(message.author.id);
-            if(getCardCooldown) return message.reply({embeds: [EMB.setDescription(LANG.lang === "en" ? "Wait for the transaction to finish." : "Подождите, пока транзакция закончится.")]}).then(msg => setTimeout(() => msg.delete(), 10000))
+            if(getCardCooldown) return message.reply({embeds: [EMB.setDescription(LANG.lang === "en" ? "Wait a while for the transaction to complete." : "Подождите некоторое время, пока транзакция закончится.")]}).then(msg => setTimeout(() => msg.delete(), 10000))
 
             const getCardCooldown2 = ops.cards.get(message.author.id);
             if(getCardCooldown2) return;
