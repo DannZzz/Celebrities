@@ -31,7 +31,7 @@ module.exports = {
         .setTitle(`${heroType[obj.type]} ${obj.name} (${obj.nameRus}) ${cMar(obj.marry)} ${cVip(obj.vip)}`)
         .setThumbnail(obj.url)
         .setDescription(LANG.lang === "en" ? obj.descriptionEN : obj.description)
-        .addField(`${hh.cost} ${cCost(obj.cost)} ${cType(obj.costType)}`, `**${hh.avail} ${cAv(obj.available)}**`, true)
+        .addField(`${hh.cost} ${cCost(obj.cost, obj)} ${cType(obj.costType)}`, `**${hh.avail} ${cAv(obj.available)}**`, true)
         .addField(`${hm.health} ${obj.health} ❤`, `**${hm.damage} ${obj.damage}** ⚔`, true)
         )
       
@@ -85,13 +85,13 @@ module.exports = {
         return hh.pack
       }
     }
-    function cCost(cost) {
+    function cCost(cost, obj) {
       if (!isNaN(cost)) {
         return cost
       } else if (cost.endsWith("₽") && LANG.lang === "ru") {
         return cost
       } else if (cost.endsWith("₽") && LANG.lang === "en") {
-        return "1,1$"
+        return obj.costUSD;
       } else {
         return hh.nocost
       }
