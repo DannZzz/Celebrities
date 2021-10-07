@@ -20,6 +20,8 @@ let rateLimiter = new RateLimiter(1, 2000);
 let msgLimiter = new RateLimiter(1, 2000);
 const Rate = require("../../functions/rateClass.js");
 
+
+
 const cooldowns = new Map();
 
 module.exports = async (bot, messageCreate) => {
@@ -105,7 +107,6 @@ module.exports = async (bot, messageCreate) => {
     }
   }
  
-  
 
         if (message.author.bot || message.channel.type === "DM") return;
 
@@ -147,10 +148,16 @@ module.exports = async (bot, messageCreate) => {
           !serverData.disabled.includes(commandfile.config.name)) || 
           (commandfile && imunCmd.includes(commandfile.config.name))
           ) {
-
             const EMB = new MessageEmbed()
             .setColor(reddark)
 
+            const getCardCooldown = ops.cards.get(message.author.id);
+            if(getCardCooldown) return message.reply({embeds: [EMB.setDescription(LANG.lang === "en" ? "Wait for the transaction to finish." : "Подождите, пока транзакция закончится.")]}).then(msg => setTimeout(() => msg.delete(), 10000))
+
+            const getCardCooldown2 = ops.cards.get(message.author.id);
+            if(getCardCooldown2) return;
+
+            
             var command = commandfile.config;
             
             if (!message.member.permissions.has(command.permissions || [])) return error(message, perm)
