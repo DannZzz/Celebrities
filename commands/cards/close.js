@@ -12,8 +12,8 @@ module.exports = {
     cooldown: 45
   },
   run: async (bot, msg, args, ops) => {
-    ops.cards.set(message.author.id, {Card: "on"});
-    setTimeout(() => ops.cards.delete(message.author.id), 10000);
+    ops.cards.set(msg.author.id, {Card: "on"});
+    setTimeout(() => ops.cards.delete(msg.author.id), 10000);
     
     Card(msg).closeCard()
   }
