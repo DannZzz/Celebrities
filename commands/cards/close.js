@@ -11,7 +11,10 @@ module.exports = {
     category: 'cards',
     cooldown: 45
   },
-  run: async (bot, msg, args) => {
+  run: async (bot, msg, args, ops) => {
+    ops.cards.set(message.author.id, {Card: "on"});
+    setTimeout(() => ops.cards.delete(message.author.id), 10000);
+    
     Card(msg).closeCard()
   }
 }

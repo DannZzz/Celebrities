@@ -122,8 +122,8 @@ module.exports = {
     .addField(`${message.author.username} (${LANG.lang === "ru" ? data1.nameRus : data1.name})`, `**${hm.level} ${myLevel}**`, true)
     .addField(`❤ ${hm.health} ${myHealth}`, `**⚔ ${hm.damage} ${myDamage}**`, true)
     .addField(`\u200b`, `\u200b`, false)
-    .addField(`${LANG.lang === "ru" ? data2.nameRus : data2.name}`, `**${hm.level} ${+eLevel}**`, true)
-    .addField(`❤ ${hm.health} ${h1}`, `**⚔ ${hm.damage} ${d1}**`, true)
+    .addField(`${LANG.lang === "ru" ? data2.nameRus : data2.name}`, `**${hm.level} ${Math.round(+eLevel)}**`, true)
+    .addField(`❤ ${hm.health} ${Math.round(h1)}`, `**⚔ ${hm.damage} ${Math.round(d1)}**`, true)
     .setColor(main)
 
    
@@ -187,7 +187,7 @@ module.exports = {
           .setDescription(`${b.between} ${message.member}, ${hero.name}(A.I) -${45} ${LEAGUE.cup}`)
           .setImage(hero.url)
           .setColor(main)
-          .addField(`❤ ${hm.health} ${eHealth}`, `**⚔ ${hm.damage} ${eDamage}**`, true)
+          .addField(`❤ ${hm.health} ${Math.round(eHealth)}`, `**⚔ ${hm.damage} ${Math.round(eDamage)}**`, true)
           msg.delete()
           return message.channel.send({embeds: [winEmb]})
         }

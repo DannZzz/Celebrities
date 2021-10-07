@@ -16,7 +16,7 @@ module.exports = {
     aliases: ['update', 'прокачать'],
     category: 'h_roleplay'
   },
-  run: async (bot, message, args) => {
+  run: async (bot, message, args, ops) => {
 
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
@@ -29,6 +29,7 @@ module.exports = {
     if(!rp || rp.item === null) {
     return error(message, hm.noHero)
     };
+    const user = message.author;
     let hero = heroes[rp.item]
     let firstLevel = 1;
     let levelCost = hero.upgradeCost;
@@ -55,6 +56,10 @@ module.exports = {
 
       return message.channel.send({embeds: [newEmb]})
     }
+
+    ops.cards.set(user.id, {Card: "on"});
+    setTimeout(() => ops.cards.delete(user.id), 30000);
+    
     if (bal < requiredValue) return error(message, `${u.err} — **${requiredValue}** ${STAR}.`)
     let a = rp.heroes.indexOf(rp.heroes.filter(a => a["name"] === rp.item))
     let b = rp.heroes[a];

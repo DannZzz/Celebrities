@@ -12,13 +12,17 @@ module.exports = {
     category: 'cards',
     cooldown: 45
   },
-  run: async (bot, msg, args) => {
+  run: async (bot, msg, args, ops) => {
     const sd = await serverFind(msg.guild.id);
     const {cardClass: cc, cards: cd} = require(`../../languages/${sd.lang}`);
     
     const user = msg.author;
     if (!args[0] || args[0].length !== 9) return error(msg, cc.specCode);
     if (!args[1] || isNaN(args[1])) return error(msg, cc.specAmount);
+
+    ops.cards.set(user.id, {Card: "on"});
+    setTimeout(() => ops.cards.delete(user.id), 30000);
+    
     return Card(msg).addMoney(args[0], args[1]);
   }
 }

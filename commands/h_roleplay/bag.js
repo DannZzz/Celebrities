@@ -17,7 +17,7 @@ module.exports = {
     aliases: ['сумка'],
     category: 'h_roleplay'
   },
-  run: async (bot, message, args) => {
+  run: async (bot, message, args, ops) => {
     
 
     const getLang = require("../../models/serverSchema");
@@ -25,6 +25,9 @@ module.exports = {
     const {use: u, buy: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
 
     const user = message.author;
+
+    
+    
     const profile = await pd.findOne({userID: user.id});
     const rp = await rpg.findOne({userID: user.id});
 

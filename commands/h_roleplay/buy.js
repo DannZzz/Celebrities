@@ -27,6 +27,10 @@ module.exports = {
    
     //const items = ["Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Broken", "Hunter", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
     const user = message.author;
+
+    ops.cards.set(user.id, {Card: "on"});
+    setTimeout(() => ops.cards.delete(user.id), 30000);
+
     const coinData = await pd.findOne({userID: user.id});
     let rp = await rpg.findOne({userID: user.id});
     if (!rp) {
