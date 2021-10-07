@@ -5,8 +5,8 @@ const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed } = require("discord.js");
 const { COIN, AGREE, STAR } = require("../../config");
-const { checkValue } = require("../../functions/functions");
-const {error, embed, perms, firstUpperCase} = require("../../functions/functions");
+const { addStar } = require("../../functions/models");
+const {error, embed, perms, firstUpperCase, randomRange} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 const ITEMS = require('../../JSON/items');
@@ -27,7 +27,7 @@ module.exports = {
     const user = message.author;
     const profile = await pd.findOne({userID: user.id});
     if (!isNaN(args[0])) {
-        const numbs = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+        const numbs = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
         if (!numbs.includes(args[0])) return error(message, b.itemErr);
         let item;
         const it = args[0]
@@ -40,6 +40,7 @@ module.exports = {
         if (it == 7) item = ITEMS.pack2
         if (it == 8) item = ITEMS.pack3
         if (it == 9) item = ITEMS.tempPack
+        if (it == 10) item = ITEMS.donateBox
         
         const rp = await rpg.findOne({userID: user.id});
         if (rp[item.name] === 0 || rp[item.name] === undefined) return error(message, u.err);
@@ -192,6 +193,13 @@ module.exports = {
         
             
             return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name))
+        } else if (it == 10) {
+            const random = Math.round(randomRange(20000, 100000));
+            await rpg.updateOne({userID: user.id}, {$inc: {donateBox: -1}});
+            await rpg.updateOne({userID: user.id}, {$inc: {openedPacks: 1}});
+
+            await addStar(user.id, random)
+            return embed(message, `${random} ${STAR}`, false);
         }
 s
     } else {

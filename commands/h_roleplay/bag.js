@@ -45,6 +45,7 @@ module.exports = {
     .addField(`**#7** ${items.pack2.emoji} :`, `${rp["pack2"] || 0}`, true)
     .addField(`**#8** ${items.pack3.emoji} :`, `${rp["pack3"] || 0}`, true)
     .addField(`**#9** ${items.tempPack.emoji} :`, `${rp["tempPack"] || 0}`, true)
+    .addField(`**#10** ${items.donateBox.emoji} :`, `${rp["donateBox"] || 0}`, true)
       
 
     return message.channel.send({embeds: [emb]})
