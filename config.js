@@ -28,6 +28,8 @@ exports.MEDAL = {
 
 exports.HERO = "<a:herodann:883382573231923201>";
 
+exports.donate = "<:goldbox:895662521829195788>";
+
 exports.potDMG = "<:potionDamage:886478199645679686>";
 
 exports.potLVL = "<:potionLevel:886478200157401089>";

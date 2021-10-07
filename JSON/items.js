@@ -1,4 +1,4 @@
-const {potLVL, potDMG, potHLT, meat, box, pack1, pack2, pack3} = require('../config')
+const {potLVL, potDMG, potHLT, meat, box, pack1, pack2, pack3, donate} = require('../config')
 
 module.exports = {
     dmg: {
@@ -69,5 +69,13 @@ module.exports = {
         emoji: "<:egyptPack:889904478508167198>",
         cost: 6500,
         list: ["Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses"]
+    },
+    donateBox: {
+        name: "donateBox",
+        NAME: "Донат-бокс",
+        NAMEEN: "Donate-box", 
+        emoji: donate,
+        winRU: "Золото 20.000-100.000",
+        winEN: "Gold 20.000-100.000"
     }
 }
