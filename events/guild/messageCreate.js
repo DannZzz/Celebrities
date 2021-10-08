@@ -50,7 +50,7 @@ module.exports = async (bot, messageCreate) => {
   if (dattt.disabled && (!devID.includes(message.author.id) && !adminID.includes(message.author.id))) return error(message, banned);
     try {
       const one = msgLimiter.take(message.author.id);
-  if (!one) {
+  if (!one && !dattt.disabled) {
     await memberModel.updateOne({userID: message.author.id, serverID: message.guild.id}, {$inc: {messages: 1}})
 
     try {
