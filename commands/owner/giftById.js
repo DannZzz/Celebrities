@@ -1,8 +1,7 @@
 const begModel = require("../../models/begSchema");
 const {MessageEmbed} = require("discord.js");
 const {main} = require('../../JSON/colours.json');
-const { COIN, AGREE, STAR, DISAGREE } = require('../../config');
-const ids = ['382906068319076372', '873237782825422968']
+const { COIN, AGREE, STAR, DISAGREE, devID, adminID } = require('../../config');
 const {error, embed, perms} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
@@ -19,7 +18,7 @@ module.exports = {
   run: async (bot, message, args) => {
     
        
-     if(!ids.includes(message.author.id)) return
+     if(!devID.includes(message.author.id) && !adminID.includes(message.author.id)) return
     if (!args[0]) return error(message, "Укажите участника.");
 
     let user = bot.users.cache.get(args[0]);
