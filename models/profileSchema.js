@@ -14,8 +14,9 @@ const profileSchema = new mongoose.Schema({
   survive: { type: Number, default: 0},
   boss: { type: Number, default: 0},
   join: { type: Number, default: 0},
-  afkMessage: { type: String, default: null} ,
+  afkMessage: { type: String, default: null},
   random: { type: Number, default: 0},
+  disabled: { type: Boolean, default: false}
 });
 
 const model = mongoose.model("ProfileModels", profileSchema);
