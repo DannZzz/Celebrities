@@ -30,6 +30,8 @@ module.exports = {
 
     ops.cards.set(user.id, {Card: "on"});
     const getTime = ops.buy2.get(user.id);
+    setTimeout(() => ops.buy2.delete(user.id), 35000);
+
     setTimeout(() => ops.cards.delete(user.id), 30000);
     if (getTime) return;
 
