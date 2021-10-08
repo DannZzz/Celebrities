@@ -29,7 +29,9 @@ module.exports = {
     const user = message.author;
 
     ops.cards.set(user.id, {Card: "on"});
+    const getTime = ops.buy2.get(user.id);
     setTimeout(() => ops.cards.delete(user.id), 30000);
+    if (getTime) return;
 
     const coinData = await pd.findOne({userID: user.id});
     let rp = await rpg.findOne({userID: user.id});
@@ -46,6 +48,7 @@ module.exports = {
     let profile = await pd.findOne({ userID: user.id });
     const menuArray = [];
     if (!args[0]) {
+      ops.buy2.set(user.id, {id: "yes"});
       for (let itemm in ITEMS) {
         const item = ITEMS[itemm]
         menuArray.push({
@@ -69,7 +72,7 @@ module.exports = {
 
       const collector = message.channel.createMessageComponentCollector({
         filter: i => i.isSelectMenu() && i.user.id === message.author.id,
-        time: 30000,
+        time: 15000,
         max: "1"
       })
       let bool = false;
@@ -83,7 +86,7 @@ module.exports = {
         const req = await message.channel.send(b.req);
         const newCollector = message.channel.createMessageCollector({
           filter: m => m.author.id === message.author.id,
-          time: 20000
+          time: 10000
         });
         let bool2 = false;
         newCollector.on("collect", async m => {
@@ -101,12 +104,13 @@ module.exports = {
 
             const lastCollector = await message.channel.createMessageComponentCollector({
               filter: i => i.isSelectMenu() && i.user.id === message.author.id,
-              time: 30000,
+              time: 10000,
               max: "1"
             });
             let bool3 = false;
             lastCollector.on("collect", async i => {
               bool3 = true;
+              ops.buy2.delete(user.id);
               lastCollector.stop();
               newMsg.delete();
               const val = i.values[0];
@@ -135,6 +139,7 @@ module.exports = {
 
             lastCollector.on("end", () => {
               if (!bool3) {
+                ops.buy2.delete(user.id);
                 newMsg.delete();
                 return error(message, cc.timeOut)}
             })
@@ -144,6 +149,7 @@ module.exports = {
 
         newCollector.on("end", () => {
           if (!bool2) {
+            ops.buy2.delete(user.id);
             req.delete();
             return error(message, cc.timeOut)}
         })
@@ -152,6 +158,8 @@ module.exports = {
 
       collector.on("end", () => {
         if (!bool) {
+          ops.buy2.delete(user.id);
+
           first.delete();
           return error(message, cc.timeOut)}
       })
