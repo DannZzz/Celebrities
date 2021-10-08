@@ -5,7 +5,7 @@ const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed } = require("discord.js");
 const { COIN, AGREE, STAR } = require("../../config");
-const { addStar } = require("../../functions/models");
+const { addStar, bagFind } = require("../../functions/models");
 const {error, embed, perms, firstUpperCase, randomRange} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
@@ -27,7 +27,7 @@ module.exports = {
     const user = message.author;
     const profile = await pd.findOne({userID: user.id});
     if (!isNaN(args[0])) {
-        const numbs = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+        const numbs = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"];
         if (!numbs.includes(args[0])) return error(message, b.itemErr);
         let item;
         const it = args[0]
@@ -41,6 +41,7 @@ module.exports = {
         if (it == 8) item = ITEMS.pack3
         if (it == 9) item = ITEMS.tempPack
         if (it == 10) item = ITEMS.donateBox
+        if (it == 11) item = ITEMS.goldBox
         
         const rp = await rpg.findOne({userID: user.id});
         if (rp[item.name] === 0 || rp[item.name] === undefined) return error(message, u.err);
@@ -192,13 +193,55 @@ module.exports = {
             rp.save()
         
             
-            return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name))
+            return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name));
         } else if (it == 10) {
             const random = Math.round(randomRange(20000, 100000));
             await rpg.updateOne({userID: user.id}, {$inc: {donateBox: -1}});
 
             await addStar(user.id, random)
             return embed(message, `${random} ${STAR}`, false);
+        } else if (it == 11) {
+            const randWin = Math.floor(Math.random() * item.list.length);
+            const random1 = Math.round(randomRange(10000, 50000));
+
+            const win = item.list[randWin];
+            if (randWin !== 4 && randWin !== 5) {
+                const hero = heroes[win]
+                if (rp.heroes.length === rp.itemCount) return error(message, b.place)
+                let get = rp.heroes.find(x => x.name === hero.name)
+                if (get) return error(message, b.already)
+
+                await rpg.updateOne({userID: user.id}, {$set: {item: hero.name}});
+                await rpg.updateOne({userID: user.id}, {$inc: {goldBox: -1}});
+
+                await rp.heroes.push({
+                name: hero.name,
+                health: hero.health,
+                damage: hero.damage,
+                level: 1
+                })
+                rp.save()
+
+                return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name));
+            }
+            if (randWin === 4) {
+                await rpg.updateOne({userID: user.id}, {$inc: {goldBox: -1}});
+
+                await addStar(user.id, random1);
+                return embed(message, `${random1} ${STAR}`, false);
+            }
+
+            if (randWin === 5) {
+                const data = await bagFind(user.id);
+                if (data.vip2) return error(message, LANG.lang === "ru" ? "Вы уже имеете __VIP 2__." : "You already have __VIP 2__.");
+                await rpg.updateOne({userID: user.id}, {$inc: {goldBox: -1}});
+
+                await bd.updateOne({userID: user.id}, {$set: {vip1: true}});
+                await bd.updateOne({userID: user.id}, {$set: {vip2: true}});
+                return embed(message, LANG.lang === "ru" ? "Вы получили __VIP 2__!" : "You got __VIP 2__!");
+            }
+            
+            
         }
 s
     } else {

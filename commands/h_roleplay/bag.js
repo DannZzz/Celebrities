@@ -18,7 +18,6 @@ module.exports = {
     category: 'h_roleplay'
   },
   run: async (bot, message, args, ops) => {
-    
 
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
@@ -46,6 +45,7 @@ module.exports = {
     .addField(`**#8** ${items.pack3.emoji} :`, `${rp["pack3"] || 0}`, true)
     .addField(`**#9** ${items.tempPack.emoji} :`, `${rp["tempPack"] || 0}`, true)
     .addField(`**#10** ${items.donateBox.emoji} :`, `${rp["donateBox"] || 0}`, true)
+    .addField(`**#11** ${items.goldBox.emoji} :`, `${rp["goldBox"] || 0}`, true)
       
 
     return message.channel.send({embeds: [emb]})
