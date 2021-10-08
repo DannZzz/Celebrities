@@ -48,6 +48,7 @@ module.exports = {
     } else if (args[1] === 'vip-2') {
       giftType = 'VIP-2';
       if(bag['vip2'] === false) {
+        await begModel.findOneAndUpdate({userID: user.id}, {$set: {"vip1": true}})
         await begModel.findOneAndUpdate({userID: user.id}, {$set: {"vip2": true}})
         message.react(`${AGREE}`)
         return user.send({embeds: [embed(message, `**У вас подарок от разработчика!🎉**\n\n||---**${giftType}**---||`, "dm")]}).catch(()=> message.react('❌'))
