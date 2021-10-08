@@ -14,9 +14,9 @@ class TeamClass {
 
     async addPromo(code, uses, reward) {
         if (!code) return error(this.msg, "Укажите промокод.");
-        if (!uses || isNaN(uses)) return error(this.msg, "Укажите кол-во испол.");
-        if (!reward || isNaN(reward)) return error(this.msg, "Укажите награду.");
-
+        if (!uses || isNaN(uses) || uses < 1) return error(this.msg, "Укажите кол-во испол.");
+        if (!reward || isNaN(reward) || reward < 1) return error(this.msg, "Укажите награду.");
+        
         const data = await promoFind(code);
         if (data) return error(this.msg, "Такой код уже существует.");
 
