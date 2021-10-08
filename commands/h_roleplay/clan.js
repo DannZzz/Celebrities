@@ -83,7 +83,7 @@ module.exports = {
       let myClan = new MessageEmbed()
       .setColor(main)
       .setTitle(`📊 __#${mc.ID}__ — ${mc.name}`)
-      .setDescription(`👑 ${cm.leader} ${message.guild.members.cache.get(mc.owner) ? message.guild.members.cache.get(mc.owner) : bot.users.cache.get(mc.owner).tag}\n📈 ${cm.level} __${mc.level}__\n💰 ${cm.budget} __${mc.budget}__ ${CLAN}\n🎁 ${cm.reward} __${mc.level * 30}__ ${mc.reward !== null && (86400 * 1000) - (Date.now() - mc.reward) > 0 ? "<:disagree:870586968734580767>" : "<:agree:870586969606979664>"}${mc.description !== null ? "\n\n" + mc.description : ''}\n\n**${cm.members} - ${a.length } / ${mc.space}**\n${b.length !== 0 ? b.join("\n") : cm.noMembers}`)
+      .setDescription(`👑 ${cm.leader} ${message.guild.members.cache.get(mc.owner) ? message.guild.members.cache.get(mc.owner) : bot.users.cache.get(mc.owner).tag}\n📈 ${cm.level} __${mc.level}__\n💰 ${cm.budget} __${mc.budget}__ ${CLAN}\n🎁 ${cm.reward} __${mc.level * 300}__ ${mc.reward !== null && (86400 * 1000) - (Date.now() - mc.reward) > 0 ? "<:disagree:870586968734580767>" : "<:agree:870586969606979664>"}${mc.description !== null ? "\n\n" + mc.description : ''}\n\n**${cm.members} - ${a.length } / ${mc.space}**\n${b.length !== 0 ? b.join("\n") : cm.noMembers}`)
       
       if (mc.logo !== null) {
         if (!isWebUri(mc.logo)) {
@@ -271,7 +271,7 @@ module.exports = {
 
       let up = 3000;
       let cost = c.level * up;
-      if (c.level === 10) return error(message, cc.upLimit)
+      if (c.level === 15) return error(message, cc.upLimit)
       if (args[1] && args[1] === "info") {
         const emb = new MessageEmbed()
         .setColor(main)
@@ -424,7 +424,7 @@ module.exports = {
           return error(message, cc.rewardTime(time));
       }
 
-      let rew = c.level * 30
+      let rew = c.level * 300
 
       const users = await rpg.find({clanID: c.ID}).exec()
       await clan.updateOne({ID: c.ID}, {$set: {reward: Date.now()}})

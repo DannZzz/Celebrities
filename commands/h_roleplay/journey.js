@@ -35,7 +35,7 @@ module.exports = {
     if (!rp.surviveLevel || rp.surviveLevel === null) await rpg.findOneAndUpdate({userID: user.id}, {$set: {surviveLevel: 1}});
     rp = await rpg.findOne({userID: user.id});
     const nowLevel = rp.surviveLevel;
-    const levelRewardAdd = 10;
+    const levelRewardAdd = 100;
     const levelReward = levelRewardAdd * nowLevel
     const argsWords = ['info', 'инфо']
 
