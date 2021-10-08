@@ -196,7 +196,6 @@ module.exports = {
         } else if (it == 10) {
             const random = Math.round(randomRange(20000, 100000));
             await rpg.updateOne({userID: user.id}, {$inc: {donateBox: -1}});
-            await rpg.updateOne({userID: user.id}, {$inc: {openedPacks: 1}});
 
             await addStar(user.id, random)
             return embed(message, `${random} ${STAR}`, false);
