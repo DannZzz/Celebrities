@@ -1,4 +1,4 @@
-const { PREFIX, DISAGREE, STAR } = require('../../config');
+const { PREFIX, DISAGREE, STAR, devID, adminID } = require('../../config');
 const { MessageEmbed, Collection } = require('discord.js')
 const profileModel = require("../../models/profileSchema");
 const serverModel = require("../../models/serverSchema");
@@ -20,7 +20,7 @@ let rateLimiter = new RateLimiter(1, 2000);
 let msgLimiter = new RateLimiter(1, 2000);
 const Rate = require("../../functions/rateClass.js");
 
-
+const buy2 = new Map();
 
 const cooldowns = new Map();
 
@@ -29,7 +29,7 @@ module.exports = async (bot, messageCreate) => {
   if (message.author.bot) return
   const getLang = require("../../models/serverSchema");
   const LANG = await getLang.findOne({serverID: message.guild.id});
-  const {afkMess, perm, cooldown: cd} = require(`../../languages/${LANG.lang}`); 
+  const {afkMess, perm, cooldown: cd, banned} = require(`../../languages/${LANG.lang}`); 
   
   let afkMember = message.mentions.members;
   if (afkMember && afkMember.length !== 0) {
@@ -46,7 +46,8 @@ module.exports = async (bot, messageCreate) => {
 
   
     
-  
+  const dattt = await profileModel.findOne({userID: message.author.id});
+  if (dattt.disabled && (!devID.includes(message.author.id) && !adminID.includes(message.author.id))) return error(message, banned);
     try {
       const one = msgLimiter.take(message.author.id);
   if (!one) {
@@ -135,7 +136,8 @@ module.exports = async (bot, messageCreate) => {
             queue3: queue3,
             games: games,
             buying: buying,
-            cards: cards
+            cards: cards,
+            buy2: buy2
         }
         let ss = new MessageEmbed().setColor("#2f3136").setTimestamp()
         const imunCmd = ["enable", "disable", "channel-enable", "channel-disable"]
