@@ -1,6 +1,7 @@
 const {MessageEmbed} = require("discord.js");
 const { COIN, BANK, STAR } = require('../config');
 const {greenlight, redlight, main} = require('../JSON/colours.json');
+const {makeTimestamp} = require("../functions/functions");
 const item = require('../JSON/items');
 
 module.exports = {   
@@ -155,7 +156,7 @@ module.exports = {
 
     "trial": {
         "desc": "Start trial for 500 gold.",
-        "trial": time => `Try again in **${time.getMinutes()} m. ${time.getSeconds()} s.**`,
+        "trial": time => `Try again <t:${makeTimestamp(time)}:R>`,
         "usage": "",
         "access": "For everyone",
      },
