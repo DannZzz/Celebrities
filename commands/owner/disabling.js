@@ -3,9 +3,10 @@ const {MessageEmbed} = require("discord.js");
 const {main} = require('../../JSON/colours.json');
 const { COIN, AGREE, STAR, DISAGREE, devID, adminID } = require('../../config');
 const {error, embed, perms} = require("../../functions/functions");
-const {profileFind, profile} = require("../../functions/models");
+const {bans, bansFind} = require("../../functions/models");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
+const ms = require("ms")
 
 module.exports = {
   config: {
@@ -19,13 +20,13 @@ module.exports = {
   run: async (bot, message, args) => {
     
        
-     if(!devID.includes(message.author.id) && !adminID.includes(message.author.id)) return;
+    if(!devID.includes(message.author.id) && !adminID.includes(message.author.id)) return;
     if (!args[0]) return error(message, "Укажите участника.");
-
+    
     let user = bot.users.cache.get(args[0]);
     let prof;
     try {
-      prof = await profileFind(user.id);
+      prof = await bansFind(user.id);
     } catch {
       return error(message, "Данные не найдены.");
     }
@@ -36,11 +37,17 @@ module.exports = {
     .setColor(main)
     .setTimestamp()
     
-    if (!prof.disabled) {
-      await profile.updateOne({userID: user.id}, {$set: {disabled: true}})
+    if (!prof) {
+      if (!args[1] || isNaN(ms(args[1]))) return error(message, "Укажите время.");
+      const time = new Date(Date.now() + ms(args[1]));
+      const newBan = await bans.create({
+        userID: user.id,
+        date: time
+      });
+      await newBan.save();
       return embed(message, "Аккаунт заблокан.");
     } else {
-      await profile.updateOne({userID: user.id}, {$set: {disabled: false}})
+      await prof.delete();
       return embed(message, "Аккаунт разблокан.");
     }
     
