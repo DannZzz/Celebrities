@@ -27,10 +27,10 @@ module.exports = {
 
         const prof = await profileFind(user.id);
         if (prof.trial && prof.trial > new Date()) {
-          return error(msg, trial.trial(prof.trial));
+          return error(msg, trial.trial(prof.trial.getTime()));
         }
 
-        let time = 18000 * 1000;
+        let time = 1800000;
         if (bag.vip2) time = time / 2;
         ops.trial.set(msg.author.id, {trial: 'on'});
         const data = await rpgFind(user.id);
