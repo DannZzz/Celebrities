@@ -53,7 +53,10 @@ class CardClass {
             pin: pinCode,
             amount: 0
         });
-        return newCard.save().then(() => embed(this.msg, cc.done1)).catch(() => this.msg.react(DISAGREE));
+        
+        newCard.save().then(() => embed(this.msg, cc.done1)).catch(() => this.msg.react(DISAGREE));
+        await addStar(this.user.id, -(card.cost))
+        return 
     }
 
     async sendPin() {
