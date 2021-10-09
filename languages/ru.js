@@ -444,7 +444,7 @@ module.exports = {
             .addField(`**#8** ${item.pack3.emoji} VIP пак: ${item.pack3.cost} ${STAR}`, `Откройте и получите одного из этих VIP героев: \`${item.pack3.list.map(i => heroes[i].nameRus).join(", ")}\``)
             .addField(`**#9** ${item.tempPack.emoji} Пак Древнеегипетских богов: ${item.tempPack.cost} ${STAR} __доступен до 31.10.2021__`, `Откройте и получите одного из этих временных героев: \`${item.tempPack.list.map(i => heroes[i].nameRus).join(", ")}\``)
             .addField(`**#10** ${item.donateBox.emoji} Донат-бокс: 15₽`, `Откройте и получите ${item.donateBox.winRU}`)
-            .addField(`**#11** ${item.goldBox.emoji} Временный бокс: 15₽`, `Откройте и получите один из этих призов: \`Герои: Тартарус, Х, Беззубик, Зеро. Предметы: VIP 2, Золото 10000-50000\``)
+            .addField(`**#11** ${item.goldBox.emoji} Временный бокс: 15₽`, `Откройте и получите один из этих призов: \`Герои: Анкалгон, Х, Беззубик, Зеро. Предметы: VIP 2, Золото 10000-50000\``)
             
         }
     },
