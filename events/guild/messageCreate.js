@@ -154,7 +154,7 @@ module.exports = async (bot, messageCreate) => {
           (commandfile && imunCmd.includes(commandfile.config.name))
           ) {
             let dateNew = await bansFind(message.author.id);
-            if (dateNew && commandfile.config.name !== "message" && commandfile.config.name !== "account") return error(message, banned + ` <t:${makeTimestamp(dateNew.date.getTime())}:f>`);
+            if (dateNew && (!devID.includes(message.author.id) && !adminID.includes(message.author.id)) && commandfile.config.name !== "message") return error(message, banned + ` <t:${makeTimestamp(dateNew.date.getTime())}:f>`);
             //  && (!devID.includes(message.author.id) && !adminID.includes(message.author.id)
             const EMB = new MessageEmbed()
             .setColor(reddark)
