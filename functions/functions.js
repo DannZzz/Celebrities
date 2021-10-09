@@ -95,6 +95,10 @@ module.exports = {
     return new Promise(resolve => setTimeout(resolve, ms));
   },
 
+  makeTimestamp(timestamp, add = 0) {
+    return Math.round((timestamp + add) / 1000);
+  },
+
   formatDate: function (date) {
     return new Intl.DateTimeFormat('en-US').format(date);
   },

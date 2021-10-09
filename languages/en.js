@@ -23,7 +23,7 @@ module.exports = {
     "cardcooldown": "Please end the actions with the cards.",
     "cooldown": (time, cmd) => `Wait __${time}__ seconds, before using __${cmd}__.`,
     "cardFix": "Your payment will be completed within a few minutes.",
-    "banned": "Your account has been banned, to unban contact the administration.",
+    "banned": "Your account was banned until",
 
     "afkMess": (name, res) => `User **${name}** is currently in AFK mode\nBy reason: **${res}**`,
     
