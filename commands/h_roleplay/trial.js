@@ -63,7 +63,7 @@ module.exports = {
             return heroes[arr[random]];
         }   
 
-        let uppingLevel = 5;
+        let uppingLevel = 2;
         let winCount = 0;
         let reward = 100;
         if (bag.vip2) {
@@ -85,7 +85,7 @@ module.exports = {
             if (d / 2 > d1) d1 += d1;
             
             await rpg.updateOne({userID: user.id}, {$inc: {totalGames: 1}})
-            uppingLevel += 3;
+            uppingLevel += 2;
 
             const CC = await makeCanvas(hero.url, enemy.url);
             const att = new MessageAttachment(CC.toBuffer(), 'trial.png')
