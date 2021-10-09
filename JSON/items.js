@@ -83,6 +83,6 @@ module.exports = {
         NAME: "Временный бокс",
         NAMEEN: "Temporary box", 
         emoji: "<:tempGold:896036200664674316>",
-        list: ["Broken", "X", "Toothless", "Zero", "gold", "vip"]
+        list: ["Tartarus", "X", "Toothless", "Zero", "gold", "vip"]
     }
 }

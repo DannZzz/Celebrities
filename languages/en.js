@@ -420,7 +420,7 @@ module.exports = {
                 {name: `<a:vip2:867868958459166751> VIP 2`,
                 value: `Gives access to unique heroes, reduces **cooldown** for all commands **two** times, makes it possible to issue a rank card, profile picture, and also gives more bet limit for all games, increases the max value of gift to 2500.`,
                 inline: false},{name: `Prices in dollars.`,
-                    value: `• Vip 1 + 10000 ${STAR} - 0,2$\n • Vip 2 + 20000 ${STAR} - 0,41$\n • Hero **Toothless** - 0,55$\n • Hero **Zeus** - 0,26$\n • 100000 ${STAR } - 1,1$ (47% discount)\n • 30000 ${STAR} - 0,4$ (33% discount)\n • 10000 ${STAR} - 0,2$\n • Donate-box (20k-100k) - 0,2$`,
+                    value: `• Vip 1 + 10000 ${STAR} - 0,2$\n • Vip 2 + 20000 ${STAR} - 0,41$\n • Hero **Tartarus** - 0,8$\n • Hero **Toothless** - 0,55$\n • Hero **Zeus** - 0,26$\n • 100000 ${STAR } - 1,1$ (47% discount)\n • 30000 ${STAR} - 0,4$ (33% discount)\n • 10000 ${STAR} - 0,2$\n • Donate-box (20k-100k) - 0,2$`,
                     inline: false},
                     {name: `Extra place for heroes.`,
                     value: `• Cost: Your place count * 2000 ${STAR}\n \`?buy place\``,
@@ -444,7 +444,7 @@ module.exports = {
                 .addField(`**#8** ${item.pack3.emoji} VIP pack: ${item.pack3.cost} ${STAR}`, `Open and get one of these VIP heroes: \`${item.pack3.list.join(", ")}\``)
                 .addField(`**#9** ${item.tempPack.emoji} Pak of Ancient Egyptian gods: ${item.tempPack.cost} ${STAR} __available until 10/31/2021__`, `Open and get one of these Temporary heroes: \`${item.tempPack.list.join(", ")}\``)
                 .addField(`**#10** ${item.donateBox.emoji} Donate-box: 0,2$`, `Open and get ${item.donateBox.winEN}`)
-                .addField(`**#11** ${item.goldBox.emoji} Temporary box: 0,2$`, `Open and get one of these: \`Heroes: Broken, Х, Toothless, Zero. Items: VIP 2, Gold 10000-50000\``)
+                .addField(`**#11** ${item.goldBox.emoji} Temporary box: 0,2$`, `Open and get one of these: \`Heroes: Tartarus, Х, Toothless, Zero. Items: VIP 2, Gold 10000-50000\``)
                 
             }
         },
