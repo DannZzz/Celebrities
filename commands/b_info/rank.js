@@ -26,7 +26,7 @@ module.exports = {
     let person = await Levels.fetch(user.id, message.guild.id, true)
     if (!person) return error(message, r.error);
     let customColor = false;
-    if (vip.rankColor !== null){
+    if (vip.rankColor){
        let a = vip.rankColor.split("")
        if (a[0] !== "#") {
          a = "#" + vip.rankColor
