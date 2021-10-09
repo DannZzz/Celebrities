@@ -64,7 +64,7 @@ module.exports = {
         }   
 
         let uppingLevel = 2;
-        if (l < 15) uppingLevel = 8;
+        if (l < 15 && h > 50000) uppingLevel = 8;
         let winCount = 0;
         let reward = 100;
         if (bag.vip2) {
