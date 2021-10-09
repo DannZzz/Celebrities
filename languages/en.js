@@ -980,7 +980,7 @@ The more fish, the higher the price!
         "access": "For everyone",
         "f1": 'Information about the server',
         "f2": 'Channels:',
-        "f3": 'Joined at:',
+        "f3": 'Joined:',
         "f4": 'Created at:',
         "f5": 'Owner:',
         "f6": 'Members:',
