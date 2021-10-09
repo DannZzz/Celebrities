@@ -39,7 +39,7 @@ module.exports = {
         }
 
         await rpg.updateMany({tasks: {$exists: false}}, {$set: {tasks: []}})
-        await rpg.updateMany({["tasks.0"]: {$exists: false}}, {$set: {["tasks.0"]: taskData, task1: 1, spendTask: 0}});
+        await rpg.updateMany({["tasks.0"]: null}, {$set: {["tasks.0"]: taskData, task1: 1, spendTask: 0}});
    
         msg.react(AGREE)
     }
