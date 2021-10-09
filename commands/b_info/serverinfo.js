@@ -1,7 +1,7 @@
 const { MessageEmbed } = require("discord.js");
 const { main, none } = require("../../JSON/colours.json");
 const { profile, profileFind, serverFind, bagFind, custom: omg } = require("../../functions/models");
-const {error, embed, perms} = require("../../functions/functions");
+const {error, embed, perms, makeTimestamp} = require("../../functions/functions");
 const moment = require('moment');
 
 module.exports = {
@@ -33,8 +33,8 @@ module.exports = {
           .setTitle(server.name)
           .setThumbnail(server.iconURL({dynamic: true}))
           .addField(s.f2, `T: ${server.channels.cache.filter(t => t.type === "GUILD_TEXT").size}\nV: ${server.channels.cache.filter(v => v.type === "GUILD_VOICE").size}`, true)
-          .addField(s.f3, `${moment(message.member.joinedAt).format('DD.MM.YYYY HH:mm')}`, true)
-          .addField(s.f4, `${moment(server.createdAt).format('DD.MM.YYYY HH:mm')}`, true)
+          .addField(s.f3, `<t:${makeTimestamp(message.member.joinedAt.getTime())}:R>`, true)
+          .addField(s.f4, `<t:${makeTimestamp(server.createdAt.getTime())}:D>`, true)
           .addField(s.f5, `${bot.users.cache.get(server.ownerId).tag}`, true)
 
 

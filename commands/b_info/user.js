@@ -1,10 +1,11 @@
 const { MessageEmbed } = require("discord.js");
 const { main } = require("../../JSON/colours.json");
 const moment = require('moment');
-const {error, embed, perms, firstUpperCase} = require('../../functions/functions');
+const {error, embed, perms, firstUpperCase, makeTimestamp} = require('../../functions/functions');
 const {memberFind} = require('../../functions/models');
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
+const ms = require("ms");
 
 module.exports = {
     config: {
@@ -65,8 +66,8 @@ try {
         UIembed.setTitle(u.name + ' ' + member.user.tag + '')
         UIembed.setAuthor(u.author)
         UIembed.setDescription(`
-        **${u.f1}** ${moment(member.user.createdAt).format('DD.MM.YYYY HH:mm')}
-**${u.f2}** ${moment(member.joinedAt).format('DD.MM.YYYY HH:mm')}
+        **${u.f1}** <t:${makeTimestamp(member.user.createdAt.getTime())}:f>
+**${u.f2}** <t:${makeTimestamp(member.joinedAt.getTime())}:f> (<t:${makeTimestamp(member.joinedAt.getTime())}:R>)
 **${u.f3}** ${member.roles.cache.size-1}
 **${u.f4}** ${member.roles.highest.name}
 **${u.f5}** \`${data.messages || 0}\``)
