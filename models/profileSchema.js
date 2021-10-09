@@ -14,6 +14,7 @@ const profileSchema = new mongoose.Schema({
   survive: { type: Number, default: 0},
   boss: { type: Number, default: 0},
   join: { type: Number, default: 0},
+  trial: { type: Date},
   afkMessage: { type: String, default: null},
   random: { type: Number, default: 0},
   disabled: { type: Boolean, default: false}

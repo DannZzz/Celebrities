@@ -150,6 +150,15 @@ module.exports = {
         "usage": "[card number] <amount>",
         "access": "For everyone",
     },
+
+
+
+    "trial": {
+        "desc": "Start trial for 500 gold.",
+        "trial": time => `Try again in **${time.getMinutes()} m. ${time.getSeconds()} s.**`,
+        "usage": "",
+        "access": "For everyone",
+     },
     
     
     

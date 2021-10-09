@@ -13,6 +13,7 @@ const queue = new Map();
 const games = new Map();
 const buying = new Map();
 const cards = new Map();
+const trial = new Map();
 const {error, embed, makeTimestamp} = require("../../functions/functions");
 const {main, none, reddark} = require('../../JSON/colours.json');
 const { RateLimiter } = require('discord.js-rate-limiter');
@@ -140,7 +141,8 @@ module.exports = async (bot, messageCreate) => {
             games: games,
             buying: buying,
             cards: cards,
-            buy2: buy2
+            buy2: buy2,
+            trial: trial
         }
         let ss = new MessageEmbed().setColor("#2f3136").setTimestamp()
         const imunCmd = ["enable", "disable", "channel-enable", "channel-disable"]
@@ -159,6 +161,9 @@ module.exports = async (bot, messageCreate) => {
             const EMB = new MessageEmbed()
             .setColor(reddark)
 
+            const getTrial = ops.trial.get(message.author.id);
+            if (getTrial) return message.reply({embeds: [EMB.setDescription(LANG.lang === "en" ? "To first end the trial." : "Сначала закончите испытание.")]}).then(msg => setTimeout(() => msg.delete(), 10000))
+            
             const getCardCooldown = ops.cards.get(message.author.id);
             if(getCardCooldown) return message.reply({embeds: [EMB.setDescription(LANG.lang === "en" ? "Wait a while for the transaction to complete." : "Подождите некоторое время, пока транзакция закончится.")]}).then(msg => setTimeout(() => msg.delete(), 10000))
 
