@@ -38,10 +38,12 @@ module.exports = {
 
     const resp = ['info', 'инфо']
     
-    const getIndex = rp.heroes.findIndex(x => x.name === rp.item)
+    const getIndex = rp.heroes.findIndex(x => x.name === rp.item);
+    
+    const heroType = heroes[rp.item];
 
-    let addH = 500;
-    let addD = 40;
+    let addH = getUpgrade(heroType.type);
+    let addD = getUpgrade(heroType.type) / 10;
 
     if(args[0] && resp.includes(args[0].toLowerCase())) {
       const newEmb = new MessageEmbed()
@@ -82,3 +84,20 @@ module.exports = {
     return message.channel.send({embeds: [Embed]})
   }
 };
+
+function getUpgrade (type) {
+  switch (type) {
+    case "common":
+      return 150;
+    case "elite":
+      return 250;
+    case "furious":
+      return 320;
+    case "mythical":
+      return 500;
+    case "private":
+      return 400;
+    default:
+      return;
+  }
+}

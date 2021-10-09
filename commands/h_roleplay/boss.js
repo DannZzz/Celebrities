@@ -82,6 +82,9 @@ module.exports = {
 
     let bossHealth = boss.health
     let bossDamage = boss.damage
+    if (allHealth / 2 > bossHealth) bossHealth += (bossHealth * 2);
+    if (allDamage / 2 > bossDamage) bossDamage += (bossDamage * 2);
+    
     if (allHealth / 2 > bossHealth) bossHealth += bossHealth;
     if (allDamage / 2 > bossDamage) bossDamage += bossDamage;
     

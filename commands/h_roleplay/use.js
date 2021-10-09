@@ -76,8 +76,13 @@ module.exports = {
             let getItem = rp.heroes;
 
             let get = rp.heroes.findIndex(x => x.name === rp.item) 
-
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.health`]: item.effect * val}});
+            const heroType = heroes[rp.item];
+            let effect = item.effect
+            if (heroType.type === "mythical") effect = effect / 2;
+            if (heroType.type === "furious") effect = effect / 4 * 3;
+            
+             
+            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.health`]: effect * val}});
             
             return message.react(AGREE)
         } else if (it == 3) {
@@ -87,16 +92,22 @@ module.exports = {
             await rpg.updateOne({userID: user.id}, {$inc: {dmg: -val}});
 
             let get = rp.heroes.findIndex(x => x.name === rp.item)
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.damage`]: item.effect * val}});
+            const heroType = heroes[rp.item];
+            let effect = item.effect
+            if (heroType.type === "mythical") effect = effect / 2;
+            if (heroType.type === "furious") effect = effect / 4 * 3;
+
+            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.damage`]: effect * val}});
             return message.react(AGREE)
         } else if (it == 4) {
             let val = 1
             if (args[1] && args[1].toLowerCase() === "all") val = rp[item.name]
             if (!rp.item) return error(message, hm.noHero)
             await rpg.updateOne({userID: user.id}, {$inc: {lvl: -val}});
+            const heroType = heroes[rp.item];
 
-            let addH = 500 * val;
-            let addD = 40 * val;
+            let addH = getUpgrade(heroType.type) * val;
+            let addD = (getUpgrade(heroType.type) / 10) * val;
             let leve = item.effect * val;
 
             let get = rp.heroes.findIndex(x => x.name === rp.item)
@@ -107,7 +118,7 @@ module.exports = {
             return message.react(AGREE)
         } else if (it == 5) {
             let val = 1
-            if (args[1] && args[1].toLowerCase() === "all") valu= rp[item.name] 
+            if (args[1] && args[1].toLowerCase() === "all") val= rp[item.name] 
             if (!rp.item) return error(message, hm.noHero)
             await rpg.updateOne({userID: user.id}, {$inc: {meat: -val}});
 
@@ -243,10 +254,27 @@ module.exports = {
             
             
         }
-s
+
     } else {
         error(message, cm.specN)
     }
    
   }
 }
+
+function getUpgrade (type) {
+    switch (type) {
+      case "common":
+        return 150;
+      case "elite":
+        return 250;
+      case "furious":
+        return 320;
+      case "mythical":
+        return 500;
+      case "private":
+        return 400;
+      default:
+        return;
+    }
+  }
