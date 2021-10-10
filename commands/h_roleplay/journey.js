@@ -15,7 +15,8 @@ module.exports = {
   config: {
     name: "journey",
     aliases: ['аdventure', 'аdventures', 'приключения'],
-    category: 'h_roleplay'
+    category: 'h_roleplay',
+    cooldown: 20
   },
   run: async (bot, message, args) => {
     

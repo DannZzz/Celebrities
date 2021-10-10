@@ -14,7 +14,8 @@ module.exports = {
   config: {
     name: "upgrade",
     aliases: ['update', 'прокачать'],
-    category: 'h_roleplay'
+    category: 'h_roleplay',
+    cooldown: 7
   },
   run: async (bot, message, args, ops) => {
 
@@ -59,9 +60,6 @@ module.exports = {
       return message.channel.send({embeds: [newEmb]})
     }
 
-    ops.cards.set(user.id, {Card: "on"});
-    setTimeout(() => ops.cards.delete(user.id), 30000);
-    
     if (bal < requiredValue) return error(message, `${u.err} — **${requiredValue}** ${STAR}.`)
     let a = rp.heroes.indexOf(rp.heroes.filter(a => a["name"] === rp.item))
     let b = rp.heroes[a];

@@ -1,7 +1,7 @@
 const Rate = require("../../functions/rateClass");
 const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js');
 const {main} = require('../../JSON/colours.json');
-const { COIN, BANK, STAR} = require('../../config');
+const { COIN, BANK, STAR, status} = require('../../config');
 const Levels = require("discord-xp");
 Levels.setURL(process.env.MONGO);
 const devs = ["382906068319076372"];
@@ -39,10 +39,10 @@ module.exports = {
     }
     let data = await bagFind(member.id);
     let rp = await rpgFind(member.id);
-    let vip = '**0** <a:vip:867867143915438100>'
+    let vip = '—'
     let checkVip = await vipFind(member.id)
-    if(data["vip1"] && data["vip2"]) vip ="**2** <a:vip2:867868958459166751>";
-    else if (data["vip1"]) vip = '**1** <a:vip1:867868958877810748>';
+    if(data["vip1"] && data["vip2"]) vip = LANG.lang === "ru" ? `${status.premium} Премиум` : `${status.premium} Premium`;
+    else if (data["vip1"]) vip = status.vip + " VIP";
     const trophy = rp.league.rate || 0;
 
     //if(data["vip1"] && checkVip.profileImage !== null && data["vip2"]) embed.setImage(checkVip.profileImage);
@@ -56,7 +56,7 @@ module.exports = {
 
 
 
-      embed.addField(`**VIP** - ${vip}`, `${STAR} ${data.stars} ${devs.includes(member.id) ? "**Dev**" : ""}\n${await Rate(message).rateData(trophy)}\n${p.quiz} ${rp.quizCount}\n${CL}\n${p.gg} ${marData}\n<:heroes:886967552310407219> : ${rp.itemCount || 1}\n\n`)
+      embed.addField(`${vip}`, `${STAR} ${data.stars} ${devs.includes(member.id) ? "**Dev**" : ""}\n${await Rate(message).rateData(trophy)}\n${p.quiz} ${rp.quizCount}\n${CL}\n${p.gg} ${marData}\n<:heroes:886967552310407219> : ${rp.itemCount || 1}\n\n`)
       embed.addField(`__${p.fishes}__\n`,
     `\`\`\`${p.junk}(🔧) - ${data.junk}\n${p.common}(🐟) - ${data.common}\n${p.unc}(🐠) - ${data.uncommon}\n${p.rare}(🦑) - ${data.rare}\n${p.leg}(🐋) - ${data.legendary}\`\`\`\n`, true)
 
