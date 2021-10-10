@@ -397,7 +397,7 @@ module.exports = {
           return res;
         }
         function cVip(bool) {
-          let res = bool ? '-VIP-' : ''
+          let res = bool ? '-PREMIUM-' : ''
           return res;
         }
         function cType(type, ava) {
