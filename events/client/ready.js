@@ -31,6 +31,6 @@ module.exports = async bot => {
         let totalUsers = bot.guilds.cache.reduce((acc, value) => acc + value.memberCount, 0)
         var activities = [ `${bot.guilds.cache.size} servers!`, `${totalUsers} users!` ];
         
-        bot.user.setActivity(`${PREFIX}help | ${activities[i++ % activities.length]}`, { type: "WATCHING" })},20000)
+        bot.user.setActivity(`${VERSION} | ${activities[i++ % activities.length]}`, { type: "WATCHING" })},20000)
     // bot.user.setActivity(VERSION)
 };
