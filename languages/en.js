@@ -45,6 +45,15 @@ module.exports = {
         "usage": "[promo code]",
         "access": "For everyone",
     },
+
+
+
+    "stats": {
+        "desc": "View your stats.",
+        "usage": "",
+        "access": "For everyone",
+        "trial": "Max. trial stage:"
+    },
     
 
 

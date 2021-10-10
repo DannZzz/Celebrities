@@ -231,7 +231,7 @@ class CardClass {
         
             let targetData = cards[target.name];
             if (Math.floor(amount) > cardData.maxGiveAmount) return error(this.msg, cc.maxGive);
-            if (target.amount + total > targetData.maxSpace) return error(this.msg, cc.max+targetData.maxSpace);
+            if (target.amount + total > targetData.maxSpace) return error(this.msg, cc.max + `${targetData.maxSpace}`);
             if (target.code === data.code) return error(this.msg, cc.another);
             
             const mess = await embed(this.msg, cc.typePin, false);

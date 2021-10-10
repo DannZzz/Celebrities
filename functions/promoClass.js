@@ -47,6 +47,15 @@ class TeamClass {
         return embed(this.msg, `${pc.done} - ${data.reward} ${STAR}`)
     }
 
+    async getAllPromo() {
+        const data = await promocodes.find().exec();
+        const mapped = data.map( ({reward, code, max, users}) => {
+            return `Promo: ${code} | Use: ${users.length}/${max} | ${reward} ${STAR}`
+        })
+
+        return embed(this.msg, mapped.join("\n\n"), false);
+    }
+
 }
 
 function teamFunc(msg) {

@@ -23,6 +23,7 @@ const rpgSchema = new mongoose.Schema({
   donateBox: { type: Number, default: 0},
   goldBox: { type: Number, default: 0},
   tasks: {type: Array, default: []},
+  trialMax: { type: Number, default: 0},
   tasksCount: { type: Number, default: 0},
   spendTask: { type: Number, default: 0},
   spendAll: { type: Number, default: 0},
