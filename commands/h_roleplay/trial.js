@@ -66,11 +66,11 @@ module.exports = {
         let uppingLevel = 2;
         if (l < 15 && h > 50000) uppingLevel = 6;
         let winCount = 0;
-        let reward = 100;
+        let reward = 500;
         if (bag.vip2) {
-          reward = 300;
+          reward = 1500;
         } else if (bag.vip1) {
-          reward = 200;
+          reward = 1000;
         }
         let totalReward = 0;
 
@@ -138,6 +138,9 @@ module.exports = {
             totalReward += reward;
             winCount += 1;
             let newData = await rpg.findOneAndUpdate({userID: user.id}, {$inc: {wins: 1}})
+            const trialMax = newData.trialMax || 0;
+            if (winCount > trialMax) await rpg.updateOne({userID: user.id}, {$set: {trialMax: winCount}});
+
             let winEmb = new MessageEmbed()
             .setTitle(`${b.winner} ${user.username} (${LANG.lang === "ru" ? hero.nameRus : hero.name})`)
             .setDescription(`🟢 ${winCount}`)

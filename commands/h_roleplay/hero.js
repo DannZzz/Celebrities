@@ -33,15 +33,11 @@ module.exports = {
     const item = heroes[rp.item]
     let myHero = new MessageEmbed()
     .setAuthor(`${user.user.tag}`)
-    .setTitle(`${heroType[item.type]} ${item.name} (${item.nameRus})\n${hm.level} ${get.level}  ${h.journey}: ${rp.surviveLevel}`)
+    .setTitle(`${heroType[item.type]} ${item.name} (${item.nameRus})\n${hm.level} ${get.level}`)
     .setDescription(LANG.lang === "ru" ? item.description : item.descriptionEN)
     .setThumbnail(item.url)
     .addField(`❤ ${hm.health}`, `${get.health}`, true)
     .addField(`⚔ ${hm.damage}`, `${get.damage}`, true)
-    .addField(`🟡 ${h.all}`, `${rp.totalGames}`, false)
-    .addField(`🟢 ${h.win}`, `${rp.wins}`, true)
-    .addField(`🔴 ${h.lose}`, `${rp.loses}`, true)
-    .addField(`🏆 ${hm.winrate}`, `${roundFunc(rp.wins / rp.totalGames  * 100) || '0'}%`, true)
     .setColor(main)
 
     return message.channel.send({embeds: [myHero]}).then(msg => setTimeout(()=>msg.delete(), 30 * 1000))
