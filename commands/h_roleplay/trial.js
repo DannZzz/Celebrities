@@ -56,7 +56,7 @@ module.exports = {
         let l = heroData.level;
         const hero = heroes[data.item];
         
-        const enemiesArr = ["Hookfang", "Tartarus", "Ancalgon", "X", "Toothless", "Zero", "Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Broken", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
+        const enemiesArr = ["Tyrus", "Light", "Dido", "Koko", "Hookfang", "Tartarus", "Ancalgon", "X", "Toothless", "Zero", "Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Broken", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
 
         function getRandomEnemy(arr) {
             const random = Math.floor(Math.random() * arr.length)
@@ -64,7 +64,7 @@ module.exports = {
         }   
 
         let uppingLevel = 2;
-        if (l < 15 && h > 50000) uppingLevel = 8;
+        if (l < 15 && h > 50000) uppingLevel = 6;
         let winCount = 0;
         let reward = 100;
         if (bag.vip2) {
