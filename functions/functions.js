@@ -45,7 +45,7 @@ module.exports = {
     const row = new MessageActionRow().addComponents([button]);
     
     msg.react(DISAGREE)
-    return msg.reply({embeds: [Emb], components: [row]}).then(message => setTimeout(() => message.delete(), 30000))
+    return msg.reply({embeds: [Emb]}).then(message => setTimeout(() => message.delete(), 30000))
   },
   progressBar: function (perc, ofMaxValue, size, line = '❤', slider = '🖤') {
   if (!perc) throw new Error('Perc value is either not provided or invalid');

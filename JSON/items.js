@@ -1,13 +1,30 @@
 const {potLVL, potDMG, potHLT, meat, box, pack1, pack2, pack3, donate} = require('../config')
 
 module.exports = {
+    box: {
+        name: "box",
+        NAME: "Лут-Бокс",
+        NAMEEN: "Loot-box", 
+        emoji: box,
+        cost: 1000,
+        max: 350,
+        min: 100
+    },
+    hlt: {
+        name: "hlt",
+        NAME: "Зелье жизни",
+        NAMEEN: "Potion of health", 
+        emoji: potHLT,
+        effect: 20,
+        cost: 450
+    },
     dmg: {
         name: "dmg",
         NAME: "Зелье атаки",
         NAMEEN: "Potion of attack", 
         emoji: potDMG,
         effect: 4,
-        cost: 250
+        cost: 450
     },
     lvl: {
         name: "lvl",
@@ -16,27 +33,12 @@ module.exports = {
         emoji: potLVL,
         effect: 1
     },
-    hlt: {
-        name: "hlt",
-        NAME: "Зелье жизни",
-        NAMEEN: "Potion of health", 
-        emoji: potHLT,
-        effect: 20,
-        cost: 250
-    },
     meat: {
         name: "meat",
         NAME: "Мясо",
         NAMEEN: "Meat", 
         emoji: meat,
         effect: 300
-    },
-    box: {
-        name: "box",
-        NAME: "Лут-Бокс",
-        NAMEEN: "Loot-box", 
-        emoji: box,
-        cost: 450
     },
     pack1: {
         name: "pack1",
@@ -83,6 +85,6 @@ module.exports = {
         NAME: "Временный бокс",
         NAMEEN: "Temporary box", 
         emoji: "<:tempGold:896036200664674316>",
-        list: ["Ancalgon", "X", "Toothless", "Zero", "gold", "vip"]
+        list: ["box", "premium"]
     }
 }

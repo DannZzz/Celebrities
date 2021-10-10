@@ -6,6 +6,11 @@ exports.devID = ["382906068319076372"];
 
 exports.adminID = ["873237782825422968"];
 
+exports.status = {
+    vip: "<:vip:896749543356522496>",
+    premium: "<:premium:896749446086406176>"
+}
+
 exports.heroType = {
     common: "<:common:894640637377413140>",
     elite: "<:elite:894640638111412235>",

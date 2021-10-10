@@ -1,5 +1,5 @@
 const {MessageEmbed} = require("discord.js");
-const { COIN, BANK, STAR } = require('../config');
+const { COIN, BANK, STAR, status } = require('../config');
 const {greenlight, redlight, main} = require('../JSON/colours.json');
 const {makeTimestamp} = require("../functions/functions");
 const item = require('../JSON/items');
@@ -10,8 +10,8 @@ module.exports = {
     "notUser": "User not found",
     "specify": "Specify a member.",
     "specifyT": "Specify a text.",
-    "vipOne": "This command is available only for __VIP 1__ users.",
-    "vipTwo": "This command is available only for __VIP 2__ users.",
+    "vipOne": "This command is available only for __VIP__ users.",
+    "vipTwo": "This command is available only for __Premium__ users.",
     "maxLimit": num => `Maximum symbol count of the text must be __${num}__!`,
     "perm": "You don't have enough permissions.",
     "specifyL": "Specify a link.",
@@ -405,7 +405,7 @@ module.exports = {
                 value: '**[Link to donate](https://www.donationalerts.com/r/adanadiscord)**',
                 inline: false},
                 {name: `Everything you need to specify!`,
-                value: '• Your ID\n • What exactly do you want, for example **Vip 1** or **Vip 2**.',
+                value: '• Your ID\n • What exactly do you want, for example **VIP** or **Premium**.',
                 inline: false},
             )
             .setTimestamp ()
@@ -424,13 +424,13 @@ module.exports = {
             .setColor (main)
             .setAuthor ("All information about transfers: ?donate")
             .addFields (
-                {name: `<a:vip1:867868958877810748> VIP 1`,
+                {name: `${status.vip} VIP`,
                 value: `Access to commands - AFK, embed, channel, levels (enabling the level system) and bio profile, and also increases the cost of fish (by 33%), increases the max value of gift to 1000, and also increases the bet of batlle.`,
                 inline: false},
-                {name: `<a:vip2:867868958459166751> VIP 2`,
-                value: `Gives access to unique heroes, reduces **cooldown** for all commands **two** times, makes it possible to issue a rank card, profile picture, and also gives more bet limit for all games, increases the max value of gift to 2500.`,
+                {name: `${status.premium} Premium`,
+                value: `Gives access to unique heroes, reduces **cooldown** for all commands **two** times, makes it possible to issue a rank card, and also gives more bet limit for all games, increases the max value of gift to 2500.`,
                 inline: false},{name: `Prices in dollars.`,
-                    value: `• Vip 1 + 10000 ${STAR} - 0,2$\n • Vip 2 + 20000 ${STAR} - 0,41$\n • Hero **Tartarus** - 0,8$\n • Hero **Toothless** - 0,55$\n • Hero **Zeus** - 0,26$\n • 100000 ${STAR } - 1,1$ (47% discount)\n • 30000 ${STAR} - 0,4$ (33% discount)\n • 10000 ${STAR} - 0,2$\n • Donate-box (20k-100k) - 0,2$`,
+                    value: `• VIP + 10000 ${STAR} - 0,2$\n • Premium + 20000 ${STAR} - 0,41$\n • Hero **Tartarus** - 0,8$\n • Hero **Toothless** - 0,55$\n • Hero **Zeus** - 0,26$\n • 100000 ${STAR } - 1,1$ (47% discount)\n • 30000 ${STAR} - 0,4$ (33% discount)\n • 10000 ${STAR} - 0,2$\n • Donate-box (20k-100k) - 0,2$`,
                     inline: false},
                     {name: `Extra place for heroes.`,
                     value: `• Cost: Your place count * 2000 ${STAR}\n \`?buy place\``,
@@ -441,9 +441,9 @@ module.exports = {
             },
             "items": () => {
                 return new MessageEmbed ()
-                .setColor (main)
-                .setAuthor ("Buff Shop")
-                .addField(`**#1** ${item.box.emoji} Item Box: ${item.box.cost} ${STAR}`, `Gives a random item and up to 150 golds`)
+                .setColor(main)
+                .setAuthor("Buff Shop")
+                .addField(`**#1** ${item.box.emoji} Item Box: ${item.box.cost} ${STAR}`, `Gives a random item and up to ${item.box.max} golds`)
                 .addField(`**#2** ${item.hlt.emoji} Potion of Health: ${item.hlt.cost} ${STAR}`, `Adds ${item.hlt.effect} health to the hero`)
                 .addField(`**#3** ${item.dmg.emoji} Potion of Attack: ${item.dmg.cost} ${STAR}`, `Adds ${item.dmg.effect} damage to the hero`)
                 .addField(`**#4** ${item.lvl.emoji} Potion of Level: Can be obtained by opening boxes.`, `Increases the level of the hero ${item.lvl.effect} times`)
@@ -451,10 +451,10 @@ module.exports = {
                 .addField(`Packs`, "** **")
                 .addField(`**#6** ${item.pack1.emoji} Common Pack: ${item.pack1.cost} ${STAR}`, `Open and get one of these common heroes: \`${item.pack1.list.join(", ")}\``)
                 .addField(`**#7** ${item.pack2.emoji} Elite Pack: ${item.pack2.cost} ${STAR}`, `Unlock and get one of these elite heroes: \`${item.pack2.list.join(", ")}\``)
-                .addField(`**#8** ${item.pack3.emoji} VIP pack: ${item.pack3.cost} ${STAR}`, `Open and get one of these VIP heroes: \`${item.pack3.list.join(", ")}\``)
+                .addField(`**#8** ${item.pack3.emoji} Premium pack: ${item.pack3.cost} ${STAR}`, `Open and get one of these Premium heroes: \`${item.pack3.list.join(", ")}\``)
                 .addField(`**#9** ${item.tempPack.emoji} Pak of Ancient Egyptian gods: ${item.tempPack.cost} ${STAR} __available until 10/31/2021__`, `Open and get one of these Temporary heroes: \`${item.tempPack.list.join(", ")}\``)
                 .addField(`**#10** ${item.donateBox.emoji} Donate-box: 0,2$`, `Open and get ${item.donateBox.winEN}`)
-                .addField(`**#11** ${item.goldBox.emoji} Temporary box: 0,2$`, `Open and get one of these: \`Heroes: Ancalgon, Х, Toothless, Zero. Items: VIP 2, Gold 10000-50000\``)
+                .addField(`**#11** ${item.goldBox.emoji} Temporary box: 0,2$`, `Open and get one of these: __200-650__ ${item.box.emoji} or __Premium__`)
                 
             }
         },
@@ -577,8 +577,8 @@ module.exports = {
         "find": "Looking for an enemy...",
         "bet": "Enter your bet.",
         "min": "Minimum bet **1**.",
-        "vip1": "Maximum rate **50**!\nOr buy __VIP 1__",
-        "vip2": "Maximum rate **100**!\nOr buy __VIP 2__",
+        "vip1": "Maximum rate **50**!\nOr buy __VIP__",
+        "vip2": "Maximum rate **100**!\nOr buy __Premium__",
         "vipError": "Maximum bet **250 **!",
         "winner": "Winner:",
         "between": "Battle between",
@@ -677,8 +677,8 @@ module.exports = {
         "error2": "Enter the number of golds to gift.",
         "error3": "You must get married first.",
         "error4": "This is not your soul mate.",
-        "vip1": "Maximum amount **50**!\nOr buy __VIP 1__",
-        "vip2": "Maximum amount **150**!\nOr buy __VIP 2__",
+        "vip1": "Maximum amount **50**!\nOr buy __VIP__",
+        "vip2": "Maximum amount **150**!\nOr buy __Premium__",
         "vipError": "Maximum amount **500**!",
         "time": time => `Try again in **${time.getUTCHours()} hours ${time.getMinutes()} minutes**`,
         "doing": "A gift is being sent...",
@@ -709,7 +709,7 @@ module.exports = {
         "itemErr": "Item not found.",
         "noItem": "This item is not available.",
         "nh": "Hero not found.",
-        "vip": "This hero is available only for __VIP 2__ users.",
+        "vip": "This hero is available only for __Premium__ users.",
         "love": "You must be in love to buy this hero.",
         "place": "You don't have enough place.",
         "already": "You already have this hero.",
@@ -853,7 +853,7 @@ The more fish, the higher the price!
         "upLimit": "Your clan has been maximized!",
         "upInfoTitle": "Clan upgrade information.",
         "upInfo": (cost, emoji, space, level) => `Price - __${cost}__ ${emoji}\nNumber of maximum members: __${space}__ + __5__\n${level === 5 ? 'Clan description and logo will be available!' : ''}`,
-        "upVip": "You must have at least __VIP 1__ to upgrade your clan.",
+        "upVip": "You must have at least __VIP__ to upgrade your clan.",
         "upDo": "Improving...",
         "errorRub": "Not enough rubies!",
         "upped": level => `Clan level successfully upgraded to __${level}__.`,
@@ -1154,7 +1154,7 @@ The more fish, the higher the price!
     "afk": {
         "desc": "Enter the AFK mode.",
         "usage": "[message]",
-        "access": "For VIP 1",
+        "access": "For VIP",
         "error": "Message can't be a link.",
         "done1": "You entered the AFK mode.",
         "done2": "You are out of the AFK mode.",
@@ -1166,7 +1166,7 @@ The more fish, the higher the price!
     "embed": {
         "desc": "Send an embed message in the specified text channel.",
         "usage": "[mention channel] [colour hex] [text]",
-        "access": "For VIP 1 and Administrator",
+        "access": "For VIP and Administrator",
         "error1": "Specify a text channel.",
         "error2": "Specify an embed colour.",
         "error3": "Specify a valid text channel."
@@ -1177,7 +1177,7 @@ The more fish, the higher the price!
     "channel": {
         "desc": "Send a message in the specified text channel.",
         "usage": "[mention channel] [text]",
-        "access": "For VIP 1 and Administrator",
+        "access": "For VIP and Administrator",
         "error1": "Specify a text channel.",
         "error2": "Specify a valid text channel."
     },
@@ -1187,7 +1187,7 @@ The more fish, the higher the price!
     "bio": {
         "desc": "Description for your profile.",
         "usage": "[text]",
-        "access": "For VIP 1",
+        "access": "For VIP",
         "done": "A new bio-profile has been successfully installed."
     },
     
@@ -1196,7 +1196,7 @@ The more fish, the higher the price!
     "profile-image": {
         "desc": "Image for your profile.",
         "usage": "[link]",
-        "access": "For VIP 2",
+        "access": "For Premium",
         "done": "A new image-profile has been successfully installed."
     },
     
@@ -1205,7 +1205,7 @@ The more fish, the higher the price!
     "rank-color": {
         "desc": "Colour for the text in rank-card.",
         "usage": "[hex colour]",
-        "access": "For VIP 2",
+        "access": "For Premium",
         "error": "Specify a hex colour.\nExample: \`#ff00ff or ff00ff\`",
         "done": "A new colour for your rank-card successfully installed."
     },
@@ -1215,7 +1215,7 @@ The more fish, the higher the price!
     "rank-image": {
         "desc": "Image for your rank-card.",
         "usage": "[link]",
-        "access": "For VIP 2",
+        "access": "For Premium",
         "done": "A new rank-card image has been successfully installed."
     },
     
