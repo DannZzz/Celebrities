@@ -42,7 +42,7 @@ module.exports = {
         message.react(`${AGREE}`)
         return user.send({embeds: [embed(message, `**У вас подарок от разработчика!🎉**\n\n||---**${giftType}**---||`, "dm")]}).catch(()=> message.react('❌'))
       } else {
-        return error(message, 'Пользователь уже имеет VIP 1.');
+        return error(message, 'Пользователь уже имеет VIP.');
 
       }
     } else if (args[1] === 'vip-2') {
@@ -53,7 +53,7 @@ module.exports = {
         message.react(`${AGREE}`)
         return user.send({embeds: [embed(message, `**У вас подарок от разработчика!🎉**\n\n||---**${giftType}**---||`, "dm")]}).catch(()=> message.react('❌'))
       } else {
-        return error(message, 'Пользователь уже имеет VIP 2.');
+        return error(message, 'Пользователь уже имеет Premium.');
       }
 
     }
