@@ -1,5 +1,7 @@
 exports.PREFIX = 'a!';
 
+exports.VERSION = 'v4.0.2';
+
 exports.DEV = "Dann#0006";
 
 exports.devID = ["382906068319076372"];
@@ -80,5 +82,3 @@ exports.AGREE = '<:check:886291083787636777>';
 exports.DISAGREE = '<:cross:886291083909292073>';
 
 exports.CLAN = '<a:clancurrency:878337758458970172>';
-
-exports.VERSION = 'v4.0.1';
