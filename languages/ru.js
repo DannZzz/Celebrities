@@ -428,7 +428,7 @@ module.exports = {
         "desc": "Информация о платежей.",
         "usage": "",
         "access": "Для всех",
-        "donate": () => {
+        "donate1": () => {
             return new MessageEmbed()
             .setColor(main)
             .addFields(
@@ -439,8 +439,27 @@ module.exports = {
                 value: '• Ваш ID\n• Что именно вы хотите, например **VIP** или **Премиум**.',
                 inline: false},
             )
-            .setTimestamp()
             .setFooter("Отправьте ваши вопросы командой ?сообщение")
+        },
+         "donate2": () => {
+            return new MessageEmbed ()
+            .setColor (main)
+            .addFields (
+                {name: `Поддерживать разработчика`,
+                value: '**[30₽ Ежемесячно](https://boosty.to/iamdann/purchase/575340?ssource=DIRECT&share=subscription_link)**',
+                inline: false},
+                {name: `Boost Classic`,
+                value: '**[50₽ Ежемесячно](https://boosty.to/iamdann/purchase/575346?ssource=DIRECT&share=subscription_link)**\n+10% Душа Тайруса\n+10% Душа Анкалгона\nДоступ к приватному каналу',
+                inline: false},
+                {name: `Boost Premium`,
+                value: '**[100₽ Ежемесячно](https://boosty.to/iamdann/purchase/575347?ssource=DIRECT&share=subscription_link)**\n+15% Душа Тайруса\n+15% Душа Анкалгона\nДоступ к приватному каналу',
+                inline: false},
+                {name: `Boost Premium Plus`,
+                value: '**[200₽ Ежемесячно](https://boosty.to/iamdann/purchase/575348?ssource=DIRECT&share=subscription_link)**\n+20% Душа Тайруса\n+20% Душа Анкалгона\nДоступ к приватному каналу',
+                inline: false},
+            )
+            .setDescription(`Пожалуйсто будьте на [Сервере поддержки](https://discord.gg/Q6Guf7MmsT), чтобы получать Бусты`)
+            .setFooter ("Отправьте ваши вопросы командой ?сообщение")
         }
     },
 
@@ -453,7 +472,7 @@ module.exports = {
         "shop": () => {
             return new MessageEmbed()
             .setColor(main)
-            .setAuthor("Вся информация о переводах: ?donate")
+            .setAuthor("Вся информация о переводах и месячных подписок: ?donate")
             .addFields(
                 {name: `${status.vip} VIP`,
                 value: `Даёт доступ к командам - AFK, embed, channel, ranking(включение системы уровней) и profile-bio, и так же увеличивает стоимость рыб(на 33%), увеличивает макс. сумма подарка до 1000, а также ставка битвы.`,
@@ -462,7 +481,7 @@ module.exports = {
                 value: `Даёт доступ к уникальным героям, уменьшает **cooldown** для всех команд **два** раза, даёт возможность оформить ранг-карточку, а так же уменьшает ограничение ставок для всех игр, увеличивает макс. сумма подарка до 2500.`,
                 inline: false},
                 {name: `Цены в рублях.`,
-                value: `• VIP + 10000 ${STAR} - 15₽\n• Премиум + 20000 ${STAR} - 30₽\n• Герой **Тайрус (Tyrus)** - 100₽\n• Герой **Тартарус (Tartarus)** - 60₽\n• Герой **Беззубик (Toothless)** - 40₽\n• Герой **Zeus (Зевс)** - 20₽\n• 100000 ${STAR} - 80₽ (скидка на 47%)\n• 30000 ${STAR} - 30₽ (скидка на 33%)\n• 10000 ${STAR} - 15₽\n• Донат-бокс (20к-100к) - 15₽`,
+                value: `• VIP + 10000 ${STAR} - 15₽\n• Премиум + 20000 ${STAR} - 30₽\n• Герой **Тартарус (Tartarus)** - 60₽\n• Герой **Беззубик (Toothless)** - 40₽\n• Герой **Zeus (Зевс)** - 20₽\n• 100000 ${STAR} - 80₽ (скидка на 47%)\n• 30000 ${STAR} - 30₽ (скидка на 33%)\n• 10000 ${STAR} - 15₽\n• Донат-бокс (20к-100к) - 15₽`,
                 inline: false},
                 {name: `Дополнительное место для героев.`,
                 value: `• Стоит: Кол-во твоих мест * 2000 ${STAR}\n\`?buy place\``,

@@ -429,7 +429,7 @@ module.exports = {
         "desc": "Payment information.",
         "usage": "",
         "access": "For everyone",
-        "donate": () => {
+        "donate1": () => {
             return new MessageEmbed ()
             .setColor (main)
             .addFields (
@@ -441,6 +441,27 @@ module.exports = {
                 inline: false},
             )
             .setTimestamp ()
+            .setFooter ("Send your questions by command ?message")
+        },
+         "donate2": () => {
+            return new MessageEmbed ()
+            .setColor (main)
+            .addFields (
+                {name: `Support the developer`,
+                value: '**[30₽ Monthly](https://boosty.to/iamdann/purchase/575340?ssource=DIRECT&share=subscription_link)**',
+                inline: false},
+                {name: `Boost Classic`,
+                value: '**[50₽ Monthly](https://boosty.to/iamdann/purchase/575346?ssource=DIRECT&share=subscription_link)**\n+10% Soul of Tyrus\n+10% Soul of Ancalgon\nPrivate channel access',
+                inline: false},
+                {name: `Boost Premium`,
+                value: '**[100₽ Monthly](https://boosty.to/iamdann/purchase/575347?ssource=DIRECT&share=subscription_link)**\n+15% Soul of Tyrus\n+15% Soul of Ancalgon\nPrivate channel access',
+                inline: false},
+                {name: `Boost Premium Plus`,
+                value: '**[200₽ Monthly](https://boosty.to/iamdann/purchase/575348?ssource=DIRECT&share=subscription_link)**\n+20% Soul of Tyrus\n+20% Soul of Ancalgon\nPrivate channel access',
+                inline: false},
+            )
+            .setTimestamp()
+            .setDescription(`Please be on [Support Server](https://discord.gg/Q6Guf7MmsT) to getting Boosts`)
             .setFooter ("Send your questions by command ?message")
         }
     },
@@ -454,7 +475,7 @@ module.exports = {
         "shop": () => {
             return new MessageEmbed ()
             .setColor (main)
-            .setAuthor ("All information about transfers: ?donate")
+            .setAuthor ("All information about transfers and monthly subscriptions: ?donate")
             .addFields (
                 {name: `${status.vip} VIP`,
                 value: `Access to commands - AFK, embed, channel, levels (enabling the level system) and bio profile, and also increases the cost of fish (by 33%), increases the max value of gift to 1000, and also increases the bet of batlle.`,
@@ -462,7 +483,7 @@ module.exports = {
                 {name: `${status.premium} Premium`,
                 value: `Gives access to unique heroes, reduces **cooldown** for all commands **two** times, makes it possible to issue a rank card, and also gives more bet limit for all games, increases the max value of gift to 2500.`,
                 inline: false},{name: `Prices in dollars.`,
-                    value: `• VIP + 10000 ${STAR} - 0,2$\n • Premium + 20000 ${STAR} - 0,41$\n • Hero **Tyrus** - 1,26$\n • Hero **Tartarus** - 0,8$\n • Hero **Toothless** - 0,55$\n • Hero **Zeus** - 0,26$\n • 100000 ${STAR } - 1,1$ (47% discount)\n • 30000 ${STAR} - 0,4$ (33% discount)\n • 10000 ${STAR} - 0,2$\n • Donate-box (20k-100k) - 0,2$`,
+                    value: `• VIP + 10000 ${STAR} - 0,2$\n • Premium + 20000 ${STAR} - 0,41$\n • Hero **Tartarus** - 0,8$\n • Hero **Toothless** - 0,55$\n • Hero **Zeus** - 0,26$\n • 100000 ${STAR } - 1,1$ (47% discount)\n • 30000 ${STAR} - 0,4$ (33% discount)\n • 10000 ${STAR} - 0,2$\n • Donate-box (20k-100k) - 0,2$`,
                     inline: false},
                     {name: `Extra place for heroes.`,
                     value: `• Cost: Your place count * 2000 ${STAR}\n \`?buy place\``,
