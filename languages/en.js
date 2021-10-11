@@ -49,6 +49,16 @@ module.exports = {
 
 
 
+    "explore": {
+        "desc": "Explore souls.",
+        "usage": "",
+        "access": "For everyone",
+        "ends": "Exploring ends",
+        "place": "What to explore..."
+    },
+
+
+
     "stats": {
         "desc": "View your stats.",
         "usage": "",

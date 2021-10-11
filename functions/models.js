@@ -10,6 +10,7 @@ const vip = require("../models/vipSchema");
 const card = require("../models/cards");
 const promocodes = require("../models/promocodes");
 const bans = require("../models/banning");
+const power = require("../models/powerUpdating.js");
 
 module.exports = {
     rpg,
@@ -24,6 +25,15 @@ module.exports = {
     card,
     promocodes,
     bans,
+    power,
+    powerFind: async (id) => {
+        const data = await power.findOne({userID: id});
+        if (!data) {
+            return false
+        } else {
+            return data;
+        };
+    },
     bansFind: async (id) => {
         const data = await bans.findOne({userID: id});
         if (!data) {

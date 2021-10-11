@@ -12,6 +12,94 @@ const {  MessageActionRow,
 const {main, none, greenlight, reddark} = require('./../JSON/colours.json')
 
 module.exports = {
+  getHeroData: (bot, sponsorID, data) => {
+    const get = data.heroes.find(x => x.name === data.item);
+    const {health, damage} = get;
+    const server = bot.guilds.cache.get("882589567377637408");
+
+    const boosterRoleIds = {
+      classic: "897172766929858601",
+      premium: "897172906021371926",
+      premiumPlus: "897172954411053098"
+    }
+    
+    let boostCount = 0;
+    if (server) {
+      const member = server.members.cache.get(sponsorID);
+      if (member) {
+        if (member.roles.cache.get(boosterRoleIds.premiumPlus)) {
+          boostCount = 20;
+        } else if (member.roles.cache.get(boosterRoleIds.premium)) {
+          boostCount = 15;
+        } else if (member.roles.cache.get(boosterRoleIds.classic)) {
+          boostCount = 10;
+        }
+      }
+    }
+    
+    let pows;
+    
+    if(data.powers) {
+      pows = {
+      h: data.powers.health.value + boostCount,
+      d: data.powers.damage.value + boostCount,
+      }
+    
+    } else {
+      pows = {
+      h: 0.2 + boostCount,
+      d: 0.2 + boostCount
+      }
+    }
+
+    const finalHealth = Math.round(health + (health * pows.h / 100));
+    const finalDamage = Math.round(damage + (damage * pows.d / 100));
+    return {
+      h: finalHealth,
+      d: finalDamage
+    }
+  },
+
+  getPowers: function (bot, sponsorID, data) {
+    const server = bot.guilds.cache.get("882589567377637408");
+
+    const boosterRoleIds = {
+      classic: "897172766929858601",
+      premium: "897172906021371926",
+      premiumPlus: "897172954411053098"
+    }
+    
+    let boostCount = 0;
+    if (server) {
+      const member = server.members.cache.get(sponsorID);
+      if (member) {
+        if (member.roles.cache.get(boosterRoleIds.premiumPlus)) {
+          boostCount = 20;
+        } else if (member.roles.cache.get(boosterRoleIds.premium)) {
+          boostCount = 15;
+        } else if (member.roles.cache.get(boosterRoleIds.classic)) {
+          boostCount = 10;
+        }
+      }
+    };
+
+    let pows;
+    
+    if(data.powers) {
+      return {
+      h: data.powers.health.value + boostCount,
+      d: data.powers.damage.value + boostCount,
+      }
+    
+    } else {
+      return {
+      h: 0.2 + boostCount,
+      d: 0.2 + boostCount
+      }
+    }
+
+  },
+
   roundFunc: function (num, precision = 1) {
     precision = Math.pow(10, precision)
     return Math.round(num * precision) / precision

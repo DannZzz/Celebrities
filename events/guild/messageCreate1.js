@@ -14,6 +14,7 @@ const games = new Map();
 const buying = new Map();
 const cards = new Map();
 const trial = new Map();
+const explore = new Map();
 const {error, embed, makeTimestamp} = require("../../functions/functions");
 const {main, none, reddark} = require('../../JSON/colours.json');
 const { RateLimiter } = require('discord.js-rate-limiter');
@@ -62,7 +63,8 @@ module.exports = async (bot, messageCreate) => {
       buying: buying,
       cards: cards,
       buy2: buy2,
-      trial: trial
+      trial: trial,
+      explore: explore
   }
   let ss = new MessageEmbed().setColor("#2f3136").setTimestamp()
   const imunCmd = ["enable", "disable", "channel-enable", "channel-disable", "account"]
@@ -75,6 +77,9 @@ module.exports = async (bot, messageCreate) => {
     !serverData.disabled.includes(commandfile.config.name)) || 
     (commandfile && imunCmd.includes(commandfile.config.name))
     ) {
+      const nowExplore = ops.explore.get(message.author.id);
+      if (nowExplore) return;
+      
       let dateNew = await bansFind(message.author.id);
       if (dateNew && (!devID.includes(message.author.id) && !adminID.includes(message.author.id)) && commandfile.config.name !== "message") return error(message, banned + ` <t:${makeTimestamp(dateNew.date.getTime())}:f>`);
       //  && (!devID.includes(message.author.id) && !adminID.includes(message.author.id)

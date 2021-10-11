@@ -12,13 +12,35 @@ const {main, none, reddark} = require('../../JSON/colours.json');
 const { RateLimiter } = require('discord.js-rate-limiter');
 let msgLimiter = new RateLimiter(1, 2000);
 const Rate = require("../../functions/rateClass.js");
-const {bans, bansFind} = require("../../functions/models");
+const {bans, bansFind, powerFind, rpgFind} = require("../../functions/models");
 
 module.exports = async (bot, messageCreate) => {
   try {
   let message = messageCreate;
   if (message.author.bot) return
   const getLang = require("../../models/serverSchema");
+  const power = await powerFind(message.author.id);
+  if (power) {
+    if (power.date < new Date() ) {
+      let data = await rpgFind(message.author.id);
+      if (!data.powers) data = await rpg.findOneAndUpdate({userID: message.author.id}, {$set: {powers: {
+    health: {
+      level: 1,
+      value: 0.2
+    },
+    damage: {
+      level: 1,
+      value: 0.2
+    }
+      }}});
+
+      data.powers[power.name]["value"] += power.value;
+      data.powers[power.name]["level"] += 1;
+      await data.save();
+      await power.delete();
+    }
+  }
+  
   const LANG = await getLang.findOne({serverID: message.guild.id});
   const {afkMess, perm, cooldown: cd, banned} = require(`../../languages/${LANG.lang}`); 
   const dattt = await bansFind(message.author.id);

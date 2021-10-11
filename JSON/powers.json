@@ -1,0 +1,22 @@
+{
+    "health": {
+        "id": "health",
+        "nameRU": "Душа Тайруса",
+        "nameEN": "Soul of Tyrus",
+        "default": 0.2,
+        "adding": 0.2,
+        "emoji": "<a:health:897105176941453322>",
+        "cost": 35000,
+        "available": true
+    },
+    "damage": {
+        "id": "damage",
+        "nameRU": "Душа Анкалгона",
+        "nameEN": "Soul of Ancalgon",
+        "default": 0.2,
+        "adding": 0.2,
+        "emoji": "<a:sword:897105176291336192>",
+        "cost": 35000,
+        "available": true
+    }
+}
