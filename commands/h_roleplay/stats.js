@@ -1,9 +1,10 @@
 const { main } = require('../../JSON/colours.json');
 const { MessageEmbed, MessageButton, MessageActionRow, MessageAttachment } = require("discord.js");
 const {STAR, AGREE } = require("../../config");
-const {error, embed, perms, firstUpperCase, makeTimestamp, delay, roundFunc} = require("../../functions/functions");
+const {error, embed, perms, firstUpperCase, makeTimestamp, delay, roundFunc, getPowers} = require("../../functions/functions");
 const {serverFind, rpgFind, addStar, bagFind, rpg, profileFind, profile } = require("../../functions/models");
 const {stripIndents} = require("common-tags");
+const powers = require("../../JSON/powers.json");
 
 module.exports = {
     config: {
@@ -27,6 +28,10 @@ module.exports = {
         <:monsterboss:887750235646996570> ${h.journey}: ${rp.surviveLevel}
 
         <a:herodann:883382573231923201> ${stats.trial} ${rp.trialMax || 0}
+
+        ${powers.health.emoji} ${sd.lang === "ru" ? powers.health.nameRU : powers.health.nameRN}: ${getPowers(bot, user.id, rp).h}%
+
+        ${powers.damage.emoji} ${sd.lang === "ru" ? powers.damage.nameRU : powers.damage.nameRN}: ${getPowers(bot, user.id, rp).d}%
 
         🟡 ${h.all} ${rp.totalGames || 0}
 

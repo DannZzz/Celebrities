@@ -1,7 +1,7 @@
 const { main } = require('../../JSON/colours.json');
 const { MessageEmbed, MessageButton, MessageActionRow, MessageAttachment } = require("discord.js");
 const {STAR, AGREE } = require("../../config");
-const {error, embed, perms, firstUpperCase, makeTimestamp, delay, roundFunc} = require("../../functions/functions");
+const {error, embed, perms, firstUpperCase, makeTimestamp, delay, roundFunc, getHeroData} = require("../../functions/functions");
 const {serverFind, rpgFind, addStar, bagFind, rpg, profileFind, profile } = require("../../functions/models");
 const heroes = require("../../JSON/heroes.json");
 const Canvas = require("canvas");
@@ -51,8 +51,8 @@ module.exports = {
         await addStar(user.id, -(value));
         await profile.updateOne({userID: user.id}, {$set: {trial: new Date(Date.now() + time)}})
         
-        let h = heroData.health;
-        let d = heroData.damage;
+        let h = getHeroData(bot, user.id, data).h
+        let d = getHeroData(bot, user.id, data).d
         let l = heroData.level;
         const hero = heroes[data.item];
         

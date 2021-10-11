@@ -5,7 +5,7 @@ const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment, MessageActionRow, MessageButton } = require("discord.js");
 const { COIN, LEAGUE } = require("../../config");
-const {error, embed, perms, roundFunc} = require("../../functions/functions");
+const {error, embed, perms, roundFunc, getHeroData} = require("../../functions/functions");
 const Canvas = require('canvas');
 const Rate = require("../../functions/rateClass");
 const {rpgFind} = require("../../functions/models");
@@ -53,10 +53,10 @@ module.exports = {
     const get1 = mrp.heroes.find(x => x.name === mrp.item)
     const get2 = rp.heroes.find(x => x.name === rp.item)
 
-    let h1 = get2.health
-    let h2 = get1.health
-    let d1 = get2.damage
-    let d2 = get1.damage
+    let h1 = get2.health // getHeroData (bot, user.id, rp).h
+    let h2 = get1.health // getHeroData (bot, mUser.id, mrp).h
+    let d1 = get2.damage // getHeroData (bot, user.id, rp).d
+    let d2 = get1.damage // getHeroData (bot, mUser.id, mrp).d
     let winner;
     let loser;
 
@@ -197,6 +197,7 @@ if(i.customId === buttonList[0].customId) {
     await rpg.findOneAndUpdate({userID: loser.id}, {$inc: {loses: 1}})
 
     let winData = await rpg.findOne({userID: winner.id})
+    const DATA = getHeroData(bot, winner.id, winData);
     const get = winData.heroes.find(x => x.name === winData.item)
     let hero = heroes[winData.item]
     let winEmb = new MessageEmbed()
@@ -204,7 +205,7 @@ if(i.customId === buttonList[0].customId) {
     .setDescription(`${d.among} ${user}, ${mUser}\n${member1}: +${winCup} ${LEAGUE.cup}\n${member2}: -45 ${LEAGUE.cup}`)
     .setImage(hero.url)
     .setColor(main)
-    .addField(`❤ ${hm.health} ${get.health}`, `**⚔ ${hm.damage} ${get.damage}**`, true)
+    .addField(`❤ ${hm.health} ${DATA.h}`, `**⚔ ${hm.damage} ${DATA.d}**`, true)
     .addField(`🏆 ${hm.winrate}`, `**${roundFunc(winData.wins / winData.totalGames * 100) || '0'}%**`, true)
     msg.delete()
     return message.channel.send({embeds: [winEmb]})

@@ -6,7 +6,7 @@ const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment } = require("discord.js");
 const { COIN, STAR, LEAGUE } = require("../../config");
 const { checkValue } = require("../../functions/functions");
-const {error, embed, perms, roundFunc} = require("../../functions/functions");
+const {error, embed, perms, roundFunc, getHeroData} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 10000);
 const Canvas = require('canvas');
@@ -78,8 +78,8 @@ module.exports = {
     const data2 = heroes[item];
     const get = mrp.heroes.find(x => x.name === mrp.item)
     const myLevel = get.level;
-    const myHealth = get.health;
-    const myDamage = get.damage;
+    const myHealth = getHeroData(bot, message.author.id, mrp).h;
+    const myDamage = getHeroData(bot, message.author.id, mrp).d;
     let eLevel;
     const rand1 = Math.floor(Math.random() * 40);
     if (rand1 > 20) {
@@ -165,6 +165,7 @@ module.exports = {
           await rpg.findOneAndUpdate({userID: winner.id}, {$inc: {wins: 1}})
           await bd.updateOne({userID: winner.id}, {$inc: {stars: value*2}});
           const WinData = await rpg.findOne({userID: winner.id});
+          const DATA = getHeroData(bot, winner.id, WinData);
           winData = WinData.heroes.find(x => x.name === WinData.item)
           let hero = heroes[winData.name]
           let it = heroes[item]
@@ -173,7 +174,7 @@ module.exports = {
           .setDescription(`${b.between} ${message.member}, ${it.name}(A.I)`)
           .setImage(hero.url)
           .setColor(main)
-          .addField(`❤ ${hm.health} ${winData.health}`, `**⚔ ${hm.damage} ${winData.damage}**`, true)
+          .addField(`❤ ${hm.health} ${DATA.h}`, `**⚔ ${hm.damage} ${DATA.d}**`, true)
           .addField(`${hm.reward} ${value * 2} ${STAR} +${winCup} ${LEAGUE.cup}`, `**🏆 ${hm.winrate} ${roundFunc(WinData.wins / WinData.totalGames * 100) || '0'}%**`, true)
           msg.delete()
           return message.channel.send({embeds: [winEmb]})
@@ -227,3 +228,4 @@ async function makeCanvas (data1, data2) {
   
   return canvas
 }
+
