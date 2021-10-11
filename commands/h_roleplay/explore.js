@@ -10,7 +10,7 @@ module.exports = {
         name: "explore",
         aliases: ['изучать'],
         category: 'h_roleplay',
-        cooldown: 20000
+        cooldown: 20
     },
     run: async (bot, msg, args, ops) => {
         const server = msg.guild;
