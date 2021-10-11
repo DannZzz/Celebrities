@@ -25,6 +25,7 @@ module.exports = {
     "cooldown": (time, cmd) => `Wait __${time}__ seconds, before using __${cmd}__.`,
     "cardFix": "Your payment will be completed within a few minutes.",
     "banned": "Your account was banned until",
+    "timeOut": "Time out.",
 
     "afkMess": (name, res) => `User **${name}** is currently in AFK mode\nBy reason: **${res}**`,
     
@@ -53,6 +54,17 @@ module.exports = {
         "usage": "",
         "access": "For everyone",
         "trial": "Max. trial stage:"
+    },
+
+
+
+    "guess": {
+        "desc": "Game \"Guess a number\".",
+        "usage": "",
+        "access": "For everyone",
+        "lose": "You lose...",
+        "guess": (f, s) => `Guess a number between ${f} and ${s}.`,
+        "win": "You answered correctly and won",
     },
     
 

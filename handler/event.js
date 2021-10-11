@@ -6,6 +6,7 @@ module.exports = (bot) => {
         for (let file of events) {
             const evt = require(`../events/${dirs}/${file}`);
             let eName = file.split('.')[0];
+            eName = eName.split(eName[eName.length-1])[0];
             bot.on(eName, evt.bind(null, bot));
           };
         };
