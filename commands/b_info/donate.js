@@ -11,6 +11,6 @@ module.exports = {
       const LANG = await serverFind(message.guild.id);
       const {donate, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`); 
 
-      message.channel.send({embeds: [donate.donate().setImage("https://i.ibb.co/xCjXC10/donate.png")]})
+      message.channel.send({embeds: [donate.donate1().setImage("https://i.ibb.co/xCjXC10/donate.png"), donate.donate2()]})
   }
 }
