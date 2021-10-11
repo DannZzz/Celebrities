@@ -65,6 +65,7 @@ module.exports = {
         "lose": "You lose...",
         "guess": (f, s) => `Guess a number between ${f} and ${s}.`,
         "win": "You answered correctly and won",
+        "wrong": "You answered incorrectly."
     },
     
 
