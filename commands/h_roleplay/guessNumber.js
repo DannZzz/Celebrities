@@ -1,6 +1,6 @@
 const { main, greenlight, reddark } = require('../../JSON/colours.json');
 const { MessageEmbed, MessageButton, MessageActionRow, MessageAttachment } = require("discord.js");
-const {STAR, AGREE } = require("../../config");
+const {STAR, AGREE, DISAGREE } = require("../../config");
 const {error, embed, perms, firstUpperCase, makeTimestamp, delay, roundFunc, randomRange} = require("../../functions/functions");
 const {serverFind, rpgFind, addStar, bagFind, rpg, profileFind, profile } = require("../../functions/models");
 
@@ -33,6 +33,7 @@ module.exports = {
             made += 1;
         }
 
+        const current = made;
         const min = 1;
         const max = 30
         
@@ -61,9 +62,9 @@ module.exports = {
             const EmbWin = new MessageEmbed()
             .setColor(greenlight)
             .setAuthor(user.username, user.displayAvatarURL({dynamic: true}))
-            .setDescription(`${g.win}  ${reward} ${STAR}`)
+            .setDescription(`${AGREE} ${g.win} ${reward} ${STAR}`)
             
-            
+            if (made !== current) Emb.setTitle(`${hm.health} ${"❤".repeat(made)}\n${DISAGREE} ${g.wrong}`)
             if (m) {
                 m.edit({embeds: [Emb]});
             } else {
