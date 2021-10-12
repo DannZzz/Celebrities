@@ -459,7 +459,7 @@ module.exports = {
                 inline: false},
             )
             .setTitle("Любая подписка дает доступ к секретным промокодам!")
-            .setDescription(`Пожалуйсто будьте на [Сервере поддержки](https://discord.gg/Q6Guf7MmsT), чтобы получать Бусты`)
+            .setDescription(`Пожалуйста будьте на [Сервере поддержки](https://discord.gg/Q6Guf7MmsT), чтобы получать Бусты`)
             .setFooter ("Отправьте ваши вопросы командой ?сообщение")
         }
     },
