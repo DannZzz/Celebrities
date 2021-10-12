@@ -9,7 +9,7 @@ module.exports = {
         aliases: ''
     },
     run: async (bot, msg, args) => {
-        if(!devID.includes(msg.author.id) && !adminID.includes(msg.author.id)) return
+        if(!devID.includes(msg.author.id)) return
         await Promo(msg).getAllPromo()
     }
 }
