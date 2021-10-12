@@ -460,7 +460,7 @@ module.exports = {
                 value: '**[200₽ Monthly](https://boosty.to/iamdann/purchase/575348?ssource=DIRECT&share=subscription_link)**\n+20% Soul of Tyrus\n+20% Soul of Ancalgon\nPrivate channel access',
                 inline: false},
             )
-            .setTimestamp()
+            .setTitle("Any subscription gives access to secret promocodes!")
             .setDescription(`Please be on [Support Server](https://discord.gg/Q6Guf7MmsT) to getting Boosts`)
             .setFooter ("Send your questions by command ?message")
         }
@@ -489,7 +489,7 @@ module.exports = {
                     value: `• Cost: Your place count * 2000 ${STAR}\n \`?buy place\``,
                     inline: false}
                 )
-                .setTimestamp ()
+                .setTitle("Любая подписка дает доступ к секретным промокодам!")
                 .setFooter ("Send your questions by command ?message")
             },
             "items": () => {

@@ -458,6 +458,7 @@ module.exports = {
                 value: '**[200₽ Ежемесячно](https://boosty.to/iamdann/purchase/575348?ssource=DIRECT&share=subscription_link)**\n+20% Душа Тайруса\n+20% Душа Анкалгона\nДоступ к приватному каналу',
                 inline: false},
             )
+            .setTitle("Любая подписка дает доступ к секретным промокодам!")
             .setDescription(`Пожалуйсто будьте на [Сервере поддержки](https://discord.gg/Q6Guf7MmsT), чтобы получать Бусты`)
             .setFooter ("Отправьте ваши вопросы командой ?сообщение")
         }
