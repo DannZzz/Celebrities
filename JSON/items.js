@@ -6,7 +6,7 @@ module.exports = {
         NAME: "Лут-Бокс",
         NAMEEN: "Loot-box", 
         emoji: box,
-        cost: 1000,
+        cost: 750,
         max: 350,
         min: 100
     },
@@ -16,7 +16,7 @@ module.exports = {
         NAMEEN: "Potion of health", 
         emoji: potHLT,
         effect: 20,
-        cost: 450
+        cost: 400
     },
     dmg: {
         name: "dmg",
@@ -24,7 +24,7 @@ module.exports = {
         NAMEEN: "Potion of attack", 
         emoji: potDMG,
         effect: 4,
-        cost: 450
+        cost: 400
     },
     lvl: {
         name: "lvl",
