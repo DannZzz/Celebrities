@@ -44,10 +44,15 @@ const rpgSchema = new mongoose.Schema({
     damage: {
       level: 1,
       value: 0.2
+    },
+    gold: {
+      level: 1,
+      value: 0
     }
-  }}
-
-});
+  },
+    
+  }
+})
 
 const model = mongoose.model("RpgModels", rpgSchema);
 

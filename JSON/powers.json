@@ -18,5 +18,15 @@
         "emoji": "<a:sword:897105176291336192>",
         "cost": 35000,
         "available": true
+    },
+    "gold": {
+        "id": "gold",
+        "nameRU": "Душа Дариуса",
+        "nameEN": "Soul of Darius",
+        "default": 0,
+        "adding": 0.2,
+        "emoji": "<a:danncoin:864467182310129674>",
+        "cost": 150000,
+        "available": true
     }
 }

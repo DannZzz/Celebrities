@@ -28,11 +28,23 @@ module.exports = async (bot, messageCreate) => {
       level: 1,
       value: 0.2
     },
+    gold: {
+      level: 1,
+      value: 0
+    },
     damage: {
       level: 1,
       value: 0.2
     }
       }}});
+      if (power.name === "gold" && !data.powers.gold) {
+        data.powers.gold = {
+          level: 1,
+          value: 0
+        }
+        await data.save();
+      }
+      data = await rpgFind(message.author.id);
 
       data.powers[power.name]["value"] += power.value;
       data.powers[power.name]["level"] += 1;

@@ -451,13 +451,13 @@ module.exports = {
                 value: '**[30₽ Monthly](https://boosty.to/iamdann/purchase/575340?ssource=DIRECT&share=subscription_link)**',
                 inline: false},
                 {name: `Boost Classic`,
-                value: '**[50₽ Monthly](https://boosty.to/iamdann/purchase/575346?ssource=DIRECT&share=subscription_link)**\n+10% Soul of Tyrus\n+10% Soul of Ancalgon\nPrivate channel access',
+                value: '**[50₽ Monthly](https://boosty.to/iamdann/purchase/575346?ssource=DIRECT&share=subscription_link)**\n+10% Soul of Tyrus\n+10% Soul of Ancalgon\n+5% Soul of Darius\nPrivate channel access',
                 inline: false},
                 {name: `Boost Premium`,
-                value: '**[100₽ Monthly](https://boosty.to/iamdann/purchase/575347?ssource=DIRECT&share=subscription_link)**\n+15% Soul of Tyrus\n+15% Soul of Ancalgon\nPrivate channel access',
+                value: '**[100₽ Monthly](https://boosty.to/iamdann/purchase/575347?ssource=DIRECT&share=subscription_link)**\n+15% Soul of Tyrus\n+15% Soul of Ancalgon\n+10% Soul of Darius\nPrivate channel access',
                 inline: false},
                 {name: `Boost Premium Plus`,
-                value: '**[200₽ Monthly](https://boosty.to/iamdann/purchase/575348?ssource=DIRECT&share=subscription_link)**\n+20% Soul of Tyrus\n+20% Soul of Ancalgon\nPrivate channel access',
+                value: '**[200₽ Monthly](https://boosty.to/iamdann/purchase/575348?ssource=DIRECT&share=subscription_link)**\n+20% Soul of Tyrus\n+20% Soul of Ancalgon\n+15% Soul of Darius\nPrivate channel access',
                 inline: false},
             )
             .setTitle("Any subscription gives access to secret promocodes!")

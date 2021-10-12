@@ -61,6 +61,47 @@ module.exports = {
     addStar: async (id, amount) => {
         await bag.updateOne({userID: id}, {$inc: {stars: Math.round(amount)}}).catch(() => false);
     },
+    addPremiumStar: async (bot, id, amount, number = false) => {
+        const server = bot.guilds.cache.get("882589567377637408");
+
+        const boosterRoleIds = {
+            classic: "897172766929858601",
+            premium: "897172906021371926",
+            premiumPlus: "897172954411053098"
+        };
+
+        let boostCount = 0;
+        if (server) {
+            const member = server.members.cache.get(id);
+            if (member) {
+                if (member.roles.cache.get(boosterRoleIds.premiumPlus)) {
+                    boostCount = 15;
+                } else if (member.roles.cache.get(boosterRoleIds.premium)) {
+                    boostCount = 10;
+                } else if (member.roles.cache.get(boosterRoleIds.classic)) {
+                    boostCount = 5;
+                }
+            }
+        };
+
+        const data = await rpg.findOne({userID: id});
+        let dataValue = 0;
+        if (data.power && data.power.gold)
+            dataValue = data.power.gold.value;
+
+        const finPerc = dataValue + boostCount;
+
+        let finalAmount = Math.round(amount + (amount * finPerc / 100));
+
+        if (amount < 0)
+            finalAmount = amount;
+
+        if (number) {
+            return finalAmount;
+        }
+
+        await bag.updateOne({ userID: id }, { $inc: { stars: Math.round(finalAmount) } }).catch(() => false);
+    },
     rpgFind: async (id) => {
         const data = await rpg.findOne({userID: id});
         if (!data) {

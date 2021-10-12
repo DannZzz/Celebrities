@@ -449,13 +449,13 @@ module.exports = {
                 value: '**[30₽ Ежемесячно](https://boosty.to/iamdann/purchase/575340?ssource=DIRECT&share=subscription_link)**',
                 inline: false},
                 {name: `Boost Classic`,
-                value: '**[50₽ Ежемесячно](https://boosty.to/iamdann/purchase/575346?ssource=DIRECT&share=subscription_link)**\n+10% Душа Тайруса\n+10% Душа Анкалгона\nДоступ к приватному каналу',
+                value: '**[50₽ Ежемесячно](https://boosty.to/iamdann/purchase/575346?ssource=DIRECT&share=subscription_link)**\n+10% Душа Тайруса\n+10% Душа Анкалгона\n+5% Душа Дариуса\nДоступ к приватному каналу',
                 inline: false},
                 {name: `Boost Premium`,
-                value: '**[100₽ Ежемесячно](https://boosty.to/iamdann/purchase/575347?ssource=DIRECT&share=subscription_link)**\n+15% Душа Тайруса\n+15% Душа Анкалгона\nДоступ к приватному каналу',
+                value: '**[100₽ Ежемесячно](https://boosty.to/iamdann/purchase/575347?ssource=DIRECT&share=subscription_link)**\n+15% Душа Тайруса\n+15% Душа Анкалгона\n+10% Душа Дариуса\nДоступ к приватному каналу',
                 inline: false},
                 {name: `Boost Premium Plus`,
-                value: '**[200₽ Ежемесячно](https://boosty.to/iamdann/purchase/575348?ssource=DIRECT&share=subscription_link)**\n+20% Душа Тайруса\n+20% Душа Анкалгона\nДоступ к приватному каналу',
+                value: '**[200₽ Ежемесячно](https://boosty.to/iamdann/purchase/575348?ssource=DIRECT&share=subscription_link)**\n+20% Душа Тайруса\n+20% Душа Анкалгона\n+15% Душа Дариуса\nДоступ к приватному каналу',
                 inline: false},
             )
             .setTitle("Любая подписка дает доступ к секретным промокодам!")

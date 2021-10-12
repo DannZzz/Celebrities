@@ -89,12 +89,14 @@ module.exports = {
       return {
       h: data.powers.health.value + boostCount,
       d: data.powers.damage.value + boostCount,
+      g: (data.powers.gold ? data.powers.gold.value : 0) + (boostCount !== 0 ? boostCount-5 : 0)
       }
     
     } else {
       return {
       h: 0.2 + boostCount,
-      d: 0.2 + boostCount
+      d: 0.2 + boostCount,
+      g: 0 + (boostCount !== 0 ? boostCount-5 : 0)
       }
     }
 
