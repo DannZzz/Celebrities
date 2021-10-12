@@ -78,8 +78,8 @@ module.exports = {
     const data2 = heroes[item];
     const get = mrp.heroes.find(x => x.name === mrp.item)
     const myLevel = get.level;
-    const myHealth = getHeroData(bot, message.author.id, mrp).h;
-    const myDamage = getHeroData(bot, message.author.id, mrp).d;
+    const myHealth = await getHeroData(bot, message.author.id, mrp).then(x => x.h);
+    const myDamage = await getHeroData(bot, message.author.id, mrp).then(x => x.d);
     let eLevel;
     const rand1 = Math.floor(Math.random() * 40);
     if (rand1 > 20) {
@@ -167,7 +167,7 @@ module.exports = {
           await addPremiumStar(bot, winner.id, value*2);
 
           const WinData = await rpg.findOne({userID: winner.id});
-          const DATA = getHeroData(bot, winner.id, WinData);
+          const DATA = await getHeroData(bot, winner.id, WinData);
           winData = WinData.heroes.find(x => x.name === WinData.item)
           let hero = heroes[winData.name]
           let it = heroes[item]

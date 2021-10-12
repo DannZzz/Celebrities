@@ -2,7 +2,7 @@ const { main } = require('../../JSON/colours.json');
 const { MessageEmbed, MessageButton, MessageActionRow, MessageAttachment, MessageSelectMenu } = require("discord.js");
 const {STAR, AGREE, DISAGREE } = require("../../config");
 const {error, embed, perms, firstUpperCase, makeTimestamp, delay, roundFunc} = require("../../functions/functions");
-const {serverFind, rpgFind, addStar, bagFind, rpg, profileFind, profile, power, powerFind } = require("../../functions/models");
+const {serverFind, rpgFind, addStar, bagFind, rpg, profileFind, profile, power, powerFind, powersFind } = require("../../functions/models");
 const powers = require("../../JSON/powers.json");
 
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
         const user = msg.author;
         const channel = msg.channel;
 
-        const data = await rpgFind(user.id);
+        const data = await powersFind(user.id);
         const dataPower = await powerFind(user.id);
         const sd = await serverFind(server.id);
         const { noStar, explore: ex } = require(`../../languages/${sd.lang}`);
@@ -29,7 +29,7 @@ module.exports = {
         for (let item in powers) {
             const i = powers[item];
             if (i.available) {
-                const l = data.powers[i.id] ? data.powers[i.id].level : 1;
+                const l = data[i.id] ? data[i.id].level : 1;
                 const cost = l * i.cost;
                 arr.push({
                     label: sd.lang === "en" ? i.nameEN : i.nameRU,
@@ -62,15 +62,15 @@ module.exports = {
             collector.stop();
             m.delete();
             const val = i.values[0];
-            const newest = await rpgFind(user.id);
+            const newest = await powersFind(user.id);
 
 
             let v, l;
-            if (!newest.powers || !newest.powers[val] || !powers[val]) {
+            if (!newest || !newest[val] || !powers[val]) {
                 v = powers[val]["default"];
                 l = 1;
             } else {
-                const {value, level} = newest.powers[val];
+                const {value, level} = newest[val];
                 v = value;
                 l = level;
             }

@@ -51,8 +51,8 @@ module.exports = {
         await addStar(user.id, -(value));
         await profile.updateOne({userID: user.id}, {$set: {trial: new Date(Date.now() + time)}})
         
-        let h = getHeroData(bot, user.id, data).h
-        let d = getHeroData(bot, user.id, data).d
+        let h = await getHeroData(bot, user.id, data).then(x => x.h);
+        let d = await getHeroData(bot, user.id, data).then(x => x.d);
         let l = heroData.level;
         const hero = heroes[data.item];
         
@@ -147,7 +147,7 @@ module.exports = {
             .setImage(hero.url)
             .setColor(main)
             .addField(`❤ ${hm.health} ${h}`, `**⚔ ${hm.damage} ${d}**`, true)
-            .addField(`${ (LANG.lang === "ru" ? "Текущий " : "Current ") + hm.reward} ${await addPremiumStar(bot, winner.id, totalReward, true)} ${STAR}`, `**🏆 ${hm.winrate} ${roundFunc(newData.wins / newData.totalGames * 100) || '0'}%**`, true)
+            .addField(`${ (LANG.lang === "ru" ? "Текущий " : "Current ") + hm.reward} ${await addPremiumStar(bot, user.id, totalReward, true)} ${STAR}`, `**🏆 ${hm.winrate} ${roundFunc(newData.wins / newData.totalGames * 100) || '0'}%**`, true)
 
             let bool = false;
 

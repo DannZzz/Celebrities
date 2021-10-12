@@ -2,7 +2,7 @@ const { main } = require('../../JSON/colours.json');
 const { MessageEmbed, MessageButton, MessageActionRow, MessageAttachment } = require("discord.js");
 const {STAR, AGREE } = require("../../config");
 const {error, embed, perms, firstUpperCase, makeTimestamp, delay, roundFunc, getPowers} = require("../../functions/functions");
-const {serverFind, rpgFind, addStar, bagFind, rpg, profileFind, profile } = require("../../functions/models");
+const {serverFind, rpgFind, addStar, bagFind, rpg, profileFind, profile, powersFind } = require("../../functions/models");
 const {stripIndents} = require("common-tags");
 const powers = require("../../JSON/powers.json");
 
@@ -29,11 +29,11 @@ module.exports = {
 
         <a:herodann:883382573231923201> ${stats.trial} ${rp.trialMax || 0}
 
-        ${powers.health.emoji} ${sd.lang === "ru" ? powers.health.nameRU : powers.health.nameEN}: ${getPowers(bot, user.id, rp).h}%
+        ${powers.health.emoji} ${sd.lang === "ru" ? powers.health.nameRU : powers.health.nameEN}: ${await getPowers(bot, user.id, rp).then(x => x.h)}%
 
-        ${powers.damage.emoji} ${sd.lang === "ru" ? powers.damage.nameRU : powers.damage.nameEN}: ${getPowers(bot, user.id, rp).d}%
+        ${powers.damage.emoji} ${sd.lang === "ru" ? powers.damage.nameRU : powers.damage.nameEN}: ${await getPowers(bot, user.id, rp).then(x => x.d)}%
 
-        ${powers.gold.emoji} ${sd.lang === "ru" ? powers.gold.nameRU : powers.gold.nameEN}: ${getPowers(bot, user.id, rp).g}%
+        ${powers.gold.emoji} ${sd.lang === "ru" ? powers.gold.nameRU : powers.gold.nameEN}: ${await getPowers(bot, user.id, rp).then(x => x.g)}%
 
         🟡 ${h.all} ${rp.totalGames || 0}
 

@@ -53,10 +53,10 @@ module.exports = {
     const get1 = mrp.heroes.find(x => x.name === mrp.item)
     const get2 = rp.heroes.find(x => x.name === rp.item)
 
-    let h1 = get2.health // getHeroData (bot, user.id, rp).h
-    let h2 = get1.health // getHeroData (bot, mUser.id, mrp).h
-    let d1 = get2.damage // getHeroData (bot, user.id, rp).d
-    let d2 = get1.damage // getHeroData (bot, mUser.id, mrp).d
+    let h1 = await getHeroData (bot, user.id, rp).then(x => x.h);
+    let h2 = await getHeroData (bot, mUser.id, mrp).then(x => x.h);
+    let d1 = await getHeroData (bot, user.id, rp).then(x => x.d);
+    let d2 = await getHeroData (bot, mUser.id, mrp).then(x => x.d);
     let winner;
     let loser;
 
@@ -135,10 +135,10 @@ if(i.customId === buttonList[0].customId) {
     .setImage('attachment://fight.png')
     .setThumbnail('https://media.giphy.com/media/SwUwZMPpgwHNQGIjI7/giphy.gif')
     .addField(`${mUser.username} (${LANG.lang === "ru" ? data1.nameRus : data1.name})`, `**${hm.level} ${get1.level}**`, true)
-    .addField(`❤ ${hm.health} ${get1.health}`, `**⚔ ${hm.damage} ${get1.damage}**`, true)
+    .addField(`❤ ${hm.health} ${h2}`, `**⚔ ${hm.damage} ${d2}**`, true)
     .addField(`\u200b`, `\u200b`, false)
     .addField(`${user.user.username} (${LANG.lang === "ru" ? data2.nameRus : data2.name})`, `**${hm.level} ${get2.level}**`, true)
-    .addField(`❤ ${hm.health} ${get2.health}`, `**⚔ ${hm.damage} ${get2.damage}**`, true)
+    .addField(`❤ ${hm.health} ${h1}`, `**⚔ ${hm.damage} ${d1}**`, true)
     .setColor(main)
   
 
@@ -197,7 +197,7 @@ if(i.customId === buttonList[0].customId) {
     await rpg.findOneAndUpdate({userID: loser.id}, {$inc: {loses: 1}})
 
     let winData = await rpg.findOne({userID: winner.id})
-    const DATA = getHeroData(bot, winner.id, winData);
+    const DATA = await getHeroData(bot, winner.id, winData);
     const get = winData.heroes.find(x => x.name === winData.item)
     let hero = heroes[winData.item]
     let winEmb = new MessageEmbed()

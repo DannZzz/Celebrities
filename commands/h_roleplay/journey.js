@@ -6,7 +6,7 @@ const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment } = require("discord.js");
 const { COIN, STAR } = require("../../config");
-const {error, embed, perms} = require("../../functions/functions");
+const {error, embed, perms, getHeroData} = require("../../functions/functions");
 const { addPremiumStar } = require("../../functions/models");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
@@ -67,8 +67,8 @@ module.exports = {
 
     const get = rp.heroes.find(x => x.name === rp.item)
     
-    let myHealth = get.health;
-    let myDamage = get.damage;
+    let myHealth = await getHeroData(bot, user.id, rp).then(x => x.h);
+    let myDamage = await getHeroData(bot, user.id, rp).then(x => x.d);
     let win;
    
     

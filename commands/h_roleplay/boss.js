@@ -69,8 +69,8 @@ module.exports = {
     const get2 = rp1.heroes.find(x => x.name === rp1.item)
     const get3 = rp2.heroes.find(x => x.name === rp2.item)
     
-    let allHealth = getHeroData(bot, mUser.id, mrp).h + getHeroData(bot, user1.id, rp1).h + getHeroData(bot, user2.id, rp2).h;
-    let allDamage = getHeroData(bot, mUser.id, mrp).d + getHeroData(bot, user1.id, rp1).d + getHeroData(bot, user2.id, rp2).d;
+    let allHealth = await getHeroData(bot, mUser.id, mrp).then(x => x.h) + await getHeroData(bot, user1.id, rp1).then(x => x.h) + await getHeroData(bot, user2.id, rp2).then(x => x.h);
+    let allDamage = await getHeroData(bot, mUser.id, mrp).then(x => x.d) + await getHeroData(bot, user1.id, rp1).then(x => x.d) + await getHeroData(bot, user2.id, rp2).then(x => x.d);
 
     let boss = enemies["FireWalker"]
 
