@@ -86,8 +86,8 @@ module.exports = {
 
         const data = await rpg.findOne({userID: id});
         let dataValue = 0;
-        if (data.power && data.power.gold)
-            dataValue = data.power.gold.value;
+        if (data.powers && data.powers.gold)
+            dataValue = data.powers.gold.value;
 
         const finPerc = dataValue + boostCount;
 
