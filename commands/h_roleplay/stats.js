@@ -29,9 +29,9 @@ module.exports = {
 
         <a:herodann:883382573231923201> ${stats.trial} ${rp.trialMax || 0}
 
-        ${powers.health.emoji} ${sd.lang === "ru" ? powers.health.nameRU : powers.health.nameRN}: ${getPowers(bot, user.id, rp).h}%
+        ${powers.health.emoji} ${sd.lang === "ru" ? powers.health.nameRU : powers.health.nameEN}: ${getPowers(bot, user.id, rp).h}%
 
-        ${powers.damage.emoji} ${sd.lang === "ru" ? powers.damage.nameRU : powers.damage.nameRN}: ${getPowers(bot, user.id, rp).d}%
+        ${powers.damage.emoji} ${sd.lang === "ru" ? powers.damage.nameRU : powers.damage.nameEN}: ${getPowers(bot, user.id, rp).d}%
 
         🟡 ${h.all} ${rp.totalGames || 0}
 

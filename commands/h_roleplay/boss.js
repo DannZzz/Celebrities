@@ -6,9 +6,7 @@ const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment, MessageButton, MessageActionRow } = require("discord.js");
 const { COIN, STAR, AGREE } = require("../../config");
-const { checkValue } = require("../../functions/functions");
-;
-const {error, embed, perms, delay} = require("../../functions/functions");
+const {error, embed, perms, delay, getHeroData} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 const Canvas = require("canvas")
@@ -70,8 +68,8 @@ module.exports = {
     const get2 = rp1.heroes.find(x => x.name === rp1.item)
     const get3 = rp2.heroes.find(x => x.name === rp2.item)
     
-    let allHealth = get1.health + get2.health + get3.health
-    let allDamage = get1.damage + get2.damage + get3.damage
+    let allHealth = getHeroData(bot, mUser.id, mrp).h + getHeroData(bot, user1.id, rp1).h + getHeroData(bot, user2.id, rp2).h;
+    let allDamage = getHeroData(bot, mUser.id, mrp).d + getHeroData(bot, user1.id, rp1).d + getHeroData(bot, user2.id, rp2).d;
 
     let boss = enemies["FireWalker"]
 
