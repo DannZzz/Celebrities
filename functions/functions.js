@@ -10,9 +10,10 @@ const {  MessageActionRow,
   MessageEmbed,
   MessageButton,} = require('discord.js');
 const {main, none, greenlight, reddark} = require('./../JSON/colours.json')
+const { powersFind, powers } = require("./models.js");
 
 module.exports = {
-  getHeroData: (bot, sponsorID, data) => {
+  getHeroData: async (bot, sponsorID, data) => {
     const get = data.heroes.find(x => x.name === data.item);
     const {health, damage} = get;
     const server = bot.guilds.cache.get("882589567377637408");
@@ -38,19 +39,20 @@ module.exports = {
     }
     
     let pows;
-    
-    if(data.powers) {
-      pows = {
-      h: data.powers.health.value + boostCount,
-      d: data.powers.damage.value + boostCount,
-      }
-    
-    } else {
-      pows = {
-      h: 0.2 + boostCount,
-      d: 0.2 + boostCount
-      }
+    let powData = await powersFind(sponsorID);
+    if (!powData) {
+      const newData = await powers.create({
+        userID: sponsorID
+      })
+      newData.save();
     }
+    powData = await powersFind(sponsorID);
+
+    pows = {
+      h: (powData.health.value || 0.2) + boostCount,
+      d: (powData.damage.value || 0.2) + boostCount,
+    };
+    
 
     const finalHealth = Math.round(health + (health * pows.h / 100));
     const finalDamage = Math.round(damage + (damage * pows.d / 100));
@@ -60,7 +62,7 @@ module.exports = {
     }
   },
 
-  getPowers: function (bot, sponsorID, data) {
+  getPowers: async function (bot, sponsorID, data) {
     const server = bot.guilds.cache.get("882589567377637408");
 
     const boosterRoleIds = {
@@ -84,20 +86,21 @@ module.exports = {
     };
 
     let pows;
+
+    let powData = await powersFind(sponsorID);
+    if (!powData) {
+      const newData = await powers.create({
+        userID: sponsorID
+      })
+      newData.save();
+    }
+    powData = await powersFind(sponsorID);
     
-    if(data.powers) {
-      return {
-      h: data.powers.health.value + boostCount,
-      d: data.powers.damage.value + boostCount,
-      g: (data.powers.gold ? data.powers.gold.value : 0) + (boostCount !== 0 ? boostCount-5 : 0)
-      }
     
-    } else {
-      return {
-      h: 0.2 + boostCount,
-      d: 0.2 + boostCount,
-      g: 0 + (boostCount !== 0 ? boostCount-5 : 0)
-      }
+    return {
+      h: (powData.health.value || 1.2) + boostCount,
+      d: (powData.damage.value || 1.2) + boostCount,
+      g: (powData.gold.value || 0) + (boostCount !== 0 ? boostCount-5 : 0)
     }
 
   },

@@ -35,23 +35,8 @@ const rpgSchema = new mongoose.Schema({
     rate: 0,
     rewardId: 0,
     maxRate: 0
-  }},
-  powers: { type: Object, default: {
-    health: {
-      level: 1,
-      value: 0.2
-    },
-    damage: {
-      level: 1,
-      value: 0.2
-    },
-    gold: {
-      level: 1,
-      value: 0
-    }
-  },
-    
-  }
+  }}
+  
 })
 
 const model = mongoose.model("RpgModels", rpgSchema);

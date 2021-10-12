@@ -12,44 +12,41 @@ const {main, none, reddark} = require('../../JSON/colours.json');
 const { RateLimiter } = require('discord.js-rate-limiter');
 let msgLimiter = new RateLimiter(1, 2000);
 const Rate = require("../../functions/rateClass.js");
-const {bans, bansFind, powerFind, rpgFind} = require("../../functions/models");
+const powerData = require("../../JSON/powers.json");
+const {bans, bansFind, powerFind, rpgFind, powersFind, powers} = require("../../functions/models");
 
 module.exports = async (bot, messageCreate) => {
   try {
   let message = messageCreate;
   if (message.author.bot) return
+
+  const pp = await powersFind(message.author.id);
+  if (!pp) {
+    const nn = await powers.create({
+      userID: message.author.id
+    })
+    nn.save();
+  }
+  
   const getLang = require("../../models/serverSchema");
   const power = await powerFind(message.author.id);
   if (power) {
     if (power.date < new Date() ) {
-      let data = await rpgFind(message.author.id);
-      if (!data.powers) data = await rpg.findOneAndUpdate({userID: message.author.id}, {$set: {powers: {
-    health: {
-      level: 1,
-      value: 0.2
-    },
-    gold: {
-      level: 1,
-      value: 0
-    },
-    damage: {
-      level: 1,
-      value: 0.2
-    }
-      }}});
-      if (power.name === "gold" && !data.powers.gold) {
-        data.powers.gold = {
-          level: 1,
-          value: 0
-        }
-        await data.save();
+      let data = await powersFind(message.author.id);
+      if (!data) {
+        const newData = await powers.create({
+          userID: message.author.id
+        })
+        newData.save();
       }
-      data = await rpgFind(message.author.id);
 
-      data.powers[power.name]["value"] += power.value;
-      data.powers[power.name]["level"] += 1;
-      await data.save();
-      await power.delete();
+      await powers.updateOne({userID: message.author.id}, {$inc: {
+        [`${power.name}.value`]: power.value,
+        [`${power.name}.level`]: 1
+      }})
+
+     
+      power.delete();
     }
   }
   

@@ -11,6 +11,7 @@ const card = require("../models/cards");
 const promocodes = require("../models/promocodes");
 const bans = require("../models/banning");
 const power = require("../models/powerUpdating.js");
+const powers = require("../models/powers.js");
 
 module.exports = {
     rpg,
@@ -26,6 +27,15 @@ module.exports = {
     promocodes,
     bans,
     power,
+    powers,
+    powersFind: async (id) => {
+        const data = await powers.findOne({userID: id});
+        if (!data) {
+            return false
+        } else {
+            return data;
+        };
+    },
     powerFind: async (id) => {
         const data = await power.findOne({userID: id});
         if (!data) {
@@ -84,10 +94,9 @@ module.exports = {
             }
         };
 
-        const data = await rpg.findOne({userID: id});
+        const data = await powers.findOne({userID: id});
         let dataValue = 0;
-        if (data.powers && data.powers.gold)
-            dataValue = data.powers.gold.value;
+        if (data && data.gold) dataValue = data.gold.value;
 
         const finPerc = dataValue + boostCount;
 
