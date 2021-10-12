@@ -434,7 +434,7 @@ async function getCardMenu(msg) {
           return {
               label: ln.lang === "en" ? firstUpperCase(cardName.name) + " Card" : firstUpperCase(cardName.nameRus) + " Карта",
               value: cardName.name,
-              description: `${cc.bal} ${data.amount}`,
+              description: `${cc.bal} ${Math.round(data.amount)}`,
               emoji: cardName.emoji
           }
       }));
@@ -445,7 +445,7 @@ async function getCardMenu(msg) {
       {
           label: ln.lang === "en" ? "Golds": "Голды",
           value: "golds",
-          description: `${cc.bal} ${myData.stars}`,
+          description: `${cc.bal} ${Math.round(myData.stars)}`,
           emoji: STAR
       }
   )
