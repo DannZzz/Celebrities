@@ -29,8 +29,7 @@ module.exports = {
         for (let item in powers) {
             const i = powers[item];
             if (i.available) {
-                const {value, level} = data.powers[i.id];
-                const l = level || 1;
+                const l = data.powers[i.id] ? data.powers[i.id].level : 1;
                 const cost = l * i.cost;
                 arr.push({
                     label: sd.lang === "en" ? i.nameEN : i.nameRU,
@@ -67,7 +66,7 @@ module.exports = {
 
 
             let v, l;
-            if (!newest.powers || !powers[val]) {
+            if (!newest.powers || !newest.powers[val] || !powers[val]) {
                 v = powers[val]["default"];
                 l = 1;
             } else {

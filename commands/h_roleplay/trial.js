@@ -2,7 +2,7 @@ const { main } = require('../../JSON/colours.json');
 const { MessageEmbed, MessageButton, MessageActionRow, MessageAttachment } = require("discord.js");
 const {STAR, AGREE } = require("../../config");
 const {error, embed, perms, firstUpperCase, makeTimestamp, delay, roundFunc, getHeroData} = require("../../functions/functions");
-const {serverFind, rpgFind, addStar, bagFind, rpg, profileFind, profile } = require("../../functions/models");
+const {serverFind, rpgFind, addStar, bagFind, rpg, profileFind, profile, addPremiumStar } = require("../../functions/models");
 const heroes = require("../../JSON/heroes.json");
 const Canvas = require("canvas");
 
@@ -147,7 +147,7 @@ module.exports = {
             .setImage(hero.url)
             .setColor(main)
             .addField(`❤ ${hm.health} ${h}`, `**⚔ ${hm.damage} ${d}**`, true)
-            .addField(`${ (LANG.lang === "ru" ? "Текущий " : "Current ") + hm.reward} ${totalReward} ${STAR}`, `**🏆 ${hm.winrate} ${roundFunc(newData.wins / newData.totalGames * 100) || '0'}%**`, true)
+            .addField(`${ (LANG.lang === "ru" ? "Текущий " : "Current ") + hm.reward} ${await addPremiumStar(bot, winner.id, totalReward, true)} ${STAR}`, `**🏆 ${hm.winrate} ${roundFunc(newData.wins / newData.totalGames * 100) || '0'}%**`, true)
 
             let bool = false;
 
@@ -186,8 +186,8 @@ module.exports = {
                   collector.stop();
                   ops.trial.delete(user.id);
                   getNext.delete();
-                  await addStar(user.id, totalReward);
-                  embed(msg, `${LANG.lang === "ru" ? "Вы выиграли" : "You won"} ${totalReward} ${STAR}`)
+                  await addPremiumStar(bot, user.id, totalReward);
+                  embed(msg, `${LANG.lang === "ru" ? "Вы выиграли" : "You won"} ${await addPremiumStar(bot, winner.id, totalReward, true)} ${STAR}`)
                 default:
                   break;
               }

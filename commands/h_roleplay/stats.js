@@ -33,6 +33,8 @@ module.exports = {
 
         ${powers.damage.emoji} ${sd.lang === "ru" ? powers.damage.nameRU : powers.damage.nameEN}: ${getPowers(bot, user.id, rp).d}%
 
+        ${powers.gold.emoji} ${sd.lang === "ru" ? powers.gold.nameRU : powers.gold.nameEN}: ${getPowers(bot, user.id, rp).g}%
+
         🟡 ${h.all} ${rp.totalGames || 0}
 
         🟢 ${h.win} ${rp.wins || 0}

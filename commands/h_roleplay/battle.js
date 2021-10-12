@@ -5,7 +5,7 @@ const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment } = require("discord.js");
 const { COIN, STAR, LEAGUE } = require("../../config");
-const { checkValue } = require("../../functions/functions");
+const { addPremiumStar } = require("../../functions/models");
 const {error, embed, perms, roundFunc, getHeroData} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 10000);
@@ -163,7 +163,9 @@ module.exports = {
           const winCup = Rate(message).winRewardGenerator(league);
           await Rate(message).rateUpdate(message.author.id, winCup);
           await rpg.findOneAndUpdate({userID: winner.id}, {$inc: {wins: 1}})
-          await bd.updateOne({userID: winner.id}, {$inc: {stars: value*2}});
+
+          await addPremiumStar(bot, winner.id, value*2);
+
           const WinData = await rpg.findOne({userID: winner.id});
           const DATA = getHeroData(bot, winner.id, WinData);
           winData = WinData.heroes.find(x => x.name === WinData.item)
@@ -175,7 +177,7 @@ module.exports = {
           .setImage(hero.url)
           .setColor(main)
           .addField(`❤ ${hm.health} ${DATA.h}`, `**⚔ ${hm.damage} ${DATA.d}**`, true)
-          .addField(`${hm.reward} ${value * 2} ${STAR} +${winCup} ${LEAGUE.cup}`, `**🏆 ${hm.winrate} ${roundFunc(WinData.wins / WinData.totalGames * 100) || '0'}%**`, true)
+          .addField(`${hm.reward} ${await addPremiumStar(bot, winner.id, value*2, true)} ${STAR} +${winCup} ${LEAGUE.cup}`, `**🏆 ${hm.winrate} ${roundFunc(WinData.wins / WinData.totalGames * 100) || '0'}%**`, true)
           msg.delete()
           return message.channel.send({embeds: [winEmb]})
         } else {

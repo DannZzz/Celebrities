@@ -8,6 +8,7 @@ const { MessageEmbed, MessageAttachment, MessageButton, MessageActionRow } = req
 const { COIN, STAR, AGREE } = require("../../config");
 const {error, embed, perms, delay, getHeroData} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
+const { addPremiumStar } = require("../../functions/models");
 let rateLimiter = new RateLimiter(1, 3000);
 const Canvas = require("canvas")
 const items = require('../../JSON/items');
@@ -250,6 +251,10 @@ module.exports = {
             await bd.findOneAndUpdate({userID: user1.id}, {$inc: {stars: boss.reward}})
             await bd.findOneAndUpdate({userID: user2.id}, {$inc: {stars: boss.reward}})
 
+            await addPremiumStar(bot, mUser.id, boss.reward);
+            await addPremiumStar(bot, user1.id, boss.reward);
+            await addPremiumStar(bot, user2.id, boss.reward);
+            
             await rpg.findOneAndUpdate({userID: mUser.id}, {$inc: {meat: 1}})
             await rpg.findOneAndUpdate({userID: user1.id}, {$inc: {meat: 1}})
             await rpg.findOneAndUpdate({userID: user2.id}, {$inc: {meat: 1}})

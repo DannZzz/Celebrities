@@ -7,6 +7,7 @@ const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment } = require("discord.js");
 const { COIN, STAR } = require("../../config");
 const {error, embed, perms} = require("../../functions/functions");
+const { addPremiumStar } = require("../../functions/models");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 const Canvas = require('canvas');
@@ -163,11 +164,11 @@ module.exports = {
     if(winner === hero){
       emb
       .setTitle(j.done)
-      .setDescription(`${j.rew} ${levelReward} ${STAR}`)
+      .setDescription(`${j.rew} ${await addPremiumStar(bot, user.id, levelReward, true)} ${STAR}`)
       .setThumbnail(enemy.url)
       .setImage(hero.url)
 
-      await bd.findOneAndUpdate({userID: user.id}, {$inc: {stars: levelReward}});
+      await addPremiumStar(bot, user.id, levelReward);
       await rpg.findOneAndUpdate({userID: user.id}, {$inc: {surviveLevel: 1}});
 
     } else {
