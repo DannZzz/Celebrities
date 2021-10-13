@@ -108,22 +108,25 @@ class SubClass {
                 } else if (member.roles.cache.get(boosterRoleIds.classic)) {
                 return 1;
                 } else {
-                return -1;
+                return 0;
                 }
             }
             } else {
-            return -1;
+            return 0;
             };
 
     };
 
     heroHighSubLevel () {
-        if (!this.hero.subLevel) return true;
+        //if (!this.hero.subLevel) return true;
 
         const mySubLevel = SubId(this.bot, this.user.id) || 0;
         const hl = this.hero.subLevel;
 
-        if (mySubLevel < hl) return false;
+        if (mySubLevel < hl) {return false}
+        else {
+            return true;
+        };
         
     };
 
@@ -149,11 +152,11 @@ function SubId (bot, id) {
             } else if (member.roles.cache.get(boosterRoleIds.classic)) {
             return 1;
             } else {
-            return -1;
+            return 0;
             }
         }
         } else {
-        return -1;
+        return 0;
         };
 
 };
