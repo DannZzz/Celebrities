@@ -477,17 +477,20 @@ module.exports = {
             .setColor (main)
             .setAuthor ("All information about transfers and monthly subscriptions: ?donate")
             .addFields (
+                {name: `Developer's Boosty Account:`,
+                value: `**[boosty.to/iamdann](https://boosty.to/iamdann)**`,
+                inline: false},
                 {name: `${status.vip} VIP`,
                 value: `Access to commands - AFK, embed, channel, levels (enabling the level system) and bio profile, and also increases the cost of fish (by 33%), increases the max value of gift to 1000, and also increases the bet of batlle.`,
                 inline: false},
                 {name: `${status.premium} Premium`,
                 value: `Gives access to unique heroes, reduces **cooldown** for all commands **two** times, makes it possible to issue a rank card, and also gives more bet limit for all games, increases the max value of gift to 2500.`,
                 inline: false},{name: `Prices in dollars.`,
-                    value: `• VIP + 10000 ${STAR} - 0,2$\n • Premium + 20000 ${STAR} - 0,41$\n • Hero **Tartarus** - 0,8$\n • Hero **Toothless** - 0,55$\n • Hero **Zeus** - 0,26$\n • 100000 ${STAR } - 1,1$ (47% discount)\n • 30000 ${STAR} - 0,4$ (33% discount)\n • 10000 ${STAR} - 0,2$\n • Donate-box (20k-100k) - 0,2$`,
-                    inline: false},
-                    {name: `Extra place for heroes.`,
-                    value: `• Cost: Your place count * 2000 ${STAR}\n \`?buy place\``,
-                    inline: false}
+                value: `• VIP + 10000 ${STAR} - 0,2$\n • Premium + 20000 ${STAR} - 0,41$\n • Hero **Tartarus** - 0,8$\n • Hero **Toothless** - 0,55$\n • Hero **Zeus** - 0,26$\n • 600000 ${STAR } - 1,25$\n • 150000 ${STAR} - 0,4$\n • 50000 ${STAR} - 0,2$\n • Donate-box (50k-200k) - 0,2$`,
+                inline: false},
+                {name: `Extra place for heroes.`,
+                value: `• Cost: Your place count * 2000 ${STAR}\n \`?buy place\``,
+                inline: false}
                 )
                 .setTitle("Любая подписка дает доступ к секретным промокодам!")
                 .setFooter ("Send your questions by command ?message")
@@ -983,11 +986,11 @@ The more fish, the higher the price!
         "access": "For everyone",
         "title": "Information about the bot!",
         "field1" : "Name:", 
-        "create": "Created at ",
+        "create": "Created at:",
         "dev": "Developer: ",
         "prefix": "Global prefix: ",
-        "link": "INVITE",
-        "inv" : "If you want to invite me, click:",
+        "link": "Boosty",
+        "inv" : "Developer's Boosty account:",
         "support": "Our discord server:"
     },
 
