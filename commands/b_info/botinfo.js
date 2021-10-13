@@ -1,7 +1,8 @@
 const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
 const { main } = require("../../JSON/colours.json");
 const { serverFind } = require("../../functions/models");
-const {PREFIX, DEV, botINVITE} = require("../../config");
+const { makeTimestamp } = require("../../functions/functions");
+const {PREFIX, DEV, botINVITE, devID} = require("../../config");
 const moment = require('moment');
 
 module.exports = {
@@ -16,7 +17,9 @@ module.exports = {
   const {botinfo} = require(`../../languages/${LANG.lang}`); 
     
   let botAvatar = bot.user.displayAvatarUrl;
-
+  const devs = devID.map(i => bot.users.cache.get(i).tag).join("\n")
+  
+    
   const button2 = new MessageButton()
       .setStyle("LINK")
       .setLabel("Commands")
@@ -24,8 +27,8 @@ module.exports = {
 
   const button1 = new MessageButton()
       .setStyle("LINK")
-      .setLabel("Main Site")
-      .setURL("https://adanabot.github.io/")
+      .setLabel("Support Server")
+      .setURL("https://discord.gg/Q6Guf7MmsT")
 
   const button3 = new MessageButton()
       .setStyle("LINK")
@@ -38,10 +41,10 @@ module.exports = {
   .setAuthor(botinfo.title)
   .addFields(
   { name: botinfo.field1, value: bot.user.tag },
-  { name: botinfo.create, value: moment(bot.user.createdAt).format('DD.MM.YYYY HH:mm') } )
-  .addField(botinfo.dev, DEV, true)
+  { name: botinfo.create, value: `<t:${(makeTimestamp(bot.user.createdAt.getTime()))}:D> (<t:${(makeTimestamp(bot.user.createdAt.getTime()))}:R>)` } )
+  .addField(botinfo.dev, devs, true)
   .addField(botinfo.prefix, PREFIX, true)
-  .addField(botinfo.inv, `[${botinfo.link}](${botINVITE})`)
+  .addField(botinfo.inv, `**[boosty.to/iamdann](https://boosty.to/iamdann)**`)
   .setThumbnail(bot.user.displayAvatarURL({ dynamic: true }))
   .setFooter("ID: " + bot.user.id)
   .setTimestamp()
