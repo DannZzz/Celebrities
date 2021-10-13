@@ -33,6 +33,7 @@ module.exports = {
         let time = 1800000;
         if (bag.vip2) time = time / 2;
         ops.trial.set(msg.author.id, {trial: 'on'});
+        setTimeout(() => ops.trial.delete(user.id), 60 * 1000 * 7);
         const data = await rpgFind(user.id);
         if (!data.item) {
           ops.trial.delete(user.id);
