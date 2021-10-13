@@ -11,6 +11,7 @@ const {tempPack: tm} = require("../../JSON/items");
 const { AGREE, DISAGREE, STAR, heroType } = require("../../config");
 const { MessageEmbed, MessageSelectMenu, MessageActionRow, MessageButton } = require("discord.js");
 const {stripIndents} = require("common-tags");
+const Subs = require("../../functions/subscriptionClass");
 
 module.exports = {
   config: {
@@ -277,10 +278,12 @@ module.exports = {
         for (let item in heroes) {
             var hero = heroes[item];
             if (hero.type === i.customId) {
+              let ccost = cCost(hero.cost);
+              if (!isNaN(ccost) && ccost <= 0) ccost = LANG.lang === "ru" ? "Бесплатно" : "Free";
               heroArr.push({
                 label: `${ln === "en" ? hero.name : hero.nameRus} ${cMar(hero.marry)} ${cVip(hero.vip)}`,
                 value: hero.name,
-                description: `${hh.cost} ${cCost(hero.cost)}`,
+                description: `${hh.cost} ${ccost}`,
                 emoji: cType(hero.costType, hero.available)
             })
             }
@@ -320,7 +323,10 @@ module.exports = {
                 }
             }
   
-            if (item.marry === true && !coinData.marryID) return error(msg, b.love)
+            if (item.marry === true && !coinData.marryID) return error(msg, b.love);
+
+            const sub = Subs(bot, msg, item.name).heroHighSubLevel();
+            if (!sub) return error(msg, `${b.subError} **${await Subs(bot, msg, item.name).getStringById(item.subLevel)}**`);
   
             if (rp.heroes.length === rp.itemCount) return error(msg, b.place)
             const idk = rp.heroes.find(x => x.name === val) 

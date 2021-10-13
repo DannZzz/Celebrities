@@ -25,13 +25,16 @@ module.exports = {
     for (let key in heroes) {
       var obj = heroes[key];
 
+      let ccost = `${cCost(obj.cost)} ${cType(obj.costType)}`;
+      if (!isNaN(obj.cost) && obj.cost <= 0) ccost = LANG.lang === "ru" ? "Бесплатно" : "Free";
+
         newdr.push(
         new MessageEmbed()
         .setColor(main)
         .setTitle(`${heroType[obj.type]} ${obj.name} (${obj.nameRus}) ${cMar(obj.marry)} ${cVip(obj.vip)}`)
         .setThumbnail(obj.url)
         .setDescription(LANG.lang === "en" ? obj.descriptionEN : obj.description)
-        .addField(`${hh.cost} ${cCost(obj.cost, obj)} ${cType(obj.costType)}`, `**${hh.avail} ${cAv(obj.available)}**`, true)
+        .addField(`${hh.cost} ${ccost}`, `**${hh.avail} ${cAv(obj.available)}**`, true)
         .addField(`${hm.health} ${obj.health} ❤`, `**${hm.damage} ${obj.damage}** ⚔`, true)
         )
       

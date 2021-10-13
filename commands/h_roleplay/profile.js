@@ -150,6 +150,8 @@ function getSub(bot, id, lang = "ru") {
         } else {
           return "—";
         }
+      } else {
+        return "—";
       }
     } else {
       return "—";
