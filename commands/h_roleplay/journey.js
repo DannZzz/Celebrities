@@ -74,7 +74,7 @@ module.exports = {
     
 
     if (args[0] && argsWords.includes(args[0])) {
-
+      const att = new MessageAttachment(enemy.path, `${enemy.name}.png`)
       const levMes = new MessageEmbed()
       .setColor(main)
       .setAuthor(`${user.username}, ${j.now} ${nowLevel}`)
@@ -82,12 +82,12 @@ module.exports = {
       .setDescription(enemy.description)
       .addField(`❤ ${hm.health} ${enemyHealth}`, `**⚔ ${hm.damage} ${enemyDamage}**`, false)
       .addField(`${hm.reward} ${levelReward} ${STAR}`, `** **`, false)
-      .setImage(enemy.url)
+      .setImage(`attachment://${enemy.name}.png`)
 
-      return message.channel.send({embeds: [levMes]});
+      return message.channel.send({embeds: [levMes], files: [att]});
     } 
     let damn = await message.channel.send(`<a:dannloading:876008681479749662> Ищем противника...`);
-    const CC = await makeCanvas(hero.url, enemy.url)
+    const CC = await makeCanvas(hero.path, enemy.path)
     const att = new MessageAttachment(CC.toBuffer(), 'fight.png')
     
     const lonely = new MessageEmbed()
@@ -161,22 +161,29 @@ module.exports = {
     let emb = new MessageEmbed()
     .setColor(main)
     .setTimestamp()
+    const att1 = new MessageAttachment(enemy.path, `${enemy.name}.png`);
+    const att2 = new MessageAttachment(hero.path, `${hero.name}.png`)
     if(winner === hero){
+      
+
+      
       emb
       .setTitle(j.done)
       .setDescription(`${j.rew} ${await addPremiumStar(bot, user.id, levelReward, true)} ${STAR}`)
-      .setThumbnail(enemy.url)
-      .setImage(hero.url)
+      .setThumbnail(`attachment://${enemy.name}.png`)
+      .setImage(`attachment://${hero.name}.png`)
 
       await addPremiumStar(bot, user.id, levelReward);
       await rpg.findOneAndUpdate({userID: user.id}, {$inc: {surviveLevel: 1}});
 
     } else {
+      
+      
       emb
       .setTitle(`${enemy.nameRus} ${j.he}`)
       .setDescription(j.err)
-      .setThumbnail(hero.url)
-      .setImage(enemy.url)
+      .setThumbnail(`attachment://${hero.name}.png`)
+      .setImage(`attachment://${enemy.name}.png`)
       await pd.findOneAndUpdate({userID: user.id}, {$set: {survive: Date.now()}})
 
     }
@@ -184,7 +191,7 @@ module.exports = {
     damn.delete()
     setTimeout(function(){
       msg.delete()
-      return message.channel.send({embeds: [emb]})
+      return message.channel.send({embeds: [emb], files: [winner === hero ? att2 : att1]})
     }, 15000)
     // message.channel.send(msgozv).then(
     //   (msg) => {

@@ -124,7 +124,7 @@ if(i.customId === buttonList[0].customId) {
     );
     wait.edit({components: [disabledRow]})
     let damn = await message.channel.send(`<a:dannloading:876008681479749662> ${d.find}`);
-   const CC = await makeCanvas(data1.url, data2.url)
+   const CC = await makeCanvas(data1.path, data2.path)
     const att = new MessageAttachment(CC.toBuffer(), 'fight.png')
     
 
@@ -199,16 +199,19 @@ if(i.customId === buttonList[0].customId) {
     let winData = await rpg.findOne({userID: winner.id})
     const DATA = await getHeroData(bot, winner.id, winData);
     const get = winData.heroes.find(x => x.name === winData.item)
-    let hero = heroes[winData.item]
+    let hero = heroes[winData.item];
+
+    const att2 = new MessageAttachment(hero.path, `${hero.name}.png`);
+    
     let winEmb = new MessageEmbed()
     .setTitle(`${d.winner} ${winner.tag || winner.user.tag} (${LANG.lang === "ru" ? hero.nameRus : hero.name})`)
     .setDescription(`${d.among} ${user}, ${mUser}\n${member1}: +${winCup} ${LEAGUE.cup}\n${member2}: -45 ${LEAGUE.cup}`)
-    .setImage(hero.url)
+    .setImage(`attachment://${hero.name}.png`)
     .setColor(main)
     .addField(`❤ ${hm.health} ${DATA.h}`, `**⚔ ${hm.damage} ${DATA.d}**`, true)
     .addField(`🏆 ${hm.winrate}`, `**${roundFunc(winData.wins / winData.totalGames * 100) || '0'}%**`, true)
     msg.delete()
-    return message.channel.send({embeds: [winEmb]})
+    return message.channel.send({embeds: [winEmb], files: [att2]})
   }, 25000)
 
   collector.stop()

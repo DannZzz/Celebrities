@@ -75,6 +75,8 @@ module.exports = {
         }
         let totalReward = 0;
 
+        const heroAtt = new MessageAttachment(hero.path, `${hero.name}.png`);
+        
         const m = await channel.send("<a:dannloading:876008681479749662>");
         await start();
         async function start() {
@@ -145,7 +147,7 @@ module.exports = {
             let winEmb = new MessageEmbed()
             .setTitle(`${b.winner} ${user.username} (${LANG.lang === "ru" ? hero.nameRus : hero.name})`)
             .setDescription(`🟢 ${winCount}`)
-            .setImage(hero.url)
+            .setImage(`attachment://${hero.name}.png`)
             .setColor(main)
             .addField(`❤ ${hm.health} ${h}`, `**⚔ ${hm.damage} ${d}**`, true)
             .addField(`${ (LANG.lang === "ru" ? "Текущий " : "Current ") + hm.reward} ${await addPremiumStar(bot, user.id, totalReward, true)} ${STAR}`, `**🏆 ${hm.winrate} ${roundFunc(newData.wins / newData.totalGames * 100) || '0'}%**`, true)
@@ -164,7 +166,7 @@ module.exports = {
 
             const row = new MessageActionRow().addComponents([button1, button2])
               
-            const getNext = await channel.send({embeds: [winEmb], components: [row]});
+            const getNext = await channel.send({embeds: [winEmb], files: [heroAtt], components: [row]});
             
             const collector = await channel.createMessageComponentCollector({
               time: 15000,
@@ -205,14 +207,17 @@ module.exports = {
                         
           } else {
             ops.trial.delete(user.id);
+
+            const enemyAtt = new MessageAttachment(enemy.path, `${enemy.name}.png`);
+            
             let winEmb = new MessageEmbed()
             .setTitle(`${b.winner} ${enemy.name} A.I (${LANG.lang === "ru" ? enemy.nameRus : enemy.name})`)
             .setDescription(`${b.between} ${msg.member}, ${enemy.name}(A.I)`)
-            .setImage(enemy.url)
+            .setImage(`attachment://${enemy.name}.png`)
             .setColor(main)
             .addField(`❤ ${hm.health} ${h1}`, `**⚔ ${hm.damage} ${d1}**`, true)
 
-            return channel.send({embeds: [winEmb]});
+            return channel.send({embeds: [winEmb], files: [enemyAtt]});
           }
 
 

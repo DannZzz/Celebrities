@@ -198,7 +198,7 @@ module.exports = {
       if(trues[0] == true && trues[1] === true) {
         waitingMsg.delete()
         const damn = await message.channel.send(`<a:dannloading:876008681479749662> ${b.connect}..`)
-        const CC = await makeCanvas(data1.url, data2.url, data3.url, boss.url)
+        const CC = await makeCanvas(data1.path, data2.path, data3.path, boss.path)
         const att = new MessageAttachment(CC.toBuffer(), 'fight.png')
         damn.delete()
         
@@ -231,12 +231,14 @@ module.exports = {
             }
           }
 
+          const att = new MessageAttachment(boss.path, `${boss.name}.png`);
+          
           let endEmbed = new MessageEmbed()
           .setColor(main)
           .setTimestamp()
           .setAuthor(`${boss.name} ${b.turned}`)
           .setTitle(`${message.author.username}, ${user1.user.username} ${and} ${user2.user.username} ${b.lost}.`)
-          .setThumbnail(boss.url)
+          .setThumbnail(`attachment://${boss.name}.png`)
 
           let winEmbed = new MessageEmbed()
           .setColor(main)
@@ -244,7 +246,7 @@ module.exports = {
           .setAuthor(`${boss.name} ${b.gaveUp}`)
           .setTitle(`${message.author.username}, ${user1.user.username} ${and} ${user2.user.username} ${b.won}.`)
           .setDescription(`${b.gets} ${boss.reward} ${STAR}, 1 ${items.meat.emoji}`)
-          .setThumbnail(boss.url)
+          .setThumbnail(`attachment://${boss.name}.png`)
 
           if (winner){
             await bd.findOneAndUpdate({userID: mUser.id}, {$inc: {stars: boss.reward}})
@@ -264,10 +266,10 @@ module.exports = {
             await pd.findOneAndUpdate({userID: user2.id}, {$set: {boss: Date.now()}})
 
             newmsg.delete()
-            return message.channel.send({embeds: [winEmbed]})
+            return message.channel.send({embeds: [winEmbed], files: [att]})
           } else {
             newmsg.delete()
-            return message.channel.send({embeds: [endEmbed]})
+            return message.channel.send({embeds: [endEmbed], files: [att]})
           }
 
         }, 20000)

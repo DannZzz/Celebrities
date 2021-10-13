@@ -111,7 +111,7 @@ module.exports = {
     let winner = false
 
     let damn = await message.channel.send(`<a:dannloading:876008681479749662> ${b.find}`);
-    const CC = await makeCanvas(data1.url, data2.url)
+    const CC = await makeCanvas(data1.path, data2.path)
     const att = new MessageAttachment(CC.toBuffer(), 'fight.png')
     
     
@@ -171,28 +171,34 @@ module.exports = {
           winData = WinData.heroes.find(x => x.name === WinData.item)
           let hero = heroes[winData.name]
           let it = heroes[item]
+
+          const att = new MessageAttachment(hero.path, `${hero.name}.png`);
+          
           let winEmb = new MessageEmbed()
           .setTitle(`${b.winner} ${winner.tag || winner.user.tag} (${LANG.lang === "ru" ? hero.nameRus : hero.name})`)
           .setDescription(`${b.between} ${message.member}, ${it.name}(A.I)`)
-          .setImage(hero.url)
+          .setImage(`attachment://${hero.name}.png`)
           .setColor(main)
           .addField(`❤ ${hm.health} ${DATA.h}`, `**⚔ ${hm.damage} ${DATA.d}**`, true)
           .addField(`${hm.reward} ${await addPremiumStar(bot, winner.id, value*2, true)} ${STAR} +${winCup} ${LEAGUE.cup}`, `**🏆 ${hm.winrate} ${roundFunc(WinData.wins / WinData.totalGames * 100) || '0'}%**`, true)
           msg.delete()
-          return message.channel.send({embeds: [winEmb]})
+          return message.channel.send({embeds: [winEmb], files: [att]});
         } else {
           await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {loses: 1}})
           await Rate(message).rateUpdate(message.author.id, -45);
 
-          let hero = heroes[item]
+          let hero = heroes[item];
+
+          const att = new MessageAttachment(hero.path, `${hero.name}.png`);
+
           let winEmb = new MessageEmbed()
           .setTitle(`${b.winner} ${hero.name} A.I (${LANG.lang === "ru" ? hero.nameRus : hero.name})`)
           .setDescription(`${b.between} ${message.member}, ${hero.name}(A.I) -${45} ${LEAGUE.cup}`)
-          .setImage(hero.url)
+          .setImage(`attachment://${hero.name}.png`)
           .setColor(main)
           .addField(`❤ ${hm.health} ${Math.round(eHealth)}`, `**⚔ ${hm.damage} ${Math.round(eDamage)}**`, true)
           msg.delete()
-          return message.channel.send({embeds: [winEmb]})
+          return message.channel.send({embeds: [winEmb], files: [att]})
         }
         
        
