@@ -770,6 +770,7 @@ module.exports = {
         "vip": "This hero is available only for __Premium__ users.",
         "love": "You must be in love to buy this hero.",
         "place": "You don't have enough place.",
+        "subError": "You need to have at least subscription",
         "already": "You already have this hero.",
         "donePlace": "You successfuly bought an extra slot for heroes.",
         "errPlace": "You already have an extra slot.",

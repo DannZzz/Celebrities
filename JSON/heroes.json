@@ -562,5 +562,22 @@
     "vip": false,
     "upgradeCost": 1000,
     "type": "mythical"
+  },
+  "Girl": {
+    "name": "Girl",
+    "nameRus": "Девушка",
+    "health": 200000,
+    "damage": 15000,
+    "cost": 0,
+    "costType": "star",
+    "url": "https://i.ibb.co/BG6pWzh/Girl.jpg",
+    "path": "./images/heroes/Girl.jpg",
+    "descriptionEN": "I wonder what happens when you combine a girl and a dragon?\nHere is the answer. A girl, beautiful, brave and blind. Yes, yes...blind...",
+    "description": "Интересно, что получится, если соединить девушку и дракона?\nВот и ответ. Девушка, красивая, смелая и слепая. Да-да...слепая...",
+    "available": "Да",
+    "vip": false,
+    "upgradeCost": 1000,
+    "type": "private",
+    "subLevel": 2
   }
 }
