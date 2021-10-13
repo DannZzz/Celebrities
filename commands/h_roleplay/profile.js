@@ -56,7 +56,7 @@ module.exports = {
 
 
 
-      embed.addField(`${vip}`, `${STAR} ${data.stars} ${devs.includes(member.id) ? "**Dev**" : ""}\n${await Rate(message).rateData(trophy)}\n${p.quiz} ${rp.quizCount}\n${CL}\n${p.gg} ${marData}\n<:heroes:886967552310407219> : ${rp.itemCount || 1}\n\n`)
+      embed.addField(`${p.status} ${vip}\n${p.subs} ${getSub(bot, member.id, LANG.lang)}`, `${STAR} ${data.stars} ${devs.includes(member.id) ? "**Dev**" : ""}\n${await Rate(message).rateData(trophy)}\n${p.quiz} ${rp.quizCount}\n${CL}\n${p.gg} ${marData}\n<:heroes:886967552310407219> : ${rp.itemCount || 1}\n\n`)
       embed.addField(`__${p.fishes}__\n`,
     `\`\`\`${p.junk}(🔧) - ${data.junk}\n${p.common}(🐟) - ${data.common}\n${p.unc}(🐠) - ${data.uncommon}\n${p.rare}(🦑) - ${data.rare}\n${p.leg}(🐋) - ${data.legendary}\`\`\`\n`, true)
 
@@ -112,5 +112,48 @@ module.exports = {
    
     
   }
+}
+
+
+function getSub(bot, id, lang = "ru") {
+  const server = bot.guilds.cache.get("882589567377637408");
+
+    const boosterRoleIds = {
+      classic: "897172766929858601",
+      premium: "897172906021371926",
+      premiumPlus: "897172954411053098"
+    }
+
+    const langData = {
+      en: {
+        classic: "Classic Boost 💛",
+        average: "Average Boost 💚",
+        max: "Maximum Boost 💜"
+      },
+      ru: {
+        classic: "Классический Буст 💛",
+        average: "Средний Буст 💚",
+        max: "Максимальный Буст 💜"
+      }
+    };
+    
+    
+    if (server) {
+      const member = server.members.cache.get(id);
+      if (member) {
+        if (member.roles.cache.get(boosterRoleIds.premiumPlus)) {
+          return langData[lang].max;
+        } else if (member.roles.cache.get(boosterRoleIds.premium)) {
+          return langData[lang].average;
+        } else if (member.roles.cache.get(boosterRoleIds.classic)) {
+          return langData[lang].classic;
+        } else {
+          return "—";
+        }
+      }
+    } else {
+      return "—";
+    }
+
 }
 
