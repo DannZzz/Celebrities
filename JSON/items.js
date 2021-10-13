@@ -77,8 +77,8 @@ module.exports = {
         NAME: "Донат-бокс",
         NAMEEN: "Donate-box", 
         emoji: donate,
-        winRU: "Золото 20.000-100.000",
-        winEN: "Gold 20.000-100.000"
+        winRU: "Золото 50.000-200.000",
+        winEN: "Gold 50.000-200.000"
     },
     goldBox: {
         name: "goldBox",
