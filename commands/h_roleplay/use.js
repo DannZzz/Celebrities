@@ -210,7 +210,7 @@ module.exports = {
             
             return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name));
         } else if (it == 10) {
-            const random = Math.round(randomRange(20000, 100000));
+            const random = Math.round(randomRange(50000, 200000));
             await rpg.updateOne({userID: user.id}, {$inc: {donateBox: -1}});
 
             await addStar(user.id, random)
