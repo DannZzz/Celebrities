@@ -5,6 +5,7 @@
     "health": 200,
     "damage": 20,
     "url": "https://i.ibb.co/mydPsWh/Jorj.jpg",
+    "path": "./images/enemies/Jorj.jpg",
     "descriptionEN": "Jorj - are supernatural humanoid creatures who, according to Western European mythology, live in underground caves and cannot stand sunlight, known as goblins.",
     "description": "Жорж - сверхъестественное человекоподобные создания, живущие, согласно западноевропейской мифологии, в подземных пещерах и не переносящие солнечного света, известны как гоблины."
   },
@@ -14,6 +15,7 @@
     "health": 400,
     "damage": 40,
     "url": "https://i.ibb.co/Tb3ZGHd/Cousin.jpg",
+    "path": "./images/enemies/Cousin.jpg",
     "descriptionEN": "Cousin is a mythological creature in the traditions of the Slavs. Often it is an incubus - the hypostasis of a walking, fiery devil. D'Lord's right hand.",
     "description": "Кузен - мифологическое существо в преданиях славян. Часто является инкубом — ипостасью ходячего, огненного чёрта. Правая рука Д'Лорда."
   },
@@ -23,6 +25,7 @@
     "health": 600,
     "damage": 50,
     "url": "https://i.ibb.co/31C0tsb/Arthas.jpg",
+    "path": "./images/enemies/Arthas.jpg",
     "descriptionEN": "Arthas is a legendary creature from Japanese mythology, an incredible embodiment of lightning. Arthas is an enemy of the people because of the storm lightning, thereby frightening the people. In Japanese mythology, it is said that Arthas is the enemy of the people not only because of lightning, but also because of the battles that they lost to him.",
     "description": "Артас — легендарное существо из японской мифологии, невероятное воплощение молнии. Артас враг народа из-за штормовых молний, тем самым пугает народ. В японской мифологии сказано, что Артас противник народа не только из-за молний,а ещё из-за битв которые они ему проигрывали."
   },
@@ -32,6 +35,7 @@
     "health": 800,
     "damage": 70,
     "url": "https://i.ibb.co/jv3T0zv/D-039-Wolf.jpg",
+    "path": "./images/enemies/D-039-Wolf.jpg",
     "descriptionEN": "D'Wolf - A dangerous animal? I don't think so.\nAn enchanted spirit that works for D'Lord. History suggests that D'Wolf used to be the most beautiful prince of the north.",
     "description": "Д'Волк — Опасное животное? Не думаю.\nЗаколдованный дух, который работает на Д'Лорда. История говорит о том, что раньше Д'Волк был самым прекрасным принцом севера."
   },
@@ -41,6 +45,7 @@
     "health": 1100,
     "damage": 110,
     "url": "https://i.ibb.co/Jm3XpXK/D-039-Lord.jpg",
+    "path": "./images/enemies/D-039-Lord.jpg",
     "descriptionEN": "D'Lord - the ancient Egyptian god of the moon, time, wisdom and culture, originally D'Lord and the good and wise spirit supposed in him, heralding the spilling of the Nile and destroying harmful reptiles.",
     "description": "Д'Лорд — древнеегипетский бог луны, времени, премудрости и культуры, первоначально Д'Лорд и предполагавшийся в нем благой и премудрый дух, возвещавший разлитие Нила и истреблявший вредных гадов."
   },
@@ -50,6 +55,7 @@
     "health": 1400,
     "damage": 140,
     "url": "https://i.ibb.co/dBrt7kd/shibzdik.jpg",
+    "path": "./images/enemies/shibzdik.jpg",
     "descriptionEN": "Nostalgia of old heroes. One of the first heroes of the game, try to win.",
     "description": "Ностальгия старых героев. Один из первых героев игры, попробуй победить."
   },
@@ -61,6 +67,7 @@
     "damage": 2500,
     "reward": 100,
     "url": "https://i.ibb.co/NNk8Gbx/Eater-Skull.jpg",
+    "path": "./images/enemies/Eater-Skull.jpg",
     "descriptionEN": "Are you ready to challenge the one who died long ago?\nKill or die. Team up with friends to win.",
     "description": "Готов ли ты бросить вызов тому, кто давно умер?\nУбей, либо умри. Объединись с друзьями чтобы выиграть."
   },
@@ -72,6 +79,7 @@
     "damage": 4000,
     "reward": 200,
     "url": "https://i.ibb.co/kJtqDbh/Fire-Walker.jpg",
+    "path": "./images/enemies/Fire-Walker.jpg",
     "descriptionEN": "Fire, fire, and more fire!\nA huge large monster shines in flames. Team up with friends to win.",
     "description": "Огонь, огонь, и ещё раз огонь!\nОгромный большой монстр сияет в огне. Объединись с друзьями чтобы выиграть."
   },
@@ -83,6 +91,7 @@
     "damage": 10000,
     "reward": 500,
     "url": "https://i.ibb.co/Lrnt099/Flor.jpg",
+    "path": "./images/enemies/Flor.jpg",
     "descriptionEN": "Flor — One of Thor's students. When he was still small, Thor himself noticed him. He invited him to study with him. Flor happily agreed. The little boy trained every day and gave all his strength. When the boy grew up he became very strong. But he began to direct his enormous forces to bad actions.",
     "description": "Флор — Один из учеников Тора. Когда он был ещё мал его заметил сам Тор. Он ему предложил учиться у него. Флор с радостью согласился. Маленький мальчик тренировался каждый день и отдавал все свои силы. Когда мальчик вырос он стал очень сильным. Но свои огромные силы начал направлять на плохие действия."
   }

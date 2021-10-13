@@ -647,6 +647,8 @@ module.exports = {
         "usage": "[username | mention | ID]",
         "access": "For everyone",
         "pr": "Profile:",
+        "status": "Status:",
+        "subs": "Subscription:",
         "none": "Unknown",
         "clan": "Clan:",
         "level": "Level:",
