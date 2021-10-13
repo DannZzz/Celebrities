@@ -108,9 +108,9 @@
   "Eragon": {
     "name": "Eragon",
     "nameRus": "Эрагон",
-    "health": 4000,
-    "damage": 60,
-    "cost": 2500,
+    "health": 44000,
+    "damage": 6000,
+    "cost": 50000,
     "costType": "star",
     "url": "https://i.ibb.co/frb1BsG/Eragon.jpg",
     "descriptionEN": "Princess Mariam and the Enchanted Dann.\nYes! Love does not die.\nAlthough they are not immortal, their love will last forever!\n\n__Guaranteed victory against the D'Lord__.",
@@ -118,7 +118,7 @@
     "available": "Да",
     "vip": true,
     "marry": true,
-    "upgradeCost": 40,
+    "upgradeCost": 400,
     "type": "mythical"
   },
   "Ariel": {
