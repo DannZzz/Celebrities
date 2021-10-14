@@ -34,6 +34,8 @@
   "D'Lord" : {
     "name": "D'Lord",
     "nameRus": "Д'Лорд",
+    "health": 1544,
+    "damage": 163,
     "url": "https://i.ibb.co/Jm3XpXK/D-039-Lord.jpg",
     "path": "./images/enemies/D-039-Lord.jpg",
     "descriptionEN": "D'Lord - the ancient Egyptian god of the moon, time, wisdom and culture, originally D'Lord and the good and wise spirit supposed in him, heralding the spilling of the Nile and destroying harmful reptiles.",
@@ -42,6 +44,8 @@
   "Shibzdik's Dilan" : {
     "name": "Shibzdik's Dilan",
     "nameRus": "Дилан Шибздика",
+    "health": 1643,
+    "damage": 186,
     "url": "https://i.ibb.co/dBrt7kd/shibzdik.jpg",
     "path": "./images/enemies/shibzdik.jpg",
     "descriptionEN": "Nostalgia of old heroes. One of the first heroes of the game, try to win.",
