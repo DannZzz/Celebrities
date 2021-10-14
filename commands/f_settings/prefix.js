@@ -9,7 +9,8 @@ module.exports = {
     config: {
         name: "prefix",
         category: "f_settings",
-        aliases: ["pr", 'префикс']
+        aliases: ["pr", 'префикс'],
+        permissions: ["ADMINISTRATOR"]
     },
     run: async (bot, message, args) => {
       
@@ -18,7 +19,6 @@ module.exports = {
       const LANG = await getLang.findOne({serverID: message.guild.id});
       const {prefix: bb, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm} = require(`../../languages/${LANG.lang}`);   
       
-        if (!perms(message, "ADMINISTRATOR")) return error(perm)
         let sd = await serverModel.findOne({ serverID: message.guild.id });
         if (!args[0]) {
 

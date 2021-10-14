@@ -9,7 +9,8 @@ module.exports = {
       config: {
         name: "delete",
         category: "f_settings",
-        aliases: ['удалить']
+        aliases: ['удалить'],
+        permissions: ["ADMINISTRATOR"]
     },
     run: async (bot, message, args) => {
       
@@ -18,7 +19,6 @@ module.exports = {
       const LANG = await getLang.findOne({serverID: message.guild.id});
       const {delete: b, waiting, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm} = require(`../../languages/${LANG.lang}`);   
      
-      if (!perms(message, "ADMINISTRATOR")) return error(message, perm);
       if (!args[0]) return error(message, b.name)
       let cmd = args[0]
 

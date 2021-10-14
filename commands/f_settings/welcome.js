@@ -11,7 +11,8 @@ module.exports = {
       config: {
         name: "welcome",
         category: "f_settings",
-        aliases: ["welcomer", 'приветствие']
+        aliases: ["welcomer", 'приветствие'],
+        permissions: ["ADMINISTRATOR"]
     },
     run: async (bot, message, args) => {
       
@@ -21,7 +22,6 @@ module.exports = {
       const {welcome: b, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm} = require(`../../languages/${LANG.lang}`);   
       
       
-      if (!perms(message, "ADMINISTRATOR")) return error(message, perms)
       if (!args[0]) return error(message, b.error)
       const option = args[0].toLowerCase();
       const serverData = await serverModel.findOne({serverID: message.guild.id});

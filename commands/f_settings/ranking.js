@@ -13,7 +13,8 @@ module.exports = {
   config: {
     name: "ranking",
     category: "f_settings",
-    aliases: ['уровни']
+    aliases: ['уровни'],
+    permissions: ["ADMINISTRATOR"]
   },
   run: async (bot, message, args, ops) => {
     
@@ -27,7 +28,6 @@ module.exports = {
     let sd = await serverModel.findOne({serverID: message.guild.id});
 
     if(bag['vip1'] === false) return error(message, vipOne);
-    if (!perms(message, "ADMINISTRATOR")) return error(message, perm);
     if(!args[0]) return error(message, b.error);
     if (args[0] === 'disable') {
       if(sd.rank) {

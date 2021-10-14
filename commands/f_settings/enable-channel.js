@@ -6,13 +6,13 @@ module.exports = {
     config: {
         name: "channel-enable",
         aliases: ["канал-включить"],
-        category: "f_settings"
+        category: "f_settings",
+        permissions: ["ADMINISTRATOR"]
     },
     run: async (bot, message, args) => {
         const data = await serverFind(message.guild.id);
         const {"channel-enable": ce, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${data.lang}`);   
         
-        if(!perms(message, "ADMINISTRATOR")) return error(message, perm);
         if (!args[0]) return error(message, ce.no);
         const channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0]);
         if (!channel || channel.type !== "GUILD_TEXT") return error(message, ce.err);

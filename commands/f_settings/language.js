@@ -10,7 +10,8 @@ module.exports = {
     config: {
       name: "language",
       aliases: ["lang", 'язык'],
-      category: "f_settings"
+      category: "f_settings",
+      permissions: ["ADMINISTRATOR"]
     },
     run: async (bot, message, args) => {
       
@@ -20,7 +21,6 @@ module.exports = {
       let {language: cl, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`); 
          
       const langs = ["ru", "en"];
-      if (!perms(message, "ADMINISTRATOR")) return error(message, perm)
       if (!args[0] || !langs.includes(args[0].toLowerCase())) return error(message, cl.err)
       
 

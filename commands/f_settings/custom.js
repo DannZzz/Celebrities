@@ -9,7 +9,8 @@ module.exports = {
       config: {
         name: "custom",
         category: "f_settings",
-        aliases: ["command", 'команда']
+        aliases: ["command", 'команда'],
+        permissions: ["ADMINISTRATOR"]
     },
     run: async (bot, message, args) => {
       
@@ -19,7 +20,6 @@ module.exports = {
       const {custom: b, waiting, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm} = require(`../../languages/${LANG.lang}`);   
      
       
-      if (!perms(message, "ADMINISTRATOR")) return error(message, perm);
 
       if (!args[0]) return error(message, b.name);
       if (!args[1]) return error(message, b.resp);
