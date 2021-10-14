@@ -32,26 +32,26 @@ module.exports = {
     }
 
     if(!args[1]) return error(message, "Укажите подарок.");
-    const vips = ['vip-1', 'vip-2']
+    const vips = ['vip', 'premium']
     if (!vips.includes(args[1])) return error(message, "Подарок не найден.");
     let giftType;
-    if (args[1] === 'vip-1') {
-      giftType = 'VIP-1';
+    if (args[1] === 'vip') {
+      giftType = 'VIP';
       if(bag['vip1'] === false) {
         await begModel.findOneAndUpdate({userID: user.id}, {$set: {"vip1": true}})
         message.react(`${AGREE}`)
-        return user.send({embeds: [embed(message, `**У вас подарок от разработчика!🎉**\n\n||---**${giftType}**---||`, "dm")]}).catch(()=> message.react('❌'))
+        return user.send({embeds: [embed(message, `**You have a gift!🎉**\n\n||---**${giftType}**---||`, "dm")]}).catch(()=> message.react('❌'))
       } else {
         return error(message, 'Пользователь уже имеет VIP.');
 
       }
-    } else if (args[1] === 'vip-2') {
-      giftType = 'VIP-2';
+    } else if (args[1] === 'premium') {
+      giftType = 'PREMIUM';
       if(bag['vip2'] === false) {
         await begModel.findOneAndUpdate({userID: user.id}, {$set: {"vip1": true}})
         await begModel.findOneAndUpdate({userID: user.id}, {$set: {"vip2": true}})
         message.react(`${AGREE}`)
-        return user.send({embeds: [embed(message, `**У вас подарок от разработчика!🎉**\n\n||---**${giftType}**---||`, "dm")]}).catch(()=> message.react('❌'))
+        return user.send({embeds: [embed(message, `**You have a gift!🎉**\n\n||---**${giftType}**---||`, "dm")]}).catch(()=> message.react('❌'))
       } else {
         return error(message, 'Пользователь уже имеет Premium.');
       }
