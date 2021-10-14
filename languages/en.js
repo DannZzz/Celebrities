@@ -49,6 +49,14 @@ module.exports = {
 
 
 
+    "forbs": {
+        "desc": "List of the most richest members.",
+        "usage": "",
+        "access": "For everyone",
+    },
+
+
+
     "explore": {
         "desc": "Explore souls.",
         "usage": "",
