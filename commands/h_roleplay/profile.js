@@ -6,6 +6,7 @@ const Levels = require("discord-xp");
 Levels.setURL(process.env.MONGO);
 const devs = ["382906068319076372"];
 const moment = require('moment');
+const { formatNumber } = require("../../functions/functions");
 const {serverFind, vip, bagFind, marry, rpg, profile, clanFind, profileFind, rpgFind, vipFind } = require("../../functions/models");
 const YTchannelInfo = require("yt-channel-info");
 
@@ -56,7 +57,7 @@ module.exports = {
 
 
 
-      embed.addField(`${p.status} ${vip}\n${p.subs} ${getSub(bot, member.id, LANG.lang)}`, `${STAR} ${data.stars} ${devs.includes(member.id) ? "**Dev**" : ""}\n${await Rate(message).rateData(trophy)}\n${p.quiz} ${rp.quizCount}\n${CL}\n${p.gg} ${marData}\n<:heroes:886967552310407219> : ${rp.itemCount || 1}\n\n`)
+      embed.addField(`${p.status} ${vip}\n${p.subs} ${getSub(bot, member.id, LANG.lang)}`, `${STAR} ${formatNumber(Math.round(data.stars)) || Math.round(data.stars)} ${devs.includes(member.id) ? "**Dev**" : ""}\n${await Rate(message).rateData(trophy)}\n${p.quiz} ${rp.quizCount}\n${CL}\n${p.gg} ${marData}\n<:heroes:886967552310407219> : ${rp.itemCount || 1}\n\n`)
       embed.addField(`__${p.fishes}__\n`,
     `\`\`\`${p.junk}(🔧) - ${data.junk}\n${p.common}(🐟) - ${data.common}\n${p.unc}(🐠) - ${data.uncommon}\n${p.rare}(🦑) - ${data.rare}\n${p.leg}(🐋) - ${data.legendary}\`\`\`\n`, true)
 
