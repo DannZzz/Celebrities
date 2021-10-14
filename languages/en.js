@@ -486,7 +486,7 @@ module.exports = {
                 {name: `${status.premium} Premium`,
                 value: `Gives access to unique heroes, reduces **cooldown** for all commands **two** times, makes it possible to issue a rank card, and also gives more bet limit for all games, increases the max value of gift to 2500.`,
                 inline: false},{name: `Prices in dollars.`,
-                value: `• VIP + 10000 ${STAR} - 0,2$\n • Premium + 20000 ${STAR} - 0,41$\n • Hero **Tartarus** - 0,8$\n • Hero **Toothless** - 0,55$\n • Hero **Zeus** - 0,26$\n • 600000 ${STAR } - 1,25$\n • 150000 ${STAR} - 0,4$\n • 50000 ${STAR} - 0,2$\n • Donate-box (50k-200k) - 0,2$`,
+                value: `• VIP + 10000 ${STAR} - 0,2$\n • Premium + 20000 ${STAR} - 0,41$\n • Hero **Tyrus** - 1,5$\n • Hero **Tartarus** - 0,8$\n • Hero **Toothless** - 0,55$\n • Hero **Zeus** - 0,26$\n • 600000 ${STAR } - 1,25$\n • 150000 ${STAR} - 0,4$\n • 50000 ${STAR} - 0,2$\n • Donate-box (50k-200k) - 0,2$`,
                 inline: false},
                 {name: `Extra place for heroes.`,
                 value: `• Cost: Your place count * 2000 ${STAR}\n \`?buy place\``,
