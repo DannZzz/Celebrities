@@ -554,7 +554,7 @@
     "damage": 9000,
     "cost": 15000000,
     "costType": "star",
-    "url": "https://i.ibb.co/87WYw2q/Tyrus.jpg",
+    "url": "https://i.ibb.co/186FnQ8/Tyrus.jpg",
     "path": "./images/heroes/Tyrus.jpg",
     "descriptionEN": "Huge...\nMagical...\nFerocious...\nAncient...\nInvincible...",
     "description": "Огромный...\nМагический...\nСвирепый...\nДревний...\nНепобедимый...",
@@ -613,5 +613,22 @@
     "upgradeCost": 1000,
     "type": "private",
     "subLevel": 3
+  },
+  "Red": {
+    "name": "Red",
+    "nameRus": "Ред",
+    "health": 46000,
+    "damage": 4000,
+    "cost": 0,
+    "costType": "star",
+    "url": "https://i.ibb.co/nbkqtLQ/Red.jpg",
+    "path": "./images/heroes/Red.jpg",
+    "descriptionEN": "Red - Liberty Knight, on a red dragon named Lieber. Red has many enemies, but he has much more courage. Red and Lieber speak their common and mental language.",
+    "description": "Ред - Рыцарь свободы, на красном драконе, по имени Либер. У Реда много врагов, но смелости у него намного больше. Говорят у Реда и Либера свой общий и мысленный язык.",
+    "available": "Да",
+    "vip": false,
+    "upgradeCost": 700,
+    "type": "private",
+    "subLevel": 1
   }
 }
