@@ -579,5 +579,39 @@
     "upgradeCost": 1000,
     "type": "private",
     "subLevel": 2
+  },
+  "Shadow": {
+    "name": "Shadow",
+    "nameRus": "Тень",
+    "health": 220000,
+    "damage": 18000,
+    "cost": 40000,
+    "costType": "star",
+    "url": "https://i.ibb.co/WPMm18b/Shadow.jpg",
+    "path": "./images/heroes/Shadow.jpg",
+    "descriptionEN": "-Shadow of the Dragon. Is there such a thing?\n-I think there is.\n-Are you afraid of the shadow?\n-No!\n-So stupid!",
+    "description": "-Тень Дракона. Есть ли такое?\n-Думаю, есть.\n-Ты боишься тени?\n-Нет!\n-Значит глупый!",
+    "available": "Да",
+    "vip": false,
+    "upgradeCost": 1000,
+    "type": "private",
+    "subLevel": 2
+  },
+  "Clarity": {
+    "name": "Clarity",
+    "nameRus": "Ясность",
+    "health": 320000,
+    "damage": 28000,
+    "cost": 0,
+    "costType": "star",
+    "url": "https://i.ibb.co/pdVtBrZ/Clarity.jpg",
+    "path": "./images/heroes/Clarity.jpg",
+    "descriptionEN": "Clarity, calmness, serenity, lordship. All you need is frankness, wisdom, courage.\n\n__Guaranteed victory against Shibzdik's Dilan__.",
+    "description": "Ясность, спокойствие, безмятежность, светлость. Всё, что тебе нужно, откровенность, мудрость, смелость.\n\n__Гарантированная победа против Дилана Шибздика__.",
+    "available": "Да",
+    "vip": false,
+    "upgradeCost": 1000,
+    "type": "private",
+    "subLevel": 3
   }
 }
