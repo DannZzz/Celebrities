@@ -2,8 +2,6 @@
   "Jorj" : {
     "name": "Jorj",
     "nameRus": "Жорж",
-    "health": 200,
-    "damage": 20,
     "url": "https://i.ibb.co/mydPsWh/Jorj.jpg",
     "path": "./images/enemies/Jorj.jpg",
     "descriptionEN": "Jorj - are supernatural humanoid creatures who, according to Western European mythology, live in underground caves and cannot stand sunlight, known as goblins.",
@@ -12,8 +10,6 @@
   "Cousin" : {
     "name": "Cousin",
     "nameRus": "Кузен",
-    "health": 400,
-    "damage": 40,
     "url": "https://i.ibb.co/Tb3ZGHd/Cousin.jpg",
     "path": "./images/enemies/Cousin.jpg",
     "descriptionEN": "Cousin is a mythological creature in the traditions of the Slavs. Often it is an incubus - the hypostasis of a walking, fiery devil. D'Lord's right hand.",
@@ -22,8 +18,6 @@
   "Arthas" : {
     "name": "Arthas",
     "nameRus": "Артас",
-    "health": 600,
-    "damage": 50,
     "url": "https://i.ibb.co/31C0tsb/Arthas.jpg",
     "path": "./images/enemies/Arthas.jpg",
     "descriptionEN": "Arthas is a legendary creature from Japanese mythology, an incredible embodiment of lightning. Arthas is an enemy of the people because of the storm lightning, thereby frightening the people. In Japanese mythology, it is said that Arthas is the enemy of the people not only because of lightning, but also because of the battles that they lost to him.",
@@ -32,8 +26,6 @@
   "D'Wolf" : {
     "name": "D'Wolf",
     "nameRus": "Д'Волк",
-    "health": 800,
-    "damage": 70,
     "url": "https://i.ibb.co/jv3T0zv/D-039-Wolf.jpg",
     "path": "./images/enemies/D-039-Wolf.jpg",
     "descriptionEN": "D'Wolf - A dangerous animal? I don't think so.\nAn enchanted spirit that works for D'Lord. History suggests that D'Wolf used to be the most beautiful prince of the north.",
@@ -42,8 +34,6 @@
   "D'Lord" : {
     "name": "D'Lord",
     "nameRus": "Д'Лорд",
-    "health": 1100,
-    "damage": 110,
     "url": "https://i.ibb.co/Jm3XpXK/D-039-Lord.jpg",
     "path": "./images/enemies/D-039-Lord.jpg",
     "descriptionEN": "D'Lord - the ancient Egyptian god of the moon, time, wisdom and culture, originally D'Lord and the good and wise spirit supposed in him, heralding the spilling of the Nile and destroying harmful reptiles.",
@@ -52,8 +42,6 @@
   "Shibzdik's Dilan" : {
     "name": "Shibzdik's Dilan",
     "nameRus": "Дилан Шибздика",
-    "health": 1400,
-    "damage": 140,
     "url": "https://i.ibb.co/dBrt7kd/shibzdik.jpg",
     "path": "./images/enemies/shibzdik.jpg",
     "descriptionEN": "Nostalgia of old heroes. One of the first heroes of the game, try to win.",
