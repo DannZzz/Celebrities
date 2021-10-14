@@ -49,6 +49,10 @@ module.exports = {
            return;
         }
 
+        try {
+
+        
+
         await addStar(user.id, -(value));
         await profile.updateOne({userID: user.id}, {$set: {trial: new Date(Date.now() + time)}})
         
@@ -91,7 +95,7 @@ module.exports = {
             await rpg.updateOne({userID: user.id}, {$inc: {totalGames: 1}})
             uppingLevel += 2;
 
-            const CC = await makeCanvas(hero.url, enemy.url);
+            const CC = await makeCanvas(hero.path, enemy.path);
             const att = new MessageAttachment(CC.toBuffer(), 'trial.png')
 
             const emb = new MessageEmbed()
@@ -226,6 +230,9 @@ module.exports = {
 
 
         }
+      } finally {
+        ops.trial.delete(user.id)
+      }
 
         
 

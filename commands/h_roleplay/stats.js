@@ -29,19 +29,19 @@ module.exports = {
 
         <a:herodann:883382573231923201> ${stats.trial} ${rp.trialMax || 0}
 
-        ${powers.health.emoji} ${sd.lang === "ru" ? powers.health.nameRU : powers.health.nameEN}: ${await getPowers(bot, user.id, rp).then(x => x.h)}%
+        ${powers.health.emoji} ${sd.lang === "ru" ? powers.health.nameRU : powers.health.nameEN}: ${await getPowers(bot, user.id, rp).then(x => x.h.toFixed(1))}%
 
-        ${powers.damage.emoji} ${sd.lang === "ru" ? powers.damage.nameRU : powers.damage.nameEN}: ${await getPowers(bot, user.id, rp).then(x => x.d)}%
+        ${powers.damage.emoji} ${sd.lang === "ru" ? powers.damage.nameRU : powers.damage.nameEN}: ${await getPowers(bot, user.id, rp).then(x => x.d.toFixed(1))}%
 
-        ${powers.gold.emoji} ${sd.lang === "ru" ? powers.gold.nameRU : powers.gold.nameEN}: ${await getPowers(bot, user.id, rp).then(x => x.g)}%
+        ${powers.gold.emoji} ${sd.lang === "ru" ? powers.gold.nameRU : powers.gold.nameEN}: ${await getPowers(bot, user.id, rp).then(x => x.g.toFixed(1))}%
 
         🟡 ${h.all} ${rp.totalGames || 0}
 
         🟢 ${h.win} ${rp.wins || 0}
 
-        🔴 ${h.lose} ${rp.loses || 0}
+        🔴 ${h.lose} ${rp.totalGames - rp.wins || 0}
 
-        🏆 ${hm.winrate} ${roundFunc(rp.wins / rp.totalGames  * 100) || '0'}%`)
+        🏆 ${hm.winrate} ${((rp.wins / rp.totalGames  * 100) || 0).toFixed(1)}%`)
 
         msg.channel.send({embeds: [EMB]});
     }

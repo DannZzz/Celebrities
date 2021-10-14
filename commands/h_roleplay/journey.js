@@ -74,7 +74,6 @@ module.exports = {
     
 
     if (args[0] && argsWords.includes(args[0])) {
-      const att = new MessageAttachment(enemy.path, `${enemy.name}.png`)
       const levMes = new MessageEmbed()
       .setColor(main)
       .setAuthor(`${user.username}, ${j.now} ${nowLevel}`)
@@ -82,9 +81,9 @@ module.exports = {
       .setDescription(enemy.description)
       .addField(`❤ ${hm.health} ${enemyHealth}`, `**⚔ ${hm.damage} ${enemyDamage}**`, false)
       .addField(`${hm.reward} ${levelReward} ${STAR}`, `** **`, false)
-      .setImage(`attachment://${enemy.name}.png`)
+      .setImage(enemy.url)
 
-      return message.channel.send({embeds: [levMes], files: [att]});
+      return message.channel.send({embeds: [levMes]});
     } 
     let damn = await message.channel.send(`<a:dannloading:876008681479749662> Ищем противника...`);
     const CC = await makeCanvas(hero.path, enemy.path)

@@ -32,7 +32,7 @@ module.exports = {
     
     const item = heroes[rp.item];
 
-    const att = new MessageAttachment(item.url, `${item.name}.png`)
+    const att = new MessageAttachment(item.path, `${item.name}.png`)
     
     let myHero = new MessageEmbed()
     .setAuthor(`${user.user.tag}`)
