@@ -62,8 +62,8 @@ module.exports = {
 
 
 
-    let enemyHealth = Math.floor(enemy.health * nowLevel);
-    let enemyDamage = Math.floor(enemy.damage * nowLevel);
+    let enemyHealth = Math.floor(1198 * nowLevel);
+    let enemyDamage = Math.floor(156 * nowLevel);
 
     const get = rp.heroes.find(x => x.name === rp.item)
     
