@@ -5,6 +5,7 @@ const bd = require("../../models/begSchema");
 const { MessageEmbed, MessageButton } = require("discord.js");
 const { COIN, STAR, LEFT, RIGHT, DLEFT, DRIGHT, CANCEL, heroType } = require("../../config");
 const {error, paginationBig} = require("../../functions/functions");
+const Subs = require("../../functions/subscriptionClass");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 
@@ -24,8 +25,12 @@ module.exports = {
     let newdr = []
     for (let key in heroes) {
       var obj = heroes[key];
-
-      let ccost = `${cCost(obj.cost)} ${cType(obj.costType)}`;
+      let level = undefined;
+      if (obj.subLevel) {
+        level = await Subs(bot, message, obj.name).getStringById(obj.subLevel);
+      }
+      
+      let ccost = `${cCost(obj.cost, obj)} ${cType(obj.costType)}`;
       if (!isNaN(obj.cost) && obj.cost <= 0) ccost = LANG.lang === "ru" ? "Бесплатно" : "Free";
 
         newdr.push(
@@ -33,7 +38,7 @@ module.exports = {
         .setColor(main)
         .setTitle(`${heroType[obj.type]} ${obj.name} (${obj.nameRus}) ${cMar(obj.marry)} ${cVip(obj.vip)}`)
         .setThumbnail(obj.url)
-        .setDescription(LANG.lang === "en" ? obj.descriptionEN : obj.description)
+        .setDescription(`${level ? `**${level}**\n\n`: ""}`+(LANG.lang === "en" ? obj.descriptionEN : obj.description))
         .addField(`${hh.cost} ${ccost}`, `**${hh.avail} ${cAv(obj.available)}**`, true)
         .addField(`${hm.health} ${obj.health} ❤`, `**${hm.damage} ${obj.damage}** ⚔`, true)
         )

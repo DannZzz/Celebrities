@@ -144,6 +144,10 @@ module.exports = {
     let winner;
     win ? winner = hero : winner = enemy
 
+    if(hero.name === "Clarity" && enemy.name === "Shibzdik's Dilan") {
+      winner = hero
+    }
+
     if(hero.name === "Eragon" && enemy.name === "D'Lord") {
       winner = hero
     }
