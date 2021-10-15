@@ -67,7 +67,7 @@ module.exports = async (bot, messageCreate) => {
       explore: explore
   }
   let ss = new MessageEmbed().setColor("#2f3136").setTimestamp()
-  const imunCmd = ["enable", "disable", "channel-enable", "channel-disable", "account"]
+  const imunCmd = ["enable", "disable", "channel-enable", "channel-disable", "message"]
   var commandfile = bot.commands.get(cmd) || bot.commands.get(bot.aliases.get(cmd))
   
       
@@ -81,7 +81,7 @@ module.exports = async (bot, messageCreate) => {
       if (nowExplore) return;
       
       let dateNew = await bansFind(message.author.id);
-      if (dateNew && (!devID.includes(message.author.id) && !adminID.includes(message.author.id)) && commandfile.config.name !== "message") return error(message, banned + ` <t:${makeTimestamp(dateNew.date.getTime())}:f>`);
+      if (dateNew && !devID.includes(message.author.id)) return error(message, banned + ` <t:${makeTimestamp(dateNew.date.getTime())}:f>`);
       //  && (!devID.includes(message.author.id) && !adminID.includes(message.author.id)
       const EMB = new MessageEmbed()
       .setColor(reddark)
