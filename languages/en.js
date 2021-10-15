@@ -26,6 +26,8 @@ module.exports = {
     "cardFix": "Your payment will be completed within a few minutes.",
     "banned": "Your account was banned until",
     "timeOut": "Time out.",
+    "ERROR": "Interaction error",
+    "interError": "This button is not available to you!",
 
     "afkMess": (name, res) => `User **${name}** is currently in AFK mode\nBy reason: **${res}**`,
     
