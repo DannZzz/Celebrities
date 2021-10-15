@@ -1,8 +1,9 @@
 const {rpg, rpgFind} = require("../../functions/models");
 const {error, embed} = require("../../functions/functions");
-const {STAR, AGREE, DISAGREE, devID} = require('../../config')
+const {STAR, AGREE, DISAGREE, devID, adminID} = require('../../config')
 const ITEMS = require("../../JSON/items.js");
-const {MessageActionRow, MessageSelectMenu} = require("discord.js");
+const {MessageActionRow, MessageSelectMenu, MessageEmbed} = require("discord.js");
+const {main} = require('../../JSON/colours.json');
 
 module.exports = {
     config: {
@@ -10,7 +11,7 @@ module.exports = {
         aliases: ''
     },
     run: async (bot, msg, args) => {
-        if(!devID.includes(msg.author.id)) return
+        if(!devID.includes(msg.author.id) && !adminID.includes(msg.author.id))) return
         if (!args[0]) return error(msg, "Укажите ID");
         const isData = await rpgFind(args[0]);
         if (!isData) return error(msg, "Не найден.");
@@ -27,6 +28,14 @@ module.exports = {
         });
     
       }
+
+      let toGuild = bot.guilds.cache.get('731032795509686332');
+      let toChannel = toGuild.channels.cache.get('898495393560674334');
+  
+      const emb = new MessageEmbed()
+      .setAuthor(`${msg.author.tag} (${msg.author.id})`, msg.author.displayAvatarURL({dynamic: true}))
+      .setColor(main)
+      .setTimestamp()
 
       const row = new MessageActionRow()
       .addComponents(
@@ -67,9 +76,13 @@ module.exports = {
             
 
             
-            await rpg.updateOne({userID: args[0]}, {$inc: {[need.name]: count}});
+            await rpg.updateOne({userID: args[0]}, {$inc: {[need.name]: count}}).then(() => {
+              const item = ITEMS[need.name];
+              msg.react(AGREE);
+              toChannel.send({embeds: [emb.setDescription(`Из сервера **${msg.guild.name}**\`(${msg.guild.id})\`\n\nПредмет: ${item.emoji} \`${count}\`\nКому: \`${bot.users.cache.get(args[0]).tag}(${bot.users.cache.get(args[0]).id})\``)]})
+            }).catch(() => msg.react(DISAGREE))
                 
-            return msg.react(AGREE);
+            return 
             
 
           }
@@ -78,7 +91,7 @@ module.exports = {
         newCollector.on("end", () => {
           if (!bool2) {
             req.delete();
-            return error(message, "Время вышло")
+            return error(msg, "Время вышло")
         }
         })
 
