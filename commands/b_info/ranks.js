@@ -12,11 +12,10 @@ module.exports = {
     category: 'b_info'
   },
   run: async (bot, message, args, ops) => {
-  const LANG = await serverFind(message.guild.id);
-  const {ranks, next, previous, clanModel: cm} = require(`../../languages/${LANG.lang}`); 
+  const server = await serverFind(message.guild.id);
+  const {ranks, next, previous, clanModel: cm} = require(`../../languages/${server.lang}`); 
     
     
-    let server = await serverModel.findOne({serverID: message.guild.id})
 
     let embed = new MessageEmbed()
     .setTimestamp()
@@ -33,7 +32,7 @@ module.exports = {
       const current = ops.queue.get(user.id)
       if (current) return
       let del;
-      if (LANG.lang === "ru") {
+      if (server.lang === "ru") {
         del = ['удалить'];
       } else {
         del = ['delete'];
