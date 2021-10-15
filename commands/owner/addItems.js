@@ -11,7 +11,7 @@ module.exports = {
         aliases: ''
     },
     run: async (bot, msg, args) => {
-        if(!devID.includes(msg.author.id) && !adminID.includes(msg.author.id))) return
+        if(!devID.includes(msg.author.id) && !adminID.includes(msg.author.id)) return
         if (!args[0]) return error(msg, "Укажите ID");
         const isData = await rpgFind(args[0]);
         if (!isData) return error(msg, "Не найден.");
