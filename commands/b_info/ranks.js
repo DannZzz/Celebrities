@@ -3,7 +3,7 @@ const Levels = require("discord-xp");
 Levels.setURL(process.env.MONGO);
 const { main, none } = require("../../JSON/colours.json");
 const { profile, profileFind, serverFind, vipFind } = require("../../functions/models");
-const {error, embed, perms} = require("../../functions/functions");
+const {error, embed, perms, pagination} = require("../../functions/functions");
 
 module.exports = {
   config: {
