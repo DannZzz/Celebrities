@@ -1,5 +1,5 @@
 const heroes = require('../../JSON/heroes.json');
-const { main } = require('../../JSON/colours.json');
+const { main, reddark } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
@@ -21,7 +21,7 @@ module.exports = {
 
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
-    const {duel: d, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
+    const {ERROR, interError, duel: d, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
    
        
     const bag = await bd.findOne({ userID: message.author.id });
@@ -93,10 +93,19 @@ embeds: [Emb],
 components: [row],
 })
 
-const filter = (i) =>
+const filter = (i) => { if (
 (i.customId === buttonList[0].customId ||
 i.customId === buttonList[1].customId) &&
-i.user.id === user.id;
+i.user.id === user.id) {
+  return true;
+}else if(i.user.id !== user.id) {
+  const intEmbed = new MessageEmbed()
+  .setColor(reddark)
+  .setTitle(ERROR)
+  .setDescription(interError)
+
+return i.reply({embeds: [intEmbed], ephemeral: true})
+}};
 
 const collector = await wait.createMessageComponentCollector({
 filter,

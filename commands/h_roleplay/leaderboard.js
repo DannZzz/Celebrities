@@ -113,7 +113,7 @@ module.exports = {
         .setEmoji(RIGHT)
         .setStyle("SECONDARY")
         
-        return pagination(m, [Embed0, Embed1, Embed2], [button1, button2], 100000, [m.author.id])
+        return await pagination(m, [Embed0, Embed1, Embed2], [button1, button2], 100000, [m.author.id])
         
     }
 }

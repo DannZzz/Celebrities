@@ -1,6 +1,6 @@
 const heroes = require('../../JSON/heroes.json');
 const enemies = require('../../JSON/enemies.json');
-const { main } = require('../../JSON/colours.json');
+const { main, reddark } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
@@ -24,7 +24,7 @@ module.exports = {
    
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
-    const {boss: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and} = require(`../../languages/${LANG.lang}`);   
+    const {ERROR, interError, boss: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and} = require(`../../languages/${LANG.lang}`);   
  
        
     const bag = await bd.findOne({ userID: message.author.id });
@@ -132,9 +132,27 @@ module.exports = {
     
 
     let trues = [false, false]
-    const filter1 = (i) => i.customId === button1.customId && i.user.id === user1.id;
+    const filter1 = (i) => {if (i.customId === button1.customId && i.user.id === user1.id) {
+      return true;
+    } else if(i.user.id !== user1.id) {
+       const intEmbed = new MessageEmbed()
+            .setColor(reddark)
+            .setTitle(ERROR)
+            .setDescription(interError)
+          
+          return i.reply({embeds: [intEmbed], ephemeral: true})
+    } };
 
-    const filter2 = (i) => i.customId === button2.customId && i.user.id === user2.id;
+    const filter2 = (i) => {if (i.customId === button2.customId && i.user.id === user2.id) {
+      return true;
+    } else if(i.user.id !== user2.id) {
+       const intEmbed = new MessageEmbed()
+            .setColor(reddark)
+            .setTitle(ERROR)
+            .setDescription(interError)
+          
+          return i.reply({embeds: [intEmbed], ephemeral: true})
+    } };
     
     const row1 = new MessageActionRow().addComponents([button1]);
     const row2 = new MessageActionRow().addComponents([button2]);
@@ -156,6 +174,7 @@ module.exports = {
 
 
     collector1.on("collect", async (i) => {
+      i.deferUpdate();
       switch (i.customId) {
         case button1.customId:
           trues[0] = true;
@@ -168,6 +187,7 @@ module.exports = {
 
 
     collector2.on("collect", async (i) => {
+      i.deferUpdate();
       switch (i.customId) {
         case button2.customId:
           trues[1] = true;

@@ -1,4 +1,4 @@
-const { main } = require('../../JSON/colours.json');
+const { main, reddark } = require('../../JSON/colours.json');
 const { MessageEmbed, MessageButton, MessageActionRow, MessageAttachment } = require("discord.js");
 const {STAR, AGREE } = require("../../config");
 const {error, embed, perms, firstUpperCase, makeTimestamp, delay, roundFunc, getHeroData} = require("../../functions/functions");
@@ -22,7 +22,7 @@ module.exports = {
         const value = 500;
         
         const LANG = await serverFind(server.id);
-        const {trial, battle: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);     
+        const {interError, ERROR, trial, battle: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);     
         const bag = await bagFind(user.id);
 
         const prof = await profileFind(user.id);
@@ -174,7 +174,18 @@ module.exports = {
             
             const collector = await channel.createMessageComponentCollector({
               time: 15000,
-              filter: i => (i.customId === button1.customId || i.customId === button2.customId) && i.user.id === user.id
+              filter: i => {
+                if ( (i.customId === button1.customId || i.customId === button2.customId) && i.user.id === user.id ) {
+                  return true;
+                } else if (i.user.id !== user.id) {
+                  const intEmbed = new MessageEmbed()
+                  .setColor(reddark)
+                  .setTitle(ERROR)
+                  .setDescription(interError)
+                
+                return i.reply({embeds: [intEmbed], ephemeral: true})
+                }
+              }
             });
 
             collector.on("collect", async (i) => {
