@@ -109,7 +109,7 @@ module.exports = {
                 buttonlast
             ]
             
-            paginationBig(message, fkit, buttonList, timeout, userids, h.dm)
+            await paginationBig(message, fkit, buttonList, timeout, userids, h.dm)
 
             // test 
             // return message.channel.send({embeds: [embed]})

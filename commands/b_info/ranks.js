@@ -1,7 +1,7 @@
 const { MessageEmbed, MessageAttachment, MessageButton, MessageActionRow } = require('discord.js');
 const Levels = require("discord-xp");
 Levels.setURL(process.env.MONGO);
-const { main, none } = require("../../JSON/colours.json");
+const { main, none, reddark } = require("../../JSON/colours.json");
 const { profile, profileFind, serverFind, vipFind } = require("../../functions/models");
 const {error, embed, perms, pagination} = require("../../functions/functions");
 
@@ -13,7 +13,7 @@ module.exports = {
   },
   run: async (bot, message, args, ops) => {
   const server = await serverFind(message.guild.id);
-  const {ranks, next, previous, clanModel: cm} = require(`../../languages/${server.lang}`); 
+  const {ERROR, interError, ranks, next, previous, clanModel: cm} = require(`../../languages/${server.lang}`); 
     
     
 
@@ -74,10 +74,21 @@ module.exports = {
         components: [row],
       })
 
-      const filter = (i) =>
+      const filter = (i) => { if (
       (i.customId === buttonList[0].customId ||
       i.customId === buttonList[1].customId) &&
-      i.user.id === user.id;
+      i.user.id === user.id) {
+        return true;
+      } else if (i.user.id !== user.id) {
+        const intEmbed = new MessageEmbed()
+        .setColor(reddark)
+        .setTitle(ERROR)
+        .setDescription(interError)
+      
+      return i.reply({embeds: [intEmbed], ephemeral: true})
+      }
+
+    };
 
       const collector = await curPage.createMessageComponentCollector({
       filter,
@@ -199,7 +210,7 @@ module.exports = {
 
       const userids = [message.author.id]
 
-      pagination(message, pages, buttonList, timeout, userids)
+      await pagination(message, pages, buttonList, timeout, userids)
     }
 
     }
