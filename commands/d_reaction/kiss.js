@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const {MessageActionRow, MessageEmbed, MessageButton} = require('discord.js');
 const superagent = require('superagent');
 const pd = require("../../models/profileSchema");
-const {greenlight, redlight, main} = require('../../JSON/colours.json');
+const {greenlight, redlight, reddark, main} = require('../../JSON/colours.json');
 const {error} = require('../../functions/functions');
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
@@ -16,7 +16,7 @@ module.exports = {
   run: async (bot, message, args) => {
       const getLang = require("../../models/serverSchema");
       const LANG = await getLang.findOne({serverID: message.guild.id});
-      const {kiss: k, specify} = require(`../../languages/${LANG.lang}`);   
+      const {kiss: k, specify, interError, ERROR} = require(`../../languages/${LANG.lang}`);   
     try {
         const user = message.author
         if(!args[0]) return error(message, specify);
@@ -63,10 +63,21 @@ module.exports = {
           components: [row],
         })
   
-        const filter = (i) =>
-        (i.customId === buttonList[0].customId ||
-        i.customId === buttonList[1].customId) &&
-        i.user.id === member.id;
+        const filter = (i) => {
+          if ( (i.customId === buttonList[0].customId ||
+          i.customId === buttonList[1].customId) &&
+          i.user.id === member.id) return true;
+
+          const intEmbed = new MessageEmbed()
+            .setColor(reddark)
+            .setTitle(ERROR)
+            .setDescription(interError)
+          
+          return i.reply({embeds: [intEmbed], ephemeral: true})
+              
+            
+        } 
+
   
         const collector = await curPage.createMessageComponentCollector({
         filter,
