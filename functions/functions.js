@@ -10,7 +10,7 @@ const {  MessageActionRow,
   MessageEmbed,
   MessageButton,} = require('discord.js');
 const {main, none, greenlight, reddark} = require('./../JSON/colours.json')
-const { powersFind, powers } = require("./models.js");
+const { powersFind, powers, serverFind } = require("./models.js");
 
 module.exports = {
   getHeroData: async (bot, sponsorID, data) => {
@@ -353,10 +353,24 @@ module.exports = {
       components: [row],fetchReply: true,
     });
 
-    const filter = (i) =>
+    const sd = await serverFind(interaction.guild.id);
+    const { ERROR, interError } = require(`./../languages/${sd.lang}`);
+
+    const filter = (i) => { if (
       (i.customId === buttonList[0].customId ||
       i.customId === buttonList[1].customId) &&
-      ids.includes(i.user.id);
+      ids.includes(i.user.id)) {
+        return true;
+      } else if (!ids.includes(i.user.id)) {
+        const intEmbed = new MessageEmbed()
+            .setColor(reddark)
+            .setTitle(ERROR)
+            .setDescription(interError)
+          
+          return i.reply({embeds: [intEmbed], ephemeral: true})
+      }
+        
+    };
 
     const collector = await curPage.createMessageComponentCollector({
       filter,
@@ -409,19 +423,32 @@ module.exports = {
 
     let page = 0;
 
+    const sd = await serverFind(interaction.guild.id);
+    const { ERROR, interError } = require(`./../languages/${sd.lang}`);
+  
     const row = new MessageActionRow().addComponents(buttonList);
     const curPage = await interaction.reply({
       embeds: [pages[page].setFooter(`${page + 1} / ${pages.length}`)],
       components: [row],fetchReply: true,
     });
 
-    const filter = (i) =>
+    const filter = (i) =>{ if (
       (i.customId === buttonList[0].customId ||
       i.customId === buttonList[1].customId ||
       i.customId === buttonList[2].customId ||
       i.customId === buttonList[3].customId ||
       i.customId === buttonList[4].customId) &&
-      ids.includes(i.user.id);
+      ids.includes(i.user.id) ) {
+        return true;
+      } else if (!ids.includes(i.user.id)) {
+        const intEmbed = new MessageEmbed()
+            .setColor(reddark)
+            .setTitle(ERROR)
+            .setDescription(interError)
+          
+          return i.reply({embeds: [intEmbed], ephemeral: true})
+      }
+    };
 
     const collector = await curPage.createMessageComponentCollector({
       filter,
