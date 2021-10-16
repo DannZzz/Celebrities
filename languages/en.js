@@ -60,6 +60,22 @@ module.exports = {
 
 
 
+    "locations": {
+        "desc": "Explore locations and earn rewards.",
+        "usage": "",
+        "access": "For everyone",
+    },
+
+
+
+    "mail": {
+        "desc": "Just mail.",
+        "usage": "",
+        "access": "For everyone",
+    },
+
+
+
     "explore": {
         "desc": "Explore souls.",
         "usage": "",
