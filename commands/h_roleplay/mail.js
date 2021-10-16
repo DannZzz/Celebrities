@@ -137,19 +137,19 @@ module.exports = {
                 collector.resetTimer();
                 const newdata = await mailFind(user.id);
                 const tropnew = newdata.tropicalForest || 0;
-                if (tropnew <= 0) return i.followUp({embeds: [errEmb.setTitle(l === "ru" ? "Вам выпало:" : "You got:").setDescription(l === "ru" ? "Вы не имеете этот предмет." : 'You don\'t have this item.')], ephemeral: true});
+                if (tropnew <= 0) return i.followUp({embeds: [errEmb.setDescription(l === "ru" ? "Вы не имеете этот предмет." : 'You don\'t have this item.')], ephemeral: true});
                 await mail.updateOne({userID: user.id}, {$inc: {tropicalForest: -1}});
                 const string = await tropData.reward.generateReward(bot, msg);
-                i.followUp({embeds: [winEmb.setDescription(string)], ephemeral: true});
+                i.followUp({embeds: [winEmb.setTitle(l === "ru" ? "Вам выпало:" : "You got:").setDescription(string)], ephemeral: true});
                 break;
             case gbutton.customId:
                 collector.resetTimer();
                 const newdata1 = await mailFind(user.id);
                 const goldnew = newdata1.gold || 0; 
-                if (goldnew <= 0) return i.followUp({embeds: [errEmb.setTitle(l === "ru" ? "Вы успешно забрали голды:" : "You have successfully collected golds:").setDescription(noStar)], ephemeral: true});
+                if (goldnew <= 0) return i.followUp({embeds: [errEmb.setDescription(noStar)], ephemeral: true});
                 await mail.updateOne({userID: user.id}, {$set: {gold: 0}});
                 await addStar(user.id, Math.round(goldnew));
-                i.followUp({embeds: [winEmb.setDescription(`${Math.round(goldnew)} ${STAR}`)], ephemeral: true});
+                i.followUp({embeds: [winEmb.setTitle(l === "ru" ? "Вы успешно забрали голды:" : "You have successfully collected golds:").setDescription(`${Math.round(goldnew)} ${STAR}`)], ephemeral: true});
                 break;
         };
     });
