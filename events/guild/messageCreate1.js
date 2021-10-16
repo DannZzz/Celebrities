@@ -124,7 +124,7 @@ module.exports = async (bot, messageCreate) => {
       commandfile.run(bot, message, args, ops)
     }//.catch(()=> message.react("❌"))}
   else if (!serverData.disabledChannels.includes(message.channel.id)) {await customModel.findOne({serverID: message.guild.id, command: cmd}, async(err, data) =>{
-  if(err) throw error
+  if(err) throw Error();
   if(data) return message.channel.send({embeds: [ss.setDescription(data.content)]}).catch(()=> message.react("❌"));
   else return
   }

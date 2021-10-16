@@ -12,6 +12,8 @@ const promocodes = require("../models/promocodes");
 const bans = require("../models/banning");
 const power = require("../models/powerUpdating.js");
 const powers = require("../models/powers.js");
+const mail = require("../models/mail.js");
+const lf = require("../models/locationFarm.js");
 
 module.exports = {
     rpg,
@@ -28,6 +30,27 @@ module.exports = {
     bans,
     power,
     powers,
+    lf,
+    mail,
+
+    mailFind: async (id) => {
+        const data = await mail.findOne({userID: id});
+        if (!data) {
+            return false;
+        } else {
+            return data;
+        };
+    },
+
+    lfFind: async (id) => {
+        const data = await lf.findOne({userID: id});
+        if (!data) {
+            return false;
+        } else {
+            return data;
+        };
+    },
+
     powersFind: async (id) => {
         const data = await powers.findOne({userID: id});
         if (!data) {

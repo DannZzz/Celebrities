@@ -13,12 +13,13 @@ const { RateLimiter } = require('discord.js-rate-limiter');
 let msgLimiter = new RateLimiter(1, 2000);
 const Rate = require("../../functions/rateClass.js");
 const powerData = require("../../JSON/powers.json");
-const {bans, bansFind, powerFind, rpgFind, powersFind, powers} = require("../../functions/models");
+const {bans, bansFind, powerFind, rpgFind, powersFind, powers, lfFind, mail, mailFind} = require("../../functions/models");
 
 module.exports = async (bot, messageCreate) => {
   try {
   let message = messageCreate;
   if (message.author.bot) return
+  const user = message.author;
 
   const pp = await powersFind(message.author.id);
   if (!pp) {
@@ -47,6 +48,23 @@ module.exports = async (bot, messageCreate) => {
 
      
       power.delete();
+    }
+  }
+
+  let lfData = await lfFind(user.id);
+  if (lfData) {
+    if (lfData.date < new Date()) {
+      let data = await mailFind(user.id);
+      if (!data) {
+          const newData = await mail.create({
+              userID: user.id
+          });
+          await newData.save();
+      }
+      data = await mailFind(user.id);
+
+      await mail.updateOne({userID: user.id}, {$inc: {[`${lfData.locationId}`]: 1}});
+      lfData.delete();
     }
   }
   

@@ -4,6 +4,8 @@ exports.VERSION = 'v5.0.4';
 
 exports.DEV = "Dann#0006";
 
+exports.MAIL = "<:inbox:887742555603734528>";
+
 exports.devID = ["382906068319076372"];
 
 exports.adminID = ["873237782825422968"];
