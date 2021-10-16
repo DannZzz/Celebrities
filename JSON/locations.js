@@ -7,7 +7,7 @@ module.exports = {
         id: "tropicalForest",
         nameRU: "Тропический лес",
         nameEN: "The Tropical forest",
-        cost: 5000,
+        cost: -5000,
         time: 60 * 60 * 1000,
         reward: {
             emoji: "🌲",
