@@ -4,7 +4,8 @@ const begSchema = new mongoose.Schema({
   code: {type: String, default: undefined, unique: true},
   max: {type: Number, default: 1},
   users: {type: Array, default: []},
-  reward: {type: Number, default: 0}
+  reward: {type: Number, default: 0},
+  subLevel: {type: Number, default: 0}
 });
 
 const model = mongoose.model("promocodes", begSchema);
