@@ -16,7 +16,7 @@ module.exports = {
     const {promoClass: cc, cards: cd} = require(`../../languages/${sd.lang}`);
     
     if (!args[0]) return error(msg, cc.noCode);
-    await Promo(msg).usePromo(args[0]);
+    await Promo(msg).usePromo(args[0], bot);
       
     
   }
