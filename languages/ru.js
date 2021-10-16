@@ -61,7 +61,7 @@ module.exports = {
 
 
 
-    "маил": {
+    "mail": {
         "desc": "Просто почта.",
         "usage": "",
         "access": "Для всех",
