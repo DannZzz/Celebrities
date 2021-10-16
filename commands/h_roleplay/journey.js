@@ -185,8 +185,7 @@ module.exports = {
       emb
       .setTitle(`${enemy.nameRus} ${j.he}`)
       .setDescription(j.err)
-      .setThumbnail(`attachment://${hero.name}.png`)
-      .setImage(`attachment://${enemy.name}.png`)
+      .setImage(enemy.url)
       await pd.findOneAndUpdate({userID: user.id}, {$set: {survive: Date.now()}})
 
     }
@@ -194,7 +193,7 @@ module.exports = {
     damn.delete()
     setTimeout(function(){
       msg.delete()
-      return message.channel.send({embeds: [emb], files: [winner === hero ? att2 : att1]})
+      return message.channel.send({embeds: [emb], files: winner === hero ? [att2] : []})
     }, 15000)
     // message.channel.send(msgozv).then(
     //   (msg) => {
