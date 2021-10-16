@@ -20,7 +20,7 @@ class Location {
         const data = await lfFind(this.user.id);
         
         const sd = await serverFind(this.server.id);
-        if (data) return error(this.msg, `Ждите, пока изучение локации закончится, <t:${makeTimestamp(data.date.getTime())}:R>.`);
+        if (data) return error(this.msg, `${sd.lang === "en" ? "Wait for the explore of the location to end," : "Ждите, пока изучение локации закончится,"} <t:${makeTimestamp(data.date.getTime())}:R>.`);
         const { timeOut, ERROR, interError } = require(`../languages/${sd.lang || "ru"}`)
         
         const gold = await locs.tropicalForest.reward.generateReward(this.bot, this.msg, true).then(d => d.gold);
@@ -114,7 +114,7 @@ class Location {
 
                     newData.save();
 
-                    return embed(this.msg, `Изучение локации закончится <t:${makeTimestamp(Date.now() + Data.time)}:R>.`)
+                    return embed(this.msg, `${sd.lang === "en" ? "The explore of the location will end" : "Изучение локации закончится"} <t:${makeTimestamp(Date.now() + Data.time)}:R>.`)
                     
                 };
             };
