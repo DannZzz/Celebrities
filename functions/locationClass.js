@@ -42,6 +42,7 @@ class Location {
         const emb = new MessageEmbed()
         .setColor(main)
         .setAuthor(this.user.username, this.user.displayAvatarURL({dynamic: true}))
+        .setTitle(sd.lang === "en" ? "Enter the number of location!" : "Введите номер локации!")
         .setDescription(stripIndents`${ld[sd.lang || "ru"]}`);
 
         const button = new MessageButton()
@@ -99,6 +100,9 @@ class Location {
         cl2.on("collect", async m => {
             if (!isNaN(m.content) && validLocs.includes(m.content)) {
                 if (m.content == 1) {
+                    b1 = true;
+                    cl1.stop();
+                    cl2.stop();
                     m1.delete();
                     const Data = locs["tropicalForest"];
                     await addStar(this.user.id, Data.cost || 0);
