@@ -36,6 +36,7 @@ module.exports = {
     "promoClass": {
         "noCode": "Please enter a promo code.",
         "noPromo": "This promo code does not exist.",
+        "subReq": "This promo code is only available to subscribers",
         "noAvailable": "This promo code is no longer available.",
         "already": "You have already used this promo code.",
         "done": "You have successfully used the promo code, your reward"
