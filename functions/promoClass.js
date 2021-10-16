@@ -171,7 +171,7 @@ class TeamClass {
             const string = await Subs(bot, this.msg, "Tyrus").getStringById(data.subLevel);
             const myLevel = Subs(bot, this.msg, "Tyrus").getSubId()
             if (myLevel < data.subLevel) {
-                return error(this.msg, `${pc.subReq} ${string}`);
+                return error(this.msg, `${pc.subReq} __${string}__`);
             }
         };
 
