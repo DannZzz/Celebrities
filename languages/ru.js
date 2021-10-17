@@ -512,7 +512,7 @@ module.exports = {
                 value: `Даёт доступ к уникальным героям, уменьшает **cooldown** для всех команд **два** раза, даёт возможность оформить ранг-карточку, а так же уменьшает ограничение ставок для всех игр, увеличивает макс. сумма подарка до 2500.`,
                 inline: false},
                 {name: `Цены в рублях.`,
-                value: `• VIP + 10000 ${STAR} - 15₽\n• Премиум + 20000 ${STAR} - 30₽\n• Герой **Тайрус (Tyrus)** - 100₽\n• Герой **Гигантес (Gigantes)** - ${heroes["Gigantes"]["cost"]}\n• Герой **Тартарус (Tartarus)** - ${heroes["Tartarus"]["cost"]}\n• Герой **Беззубик (Toothless)** - ${heroes["Toothless"]["cost"]}\n• Герой **Zeus (Зевс)** - ${heroes["Zeus"]["cost"]}\n• 600000 ${STAR} - 90₽\n• 150000 ${STAR} - 30₽\n• 50000 ${STAR} - 15₽\n• Донат-бокс (50к-200к) - 15₽`,
+                value: `• VIP + 10000 ${STAR} - 45₽\n• Премиум + 20000 ${STAR} - 100₽\n• Герой **Тайрус (Tyrus)** - 160₽\n• Герой **Гигантес (Gigantes)** - ${heroes["Gigantes"]["cost"]}\n• Герой **Тартарус (Tartarus)** - ${heroes["Tartarus"]["cost"]}\n• Герой **Беззубик (Toothless)** - ${heroes["Toothless"]["cost"]}\n• Герой **Zeus (Зевс)** - ${heroes["Zeus"]["cost"]}\n• 600000 ${STAR} - 90₽\n• 150000 ${STAR} - 30₽\n• 50000 ${STAR} - 15₽\n• Донат-бокс (50к-200к) - 15₽`,
                 inline: false},
                 {name: `Дополнительное место для героев.`,
                 value: `• Стоит: Кол-во твоих мест * 2000 ${STAR}\n\`?buy place\``,
