@@ -26,18 +26,28 @@ class Location {
         const gold = await locs.tropicalForest.reward.generateReward(this.bot, this.msg, true).then(d => d.gold);
         const box = await locs.tropicalForest.reward.generateReward(this.bot, this.msg, true).then(d => d.box);
 
+        const bgold = await locs.bodeGalaxy.reward.generateReward(this.bot, this.msg, true).then(d => d.gold);
+        const bbox = await locs.bodeGalaxy.reward.generateReward(this.bot, this.msg, true).then(d => d.box);
+
         const ld = {
             en: `
             1. ${locs.tropicalForest.nameEN} | ${locs.tropicalForest.reward.emoji || ""} Reward: \`${gold.min}-${gold.max}\` ${STAR} or \`${box.min}-${box.max}\` ${B}
             Cost: \`${locs.tropicalForest.cost}\` | Duration: \`1 hour\`
+
+            2. ${locs.bodeGalaxy.nameEN} | ${locs.bodeGalaxy.reward.emoji || ""} Reward: \`${bgold.min}-${bgold.max}\` ${STAR} or \`${bbox.min}-${bbox.max}\` ${B} or __hero **Alfonso**__
+            Cost: \`${locs.bodeGalaxy.cost}\` | Duration: \`8 hours\`
             `,
+
             ru: `
             1. ${locs.tropicalForest.nameRU} | ${locs.tropicalForest.reward.emoji || ""} Награда: \`${gold.min}-${gold.max}\` ${STAR} или \`${box.min}-${box.max}\` ${B}
             Цена: \`${locs.tropicalForest.cost}\` | Длительность: \`1 час\`
+
+            2. ${locs.bodeGalaxy.nameRU} | ${locs.bodeGalaxy.reward.emoji || ""} Награда: \`${bgold.min}-${bgold.max}\` ${STAR} или \`${bbox.min}-${bbox.max}\` ${B} или __герой **Alfonso**__
+            Цена: \`${locs.bodeGalaxy.cost}\` | Длительность: \`8 часов\`
             `
         };
 
-        const validLocs = ["1"];
+        const validLocs = ["1", "2"];
 
         const emb = new MessageEmbed()
         .setColor(main)
@@ -105,7 +115,7 @@ class Location {
                     cl2.stop();
                     m1.delete();
                     const Data = locs["tropicalForest"];
-                    await addStar(this.user.id, Data.cost || 0);
+                    await addStar(this.user.id, -Data.cost || 0);
                     const newData = await lf.create({
                         userID: this.user.id,
                         date: new Date(Date.now() + Data.time),
@@ -116,7 +126,23 @@ class Location {
 
                     return embed(this.msg, `${sd.lang === "en" ? "The explore of the location will end" : "Изучение локации закончится"} <t:${makeTimestamp(Date.now() + Data.time)}:R>.`)
                     
-                };
+                } else if (m.content == 2) {
+                    b1 = true;
+                    cl1.stop();
+                    cl2.stop();
+                    m1.delete();
+                    const Data = locs["bodeGalaxy"];
+                    await addStar(this.user.id, -Data.cost || 0);
+                    const newData = await lf.create({
+                        userID: this.user.id,
+                        date: new Date(Date.now() + Data.time),
+                        locationId: Data.id
+                    });
+
+                    newData.save();
+
+                    return embed(this.msg, `${sd.lang === "en" ? "The explore of the location will end" : "Изучение локации закончится"} <t:${makeTimestamp(Date.now() + Data.time)}:R>.`)
+                }
             };
         });
 
