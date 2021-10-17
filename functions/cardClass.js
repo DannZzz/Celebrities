@@ -1,5 +1,5 @@
 const { cardFind, bagFind, serverFind, card: cd, bag, addStar } = require("./models");
-const { error, embed, firstUpperCase, randomRange, delay } = require("./functions");
+const { error, embed, firstUpperCase, randomRange, delay, sendToMail } = require("./functions");
 const cards = require("../JSON/cards.json");
 const {none, main} = require("../JSON/colours.json");
 const cardModel = require("../models/cards");
@@ -252,7 +252,7 @@ class CardClass {
                     mess.delete();
                     msgCollector.stop();
 
-                    const random = randomRange(60, 180)
+                    const random = 5 //randomRange(60, 180)
                     this.msg.react(AGREE);
                     await embed(this.msg, cardFix).then( (msg) => setTimeout(() => msg.delete(), 10000));
                     await delay(random * 1000);
@@ -274,6 +274,14 @@ class CardClass {
                     
                     await cardModel.updateOne({code: target.code}, {$inc: {amount: total}});
                     await cardModel.updateOne({code: data.code}, {$inc: {amount: -Math.floor(amount)}});
+
+                    let langMessage = `__${total}__ золото добавлено на вашу карту с номером \`${target.code}\`.`;
+                    if (ln.lang === "en") langMessage = `__${total}__ gold has been added to your card with the number \`${target.code}\`.`;
+
+                    await sendToMail(this.user.id, {
+                        textMessage: langMessage,
+                        createdAt: new Date()
+                    })
                     
                     return
                 }

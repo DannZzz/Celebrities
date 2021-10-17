@@ -21,7 +21,7 @@ class Location {
         
         const sd = await serverFind(this.server.id);
         if (data) return error(this.msg, `${sd.lang === "en" ? "Wait for the explore of the location to end," : "Ждите, пока изучение локации закончится,"} <t:${makeTimestamp(data.date.getTime())}:R>.`);
-        const { timeOut, ERROR, interError } = require(`../languages/${sd.lang || "ru"}`)
+        const { noStar, timeOut, ERROR, interError } = require(`../languages/${sd.lang || "ru"}`)
         
         const gold = await locs.tropicalForest.reward.generateReward(this.bot, this.msg, true).then(d => d.gold);
         const box = await locs.tropicalForest.reward.generateReward(this.bot, this.msg, true).then(d => d.box);
@@ -115,6 +115,8 @@ class Location {
                     cl2.stop();
                     m1.delete();
                     const Data = locs["tropicalForest"];
+                    const my = await bagFind(this.user.id);
+                    if (my.stars < Data.cost) return error(this.msg, noStar);
                     await addStar(this.user.id, -Data.cost || 0);
                     const newData = await lf.create({
                         userID: this.user.id,
@@ -132,6 +134,8 @@ class Location {
                     cl2.stop();
                     m1.delete();
                     const Data = locs["bodeGalaxy"];
+                    const my = await bagFind(this.user.id);
+                    if (my.stars < Data.cost) return error(this.msg, noStar);
                     await addStar(this.user.id, -Data.cost || 0);
                     const newData = await lf.create({
                         userID: this.user.id,

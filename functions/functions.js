@@ -10,7 +10,7 @@ const {  MessageActionRow,
   MessageEmbed,
   MessageButton,} = require('discord.js');
 const {main, none, greenlight, reddark} = require('./../JSON/colours.json')
-const { powersFind, powers, serverFind } = require("./models.js");
+const { powersFind, powers, serverFind, mail, mailFind } = require("./models.js");
 
 module.exports = {
   getHeroData: async (bot, sponsorID, data) => {
@@ -103,6 +103,26 @@ module.exports = {
       g: (powData.gold.value || 0) + (boostCount !== 0 ? boostCount-5 : 0)
     }
 
+  },
+
+  sendToMail: async function(id, {
+    textMessage,
+    createdAt
+  }) {
+    let data = await mailFind(id);
+    if (!data) {
+        const newData = await mail.create({
+            userID: id
+        });
+        await newData.save();
+    }
+    data = await mailFind(id);
+    
+    data.messages.push({
+      message: textMessage,
+      date: createdAt
+    })
+    data.save();
   },
 
   roundFunc: function (num, precision = 1) {
