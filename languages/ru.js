@@ -536,7 +536,7 @@ module.exports = {
             .addField(`**#8** ${item.pack3.emoji} Премиум пак: ${item.pack3.cost} ${STAR}`, `Откройте и получите одного из этих Премиум героев: \`${item.pack3.list.map(i => heroes[i].nameRus).join(", ")}\``)
             .addField(`**#9** ${item.tempPack.emoji} Пак Древнеегипетских богов: ${item.tempPack.cost} ${STAR} __доступен до 31.10.2021__`, `Откройте и получите одного из этих временных героев: \`${item.tempPack.list.map(i => heroes[i].nameRus).join(", ")}\``)
             .addField(`**#10** ${item.donateBox.emoji} Донат-бокс: 15₽`, `Откройте и получите ${item.donateBox.winRU}`)
-            .addField(`**#11** ${item.goldBox.emoji} Временный бокс: 15₽`, `Откройте и получите: __${item.goldBox.list[0]}__ ${item.box.emoji}, __${item.goldBox.list[1]}__ ${item.hlt.emoji} и __${item.goldBox.list[0]}__ ${item.dmg.emoji}`)
+            .addField(`**#11** ${item.goldBox.emoji} Временный бокс: 15₽`, `Откройте и получите: __${item.goldBox.list[0]}__ ${item.box.emoji}, __${item.goldBox.list[1]}__ ${item.hlt.emoji} и __${item.goldBox.list[2]}__ ${item.dmg.emoji}`)
             
         }
     },

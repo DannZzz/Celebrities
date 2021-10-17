@@ -566,7 +566,7 @@
   "Girl": {
     "name": "Girl",
     "nameRus": "Девушка",
-    "health": 200000,
+    "health": 220000,
     "damage": 15000,
     "cost": 0,
     "costType": "star",
@@ -583,7 +583,7 @@
   "Shadow": {
     "name": "Shadow",
     "nameRus": "Тень",
-    "health": 220000,
+    "health": 240000,
     "damage": 18000,
     "cost": 40000,
     "costType": "star",
