@@ -35,6 +35,9 @@ module.exports = {
     const trop = data.tropicalForest || 0;
     const tropData = locs["tropicalForest"];
 
+    const bode = data.bodeGalaxy || 0;
+    const bodeData = locs["bodeGalaxy"];
+
     const messages = data.messages || [];
     
     const emb = new MessageEmbed()
@@ -66,6 +69,12 @@ module.exports = {
     .setCustomId("main")
     .setStyle("SECONDARY")
     .setLabel(l === "ru" ? "Прочитать" : "Read")
+
+    const bbutton = new MessageButton()
+    .setEmoji("🌠")
+    .setCustomId("bode")
+    .setStyle("SECONDARY")
+    .setLabel(l === "ru" ? "Забрать один" : "Collect one")
     
     if (trop && trop !== 0) {
         arr.push({
@@ -74,6 +83,15 @@ module.exports = {
         });
 
         buttonList.push(tbutton)
+    }
+
+    if (bode && bode !== 0) {
+        arr.push({
+        name: `${l === "ru" ? bodeData.nameRU : bodeData.nameEN}:`,
+        value: `${bode} ${bodeData.reward.emoji || ""}`
+        });
+
+        buttonList.push(bbutton)
     }
     
 
@@ -150,6 +168,15 @@ module.exports = {
                 await mail.updateOne({userID: user.id}, {$set: {gold: 0}});
                 await addStar(user.id, Math.round(goldnew));
                 i.followUp({embeds: [winEmb.setTitle(l === "ru" ? "Вы успешно забрали голды:" : "You have successfully collected golds:").setDescription(`${Math.round(goldnew)} ${STAR}`)], ephemeral: true});
+                break;
+            case bbutton.customId:
+                collector.resetTimer();
+                const newdata2 = await mailFind(user.id);
+                const bodenew = newdata2.bodeGalaxy || 0; 
+                if (bodenew <= 0) return i.followUp({embeds: [errEmb.setDescription(l === "ru" ? "Вы не имеете этот предмет." : 'You don\'t have this item.')], ephemeral: true});
+                await mail.updateOne({userID: user.id}, {$inc: {bodeGalaxy: -1}});
+                const string1 = await bodeData.reward.generateReward(bot, msg);
+                i.followUp({embeds: [winEmb.setTitle(l === "ru" ? "Вам выпало:" : "You got:").setDescription(string1)], ephemeral: true});
                 break;
         };
     });

@@ -8,7 +8,8 @@ module.exports = {
   config: {
     name: "locations",
     aliases: ['локации'],
-    category: 'h_roleplay'
+    category: 'h_roleplay',
+    cooldown: 35
   },
   run: async (bot, msg, args, ops) => {
 
