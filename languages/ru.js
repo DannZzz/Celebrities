@@ -512,7 +512,7 @@ module.exports = {
                 value: `Даёт доступ к уникальным героям, уменьшает **cooldown** для всех команд **два** раза, даёт возможность оформить ранг-карточку, а так же уменьшает ограничение ставок для всех игр, увеличивает макс. сумма подарка до 2500.`,
                 inline: false},
                 {name: `Цены в рублях.`,
-                value: `• VIP + 10000 ${STAR} - 15₽\n• Премиум + 20000 ${STAR} - 30₽\n• Герой **Тайрус (Tyrus)** - 100₽\n• Герой **Тартарус (Tartarus)** - 60₽\n• Герой **Беззубик (Toothless)** - 40₽\n• Герой **Zeus (Зевс)** - 20₽\n• 600000 ${STAR} - 90₽\n• 150000 ${STAR} - 30₽\n• 50000 ${STAR} - 15₽\n• Донат-бокс (50к-200к) - 15₽`,
+                value: `• VIP + 10000 ${STAR} - 15₽\n• Премиум + 20000 ${STAR} - 30₽\n• Герой **Тайрус (Tyrus)** - 100₽\n• Герой **Гигантос (Gigantos)** - ${heroes["Gigantos"]["cost"]}\n• Герой **Тартарус (Tartarus)** - ${heroes["Tartarus"]["cost"]}\n• Герой **Беззубик (Toothless)** - ${heroes["Toothless"]["cost"]}\n• Герой **Zeus (Зевс)** - ${heroes["Zeus"]["cost"]}\n• 600000 ${STAR} - 90₽\n• 150000 ${STAR} - 30₽\n• 50000 ${STAR} - 15₽\n• Донат-бокс (50к-200к) - 15₽`,
                 inline: false},
                 {name: `Дополнительное место для героев.`,
                 value: `• Стоит: Кол-во твоих мест * 2000 ${STAR}\n\`?buy place\``,
@@ -536,7 +536,7 @@ module.exports = {
             .addField(`**#8** ${item.pack3.emoji} Премиум пак: ${item.pack3.cost} ${STAR}`, `Откройте и получите одного из этих Премиум героев: \`${item.pack3.list.map(i => heroes[i].nameRus).join(", ")}\``)
             .addField(`**#9** ${item.tempPack.emoji} Пак Древнеегипетских богов: ${item.tempPack.cost} ${STAR} __доступен до 31.10.2021__`, `Откройте и получите одного из этих временных героев: \`${item.tempPack.list.map(i => heroes[i].nameRus).join(", ")}\``)
             .addField(`**#10** ${item.donateBox.emoji} Донат-бокс: 15₽`, `Откройте и получите ${item.donateBox.winRU}`)
-            .addField(`**#11** ${item.goldBox.emoji} Временный бокс: 15₽`, `Откройте и получите один из этих призов: __200-650__ ${item.box.emoji} или __Премиум__`)
+            .addField(`**#11** ${item.goldBox.emoji} Временный бокс: 15₽`, `Откройте и получите: __${item.goldBox.list[0]}__ ${item.box.emoji}, __${item.goldBox.list[1]}__ ${item.hlt.emoji} и __${item.goldBox.list[0]}__ ${item.dmg.emoji}`)
             
         }
     },

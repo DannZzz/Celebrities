@@ -3,6 +3,7 @@ const { COIN, BANK, STAR, status } = require('../config');
 const {greenlight, redlight, main} = require('../JSON/colours.json');
 const {makeTimestamp} = require("../functions/functions");
 const item = require('../JSON/items');
+const heroes = require('../JSON/heroes.json');
 
 module.exports = {   
     "previous": "Previous",
@@ -513,7 +514,7 @@ module.exports = {
                 {name: `${status.premium} Premium`,
                 value: `Gives access to unique heroes, reduces **cooldown** for all commands **two** times, makes it possible to issue a rank card, and also gives more bet limit for all games, increases the max value of gift to 2500.`,
                 inline: false},{name: `Prices in dollars.`,
-                value: `• VIP + 10000 ${STAR} - 0,2$\n • Premium + 20000 ${STAR} - 0,41$\n • Hero **Tyrus** - 1,5$\n • Hero **Tartarus** - 0,8$\n • Hero **Toothless** - 0,55$\n • Hero **Zeus** - 0,26$\n • 600000 ${STAR } - 1,25$\n • 150000 ${STAR} - 0,4$\n • 50000 ${STAR} - 0,2$\n • Donate-box (50k-200k) - 0,2$`,
+                value: `• VIP + 10000 ${STAR} - 0,2$\n • Premium + 20000 ${STAR} - 0,41$\n • Hero **Tyrus** - 1,5$\n • Hero **Gigantos** - ${heroes["Gigantos"]["costUSD"]}\n • Hero **Tartarus** - ${heroes["Tartarus"]["costUSD"]}\n • Hero **Toothless** - ${heroes["Toothless"]["costUSD"]}\n • Hero **Zeus** - ${heroes["Zeus"]["costUSD"]}\n • 600000 ${STAR } - 1,25$\n • 150000 ${STAR} - 0,4$\n • 50000 ${STAR} - 0,2$\n • Donate-box (50k-200k) - 0,2$`,
                 inline: false},
                 {name: `Extra place for heroes.`,
                 value: `• Cost: Your place count * 2000 ${STAR}\n \`?buy place\``,
@@ -537,7 +538,7 @@ module.exports = {
                 .addField(`**#8** ${item.pack3.emoji} Premium pack: ${item.pack3.cost} ${STAR}`, `Open and get one of these Premium heroes: \`${item.pack3.list.join(", ")}\``)
                 .addField(`**#9** ${item.tempPack.emoji} Pak of Ancient Egyptian gods: ${item.tempPack.cost} ${STAR} __available until 10/31/2021__`, `Open and get one of these Temporary heroes: \`${item.tempPack.list.join(", ")}\``)
                 .addField(`**#10** ${item.donateBox.emoji} Donate-box: 0,2$`, `Open and get ${item.donateBox.winEN}`)
-                .addField(`**#11** ${item.goldBox.emoji} Temporary box: 0,2$`, `Open and get one of these: __200-650__ ${item.box.emoji} or __Premium__`)
+                .addField(`**#11** ${item.goldBox.emoji} Temporary box: 0,2$`, `Open and get: __${item.goldBox.list[0]}__ ${item.box.emoji}, __${item.goldBox.list[1]}__ ${item.hlt.emoji} and __${item.goldBox.list[0]}__ ${item.dmg.emoji}`)
                 
             }
         },

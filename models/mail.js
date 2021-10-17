@@ -5,7 +5,8 @@ const Schema = new mongoose.Schema({
   userID: { type: String, require: true, unique: true },
   messages: { type: Array, default: [] },
   gold: { type: Number, default: 0 },
-  tropicalForest: { type: Number, default: 0 }
+  tropicalForest: { type: Number, default: 0 },
+  bodeGalaxy: { type: Number, default: 0 }
 });
 
 const model = mongoose.model("mail", Schema);
