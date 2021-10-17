@@ -1,6 +1,6 @@
 const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
-const { STAR, AGREE, MAIL } = require("../../config");
-const {error, embed, perms, firstUpperCase, makeTimestamp} = require("../../functions/functions");
+const { STAR, AGREE, MAIL, LEFT, RIGHT } = require("../../config");
+const {error, embed, perms, firstUpperCase, makeTimestamp, pagination} = require("../../functions/functions");
 const { serverFind, mailFind, mail, addStar } = require("../../functions/models");
 const locs = require("../../JSON/locations");
 const {main , none, reddark, greenlight} = require("../../JSON/colours.json");
@@ -101,9 +101,7 @@ module.exports = {
         value: `${messages.length} ${l === "ru" ? "сообщений" : "messages"}`
         });
 
-        buttonList.push(
-           
-        )
+        buttonList.push(mbutton)
     }
 
     const row = new MessageActionRow().addComponents([buttonList])
@@ -178,6 +176,53 @@ module.exports = {
                 const string1 = await bodeData.reward.generateReward(bot, msg);
                 i.followUp({embeds: [winEmb.setTitle(l === "ru" ? "Вам выпало:" : "You got:").setDescription(string1)], ephemeral: true});
                 break;
+            case mbutton.customId:
+                collector.stop();
+                const mapped = messages.map(({message, date}, pos) => {
+                    return `\`${pos+1}.\` <t:${makeTimestamp(date.getTime())}:f>\n**${message}**`
+                });
+
+                const msgEmbed = new MessageEmbed()
+                .setColor(main)
+                .setAuthor(user.username, user.displayAvatarURL({dynamic: true}))
+                .setTitle(l === "ru" ? "Сообщения" : "Messages")
+
+                if (mapped.length > 5) {
+                    let arr = [];
+                    let i = 0;
+                    
+                    pages();
+                    function pages () {
+                        let v = mapped.slice(i, i+5);
+                        arr.push(
+                            new MessageEmbed()
+                            .setColor(main)
+                            .setAuthor(user.username, user.displayAvatarURL({dynamic: true}))
+                            .setTitle(l === "ru" ? "Сообщения" : "Messages")
+                            .setDescription(v.join("\n\n"))
+                        );
+                        i += 5;
+                        if (i < mapped.length) {
+                            pages();
+                        }
+        
+                    };
+        
+                    const button1 = new MessageButton()
+                    .setCustomId("left")
+                    .setEmoji(LEFT)
+                    .setStyle("SECONDARY")
+                    const button2 = new MessageButton()
+                    .setCustomId("right")
+                    .setEmoji(RIGHT)
+                    .setStyle("SECONDARY")
+                    
+                    await pagination(msg, arr, [button1, button2], 30000, [user.id]);
+                    
+                } else {
+                    return msg.channel.send({embeds: [msgEmbed.setDescription(mapped.join("\n\n"))]});
+                }
+
         };
     });
 
