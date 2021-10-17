@@ -216,6 +216,8 @@ module.exports = {
             await addStar(user.id, random)
             return embed(message, `${random} ${STAR}`, false);
         } else if (it == 11) {
+            await rpg.updateOne({userID: id}, {$inc: {goldBox: -1}})
+
             await rpg.updateOne({userID: user.id}, {$inc: {
                 box: item.list[0],
                 hlt: item.list[1],
