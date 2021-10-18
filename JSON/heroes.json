@@ -642,7 +642,7 @@
     "path": "./images/heroes/Alfonso.jpg",
     "descriptionEN": "Despite his more than modest size, Alfonso is one of the most cruel and vicious robots, showing animal fury in battle. If he could breathe, war would replace oxygen for him. His passion for destruction pursues only one goal: to instill fear and horror in the souls of other robots. Sometimes, by his example, he encourages them to stop retreating and again rush into battle. But because of his absurd nature and manner, almost to use weapons, even his allies have a hard time finding a common language with him.",
     "description": "Несмотря на свои более чем скромные габариты, Альфонсо — один из самых жестоких и злобных роботов, проявляющий в бою звериную ярость. Если бы он мог дышать, война заменила бы ему кислород. Его страсть к разрушению преследует лишь одну цель: вселить страх и ужас в души остальных роботов. Порой он своим примером воодушевляет их прекратить отступление и вновь броситься в бой. Но из-за его вздорного характера и манеры, чуть что, пускать в ход оружие, даже его союзникам бывает нелегко найти с ним общий язык.",
-    "available": "пак",
+    "available": "loc",
     "vip": false,
     "upgradeCost": 833,
     "type": "private"
