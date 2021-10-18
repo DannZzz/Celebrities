@@ -1,4 +1,4 @@
-const { bagFind, rpg, rpgFind, addPremiumStar} = require("../functions/models");
+const { bagFind, rpg, rpgFind, addPremiumStar, serverFind} = require("../functions/models");
 const { randomRange, error, embed } = require("../functions/functions");
 const { STAR, box: b } = require("../config");
 const heroes = require("../JSON/heroes.json");
