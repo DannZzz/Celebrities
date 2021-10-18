@@ -433,6 +433,7 @@ module.exports = {
         "avail": "Available:",
         "donate": "Donate",
         "noavail": "Gift from the developer",
+        "loc": "Can be found by exploring locations",
         "pack": "Temporary pack",
         "nocost": "Unknown",
         "yes": "Yes",
