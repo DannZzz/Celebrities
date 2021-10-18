@@ -85,8 +85,8 @@ module.exports = {
 
                         rpgData.heroes.push({
                             name: heroes["Alfonso"]["name"],
-                            healthdamage: heroes["Alfonso"]["healthdamage"],
-                            damage: heroes["Alfonso"]["name"]
+                            health: heroes["Alfonso"]["health"],
+                            damage: heroes["Alfonso"]["damage"]
                         });
 
                         rpgData.save();
