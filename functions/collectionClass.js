@@ -88,7 +88,7 @@ class CollectionClass {
 
         Collection.forEach(object => checking(object));
 
-        if (arr.length === 0) return error(this.msg, "Вы не собрали ни одной новой коллекции!");
+        if (arr.length === 0) return error(this.msg, bool ? "You haven't collected any new collections!" : "Вы не собрали ни одной новой коллекции!");
 
         arr.forEach(async obj => {
             rp.collections.push(obj.id);
