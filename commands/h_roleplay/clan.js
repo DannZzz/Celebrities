@@ -83,9 +83,9 @@ module.exports = {
       let myClan = new MessageEmbed()
       .setColor(main)
       .setTitle(`📊 __#${mc.ID}__ — ${mc.name}`)
-      .setDescription(`👑 ${cm.leader} ${message.guild.members.cache.get(mc.owner) ? message.guild.members.cache.get(mc.owner) : bot.users.cache.get(mc.owner).tag}\n📈 ${cm.level} __${mc.level}__\n💰 ${cm.budget} __${mc.budget}__ ${CLAN}\n🎁 ${cm.reward} __${mc.level * 300}__ ${mc.reward !== null && (86400 * 1000) - (Date.now() - mc.reward) > 0 ? "<:disagree:870586968734580767>" : "<:agree:870586969606979664>"}${mc.description !== null ? "\n\n" + mc.description : ''}\n\n**${cm.members} - ${a.length } / ${mc.space}**\n${b.length !== 0 ? b.join("\n") : cm.noMembers}`)
+      .setDescription(`👑 ${cm.leader} ${message.guild.members.cache.get(mc.owner) ? message.guild.members.cache.get(mc.owner) : bot.users.cache.get(mc.owner).tag}\n📈 ${cm.level} __${mc.level}__\n💰 ${cm.budget} __${mc.budget}__ ${CLAN}\n🎁 ${cm.reward} __${mc.level * 300}__ ${mc.reward !== null && (86400 * 1000) - (Date.now() - mc.reward) > 0 ? "<:disagree:870586968734580767>" : "<:agree:870586969606979664>"}${mc.description ? "\n\n" + mc.description : ''}\n\n**${cm.members} - ${a.length } / ${mc.space}**\n${b.length !== 0 ? b.join("\n") : cm.noMembers}`)
       
-      if (mc.logo !== null) {
+      if (mc.logo) {
         if (!isWebUri(mc.logo)) {
           myClan.setThumbnail("https://pbs.twimg.com/profile_images/1063925348205821958/DlGcxdOl_400x400.jpg")
         }else {
