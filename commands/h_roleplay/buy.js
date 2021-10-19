@@ -191,7 +191,7 @@ module.exports = {
     }
     const slots = ["slot", "place", "слот", "место"];
     if(slots.includes(args[0].toLowerCase())) {
-      if((bag["vip2"] && rp.itemCount !== 15) || (!bag["vip2"] && rp.itemCount !== 7)) {
+      if((bag["vip2"] && rp.itemCount !== 20) || (!bag["vip2"] && rp.itemCount !== 10)) {
         if(bag.stars >= 2000 * (rp.itemCount || 1)) {
           await bd.updateOne({userID: message.author.id}, {$inc: {stars: -(2000 * (rp.itemCount || 1))}})
           await rpg.updateOne({userID: message.author.id}, {$inc: {itemCount: 1}})
@@ -199,7 +199,7 @@ module.exports = {
         } else {
           return error(message, noStar + ` ${2000 * (rp.itemCount || 1)} ${STAR}`)
         }
-      } else if(!bag["vip2"] && rp.itemCount === 7) {
+      } else if(!bag["vip2"] && rp.itemCount === 10) {
         return error(message, vipTwo)
       } else {
         return error(message, b.errPlace)
