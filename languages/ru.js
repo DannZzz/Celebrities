@@ -53,6 +53,14 @@ module.exports = {
 
 
 
+    "collection": {
+        "desc": "Посмотреть коллекции.",
+        "usage": "(check)",
+        "access": "Для всех",
+    },
+
+
+
     "locations": {
         "desc": "Изучать локации и получать награды.",
         "usage": "",

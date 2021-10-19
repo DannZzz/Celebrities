@@ -278,7 +278,7 @@ class CardClass {
                     let langMessage = `__${total}__ золото добавлено на вашу карту с номером \`${target.code}\`.`;
                     if (ln.lang === "en") langMessage = `__${total}__ gold has been added to your card with the number \`${target.code}\`.`;
 
-                    await sendToMail(this.user.id, {
+                    await sendToMail(target.userID, {
                         textMessage: langMessage,
                         createdAt: new Date()
                     })

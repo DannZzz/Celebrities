@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "list": ["Selena", "Ariel", "Atalanta", "Athena", "Girl"],
+        "nameRU": "Коллекция красавиц",
+        "nameEN": "Collection of beauties",
+        "reward": 300000
+    },
+    {
+        "id": 2,
+        "list": ["Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses"],
+        "nameRU": "Египетская коллекция",
+        "nameEN": "Egyptian collection",
+        "reward": 35000
+    },
+    {
+        "id": 3,
+        "list": ["Eragon", "Zero", "X", "Toothless", "Light", "Shadow"],
+        "nameRU": "Коллекция драконов",
+        "nameEN": "Dragon collection",
+        "reward": 1500000
+    },
+    {
+        "id": 4,
+        "list": ["Ancalgon", "Tyrus", "Clarity", "Gigantes"],
+        "nameRU": "Коллекция монстров",
+        "nameEN": "Monster collection",
+        "reward": 4500000
+    }
+]
