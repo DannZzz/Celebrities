@@ -75,7 +75,7 @@ async function getCardMenu(msg, {
         const cardName = cards[data];
         if (cardName.name !== "VIP") {
             options.push({
-                label: `${ln.lang === "en" ? `${firstUpperCase(cardName.name)} Card` : `${firstUpperCase(cardName.nameRus)} Карта`} ${cardName.available === "yes" ? " " : "VIP 2"}`,
+                label: `${ln.lang === "en" ? `${firstUpperCase(cardName.name)} Card` : `${firstUpperCase(cardName.nameRus)} Карта`} ${cardName.available === "yes" ? " " : "PREMIUM"}`,
                 value: cardName.name,
                 description: `${open.cost} ${cardName.cost}`,
                 emoji: cardName.emoji
