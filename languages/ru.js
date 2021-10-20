@@ -69,6 +69,14 @@ module.exports = {
 
 
 
+    "partner": {
+        "desc": "Посмотреть свой персональный код донатов.",
+        "usage": "(create)",
+        "access": "Для всех",
+    },
+
+
+
     "mail": {
         "desc": "Просто почта.",
         "usage": "",

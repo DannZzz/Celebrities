@@ -14,6 +14,7 @@ const power = require("../models/powerUpdating.js");
 const powers = require("../models/powers.js");
 const mail = require("../models/mail.js");
 const lf = require("../models/locationFarm.js");
+const partner = require("../models/partner.js");
 
 module.exports = {
     rpg,
@@ -32,6 +33,25 @@ module.exports = {
     powers,
     lf,
     mail,
+    partner,
+
+    partnerFindCode: async (code) => {
+        const data = await partner.findOne({code: code});
+        if (!data) {
+            return false;
+        } else {
+            return data;
+        };
+    },
+
+    partnerFind: async (id) => {
+        const data = await partner.findOne({userID: id});
+        if (!data) {
+            return false;
+        } else {
+            return data;
+        };
+    },
 
     mailFind: async (id) => {
         const data = await mail.findOne({userID: id});

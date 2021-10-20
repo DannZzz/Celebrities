@@ -76,6 +76,14 @@ module.exports = {
 
 
 
+    "partner": {
+        "desc": "View your personal donation code.",
+        "usage": "(create)",
+        "access": "For everyone",
+    },
+
+
+
     "mail": {
         "desc": "Just mail.",
         "usage": "",

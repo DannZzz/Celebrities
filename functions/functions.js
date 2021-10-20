@@ -118,7 +118,7 @@ module.exports = {
     }
     data = await mailFind(id);
     
-    data.messages.push({
+    data.messages.unshift({
       message: textMessage,
       date: createdAt
     })
