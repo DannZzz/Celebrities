@@ -6,7 +6,7 @@ module.exports = {
         NAME: "Лут-Бокс",
         NAMEEN: "Loot-box", 
         emoji: box,
-        cost: 450,
+        cost: 750,
         max: 350,
         min: 100
     },
