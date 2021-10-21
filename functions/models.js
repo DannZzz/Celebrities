@@ -111,6 +111,11 @@ module.exports = {
             return data;
         };
     },
+
+    addCrystal: async (id, amount) => {
+        await bag.updateOne({userID: id}, {$inc: {crystal: Math.round(amount)}}).catch(() => false);
+    },
+    
     addStar: async (id, amount) => {
         await bag.updateOne({userID: id}, {$inc: {stars: Math.round(amount)}}).catch(() => false);
     },

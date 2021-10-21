@@ -1,6 +1,6 @@
 exports.PREFIX = 'a!';
 
-exports.VERSION = 'v5.0.4';
+exports.VERSION = 'v6.2.5';
 
 exports.DEV = "Dann#0006";
 
@@ -9,6 +9,8 @@ exports.MAIL = "<:inbox:887742555603734528>";
 exports.devID = ["382906068319076372"];
 
 exports.adminID = ["873237782825422968"];
+
+exports.CRYSTAL = "<:selendian:900804465102299177>";
 
 exports.status = {
     vip: "<:vip:896749543356522496>",

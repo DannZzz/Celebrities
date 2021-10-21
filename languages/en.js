@@ -1,11 +1,11 @@
-const {MessageEmbed} = require("discord.js");
-const { COIN, BANK, STAR, status } = require('../config');
-const {greenlight, redlight, main} = require('../JSON/colours.json');
-const {makeTimestamp} = require("../functions/functions");
+const { MessageEmbed } = require("discord.js");
+const { COIN, BANK, STAR, status, CRYSTAL } = require('../config');
+const { greenlight, redlight, main } = require('../JSON/colours.json');
+const { makeTimestamp, rubToDollar, formatNumber } = require("../functions/functions");
 const item = require('../JSON/items');
 const heroes = require('../JSON/heroes.json');
 
-module.exports = {   
+module.exports = {
     "previous": "Previous",
     "next": "Next",
     "notUser": "User not found",
@@ -22,6 +22,7 @@ module.exports = {
     "buttonYes": "Yes",
     "buttonNo": "No",
     "noStar": "You don't have enough golds.",
+    "noCrystal": "You don't have enough selendians.",
     "cardcooldown": "Please end the actions with the cards.",
     "cooldown": (time, cmd) => `Wait __${time}__ seconds, before using __${cmd}__.`,
     "cardFix": "Your payment will be completed within a few minutes.",
@@ -29,9 +30,10 @@ module.exports = {
     "timeOut": "Time out.",
     "ERROR": "Interaction error",
     "interError": "This button is not available to you!",
+    "crystal": "Selendian:",
 
     "afkMess": (name, res) => `User **${name}** is currently in AFK mode\nBy reason: **${res}**`,
-    
+
 
 
     "promoClass": {
@@ -120,7 +122,7 @@ module.exports = {
         "win": "You answered correctly and won",
         "wrong": "You answered incorrectly."
     },
-    
+
 
 
     "cardClass": {
@@ -234,10 +236,10 @@ module.exports = {
         "trial": time => `Try again <t:${makeTimestamp(time)}:R>`,
         "usage": "",
         "access": "For everyone",
-     },
-    
-    
-    
+    },
+
+
+
     "heroModel": {
         "health": "Health:",
         "damage": "Damage:",
@@ -317,7 +319,7 @@ module.exports = {
     },
 
 
-    
+
     "tasks": {
         "desc": "Get your tasks.",
         "usage": "",
@@ -428,7 +430,7 @@ module.exports = {
         "hero": name => `You got hero - __${name}__`
     },
 
-    
+
 
     "language": {
         "desc": "Change the bot language on the server.",
@@ -474,39 +476,51 @@ module.exports = {
         "usage": "",
         "access": "For everyone",
         "donate1": () => {
-            return new MessageEmbed ()
-            .setColor (main)
-            .addFields (
-                {name: `Support the developer, and buy premium access.`,
-                value: '**[Link to donate](https://www.donationalerts.com/r/adanadiscord)**',
-                inline: false},
-                {name: `Everything you need to specify!`,
-                value: '• Your ID\n • What exactly do you want, for example **VIP** or **Premium**.',
-                inline: false},
-            )
-            .setTimestamp ()
-            .setFooter ("Send your questions by command ?message")
+            return new MessageEmbed()
+                .setColor(main)
+                .addFields(
+                    {
+                        name: `Support the developer, and buy premium access.`,
+                        value: '**[Link to donate](https://www.donationalerts.com/r/adanadiscord)**',
+                        inline: false
+                    },
+                    {
+                        name: `Everything you need to specify!`,
+                        value: '• Your ID\n • What exactly do you want, for example **VIP** or **Premium**.',
+                        inline: false
+                    },
+                )
+                .setTimestamp()
+                .setFooter("Send your questions by command ?message")
         },
-         "donate2": () => {
-            return new MessageEmbed ()
-            .setColor (main)
-            .addFields (
-                {name: `Support the developer`,
-                value: '**[30₽ Monthly](https://boosty.to/iamdann/purchase/575340?ssource=DIRECT&share=subscription_link)**',
-                inline: false},
-                {name: `Classic Boost 💛`,
-                value: '**[50₽ Monthly](https://boosty.to/iamdann/purchase/575346?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n+10% Soul of Tyrus\n+10% Soul of Ancalgon\n+5% Soul of Darius\nPrivate channel access',
-                inline: false},
-                {name: `Average Boost 💚`,
-                value: '**[100₽ Monthly](https://boosty.to/iamdann/purchase/575347?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n+15% Soul of Tyrus\n+15% Soul of Ancalgon\n+10% Soul of Darius\nPrivate channel access',
-                inline: false},
-                {name: `Maximum Boost 💜`,
-                value: '**[200₽ Monthly](https://boosty.to/iamdann/purchase/575348?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n+20% Soul of Tyrus\n+20% Soul of Ancalgon\n+15% Soul of Darius\nPrivate channel access',
-                inline: false},
-            )
-            .setTitle("Any subscription gives access to secret promocodes!")
-            .setDescription(`Please be on [Support Server](https://discord.gg/Q6Guf7MmsT) to getting Boosts`)
-            .setFooter ("Send your questions by command ?message")
+        "donate2": () => {
+            return new MessageEmbed()
+                .setColor(main)
+                .addFields(
+                    {
+                        name: `Support the developer`,
+                        value: '**[30₽ Monthly](https://boosty.to/iamdann/purchase/575340?ssource=DIRECT&share=subscription_link)**',
+                        inline: false
+                    },
+                    {
+                        name: `Classic Boost 💛`,
+                        value: '**[50₽ Monthly](https://boosty.to/iamdann/purchase/575346?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n+10% Soul of Tyrus\n+10% Soul of Ancalgon\n+5% Soul of Darius\nPrivate channel access',
+                        inline: false
+                    },
+                    {
+                        name: `Average Boost 💚`,
+                        value: '**[100₽ Monthly](https://boosty.to/iamdann/purchase/575347?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n+15% Soul of Tyrus\n+15% Soul of Ancalgon\n+10% Soul of Darius\nPrivate channel access',
+                        inline: false
+                    },
+                    {
+                        name: `Maximum Boost 💜`,
+                        value: '**[200₽ Monthly](https://boosty.to/iamdann/purchase/575348?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n+20% Soul of Tyrus\n+20% Soul of Ancalgon\n+15% Soul of Darius\nPrivate channel access',
+                        inline: false
+                    },
+                )
+                .setTitle("Any subscription gives access to secret promocodes!")
+                .setDescription(`Please be on [Support Server](https://discord.gg/Q6Guf7MmsT) to getting Boosts`)
+                .setFooter("Send your questions by command ?message")
         }
     },
 
@@ -517,30 +531,40 @@ module.exports = {
         "usage": "[pack | packs]",
         "access": "For everyone",
         "shop": () => {
-            return new MessageEmbed ()
-            .setColor (main)
-            .setAuthor ("All information about transfers and monthly subscriptions: ?donate")
-            .addFields (
-                {name: `Developer's Boosty Account:`,
-                value: `**[boosty.to/iamdann](https://boosty.to/iamdann)**`,
-                inline: false},
-                {name: `${status.vip} VIP`,
-                value: `Access to commands - AFK, embed, channel, levels (enabling the level system) and bio profile, and also increases the cost of fish (by 33%), increases the max value of gift to 1000, and also increases the bet of batlle.`,
-                inline: false},
-                {name: `${status.premium} Premium`,
-                value: `Gives access to unique heroes, reduces **cooldown** for all commands **two** times, makes it possible to issue a rank card, and also gives more bet limit for all games, increases the max value of gift to 2500.`,
-                inline: false},{name: `Prices in dollars.`,
-                value: `• VIP + 10000 ${STAR} - 0,63$\n • Premium + 20000 ${STAR} - 1,41$\n • Hero **Tyrus** - 2,25$\n • Hero **Gigantes** - ${heroes["Gigantes"]["costUSD"]}\n • Hero **Tartarus** - ${heroes["Tartarus"]["costUSD"]}\n • Hero **Toothless** - ${heroes["Toothless"]["costUSD"]}\n • Hero **Zeus** - ${heroes["Zeus"]["costUSD"]}\n • 600000 ${STAR } - 1,25$\n • 150000 ${STAR} - 0,4$\n • 50000 ${STAR} - 0,2$\n • Donate-box (50k-200k) - 0,2$`,
-                inline: false},
-                {name: `Extra place for heroes.`,
-                value: `• Cost: Your place count * 2000 ${STAR}\n \`?buy place\``,
-                inline: false}
+            return new MessageEmbed()
+                .setColor(main)
+                .setAuthor("All information about transfers and monthly subscriptions: ?donate")
+                .addFields(
+                    {
+                        name: `Developer's Boosty Account:`,
+                        value: `**[boosty.to/iamdann](https://boosty.to/iamdann)**`,
+                        inline: false
+                    },
+                    {
+                        name: `${status.vip} VIP`,
+                        value: `Access to commands - AFK, embed, channel, levels (enabling the level system) and bio profile, and also increases the cost of fish (by 33%), increases the max value of gift to 1000, and also increases the bet of batlle.`,
+                        inline: false
+                    },
+                    {
+                        name: `${status.premium} Premium`,
+                        value: `Gives access to unique heroes, reduces **cooldown** for all commands **two** times, makes it possible to issue a rank card, and also gives more bet limit for all games, increases the max value of gift to 2500.`,
+                        inline: false
+                    }, {
+                        name: `Prices in dollars.`,
+                    value: `• VIP + 10000 ${STAR} - ${rubToDollar(45, formatNumber)} \n • Premium + 20000 ${STAR} - ${rubToDollar(100, formatNumber)}\n • Hero **Tyrus** - ${rubToDollar(160, formatNumber)}\n • 1000 ${CRYSTAL} - ${rubToDollar(90, formatNumber)}\n • 350 ${CRYSTAL} - ${rubToDollar(30, formatNumber)}\n • 100 ${CRYSTAL} - ${rubToDollar(10, formatNumber)}\n • 600000 ${STAR} - ${rubToDollar(90, formatNumber)}\n • 150000 ${STAR} - ${rubToDollar(30, formatNumber)}\n • 50000 ${STAR} - ${rubToDollar(15, formatNumber)}\n • Donate-box (50k-200k) - ${rubToDollar(15, formatNumber)}`,
+                    inline: false
+                },
+                    {
+                        name: `Extra place for heroes.`,
+                        value: `• Cost: Your place count * 2000 ${STAR}\n \`?buy place\``,
+                        inline: false
+                    }
                 )
                 .setTitle("Любая подписка дает доступ к секретным промокодам!")
-                .setFooter ("Send your questions by command ?message")
-            },
-            "items": () => {
-                return new MessageEmbed ()
+                .setFooter("Send your questions by command ?message")
+        },
+        "items": () => {
+            return new MessageEmbed()
                 .setColor(main)
                 .setAuthor("Buff Shop")
                 .addField(`**#1** ${item.box.emoji} Item Box: ${item.box.cost} ${STAR}`, `Gives a random item and up to ${item.box.max} golds`)
@@ -555,9 +579,9 @@ module.exports = {
                 .addField(`**#9** ${item.tempPack.emoji} Pak of Ancient Egyptian gods: ${item.tempPack.cost} ${STAR} __available until 10/31/2021__`, `Open and get one of these Temporary heroes: \`${item.tempPack.list.join(", ")}\``)
                 .addField(`**#10** ${item.donateBox.emoji} Donate-box: 0,2$`, `Open and get ${item.donateBox.winEN}`)
                 .addField(`**#11** ${item.goldBox.emoji} Temporary box: 0,2$`, `Open and get: __${item.goldBox.list[0]}__ ${item.box.emoji}, __${item.goldBox.list[1]}__ ${item.hlt.emoji} and __${item.goldBox.list[2]}__ ${item.dmg.emoji}`)
-                
-            }
-        },
+
+        }
+    },
 
 
 
@@ -726,7 +750,7 @@ module.exports = {
         "usage": "[mention | ID]",
         "access": "For everyone",
         "err1": "You are already married.",
-        "time": time => `Try again in **${Math.round(Math.abs (time) / 86400000)} days**.`,
+        "time": time => `Try again in **${Math.round(Math.abs(time) / 86400000)} days**.`,
         "err2": "This member already has a partner.",
         "err3": "You have not enough golds - 150",
         "sure": "Offers you his hand and heart",
@@ -751,7 +775,7 @@ module.exports = {
         "desc": "Apply to join the clan.",
         "usage": "[number of clan]",
         "access": "For everyone",
-        "time": time => `Try again in **${time.getMinutes()} minutes ${time.getSeconds ()} seconds**.`,
+        "time": time => `Try again in **${time.getMinutes()} minutes ${time.getSeconds()} seconds**.`,
         "offed": "Applications to join this clan are disabled!",
         "limit": "There are enough members in this clan!",
         "done": "You have successfully submitted your application."
@@ -834,7 +858,8 @@ module.exports = {
         "time": time => `You recently fished.\nTry again in **${time.getMinutes()} minutes ${time.getSeconds()} seconds.**`,
         "done": symbol => `**🎣 You dropped your line and caught ${symbol}**!`,
         "title": "List of fish, their rarity.",
-        "list": () => {return `
+        "list": () => {
+            return `
         \`\`\`🔧Junk :: [ID: 1]
 🐟Common :: [ID: 2]
 🐠Uncommon :: [ID: 3]
@@ -861,14 +886,14 @@ The more fish, the higher the price!
 
 
     "daily": {
-        "desc": "10 golds and 1 box daily.",
+        "desc": "1 selendian and loot-box daily.",
         "usage": "",
         "access": "For everyone",
         "time": time => `You have already collected your daily prize.\nTry again in **${time.getUTCHours()} hours ${time.getMinutes()} minutes.**`,
-        "done": "Your daily prize: 100"
+        "done": "Your daily prize:"
     },
 
-    
+
     "duel": {
         "desc": "Go to battle with a member.",
         "usage": "[nickname | mention | ID]",
@@ -889,7 +914,7 @@ The more fish, the higher the price!
 
 
 
-    "clan": { 
+    "clan": {
         "desc": "Clan information.",
         "usage": "[help]",
         "access": "For everyone",
@@ -1017,7 +1042,7 @@ The more fish, the higher the price!
         "button2": "Agree"
     },
 
-    
+
 
     "avatar": {
         "desc": "Get a user's avatar.",
@@ -1032,12 +1057,12 @@ The more fish, the higher the price!
         "usage": "",
         "access": "For everyone",
         "title": "Information about the bot!",
-        "field1" : "Name:", 
+        "field1": "Name:",
         "create": "Created at:",
         "dev": "Developer: ",
         "prefix": "Global prefix: ",
         "link": "Boosty",
-        "inv" : "Developer's Boosty account:",
+        "inv": "Developer's Boosty account:",
         "support": "Our discord server:"
     },
 
@@ -1058,7 +1083,7 @@ The more fish, the higher the price!
         "level": "Level:",
         "xp": "XP:",
         "top20": "Top of 20 active members!",
-        "top30": "Top of 30 active members!" 
+        "top30": "Top of 30 active members!"
     },
 
 
@@ -1274,9 +1299,9 @@ The more fish, the higher the price!
         "error2": "Specify an embed colour.",
         "error3": "Specify a valid text channel."
     },
-    
-    
-    
+
+
+
     "channel": {
         "desc": "Send a message in the specified text channel.",
         "usage": "[mention channel] [text]",
@@ -1284,27 +1309,27 @@ The more fish, the higher the price!
         "error1": "Specify a text channel.",
         "error2": "Specify a valid text channel."
     },
-    
-    
-    
+
+
+
     "bio": {
         "desc": "Description for your profile.",
         "usage": "[text]",
         "access": "For VIP",
         "done": "A new bio-profile has been successfully installed."
     },
-    
-    
-    
+
+
+
     "profile-image": {
         "desc": "Image for your profile.",
         "usage": "[link]",
         "access": "For Premium",
         "done": "A new image-profile has been successfully installed."
     },
-    
-    
-    
+
+
+
     "rank-color": {
         "desc": "Colour for the text in rank-card.",
         "usage": "[hex colour]",
@@ -1312,42 +1337,42 @@ The more fish, the higher the price!
         "error": "Specify a hex colour.\nExample: \`#ff00ff or ff00ff\`",
         "done": "A new colour for your rank-card successfully installed."
     },
-    
-    
-    
+
+
+
     "rank-image": {
         "desc": "Image for your rank-card.",
         "usage": "[link]",
         "access": "For Premium",
         "done": "A new rank-card image has been successfully installed."
     },
-    
-    
-    
+
+
+
     "burn": {
         "desc": "Burn users.",
         "usage": "(mention | ID | username)",
         "access": "For everyone",
     },
-    
-    
-    
+
+
+
     "rip": {
         "desc": "Damn...",
         "usage": "(mention | ID | username)",
         "access": "For everyone",
     },
-    
-    
-    
+
+
+
     "trigger": {
         "desc": "Triggered users's avatar.",
         "usage": "(mention | ID | username)",
         "access": "For everyone",
     },
-    
-    
-    
+
+
+
     "custom": {
         "desc": "Create a new custom command.",
         "usage": "[name] [response]",
@@ -1357,9 +1382,9 @@ The more fish, the higher the price!
         "done": "New command successfully created",
         "updated": "The command successfully updated.",
     },
-    
-    
-    
+
+
+
     "delete": {
         "desc": "Delete a custom command.",
         "usage": "[name]",
@@ -1368,9 +1393,9 @@ The more fish, the higher the price!
         "err": cmd => `Command __${cmd}__ not found.`,
         "done": "The command successfully deleted",
     },
-    
-    
-    
+
+
+
     "ranking": {
         "desc": "Enable/Disable ranking system.",
         "usage": "[enable | disable]",
@@ -1386,9 +1411,9 @@ The more fish, the higher the price!
         "done3": "Ranking system already enabled.",
         "done4": "An action not found",
     },
-    
-    
-    
+
+
+
     "prefix": {
         "desc": "Change the server prefix.",
         "usage": "[prefix]",
@@ -1398,9 +1423,9 @@ The more fish, the higher the price!
         "err1": "Specify another prefix.",
         "done": "Server's new prefix:"
     },
-    
-    
-    
+
+
+
     "welcome": {
         "desc": "Enable/Disable server welcoming system.",
         "usage": "[action] [parametr]",

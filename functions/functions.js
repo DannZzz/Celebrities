@@ -296,7 +296,7 @@ module.exports = {
     return `${scaled.toFixed(2)}${last}`;
   },
 
-  formatNumber(number, minimumFractionDigits = 0) {
+  formatNumber: (number, minimumFractionDigits = 0) => {
     return Number.parseFloat(number).toLocaleString(undefined, {
       minimumFractionDigits,
       maximumFractionDigits: 2
@@ -354,6 +354,15 @@ module.exports = {
 			return resolve(lines);
 		});
 	},
+
+  rubToDollar: function (rub, func, lang = "en") {
+    if (lang === "ru") {
+      return `${rub}₽`
+    } else {
+      const f = amount => func(amount*0.014, 2);
+      return `${f(rub)}$`
+    }
+  },
 
   async pagination(interaction, pages, buttonList, timeout = 120000, ids) {
     //if (!msg && !msg.channel) throw new Error("Channel is inaccessible.");
