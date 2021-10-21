@@ -5,7 +5,6 @@ const { AGREE, DISAGREE, STAR, LEFT, RIGHT } = require("../config");
 const { stripIndents } = require("common-tags");
 const { MessageEmbed, MessageActionRow, MessageSelectMenu, MessageCollector, MessageButton } = require("discord.js");
 
-const cost = 150000;
 const donator = 35000;
 const part = 25000;
 
@@ -22,19 +21,19 @@ class PartnerClass {
     async createPartnerCode() {
         const langData = {
             en: {
-                first: "You can give this promo code to your friend or acquaintance, and if, during the subsequent donation, a person indicates your promo code, he will receive 35k gold as a bonus, and you will also receive a bonus of 25k gold for using your promo code.",
+                first: "You can give this promo code to your friend or acquaintance, and if, during the subsequent donation, a person indicates your promo code, he will receive 35k gold as a bonus, and you will also receive a bonus of 25k gold for using your promo code.\n\n**Important!\nYou will not be able to use your personal code for yourself.**",
                 already: "You already have a personal code.",
                 canceled: "Action canceled successfully.",
                 done: "You have successfully created a personal code - ",
-                req: stripIndents`Specify nickname, for personal code, maximum length - 15 characters (__this code cannot be changed!__)\nWrite \`cancel\` to cancel the action.\n\nPrice of the code: ${cost} ${STAR}`
+                req: stripIndents`\`Specify username now\`, for personal code, maximum length - 15 characters (__this code cannot be changed!__)\nWrite \`cancel\` to cancel the action.`
             },
 
             ru: {
-                first: "Вы можете дать этот промо-код своему другу или знакомому и, если при последующем донате человек укажет Ваш промо-код, то он получит - 35к голды бонусом, Вам же будет бонус в размере - 25к голды за использование вашего промо-кода.",
+                first: "Вы можете дать этот промо-код своему другу или знакомому и, если при последующем донате человек укажет Ваш промо-код, то он получит - 35к голды бонусом, Вам же будет бонус в размере - 25к голды за использование вашего промо-кода.\n\n**Важно!\nВы не сможете использовать свой персональный код для себя.**",
                 already: "Вы уже имеете персональный код.",
                 canceled: "Действие успешно отменено.",
                 done: "Вы успешно создали персональный код - ",
-                req: stripIndents`Укажите ник, для персонального кода, максимальная длина - 15 символов (__этот код изменить нельзя!__)\nНапишите \`cancel\`, чтобы отменить действие.\n\nЦена кода: ${cost} ${STAR}`
+                req: stripIndents`\`Укажите ник сейчас\`, для персонального кода, максимальная длина - 15 символов (__этот код изменить нельзя!__)\nНапишите \`cancel\`, чтобы отменить действие.`
             }
         };
 
@@ -74,11 +73,6 @@ class PartnerClass {
                 };
 
                 const getCode = await creating();
-
-                const myGold = await bagFind(this.id).then(x => x.stars || 0);
-
-                if (myGold < cost) return error(this.msg, noStar);
-                await addStar(this.id, -cost);
 
                 const create = await partner.create({
                     userID: this.id,
@@ -125,7 +119,7 @@ class PartnerClass {
             .setColor(main)
             .setAuthor(this.user.username, this.user.displayAvatarURL({ dynamic: true }))
             .setTitle(bool ? "Your personal code is:" : "Твой персональный код:")
-            .setDescription(bool ? `\`${data.code}\`\n\nYou can give this promo code to your friend or acquaintance, and if, during the subsequent donation, a person indicates your promo code, he will receive 35k gold as a bonus, and you will also receive a bonus of 25k gold for using your promo code.` : `\`${data.code}\`\n\nВы можете дать этот промо-код своему другу или знакомому и, если при последующем донате человек укажет Ваш промо-код, то он получит - 35к голды бонусом, Вам же будет бонус в размере - 25к голды за использование вашего промо-кода.`)
+            .setDescription(bool ? `\`${data.code}\`\n\nYou can give this promo code to your friend or acquaintance, and if, during the subsequent donation, a person indicates your promo code, he will receive 35k gold as a bonus, and you will also receive a bonus of 25k gold for using your promo code.\n\n**Important!\nYou will not be able to use your personal code for yourself.**` : `\`${data.code}\`\n\nВы можете дать этот промо-код своему другу или знакомому и, если при последующем донате человек укажет Ваш промо-код, то он получит - 35к голды бонусом, Вам же будет бонус в размере - 25к голды за использование вашего промо-кода.\n\n**Важно!\nВы не сможете использовать свой персональный код для себя.**`)
 
         return this.msg.reply({ embeds: [emb] });
     };
@@ -135,6 +129,7 @@ class PartnerClass {
         if (!data) return error(this.msg, "Персональный код не найден!");
         const user = this.bot.users.cache.get(id);
         if (!user) return error(this.msg, "Айди донатера не найден!");
+        if (data.userID === id) return error(this.msg, "Айди донатера и партнера совпадает!");
         await addStar(data.userID, part);
         await addStar(id, donator);
 
