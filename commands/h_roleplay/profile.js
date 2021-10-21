@@ -1,13 +1,13 @@
 const Rate = require("../../functions/rateClass");
 const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js');
-const {main} = require('../../JSON/colours.json');
-const { COIN, BANK, STAR, status} = require('../../config');
+const { main } = require('../../JSON/colours.json');
+const { COIN, BANK, STAR, status, CRYSTAL } = require('../../config');
 const Levels = require("discord-xp");
 Levels.setURL(process.env.MONGO);
 const devs = ["382906068319076372"];
 const moment = require('moment');
 const { formatNumber } = require("../../functions/functions");
-const {serverFind, vip, bagFind, marry, rpg, profile, clanFind, profileFind, rpgFind, vipFind } = require("../../functions/models");
+const { serverFind, vip, bagFind, marry, rpg, profile, clanFind, profileFind, rpgFind, vipFind } = require("../../functions/models");
 const YTchannelInfo = require("yt-channel-info");
 
 module.exports = {
@@ -18,18 +18,18 @@ module.exports = {
   },
   run: async (bot, message, args) => {
     const LANG = await serverFind(message.guild.id);
-    const {profile: p, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
-   
+    const { crystal, profile: p, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar } = require(`../../languages/${LANG.lang}`);
+
     let member = await message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(r => r.user.username.toLowerCase() === args.join(' ').toLocaleLowerCase()) || message.guild.members.cache.find(r => r.displayName.toLowerCase() === args.join(' ').toLocaleLowerCase()) || message.member;
     let person = await Levels.fetch(member.user.id, message.guild.id, true)
     let embed = new MessageEmbed()
-    .setColor(main)
-    .setAuthor(`${p.pr} ` + member.user.tag , member.user.displayAvatarURL({dynamic: true}))
+      .setColor(main)
+      .setAuthor(`${p.pr} ` + member.user.tag, member.user.displayAvatarURL({ dynamic: true }))
 
     const data1 = await profileFind(member.id);
     let marData;
     if (data1.marryID) {
-      let mar = await marry.findOne({id: data1.marryID})
+      let mar = await marry.findOne({ id: data1.marryID })
       if (member.id === mar.first) {
         marData = `${(message.guild.members.cache.get(mar.second) ? message.guild.members.cache.get(mar.second) : (bot.users.cache.get(mar.second) ? `${bot.users.cache.get(mar.second).tag || p.none} ${p.from} ${moment(mar.date).format('DD.MM.YYYY')}` : "?"))}`
       } else {
@@ -42,7 +42,7 @@ module.exports = {
     let rp = await rpgFind(member.id);
     let vip = '—'
     let checkVip = await vipFind(member.id)
-    if(data["vip1"] && data["vip2"]) vip = LANG.lang === "ru" ? `${status.premium} Премиум` : `${status.premium} Premium`;
+    if (data["vip1"] && data["vip2"]) vip = LANG.lang === "ru" ? `${status.premium} Премиум` : `${status.premium} Premium`;
     else if (data["vip1"]) vip = status.vip + " VIP";
     const trophy = rp.league.rate || 0;
 
@@ -57,31 +57,31 @@ module.exports = {
 
 
 
-      embed.addField(`${p.status} ${vip}\n${p.subs} ${getSub(bot, member.id, LANG.lang)}`, `${STAR} ${formatNumber(Math.round(data.stars)) || Math.round(data.stars)} ${devs.includes(member.id) ? "**Dev**" : ""}\n${await Rate(message).rateData(trophy)}\n${p.quiz} ${rp.quizCount}\n${CL}\n${p.gg} ${marData}\n<:heroes:886967552310407219> : ${rp.itemCount || 1}\n\n`)
-      embed.addField(`__${p.fishes}__\n`,
-    `\`\`\`${p.junk}(🔧) - ${data.junk}\n${p.common}(🐟) - ${data.common}\n${p.unc}(🐠) - ${data.uncommon}\n${p.rare}(🦑) - ${data.rare}\n${p.leg}(🐋) - ${data.legendary}\`\`\`\n`, true)
+    embed.addField(`${p.status} ${vip}\n${p.subs} ${getSub(bot, member.id, LANG.lang)}`, `${STAR} ${formatNumber(Math.round(data.stars)) || Math.round(data.stars)} ${devs.includes(member.id) ? "**Dev**" : ""}\n${CRYSTAL} ${formatNumber(Math.round(data.crystal || 0))}\n${await Rate(message).rateData(trophy)}\n${p.quiz} ${rp.quizCount}\n${CL}\n${p.gg} ${marData}\n<:heroes:886967552310407219> : ${rp.itemCount || 1}\n\n`)
+    embed.addField(`__${p.fishes}__\n`,
+      `\`\`\`${p.junk}(🔧) - ${data.junk}\n${p.common}(🐟) - ${data.common}\n${p.unc}(🐠) - ${data.uncommon}\n${p.rare}(🦑) - ${data.rare}\n${p.leg}(🐋) - ${data.legendary}\`\`\`\n`, true)
 
 
-    if(data["vip1"] && checkVip.profileBio) embed.addField(p.bio, checkVip.profileBio, true);
+    if (data["vip1"] && checkVip.profileBio) embed.addField(p.bio, checkVip.profileBio, true);
 
     let buttonList = []
     if (checkVip.vkLink) {
       const link = checkVip.vkLink.substring(8, checkVip.vkLink.length);
       const button1 = new MessageButton()
-      .setLabel(link)
-      .setStyle("LINK")
-      .setURL(checkVip.vkLink)
-      .setEmoji("<:VK:889579417804886116>")
+        .setLabel(link)
+        .setStyle("LINK")
+        .setURL(checkVip.vkLink)
+        .setEmoji("<:VK:889579417804886116>")
       buttonList.push(button1)
     }
 
     if (checkVip.discordLink) {
       const link = checkVip.discordLink.substring(8, checkVip.discordLink.length);
       const button2 = new MessageButton()
-      .setLabel(link)
-      .setStyle("LINK")
-      .setURL(checkVip.discordLink)
-      .setEmoji("<:discord:889581995129192518>")
+        .setLabel(link)
+        .setStyle("LINK")
+        .setURL(checkVip.discordLink)
+        .setEmoji("<:discord:889581995129192518>")
       buttonList.push(button2)
     }
 
@@ -90,28 +90,28 @@ module.exports = {
       const res = link.substring(32, link.length);
       const get = await YTchannelInfo.getChannelInfo(res);
       const button3 = new MessageButton()
-      .setLabel(`youtube/${get.author}`)
-      .setStyle("LINK")
-      .setURL(link)
-      .setEmoji("<:youtube:889594031116521503>")
-      buttonList.push(button3) 
+        .setLabel(`youtube/${get.author}`)
+        .setStyle("LINK")
+        .setURL(link)
+        .setEmoji("<:youtube:889594031116521503>")
+      buttonList.push(button3)
     }
 
     if (checkVip.instagramLink) {
       const link = checkVip.instagramLink;
-      const res = link.substring(26, link.length-1);
+      const res = link.substring(26, link.length - 1);
       const button4 = new MessageButton()
-      .setLabel(`instagram/${res}`)
-      .setStyle("LINK")
-      .setURL(link)
-      .setEmoji("<:instagram:889609379517698108>")
-      buttonList.push(button4) 
+        .setLabel(`instagram/${res}`)
+        .setStyle("LINK")
+        .setURL(link)
+        .setEmoji("<:instagram:889609379517698108>")
+      buttonList.push(button4)
     }
-    
+
     const row = new MessageActionRow().addComponents(buttonList);
-    buttonList.length !== 0 ? message.channel.send({embeds: [embed], components: [row]}) : message.channel.send({embeds: [embed]})
-   
-    
+    buttonList.length !== 0 ? message.channel.send({ embeds: [embed], components: [row] }) : message.channel.send({ embeds: [embed] })
+
+
   }
 }
 
@@ -119,44 +119,44 @@ module.exports = {
 function getSub(bot, id, lang = "ru") {
   const server = bot.guilds.cache.get("882589567377637408");
 
-    const boosterRoleIds = {
-      classic: "897172766929858601",
-      premium: "897172906021371926",
-      premiumPlus: "897172954411053098"
-    }
+  const boosterRoleIds = {
+    classic: "897172766929858601",
+    premium: "897172906021371926",
+    premiumPlus: "897172954411053098"
+  }
 
-    const langData = {
-      en: {
-        classic: "Classic Boost 💛",
-        average: "Average Boost 💚",
-        max: "Maximum Boost 💜"
-      },
-      ru: {
-        classic: "Классический Буст 💛",
-        average: "Средний Буст 💚",
-        max: "Максимальный Буст 💜"
-      }
-    };
-    
-    
-    if (server) {
-      const member = server.members.cache.get(id);
-      if (member) {
-        if (member.roles.cache.get(boosterRoleIds.premiumPlus)) {
-          return langData[lang].max;
-        } else if (member.roles.cache.get(boosterRoleIds.premium)) {
-          return langData[lang].average;
-        } else if (member.roles.cache.get(boosterRoleIds.classic)) {
-          return langData[lang].classic;
-        } else {
-          return "—";
-        }
+  const langData = {
+    en: {
+      classic: "Classic Boost 💛",
+      average: "Average Boost 💚",
+      max: "Maximum Boost 💜"
+    },
+    ru: {
+      classic: "Классический Буст 💛",
+      average: "Средний Буст 💚",
+      max: "Максимальный Буст 💜"
+    }
+  };
+
+
+  if (server) {
+    const member = server.members.cache.get(id);
+    if (member) {
+      if (member.roles.cache.get(boosterRoleIds.premiumPlus)) {
+        return langData[lang].max;
+      } else if (member.roles.cache.get(boosterRoleIds.premium)) {
+        return langData[lang].average;
+      } else if (member.roles.cache.get(boosterRoleIds.classic)) {
+        return langData[lang].classic;
       } else {
         return "—";
       }
     } else {
       return "—";
     }
+  } else {
+    return "—";
+  }
 
 }
 

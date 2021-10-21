@@ -1,7 +1,7 @@
 const heroes = require('../../JSON/heroes.json');
 const { main, reddark } = require('../../JSON/colours.json');
 const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
-const { COIN, STAR, LEFT, RIGHT, DLEFT, DRIGHT, CANCEL, heroType } = require("../../config");
+const { COIN, STAR, LEFT, RIGHT, DLEFT, DRIGHT, CANCEL, heroType, CRYSTAL } = require("../../config");
 const { error, paginationBig } = require("../../functions/functions");
 const Subs = require("../../functions/subscriptionClass");
 
@@ -72,9 +72,9 @@ module.exports = {
     });
     let bool = false;
     collectorType.on("collect", async i => {
-      i.deferUpdate(); 
+      i.deferUpdate();
       bool = true;
-      collectorType.stop(); 
+      collectorType.stop();
 
       let newdr = []
       for (let key in heroes) {
@@ -183,6 +183,7 @@ module.exports = {
     }
     function cType(type) {
       if (type === 'star') { return STAR }
+      else if (type === "crystal") { return CRYSTAL }
       else {
         return ''
       }
