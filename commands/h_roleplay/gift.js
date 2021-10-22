@@ -42,11 +42,11 @@ module.exports = {
     if(!args[1]) return error(message, g.error2); ops.queue.delete(message.author.id);
     
     let value = Math.floor(args[1])
-    if (!bag["vip1"] && value > 500) {
+    if (!bag["vip1"] && value > 2500) {
         return error(message, g.vip1);
-      } else if (!bag["vip2"] && value > 1000) {
+      } else if (!bag["vip2"] && value > 5000) {
         return error(message, g.vip2);
-      } else if (bag["vip2"] && value > 2500) {
+      } else if (bag["vip2"] && value > 10000) {
         return error(message, g.vipError);
       }
     

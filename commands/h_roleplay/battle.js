@@ -51,11 +51,11 @@ module.exports = {
 
       if (value < 1) return error(message, b.min);
 
-      if (!bag["vip1"] && value > 50) {
+      if (!bag["vip1"] && value > 150) {
         return error(message, b.vip1);
-      } else if (!bag["vip2"] && value > 100) {
+      } else if (!bag["vip2"] && value > 250) {
         return error(message, b.vip2);
-      } else if (bag["vip2"] && value > 250) {
+      } else if (bag["vip2"] && value > 400) {
         return error(message, b.vipError);
       }
 
@@ -68,7 +68,7 @@ module.exports = {
       if (!mrp || mrp.item === null) return error(message, hm.noHero);
       const mItem = mrp.item
       let item;
-      const enem = ["Alfonso", "Red", "Shadow", "Tyrus", "Light", "Dido", "Koko", "Hookfang", "Tartarus", "Ancalgon", "X", "Toothless", "Zero", "Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Broken", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
+      const enem = ["Merlin", "Kindness", "Lyric", "Dranna", "Alfonso", "Red", "Shadow", "Tyrus", "Light", "Dido", "Koko", "Hookfang", "Tartarus", "Ancalgon", "X", "Toothless", "Zero", "Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Broken", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
       const random = Math.floor(Math.random() * enem.length);
       item = enem[random]
 
