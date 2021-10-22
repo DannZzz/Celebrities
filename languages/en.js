@@ -63,6 +63,16 @@ module.exports = {
 
 
 
+    "slots": {
+        "desc": "Play the slot game.",
+        "usage": "<bet>",
+        "access": "For everyone",
+        "win": "You won",
+        "lose": "YOu lose"
+    },
+
+
+
     "collection": {
         "desc": "View the collections.",
         "usage": "(check)",

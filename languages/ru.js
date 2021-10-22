@@ -55,6 +55,16 @@ module.exports = {
 
 
 
+    "slots": {
+        "desc": "Играть в слоты.",
+        "usage": "<ставка>",
+        "access": "Для всех",
+        "win": "Ты выиграл",
+        "lose": "Ты проиграл"
+    },
+
+
+
     "collection": {
         "desc": "Посмотреть коллекции.",
         "usage": "(check)",
