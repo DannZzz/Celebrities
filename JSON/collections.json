@@ -26,5 +26,12 @@
         "nameRU": "Коллекция монстров",
         "nameEN": "Monster collection",
         "reward": 4500000
+    },
+    {
+        "id": "temp1",
+        "list": ["Merlin", "Muratova", "Kindness", "Lyric", "Dranna"],
+        "nameRU": "Временная Коллекция \"?\"",
+        "nameEN": "Collection \"?\"",
+        "reward": 3030000
     }
 ]
