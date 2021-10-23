@@ -103,6 +103,9 @@ module.exports = {
                 ${STAR} ${obj.stars}
                 `
                 
+                const newData = await rpgFind(user.id);
+                if (newData.box === 0 || newData.box === undefined || newData.box < minusBox) return error(message, u.err);
+                
                 await rpg.updateOne({userID: user.id}, {$inc: {
                     box: -minusBox,
                     hlt: obj.hlt !== 0 ? obj.hlt : 0,
