@@ -10,13 +10,14 @@ const {error, embed, perms, firstUpperCase, randomRange} = require("../../functi
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 const ITEMS = require('../../JSON/items');
+const { stripIndents } = require("common-tags");
 
 module.exports = {
   config: {
     name: "use",
     aliases: ['использовать'],
     category: 'h_roleplay',
-    cooldown: 1.5
+    cooldown: 5
   },
   run: async (bot, message, args) => {
 
@@ -47,26 +48,72 @@ module.exports = {
         if (rp[item.name] === 0 || rp[item.name] === undefined) return error(message, u.err);
 
         if (it == 1) {
-            const random = Math.floor(Math.random() * 40);
-            const randomStar = randomRange(item.min, item.max);
-            let prize;
-            if ( random <= 2 ) {
-                prize = ITEMS.lvl;
-                await rpg.updateOne({userID: user.id}, {$inc: {lvl: 1}});
-            } else if ( random <= 5 ) {
-                prize = ITEMS.meat;
-                await rpg.updateOne({userID: user.id}, {$inc: {meat: 1}});
-            } else if (random <= 20) {
-                prize = ITEMS.hlt;
-                await rpg.updateOne({userID: user.id}, {$inc: {hlt: 1}});
-            } else if ( random <= 40) {
-                prize = ITEMS.dmg;
-                await rpg.updateOne({userID: user.id}, {$inc: {dmg: 1}});
-            }
+            if (!args[1] || Math.round(args[1]) <= 1 || isNaN(args[1])) {
+                const random = Math.floor(Math.random() * 40);
+                const randomStar = randomRange(item.min, item.max);
+                let prize;
+                if ( random <= 2 ) {
+                    prize = ITEMS.lvl;
+                    await rpg.updateOne({userID: user.id}, {$inc: {lvl: 1}});
+                } else if ( random <= 5 ) {
+                    prize = ITEMS.meat;
+                    await rpg.updateOne({userID: user.id}, {$inc: {meat: 1}});
+                } else if (random <= 20) {
+                    prize = ITEMS.hlt;
+                    await rpg.updateOne({userID: user.id}, {$inc: {hlt: 1}});
+                } else if ( random <= 40) {
+                    prize = ITEMS.dmg;
+                    await rpg.updateOne({userID: user.id}, {$inc: {dmg: 1}});
+                }
+    
+                await rpg.updateOne({userID: user.id}, {$inc: {box: -1}});
+                await bd.updateOne({userID: user.id}, {$inc: {stars: randomStar}})
+                return embed(message, u.boxDone + ` ${prize.emoji}, ${randomStar} ${STAR}`, false)
+            } else if (args[1] && !isNaN(args[1])) {
+                let count = Math.round(args[1]);
+                let minusBox = count;
+                if (rp.box < count) {
+                    count = rp.box;
+                    minusBox = rp.box;
+                };
+                const obj = {
+                    hlt: 0,
+                    dmg: 0,
+                    lvl: 0,
+                    meat: 0,
+                    stars: 0
+                };
+                for (count; count > 0; --count) {
+                const random = Math.floor(Math.random() * 40);
+                obj.stars += randomRange(item.min, item.max);
+                if ( random <= 2 ) {
+                    obj.lvl += 1;
+                } else if ( random <= 5 ) {
+                    obj.meat += 1;
+                } else if (random <= 20) {
+                    obj.hlt += 1;
+                } else if ( random <= 40) {
+                    obj.dmg += 1;
+                }
+               
+                };
 
-            await rpg.updateOne({userID: user.id}, {$inc: {box: -1}});
-            await bd.updateOne({userID: user.id}, {$inc: {stars: randomStar}})
-            return embed(message, u.boxDone + ` ${prize.emoji}, ${randomStar} ${STAR}`, false)
+                const text = stripIndents`
+                ${obj.hlt === 0 ? "" : `${ITEMS.hlt.emoji} ${obj.hlt}`}${obj.dmg === 0 ? "" : `\n${ITEMS.dmg.emoji} ${obj.dmg}`}${obj.lvl === 0 ? "" : `\n${ITEMS.lvl.emoji} ${obj.lvl}`}${obj.meat === 0 ? "" : `\n${ITEMS.meat.emoji} ${obj.meat}`}
+                ${STAR} ${obj.stars}
+                `
+                
+                await rpg.updateOne({userID: user.id}, {$inc: {
+                    box: -minusBox,
+                    hlt: obj.hlt !== 0 ? obj.hlt : 0,
+                    dmg: obj.dmg !== 0 ? obj.dmg : 0,
+                    lvl: obj.lvl !== 0 ? obj.lvl : 0,
+                    meat: obj.meat !== 0 ? obj.meat : 0,
+                    }});
+                await bd.updateOne({userID: user.id}, {$inc: {stars: obj.stars}})
+                return embed(message, u.boxDone + `\n${text}`, false)
+            };
+            
         } else if (it == 2) {
             let val = 1
             if (args[1] && args[1].toLowerCase() === "all") val = rp[item.name] 
