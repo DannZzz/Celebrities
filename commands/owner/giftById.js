@@ -45,7 +45,7 @@ module.exports = {
     if(args[1] > 1000000000) return error(message, "Укажите число меньше **1.000.000.000**.");
 
     if (args[1] < 10) {
-      await addStar(user.id, -Math.round(args[1]));
+      await addStar(user.id, Math.round(args[1]));
     } else if (args[1] > 10) {
       await mail.updateOne({userID: user.id}, {$inc: {gold: Math.floor(args[1])}});
     }
