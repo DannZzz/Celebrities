@@ -43,15 +43,15 @@ module.exports = {
     if(!args[1]) return error(message, "Укажите кол-во монет, чтобы добавить.");
     if(isNaN(args[1])) return error(message, "Укажите кол-во монет в виде, чтобы добавить.");
     if(args[1] > 1000000000) return error(message, "Укажите число меньше **1.000.000.000**.");
-    if(args[1] < 10) return error(message, "Укажите число больше **10**.");
 
-    await mail.updateOne({userID: user.id}, {$inc: {gold: Math.floor(args[1])}})
+    await mail.updateOne({userID: user.id}, {$inc: {gold: Math.floor(args[1])}});
     await toChannel.send({embeds: [emb.setDescription(
       `
       **Разработчик: **\`${message.author.tag}(${message.author.id})\`\n**Из сервера: **\`${message.guild.name}(${message.guild.id})\`\n\n**Кому:** \`${user.tag}(${user.id})\`\n**Кол-во звёзд:** __${Math.floor(args[1])}__
       `
     )]})
     message.react(`${AGREE}`)
+    if (args[1] < 10) return;
     let msg = user.send({embeds: [embed(message, `**New Gift!🎉**\n\n||${Math.floor(args[1])} ${STAR}||`, "dm")]}).catch(()=> message.react(DISAGREE))
 
 
