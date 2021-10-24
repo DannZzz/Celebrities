@@ -408,7 +408,7 @@ module.exports = {
         "place": "This member has enough heroes.",
         "already": "This member already has this hero.",
         "star": "This member does not have that many golds.",
-        "sell": (name, cost) => `You sold the hero: __${name}__ for __${cost}__(20% tax)`
+        "sell": (name, cost) => `You sold the hero: __${name}__ for __${cost}__ (20% tax)`
     },
 
 
