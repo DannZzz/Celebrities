@@ -3,7 +3,7 @@ const {MessageEmbed} = require("discord.js");
 const {main} = require('../../JSON/colours.json');
 const { COIN, AGREE, STAR, DISAGREE, devID, adminID } = require('../../config');
 const {error, embed, perms} = require("../../functions/functions");
-const {mail, mailFind} = require("../../functions/models");
+const {mail, mailFind, addStar} = require("../../functions/models");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 
@@ -44,7 +44,12 @@ module.exports = {
     if(isNaN(args[1])) return error(message, "Укажите кол-во монет в виде, чтобы добавить.");
     if(args[1] > 1000000000) return error(message, "Укажите число меньше **1.000.000.000**.");
 
-    await mail.updateOne({userID: user.id}, {$inc: {gold: Math.floor(args[1])}});
+    if (args[1] < 10) {
+      await addStar(user.id, -Math.round(args[1]));
+    } else if (args[1] > 10) {
+      await mail.updateOne({userID: user.id}, {$inc: {gold: Math.floor(args[1])}});
+    }
+    
     await toChannel.send({embeds: [emb.setDescription(
       `
       **Разработчик: **\`${message.author.tag}(${message.author.id})\`\n**Из сервера: **\`${message.guild.name}(${message.guild.id})\`\n\n**Кому:** \`${user.tag}(${user.id})\`\n**Кол-во звёзд:** __${Math.floor(args[1])}__
