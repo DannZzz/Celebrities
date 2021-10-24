@@ -588,7 +588,7 @@ module.exports = {
                 .addField(`**#8** ${item.pack3.emoji} Premium pack: ${item.pack3.cost} ${STAR}`, `Open and get one of these Premium heroes: \`${item.pack3.list.join(", ")}\``)
                 .addField(`**#9** ${item.tempPack.emoji} Pak of Ancient Egyptian gods: ${item.tempPack.cost} ${STAR} __available until 10/31/2021__`, `Open and get one of these Temporary heroes: \`${item.tempPack.list.join(", ")}\``)
                 .addField(`**#10** ${item.donateBox.emoji} Donate-box: 0,2$`, `Open and get ${item.donateBox.winEN}`)
-                .addField(`**#11** ${item.goldBox.emoji} Temporary box: 0,2$`, `Open and get: __${item.goldBox.list[0]}__ ${item.box.emoji}, __${item.goldBox.list[1]}__ ${item.hlt.emoji} and __${item.goldBox.list[2]}__ ${item.dmg.emoji}`)
+                .addField(`**#11** ${item.goldBox.emoji} Temporary box: 0,2$`, `Open and get: __200-650__ ${item.box.emoji} or __Premium Status__`)
 
         }
     },
