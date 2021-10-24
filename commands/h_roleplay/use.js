@@ -266,14 +266,7 @@ module.exports = {
             await addStar(user.id, random)
             return embed(message, `${random} ${STAR}`, false);
         } else if (it == 11) {
-            await rpg.updateOne({userID: user.id}, {$inc: {goldBox: -1}})
-            
-            await rpg.updateOne({userID: user.id}, {$inc: {
-                box: item.list[0],
-                hlt: item.list[1],
-                dmg: item.list[2]
-            }});
-            message.react(AGREE)
+            await donateReward(message, user.id, item.list, LANG.lang);
         }
 
     } else {
@@ -283,7 +276,7 @@ module.exports = {
   }
 }
 
-async function donateReward (message, id, arr, lang) {
+async function donateReward (message, id, arr, lang = "ru") {
     function getReward (array) {
         const random = Math.floor(Math.random() * array.length);
         return array[random];
