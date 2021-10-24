@@ -17,7 +17,8 @@ module.exports = {
   config: {
     name: "buy",
     aliases: ['get', "купить"],
-    category: 'h_roleplay'
+    category: 'h_roleplay',
+    cooldown: 35
   },
   run: async (bot, message, args, ops) => {
 
@@ -33,7 +34,7 @@ module.exports = {
     const getTime = ops.buy2.get(user.id);
     setTimeout(() => ops.buy2.delete(user.id), 35000);
 
-    setTimeout(() => ops.cards.delete(user.id), 30000);
+    setTimeout(() => ops.cards.delete(user.id), 32000);
     if (getTime) return;
 
     const coinData = await pd.findOne({ userID: user.id });
