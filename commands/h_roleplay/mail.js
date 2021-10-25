@@ -1,6 +1,6 @@
 const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
 const { STAR, AGREE, MAIL, LEFT, RIGHT } = require("../../config");
-const {error, embed, perms, firstUpperCase, makeTimestamp, pagination} = require("../../functions/functions");
+const {error, embed, perms, firstUpperCase, makeTimestamp} = require("../../functions/functions");
 const { serverFind, mailFind, mail, addStar } = require("../../functions/models");
 const locs = require("../../JSON/locations");
 const {main , none, reddark, greenlight} = require("../../JSON/colours.json");
@@ -189,11 +189,11 @@ module.exports = {
 
                 if (mapped.length > 5) {
                     let arr = [];
-                    let i = 0;
+                    let k = 0;
                     
                     pages();
                     function pages () {
-                        let v = mapped.slice(i, i+5);
+                        let v = mapped.slice(k, k+5);
                         arr.push(
                             new MessageEmbed()
                             .setColor(main)
@@ -201,8 +201,8 @@ module.exports = {
                             .setTitle(l === "ru" ? "Сообщения" : "Messages")
                             .setDescription(v.join("\n\n"))
                         );
-                        i += 5;
-                        if (i < mapped.length) {
+                        k += 5;
+                        if (k < mapped.length) {
                             pages();
                         }
         
@@ -217,7 +217,7 @@ module.exports = {
                     .setEmoji(RIGHT)
                     .setStyle("SECONDARY")
                     
-                    await pagination(msg, arr, [button1, button2], 30000, [user.id]);
+                    await pagination(i, arr, [button1, button2], 30000, [user.id]);
                     
                 } else {
                     return msg.channel.send({embeds: [msgEmbed.setDescription(mapped.join("\n\n"))]});
@@ -242,4 +242,87 @@ module.exports = {
     
     
   }
-}
+};
+
+
+
+
+
+async function pagination(interaction, pages, buttonList, timeout = 120000, ids) {
+    //if (!msg && !msg.channel) throw new Error("Channel is inaccessible.");
+    if (!pages) throw new Error("Pages are not given.");
+    if (!buttonList) throw new Error("Buttons are not given.");
+    if (buttonList[0].style === "LINK" || buttonList[1].style === "LINK")
+      throw new Error(
+        "Link buttons are not supported with discordjs-button-pagination"
+      );
+    if (buttonList.length !== 2) throw new Error("Need two buttons.");
+
+    let page = 0;
+
+    const row = new MessageActionRow().addComponents(buttonList);
+    const curPage = await interaction.followUp({
+      embeds: [pages[page].setFooter(`${page + 1} / ${pages.length}`)],
+      components: [row],
+      fetchReply: true,
+      ephemeral: true
+    });
+
+    const sd = await serverFind(interaction.guild.id);
+    const { ERROR, interError } = require(`../../languages/${sd.lang}`);
+
+    const filter = (i) => { if (
+      (i.customId === buttonList[0].customId ||
+      i.customId === buttonList[1].customId) &&
+      ids.includes(i.user.id)) {
+        return true;
+      } else if (!ids.includes(i.user.id)) {
+        const intEmbed = new MessageEmbed()
+            .setColor(reddark)
+            .setTitle(ERROR)
+            .setDescription(interError)
+          
+          return i.reply({embeds: [intEmbed], ephemeral: true})
+      }
+        
+    };
+
+    const collector = await curPage.createMessageComponentCollector({
+      filter,
+      time: timeout,
+    });
+
+    collector.on("collect", async (i) => {
+      switch (i.customId) {
+        case buttonList[0].customId:
+          page = page > 0 ? --page : pages.length - 1;
+          break;
+        case buttonList[1].customId:
+          page = page + 1 < pages.length ? ++page : 0;
+          break;
+        default:
+          break;
+      }
+      await i.deferUpdate();
+      await i.editReply({
+        embeds: [pages[page].setFooter(`${page + 1} / ${pages.length}`)],
+        components: [row],
+      }).catch(()=>interaction.message.react('❌'));
+      collector.resetTimer();
+    });
+
+    collector.on("end", () => {
+      if (!curPage.deleted) {
+        const disabledRow = new MessageActionRow().addComponents(
+          buttonList[0].setDisabled(true),
+          buttonList[1].setDisabled(true)
+        );
+        curPage.edit({
+          embeds: [pages[page].setFooter(`${page + 1} / ${pages.length}`)],
+          components: [disabledRow],
+        });
+      }
+    });
+
+    return curPage;
+  };
