@@ -92,15 +92,7 @@ bot.on('messageCreate', async message => {
     profileData = await profileModel.findOne({ userID: message.author.id });
     if (!profileData) {
       let profile = await profileModel.create({
-        userID: message.author.id,
-        serverID: message.guild.id,
-        coins: 1000,
-        bank: 0,
-        slots: 0,
-        rob: 0,
-        fish: 0,
-        work: 0,
-        daily: 0
+        userID: message.author.id
       });
       profile.save();
     }
