@@ -49,6 +49,8 @@ module.exports = {
       enemy = enemies["D'Lord"]
     } else if (nowLevel % 7 === 0) {
       enemy = enemies["D'Wolf"];
+    } else if (nowLevel % 6 === 0) {
+      enemy = enemies["Orga"];
     } else if (nowLevel % 5 === 0) {
       enemy = enemies["Arthas"];
     } else if (nowLevel % 4 === 0) {
