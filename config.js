@@ -10,6 +10,8 @@ exports.devID = ["382906068319076372"];
 
 exports.adminID = ["873237782825422968"];
 
+exports.LOADING = "<a:dannloading:876008681479749662>";
+
 exports.CRYSTAL = "<:selendian:900804465102299177>";
 
 exports.status = {

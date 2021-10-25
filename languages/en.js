@@ -63,6 +63,16 @@ module.exports = {
 
 
 
+    "combine": {
+        "desc": "Combine 2 heroes.",
+        "usage": "[name of the main hero] [name of the minor hero]",
+        "access": "For everyone",
+        "time": "Try again",
+        "spec": "Specify the heroes!",
+        "err": "The heroes not found!"
+    },
+
+
     "slots": {
         "desc": "Play the slot game.",
         "usage": "<bet>",
