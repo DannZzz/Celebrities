@@ -739,5 +739,21 @@
     "vip": false,
     "upgradeCost": 1000,
     "type": "private"
+  },
+  "Centurion": {
+    "name": "Centurion",
+    "nameRus": "Центурион",
+    "health": 66000,
+    "damage": 33500,
+    "cost": 285000,
+    "costType": "star",
+    "url": "https://i.ibb.co/Zd8q63S/Centurion.jpg",
+    "path": "./images/heroes/Centurion.jpg",
+    "descriptionEN": "The secret dragon of Rome, it was closed in a cave from Alexander the Great. The time will come when the Centurion will be free again!",
+    "description": "Секретный дракон Рима, он был закрыт в пещере от Александра Македонского. Придет время, и Центурион снова будет на свободе!",
+    "available": "Да",
+    "vip": false,
+    "upgradeCost": 963,
+    "type": "mythical"
   }
 }

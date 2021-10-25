@@ -23,6 +23,14 @@
     "descriptionEN": "Arthas is a legendary creature from Japanese mythology, an incredible embodiment of lightning. Arthas is an enemy of the people because of the storm lightning, thereby frightening the people. In Japanese mythology, it is said that Arthas is the enemy of the people not only because of lightning, but also because of the battles that they lost to him.",
     "description": "Артас — легендарное существо из японской мифологии, невероятное воплощение молнии. Артас враг народа из-за штормовых молний, тем самым пугает народ. В японской мифологии сказано, что Артас противник народа не только из-за молний,а ещё из-за битв которые они ему проигрывали."
   },
+  "Orga" : {
+    "name": "Orga",
+    "nameRus": "Орга",
+    "url": "https://i.ibb.co/NWPWCTB/Orga.jpg",
+    "path": "./images/enemies/Orga.jpg",
+    "descriptionEN": "Orga, the Hermit Orc. Hates humans, goblins, and gnomes. It's strange, but he just loves flowers.",
+    "description": "Орга, Орк-отшельник. Ненавидит людей, гоблинов, и гномов. Как-то странно, но он просто обожает цветочки."
+  },
   "D'Wolf" : {
     "name": "D'Wolf",
     "nameRus": "Д'Волк",

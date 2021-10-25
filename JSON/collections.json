@@ -28,6 +28,13 @@
         "reward": 4500000
     },
     {
+        "id": 5,
+        "list": ["X", "Eragon", "Centurion"],
+        "nameRU": "Коллекция забытых драконов",
+        "nameEN": "Collection of forgotten dragons",
+        "reward": 500000
+    },
+    {
         "id": "temp1",
         "list": ["Merlin", "Muratova", "Kindness", "Lyric", "Dranna"],
         "nameRU": "Временная Коллекция \"?\"",
