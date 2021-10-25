@@ -69,7 +69,8 @@ module.exports = {
         "access": "For everyone",
         "time": "Try again",
         "spec": "Specify the heroes!",
-        "err": "The heroes not found!"
+        "err": "The heroes not found!",
+        "private": "Private hero can not be combined!"
     },
 
 
