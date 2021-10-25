@@ -41,7 +41,7 @@ bot.on("guildCreate", async guild => {
   if(!serverData) {
     let server = await serverModel.create({
       serverID: guild.id,
-      lang: "en"
+      lang: "ru"
     })
   server.save()}
 
@@ -124,7 +124,7 @@ bot.on('messageCreate', async message => {
           if(!serverData) {
             let server = await serverModel.create({
               serverID: message.guild.id,
-              lang: "en"
+              lang: "ru"
             })
           server.save()}
 
