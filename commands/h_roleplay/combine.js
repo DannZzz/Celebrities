@@ -3,6 +3,7 @@ const { MessageEmbed, MessageButton, MessageActionRow, MessageAttachment } = req
 const { STAR, AGREE, LOADING } = require("../../config");
 const { error, embed, perms, firstUpperCase, makeTimestamp, delay, randomRange, roundFunc, getHeroData } = require("../../functions/functions");
 const { serverFind, rpgFind, addStar, bagFind, rpg, profileFind, profile, addPremiumStar } = require("../../functions/models");
+const heroes = require("../../JSON/heroes.json");
 
 module.exports = {
   config: {
@@ -47,6 +48,8 @@ module.exports = {
     const get2 = rp.heroes.find(x => x.name === name2);
 
     if (!get1 || !get2 || name1 === name2) return error(msg, c.err);
+    const data = heroes[name2];
+    if (data.type === "private") return error(msg, c.private);
 
     rp.heroes[rp.heroes.indexOf(get1)]["health"] += Math.ceil(rp.heroes[rp.heroes.indexOf(get2)]["health"] / 2);
     rp.heroes[rp.heroes.indexOf(get1)]["level"] += Math.ceil(rp.heroes[rp.heroes.indexOf(get2)]["level"] / 2);
