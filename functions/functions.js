@@ -125,6 +125,11 @@ module.exports = {
     data.save();
   },
 
+  forceGenerator(f, s, t) {
+    const numb = (f + s + t) / 3000;
+    return numb.toFixed(1);
+  },
+
   roundFunc: function (num, precision = 1) {
     precision = Math.pow(10, precision)
     return Math.round(num * precision) / precision
