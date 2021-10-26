@@ -1,8 +1,8 @@
 const heroes = require('../../JSON/heroes.json');
 const { main, reddark } = require('../../JSON/colours.json');
 const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
-const { COIN, STAR, LEFT, RIGHT, DLEFT, DRIGHT, CANCEL, heroType, CRYSTAL } = require("../../config");
-const { error, paginationBig } = require("../../functions/functions");
+const { COIN, STAR, LEFT, RIGHT, DLEFT, FORCE, DRIGHT, CANCEL, heroType, CRYSTAL } = require("../../config");
+const { error, paginationBig, forceGenerator, formatNumber } = require("../../functions/functions");
 const Subs = require("../../functions/subscriptionClass");
 
 module.exports = {
@@ -91,11 +91,11 @@ module.exports = {
           newdr.push(
             new MessageEmbed()
               .setColor(main)
-              .setTitle(`${heroType[obj.type]} ${obj.name} (${obj.nameRus}) ${cMar(obj.marry)} ${cVip(obj.vip)}`)
+              .setTitle(`${heroType[obj.type]} ${obj.name} (${obj.nameRus}) ${cMar(obj.marry)} ${cVip(obj.vip)}\n${FORCE} ${hm.force} ${forceGenerator(obj.health, obj.damage, 1)}`)
               .setThumbnail(obj.url)
               .setDescription(`${level ? `**${level}**\n\n` : ""}` + (LANG.lang === "en" ? obj.descriptionEN : obj.description))
               .addField(`${hh.cost} ${ccost}`, `**${hh.avail} ${cAv(obj.available)}**`, true)
-              .addField(`${hm.health} ${obj.health} ❤`, `**${hm.damage} ${obj.damage}** ⚔`, true)
+              .addField(`${hm.health} ${formatNumber(obj.health)} ❤`, `**${hm.damage} ${formatNumber(obj.damage)}** ⚔`, true)
           )
         }
       }
@@ -164,7 +164,7 @@ module.exports = {
     }
     function cCost(cost, obj) {
       if (!isNaN(cost)) {
-        return cost
+        return formatNumber(cost);
       } else if (cost.endsWith("₽") && LANG.lang === "ru") {
         return cost
       } else if (cost.endsWith("₽") && LANG.lang === "en") {

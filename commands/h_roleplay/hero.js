@@ -1,9 +1,9 @@
 const heroes = require('../../JSON/heroes.json');
 const { main } = require('../../JSON/colours.json');
 const {rpgFind, serverFind} = require("../../functions/models");
-const {heroType} = require("../../config");
+const {heroType, FORCE} = require("../../config");
 const { MessageEmbed, MessageAttachment } = require("discord.js");
-const {error, roundFunc} = require("../../functions/functions");
+const {error, roundFunc, forceGenerator, formatNumber} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 
@@ -36,11 +36,11 @@ module.exports = {
     
     let myHero = new MessageEmbed()
     .setAuthor(`${user.user.tag}`)
-    .setTitle(`${heroType[item.type]} ${item.name} (${item.nameRus})\n${hm.level} ${get.level}`)
+    .setTitle(`${heroType[item.type]} ${item.name} (${item.nameRus})\n${hm.level} ${get.level}\n ${FORCE} ${hm.force} ${forceGenerator(get.health, get.level, get.damage)}`)
     .setDescription(LANG.lang === "ru" ? item.description : item.descriptionEN)
     .setThumbnail(`attachment://${item.name}.png`)
-    .addField(`❤ ${hm.health}`, `${get.health}`, true)
-    .addField(`⚔ ${hm.damage}`, `${get.damage}`, true)
+    .addField(`❤ ${hm.health}`, `${formatNumber(get.health)}`, true)
+    .addField(`⚔ ${hm.damage}`, `${formatNumber(get.damage)}`, true)
     .setColor(main)
 
     return message.channel.send({embeds: [myHero], files: [att]}).then(msg => setTimeout(()=>msg.delete(), 30 * 1000))

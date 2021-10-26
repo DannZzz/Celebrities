@@ -3,9 +3,9 @@ const { main } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
-const { COIN, STAR, LEFT, RIGHT, DLEFT, DRIGHT, CANCEL, heroType } = require("../../config");
+const { COIN, STAR, LEFT, RIGHT, DLEFT, DRIGHT, CANCEL, heroType, FORCE } = require("../../config");
 const { MessageEmbed, MessageButton } = require("discord.js");
-const {error, paginationBig} = require("../../functions/functions");
+const {error, paginationBig, formatNumber, forceGenerator} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 
@@ -42,10 +42,10 @@ module.exports = {
     const hero = new MessageEmbed()
     .setThumbnail(h.url)
     .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
-    .setTitle(`${h.name} (${h.nameRus})`)
+    .setTitle(`${h.name} (${h.nameRus})\n ${FORCE} ${hm.force} ${forceGenerator(item.health, item.level, item.damage)}`)
     .setDescription(h.description)
     .setColor(main)
-    .addField(`💯 ${hm.level} ${item.level}\n❤ ${hm.health} ${item.health}\n⚔ ${hm.damage} ${item.damage}`, `** **`)
+    .addField(`💯 ${hm.level} ${item.level}\n❤ ${hm.health} ${formatNumber(item.health)}\n⚔ ${hm.damage} ${formatNumber(item.damage)}`, `** **`)
     .setFooter(`1 / 1`)
 
     if (rp.heroes.length === 1) {
@@ -56,10 +56,10 @@ module.exports = {
         return new MessageEmbed()
         .setThumbnail(h1.url)
         .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
-        .setTitle(`${heroType[h1.type]} ${h1.name} (${h1.nameRus})`)
+        .setTitle(`${heroType[h1.type]} ${h1.name} (${h1.nameRus})\n ${FORCE} ${hm.force} ${forceGenerator(i.health, i.level, i.damage)}`)
         .setDescription(h1.description)
         .setColor(main)
-        .addField(`💯 ${hm.level} ${i.level}\n❤ ${hm.health} ${i.health}\n⚔ ${hm.damage} ${i.damage}`, `** **`)
+        .addField(`💯 ${hm.level} ${i.level}\n❤ ${hm.health} ${formatNumber(i.health)}\n⚔ ${hm.damage} ${formatNumber(i.damage)}`, `** **`)
         
       })
     
