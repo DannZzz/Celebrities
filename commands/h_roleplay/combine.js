@@ -19,7 +19,7 @@ module.exports = {
     const channel = msg.channel;
 
     const sd = await serverFind(server.id);
-    const { combine: c, heroModel: hm} = require(`../../languages/${sd.lang || "r"}`);
+    const { again, combine: c, heroModel: hm} = require(`../../languages/${sd.lang || "r"}`);
 
     const [mainHero, targetHero] = args;
     const bag = await bagFind(user.id);
@@ -27,8 +27,8 @@ module.exports = {
     if (bag.vip2) timeout /= 2;
     
     const pd = await profileFind(user.id);
-    if (pd.give && pd.give > new Date()) {
-      return error(msg, c.time + ` <t:${makeTimestamp(pd.give.getTime())}:R>`);
+    if (pd.combine && pd.combine > new Date()) {
+      return error(msg, again + ` <t:${makeTimestamp(pd.combine.getTime())}:R>`);
     };
     
     if (!mainHero || !targetHero) return error(msg, c.spec + `\n\`${sd.prefix}combine ${c.usage}\``);
@@ -60,7 +60,7 @@ module.exports = {
     rp.save().then(msg.react(AGREE));
 
     await profile.updateOne({userID: user.id}, {$set: {
-      give: new Date(Date.now() + timeout)
+      combine: new Date(Date.now() + timeout)
     }})
 
     await rpg.updateOne({userID: user.id}, {$set: {

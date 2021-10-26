@@ -2,8 +2,8 @@ const heroes = require('../../JSON/heroes.json');
 const { main, reddark } = require('../../JSON/colours.json');
 const { MessageEmbed, MessageAttachment, MessageButton, MessageActionRow } = require("discord.js");
 const { COIN, STAR, AGREE } = require("../../config");
-const {error, embed, perms, firstUpperCase, randomRange, sendToMail} = require("../../functions/functions");
-const {bagFind, rpgFind, rpg, addStar} = require("../../functions/models");
+const {error, embed, perms, firstUpperCase, randomRange, makeTimestamp, sendToMail} = require("../../functions/functions");
+const {bagFind, rpgFind, rpg, addStar, profile, profileFind} = require("../../functions/models");
 
 module.exports = {
   config: {
@@ -16,13 +16,21 @@ module.exports = {
     const msg = message
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
-    const {give: g, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, buttonNo, buttonYes, timeOut} = require(`../../languages/${LANG.lang}`);   
+    const {give: g, again, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, buttonNo, buttonYes, timeOut} = require(`../../languages/${LANG.lang}`);   
    
      
     const user = message.author;
        
     const bag = await bagFind(user.id);
     let mrp = await rpgFind(user.id);
+
+    let timeout = 86400 * 1000;
+    if (bag.vip2) timeout /= 2;
+    
+    const pd = await profileFind(user.id);
+    if (pd.give && pd.give > new Date()) {
+      return error(msg, again + ` <t:${makeTimestamp(pd.give.getTime())}:R>`);
+    };
 
     if (!mrp.item || mrp.heroes.length === 0) return error(msg, hm.noHero)
     if (!args[0]) return error(msg, g.specH + `\n\`${g.usage}\``);
@@ -127,6 +135,9 @@ module.exports = {
               await rpg.updateOne({userID: user.id}, {$set: {item: mrp.heroes[0]["name"]}});
             }
              
+            await profile.updateOne({userID: user.id}, {$set: {
+              give: new Date(Date.now() + timeout)
+            }});
             await sendToMail(user.id, {textMessage: `${g.sell(trans, Math.floor(cost/100*80))} ${STAR}`, createdAt: new Date()});
         }, a * 1000)
 
