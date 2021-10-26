@@ -5,8 +5,8 @@ const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed } = require("discord.js");
 const { COIN, AGREE } = require("../../config");
-const { checkValue } = require("../../functions/functions");
-const {error, embed, perms, firstUpperCase} = require("../../functions/functions");
+const {error, embed, perms, firstUpperCase, makeTimestamp} = require("../../functions/functions");
+const {eventFind} = require("../../functions/models");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 const items = require('../../JSON/items');
@@ -18,6 +18,7 @@ module.exports = {
     category: 'h_roleplay'
   },
   run: async (bot, message, args, ops) => {
+    
 
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
@@ -25,7 +26,7 @@ module.exports = {
 
     const user = message.author;
 
-    
+    const ev = await eventFind(user.id)
     
     const profile = await pd.findOne({userID: user.id});
     const rp = await rpg.findOne({userID: user.id});
@@ -35,17 +36,18 @@ module.exports = {
     .setColor(main)
     .setThumbnail(user.displayAvatarURL({dynamic: true}))
     
-    .addField(`**#1** ${items.box.emoji} :`, `${rp["box"] || 0}`, true)
-    .addField(`**#2** ${items.hlt.emoji} :`, `${rp["hlt"] || 0}`, true)
-    .addField(`**#3** ${items.dmg.emoji} :`, `${rp["dmg"] || 0}`, true)
-    .addField(`**#4** ${items.lvl.emoji} :`, `${rp["lvl"] || 0}`, true)
-    .addField(`**#5** ${items.meat.emoji}:`, `${rp["meat"] || 0}`, true)
-    .addField(`**#6** ${items.pack1.emoji} :`, `${rp["pack1"] || 0}`, true)
-    .addField(`**#7** ${items.pack2.emoji} :`, `${rp["pack2"] || 0}`, true)
-    .addField(`**#8** ${items.pack3.emoji} :`, `${rp["pack3"] || 0}`, true)
-    .addField(`**#9** ${items.tempPack.emoji} :`, `${rp["tempPack"] || 0}`, true)
-    .addField(`**#10** ${items.donateBox.emoji} :`, `${rp["donateBox"] || 0}`, true)
-    .addField(`**#11** ${items.goldBox.emoji} :`, `${rp["goldBox"] || 0}`, true)
+    .addField(`${items.box.emoji} ${LANG.lang === "en" ? items.box.NAMEEN : items.box.NAME}:`, `${rp["box"] || 0}`, true)
+    .addField(`${items.hlt.emoji} ${LANG.lang === "en" ? items.hlt.NAMEEN : items.hlt.NAME}:`, `${rp["hlt"] || 0}`, true)
+    .addField(`${items.dmg.emoji} ${LANG.lang === "en" ? items.dmg.NAMEEN : items.dmg.NAME}:`, `${rp["dmg"] || 0}`, true)
+    .addField(`${items.lvl.emoji} ${LANG.lang === "en" ? items.lvl.NAMEEN : items.lvl.NAME}:`, `${rp["lvl"] || 0}`, true)
+    .addField(`${items.meat.emoji} ${LANG.lang === "en" ? items.meat.NAMEEN : items.meat.NAME}:`, `${rp["meat"] || 0}`, true)
+    .addField(`${items.pack1.emoji} ${LANG.lang === "en" ? items.pack1.NAMEEN : items.pack1.NAME}:`, `${rp["pack1"] || 0}`, true)
+    .addField(`${items.pack2.emoji} ${LANG.lang === "en" ? items.pack2.NAMEEN : items.pack2.NAME}:`, `${rp["pack2"] || 0}`, true)
+    .addField(`${items.pack3.emoji} ${LANG.lang === "en" ? items.pack3.NAMEEN : items.pack3.NAME}:`, `${rp["pack3"] || 0}`, true)
+    .addField(`${items.tempPack.emoji} ${LANG.lang === "en" ? items.tempPack.NAMEEN : items.tempPack.NAME}:`, `${rp["tempPack"] || 0}`, true)
+    .addField(`${items.donateBox.emoji} ${LANG.lang === "en" ? items.donateBox.NAMEEN : items.donateBox.NAME}:`, `${rp["donateBox"] || 0}`, true)
+    .addField(`${items.goldBox.emoji} ${LANG.lang === "en" ? items.goldBox.NAMEEN : items.goldBox.NAME}:`, `${rp["goldBox"] || 0}`, true)
+    .addField(`${items.halloween.emoji} ${LANG.lang === "en" ? items.halloween.NAMEEN : items.halloween.NAME}:`, `${ev["candyBox"] || 0}`, true)
       
 
     return message.channel.send({embeds: [emb]})

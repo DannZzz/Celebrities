@@ -1,14 +1,15 @@
 const heroes = require('../../JSON/heroes.json');
-const { main } = require('../../JSON/colours.json');
+const { main, reddark } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
-const { MessageEmbed } = require("discord.js");
+const { MessageSelectMenu, MessageActionRow, MessageEmbed } = require("discord.js");
 const { COIN, AGREE, STAR } = require("../../config");
-const { addStar, bagFind, rpgFind } = require("../../functions/models");
+const { event, eventFind, addStar, bagFind, rpgFind } = require("../../functions/models");
 const {error, embed, perms, firstUpperCase, randomRange} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
+const EVENT = require("../../functions/eventClass");
 const ITEMS = require('../../JSON/items');
 const { stripIndents } = require("common-tags");
 
@@ -19,58 +20,110 @@ module.exports = {
     category: 'h_roleplay',
     cooldown: 5
   },
-  run: async (bot, message, args) => {
+  run: async (bot, message, args, ops) => {
 
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
-    const {use: u, buy: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
+    const {timeOut, ERROR, interError, use: u, buy: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
 
     const user = message.author;
-    const profile = await pd.findOne({userID: user.id});
-    if (!isNaN(args[0])) {
-        const numbs = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"];
-        if (!numbs.includes(args[0])) return error(message, b.itemErr);
-        let item;
-        const it = args[0]
-        if (it == 1) item = ITEMS.box
-        if (it == 2) item = ITEMS.hlt
-        if (it == 3) item = ITEMS.dmg
-        if (it == 4) item = ITEMS.lvl
-        if (it == 5) item = ITEMS.meat
-        if (it == 6) item = ITEMS.pack1
-        if (it == 7) item = ITEMS.pack2
-        if (it == 8) item = ITEMS.pack3
-        if (it == 9) item = ITEMS.tempPack
-        if (it == 10) item = ITEMS.donateBox
-        if (it == 11) item = ITEMS.goldBox
-        
-        const rp = await rpg.findOne({userID: user.id});
-        if (rp[item.name] === 0 || rp[item.name] === undefined) return error(message, u.err);
+    const rp = await rpg.findOne({userID: user.id});
+    await EVENT(user.id).checkDocument();
+    const data = await eventFind(user.id);
 
-        if (it == 1) {
-            if (!args[1] || Math.round(args[1]) <= 1 || isNaN(args[1])) {
-                const random = Math.floor(Math.random() * 40);
-                const randomStar = randomRange(item.min, item.max);
-                let prize;
-                if ( random <= 2 ) {
-                    prize = ITEMS.lvl;
-                    await rpg.updateOne({userID: user.id}, {$inc: {lvl: 1}});
-                } else if ( random <= 5 ) {
-                    prize = ITEMS.meat;
-                    await rpg.updateOne({userID: user.id}, {$inc: {meat: 1}});
-                } else if (random <= 20) {
-                    prize = ITEMS.hlt;
-                    await rpg.updateOne({userID: user.id}, {$inc: {hlt: 1}});
-                } else if ( random <= 40) {
-                    prize = ITEMS.dmg;
-                    await rpg.updateOne({userID: user.id}, {$inc: {dmg: 1}});
+    const nowOps = ops.using.get(user.id);
+    if (nowOps) return;
+
+    ops.using.set(user.id, {get: "true"});
+
+    let number = 1;
+    if (args[0] && !isNaN(args[0]) && Math.round(args[0]) >= 1) number = Math.round(args[0]);
+
+    const arr = [];
+    for (let p in ITEMS) {
+        const i = ITEMS[p]
+        if (i.name !== "halloween") {
+            arr.push({
+                label: LANG.lang === "en" ? i.NAMEEN : i.NAME,
+                value: i.name,
+                emoji: i.emoji,
+                description: (rp[i.name] || 0) + ""
+            });
+        } else {
+            arr.push({
+                label: LANG.lang === "en" ? i.NAMEEN : i.NAME,
+                value: i.name,
+                emoji: i.emoji,
+                description: (data.candyBox || 0) + ""
+            });
+        }
+    };
+
+    const row = new MessageActionRow().addComponents(
+        new MessageSelectMenu()
+        .setCustomId("items")
+        .setPlaceholder(b.specHero)
+        .addOptions(arr)
+    );
+
+    const m1 = await message.reply({content: "ㅤ", components: [row]});
+
+    const coll = await m1.createMessageComponentCollector({
+        filter: i => {
+            if (!i.isSelectMenu()) return false;
+            if (i.user.id === user.id) {
+                return true;
+            } else {
+                const intEmbed = new MessageEmbed()
+                .setColor(reddark)
+                .setTitle(ERROR)
+                .setDescription(interError)
+            
+                return i.reply({embeds: [intEmbed], ephemeral: true})
+            }
+        },
+        time: 15000
+    });
+
+    let bool1 = false;
+    let bool2 = false;
+    let heroType, effect, get, rew, hero;
+    coll.on("collect", async (i) => {
+        bool1 = true;
+        coll.stop();
+        const val = i.values[0];
+        switch (val) {
+            case "halloween":
+                const d1 = await eventFind(user.id);
+                if (!d1.candyBox || d1.candyBox <= 0) return error(message, u.err);
+                const randTry = Math.floor(Math.random() * ITEMS.halloween.list.length);
+                if (ITEMS.halloween.list[randTry] !== "hero") {
+                    await event.updateOne({userID: user.id}, {$inc: {candyBox: -1}});
+                    return error(message, LANG.lang === "" ? "You got nothing.." : "Вы получили ничего..");
                 }
-    
-                await rpg.updateOne({userID: user.id}, {$inc: {box: -1}});
-                await bd.updateOne({userID: user.id}, {$inc: {stars: randomStar}})
-                return embed(message, u.boxDone + ` ${prize.emoji}, ${randomStar} ${STAR}`, false)
-            } else if (args[1] && !isNaN(args[1])) {
-                let count = Math.round(args[1]);
+                rew = await getValidHero(user, ITEMS.halloween.validList);
+                if (!rew) return error(message, b.already);
+                hero = heroes[rew];
+                if (rp.heroes.length === rp.itemCount) return error(message, b.place)
+                get = rp.heroes.find(x => x.name === hero.name)
+                if (get) return error(message, b.already)
+                
+                await event.updateOne({userID: user.id}, {$inc: {candyBox: -1}});
+                await rpg.updateOne({userID: user.id}, {$set: {item: hero.name}});
+        
+                await rp.heroes.push({
+                name: hero.name,
+                health: hero.health,
+                damage: hero.damage,
+                level: 1
+                })
+                rp.save();
+                
+                
+                return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name));
+            case "box":
+                if (rp.box <= 0 || !rp.box) return error(message, u.err);
+                let count = number;
                 let minusBox = count;
                 if (rp.box < count) {
                     count = rp.box;
@@ -85,7 +138,7 @@ module.exports = {
                 };
                 for (count; count > 0; --count) {
                 const random = Math.floor(Math.random() * 40);
-                obj.stars += randomRange(item.min, item.max);
+                obj.stars += randomRange(ITEMS.box.min, ITEMS.box.max);
                 if ( random <= 2 ) {
                     obj.lvl += 1;
                 } else if ( random <= 5 ) {
@@ -115,164 +168,172 @@ module.exports = {
                     }});
                 await bd.updateOne({userID: user.id}, {$inc: {stars: obj.stars}})
                 return embed(message, u.boxDone + `\n${text}`, false)
-            };
+            case "hlt":
+                if (rp.hlt <= 0 || !rp.hlt) return error(message, u.err);
+                if (number > rp.hlt) number = rp.hlt;
+                if (!rp.item) return error(message, hm.noHero)
+                await rpg.updateOne({userID: user.id}, {$inc: {hlt: -number}});
+    
+                get = rp.heroes.findIndex(x => x.name === rp.item)
+                heroType = heroes[rp.item];
+                effect = ITEMS.hlt.effect;
+                if (heroType.type === "mythical") effect = effect / 2;
+                if (heroType.type === "furious") effect = effect / 4 * 3;
+    
+                await rpg.updateOne({userID: user.id}, {$inc: {[`heroes.${get}.health`]: effect * number}});
+                return message.react(AGREE);
+            case "dmg":
+                if (rp.dmg <= 0 || !rp.dmg) return error(message, u.err);
+                if (number > rp.dmg) number = rp.dmg;
+                if (!rp.item) return error(message, hm.noHero)
+                await rpg.updateOne({userID: user.id}, {$inc: {dmg: -number}});
+
+    
+                get = rp.heroes.findIndex(x => x.name === rp.item) 
+                heroType = heroes[rp.item];
+                effect = ITEMS.dmg.effect
+                if (heroType.type === "mythical") effect = effect / 2;
+                if (heroType.type === "furious") effect = effect / 4 * 3;
+                
+                 
+                await rpg.updateOne({userID: user.id}, {$inc: {[`heroes.${get}.damage`]: effect * number}});
+                
+                return message.react(AGREE);
+            case "lvl":
+                if (rp.lvl <= 0 || !rp.lvl) return error(message, u.err);
+                if (number > rp.lvl) number = rp.lvl;
+                if (!rp.item) return error(message, hm.noHero);
+                await rpg.updateOne({userID: user.id}, {$inc: {lvl: -number}});
+                heroType = heroes[rp.item];
+
+                let addH = getUpgrade(heroType.type) * number;
+                let addD = (getUpgrade(heroType.type) / 10) * number;
+                let leve = ITEMS.lvl.effect * number;
+
+                get = rp.heroes.findIndex(x => x.name === rp.item);
+                await rpg.updateOne({userID: user.id}, {$inc: {[`heroes.${get}.health`]: addH}});
+                await rpg.updateOne({userID: user.id}, {$inc: {[`heroes.${get}.level`]: leve}});
+                await rpg.updateOne({userID: user.id}, {$inc: {[`heroes.${get}.damage`]: addD}});
+                
+                return message.react(AGREE);
+            case "meat":
+                if (rp.meat <= 0 || !rp.meat) return error(message, u.err);
+                if (number > rp.meat) number = rp.meat;
+                if (!rp.item) return error(message, hm.noHero);
+                await rpg.updateOne({userID: user.id}, {$inc: {meat: -number}});
+
+                get = rp.heroes.findIndex(x => x.name === rp.item)
+                await rpg.updateOne({userID: user.id}, {$inc: {[`heroes.${get}.health`]: ITEMS.meat.effect * val}});
+                
+                return message.react(AGREE);
+            case "pack1":
+                if (!rp.pack1 || rp.pack1 <= 1) return error(message, u.err);
+                rew = await getValidHero(user, ITEMS.pack1.list);
+                if (!rew) return error(message, b.already);
+                hero = heroes[rew];
+                if (rp.heroes.length === rp.itemCount) return error(message, b.place)
+                get = rp.heroes.find(x => x.name === hero.name)
+                if (get) return error(message, b.already)
+                
+                await rpg.updateOne({userID: user.id}, {$inc: {pack1: -1}});
+                await rpg.updateOne({userID: user.id}, {$set: {item: hero.name}});
+    
+                await rp.heroes.push({
+                name: hero.name,
+                health: hero.health,
+                damage: hero.damage,
+                level: 1
+                })
+                rp.save()
             
-        } else if (it == 2) {
-            let val = 1
-            if (args[1] && args[1].toLowerCase() === "all") val = rp[item.name] 
-            if (!rp.item) return error(message, hm.noHero)
-            await rpg.updateOne({userID: user.id}, {$inc: {hlt: -val}});
-
-            let getItem = rp.heroes;
-
-            let get = rp.heroes.findIndex(x => x.name === rp.item) 
-            const heroType = heroes[rp.item];
-            let effect = item.effect
-            if (heroType.type === "mythical") effect = effect / 2;
-            if (heroType.type === "furious") effect = effect / 4 * 3;
-            
-             
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.health`]: effect * val}});
-            
-            return message.react(AGREE)
-        } else if (it == 3) {
-            let val = 1
-            if (args[1] && args[1].toLowerCase() === "all") val = rp[item.name] 
-            if (!rp.item) return error(message, hm.noHero)
-            await rpg.updateOne({userID: user.id}, {$inc: {dmg: -val}});
-
-            let get = rp.heroes.findIndex(x => x.name === rp.item)
-            const heroType = heroes[rp.item];
-            let effect = item.effect
-            if (heroType.type === "mythical") effect = effect / 2;
-            if (heroType.type === "furious") effect = effect / 4 * 3;
-
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.damage`]: effect * val}});
-            return message.react(AGREE)
-        } else if (it == 4) {
-            let val = 1
-            if (args[1] && args[1].toLowerCase() === "all") val = rp[item.name]
-            if (!rp.item) return error(message, hm.noHero)
-            await rpg.updateOne({userID: user.id}, {$inc: {lvl: -val}});
-            const heroType = heroes[rp.item];
-
-            let addH = getUpgrade(heroType.type) * val;
-            let addD = (getUpgrade(heroType.type) / 10) * val;
-            let leve = item.effect * val;
-
-            let get = rp.heroes.findIndex(x => x.name === rp.item)
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.health`]: addH}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.level`]: leve}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.damage`]: addD}});
-            
-            return message.react(AGREE)
-        } else if (it == 5) {
-            let val = 1
-            if (args[1] && args[1].toLowerCase() === "all") val= rp[item.name] 
-            if (!rp.item) return error(message, hm.noHero)
-            await rpg.updateOne({userID: user.id}, {$inc: {meat: -val}});
-
-            let get = rp.heroes.findIndex(x => x.name === rp.item)
-            await rpg.findOneAndUpdate({userID: user.id}, {$inc: {[`heroes.${get}.health`]: item.effect * val}});
-            
-            return message.react(AGREE)
-        } else if (it == 6) {
-            const rew = await getValidHero(user, item.list);
-            if (!rew) return error(message, b.already);
-            const hero = heroes[rew];
-            if (rp.heroes.length === rp.itemCount) return error(message, b.place)
-            let get = rp.heroes.find(x => x.name === hero.name)
-            if (get) return error(message, b.already)
-            
-            await rpg.updateOne({userID: user.id}, {$inc: {pack1: -1}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: hero.name}});
-
-            await rp.heroes.push({
-            name: hero.name,
-            health: hero.health,
-            damage: hero.damage,
-            level: 1
-            })
-            rp.save()
+                
+                return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name));
+            case "pack2":
+                if (!rp.pack2 || rp.pack2 <= 1) return error(message, u.err);
+                rew = await getValidHero(user, ITEMS.pack2.list);
+                if (!rew) return error(message, b.already);
+                hero = heroes[rew];
+                if (rp.heroes.length === rp.itemCount) return error(message, b.place)
+                get = rp.heroes.find(x => x.name === hero.name)
+                if (get) return error(message, b.already)
+                
+                await rpg.updateOne({userID: user.id}, {$inc: {pack2: -1}});
+                await rpg.updateOne({userID: user.id}, {$set: {item: hero.name}});
         
+                await rp.heroes.push({
+                name: hero.name,
+                health: hero.health,
+                damage: hero.damage,
+                level: 1
+                })
+                rp.save();
+                
+                
+                return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name));
+            case "pack3":
+                if (!rp.pack3 || rp.pack3 <= 1) return error(message, u.err);
+                rew = await getValidHero(user, ITEMS.pack3.list);
+                if (!rew) return error(message, b.already);
+                hero = heroes[rew];
+                if (rp.heroes.length === rp.itemCount) return error(message, b.place)
+                get = rp.heroes.find(x => x.name === hero.name)
+                if (get) return error(message, b.already)
+                
+                await rpg.updateOne({userID: user.id}, {$inc: {pack3: -1}});
+                await rpg.updateOne({userID: user.id}, {$set: {item: hero.name}});
             
-            return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name))
-        } else if (it == 7) {
-            const rew = await getValidHero(user, item.list);
-            if (!rew) return error(message, b.already);
-            const hero = heroes[rew];
-            if (rp.heroes.length === rp.itemCount) return error(message, b.place)
-            let get = rp.heroes.find(x => x.name === hero.name)
-            if (get) return error(message, b.already)
-
-            await rpg.updateOne({userID: user.id}, {$inc: {pack2: -1}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: hero.name}});
-
-            await rp.heroes.push({
-            name: hero.name,
-            health: hero.health,
-            damage: hero.damage,
-            level: 1
-            })
-            rp.save()
-        
+                await rp.heroes.push({
+                name: hero.name,
+                health: hero.health,
+                damage: hero.damage,
+                level: 1
+                })
+                rp.save();
+                
+                
+                return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name));
+            case "tempPack":
+                if (!rp.tempPack || rp.tempPack <= 1) return error(message, u.err);
+                rew = await getValidHero(user, ITEMS.tempPack.list);
+                if (!rew) return error(message, b.already);
+                hero = heroes[rew];
+                if (rp.heroes.length === rp.itemCount) return error(message, b.place)
+                get = rp.heroes.find(x => x.name === hero.name)
+                if (get) return error(message, b.already)
+                
+                await rpg.updateOne({userID: user.id}, {$inc: {tempPack: -1}});
+                await rpg.updateOne({userID: user.id}, {$set: {item: hero.name}});
             
-            return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name))
-        } else if (it == 8) {
-            const rew = await getValidHero(user, item.list);
-            if (!rew) return error(message, b.already);
-            const hero = heroes[rew];
-            if (rp.heroes.length === rp.itemCount) return error(message, b.place)
-            let get = rp.heroes.find(x => x.name === hero.name)
-            if (get) return error(message, b.already)
-            await rpg.updateOne({userID: user.id}, {$inc: {pack3: -1}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: hero.name}});
+                await rp.heroes.push({
+                name: hero.name,
+                health: hero.health,
+                damage: hero.damage,
+                level: 1
+                })
+                rp.save();
+                
+                
+                return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name));
+            case "donateBox":
+                const random1 = Math.round(randomRange(50000, 200000));
+                await rpg.updateOne({userID: user.id}, {$inc: {donateBox: -1}});
 
-            await rp.heroes.push({
-            name: hero.name,
-            health: hero.health,
-            damage: hero.damage,
-            level: 1
-            })
-            rp.save()
-        
-            
-            return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name))
-        } else if (it == 9) {
-            const rew = await getValidHero(user, item.list);
-            if (!rew) return error(message, b.already);
-            const hero = heroes[rew];
-            if (rp.heroes.length === rp.itemCount) return error(message, b.place)
-            let get = rp.heroes.find(x => x.name === hero.name)
-            if (get) return error(message, b.already)
-            await rpg.updateOne({userID: user.id}, {$inc: {tempPack: -1}});
-            await rpg.updateOne({userID: user.id}, {$inc: {openedPacks: 1}});
-            await rpg.findOneAndUpdate({userID: user.id}, {$set: {item: hero.name}});
-
-            await rp.heroes.push({
-            name: hero.name,
-            health: hero.health,
-            damage: hero.damage,
-            level: 1
-            })
-            rp.save()
-        
-            
-            return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name));
-        } else if (it == 10) {
-            const random = Math.round(randomRange(50000, 200000));
-            await rpg.updateOne({userID: user.id}, {$inc: {donateBox: -1}});
-
-            await addStar(user.id, random)
-            return embed(message, `${random} ${STAR}`, false);
-        } else if (it == 11) {
-            await donateReward(message, user.id, item.list, LANG.lang);
+                await addStar(user.id, random1)
+                return embed(message, `${random1} ${STAR}`, false);
+            case "goldBox":
+                return await donateReward(message, user.id, item.list, LANG.lang);
         }
+    });
 
-    } else {
-        error(message, cm.specN)
-    }
-   
+    coll.on("end", () => {
+        m1.delete();
+        ops.using.delete(user.id);
+        if (!bool1) {
+            return error(message, timeOut);
+        };
+    });
+
+    return;
   }
 }
 

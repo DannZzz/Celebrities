@@ -2,16 +2,17 @@ const pd = require("../../models/profileSchema");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 const ITEMS = require('../../JSON/items');
-const { addCrystal, serverFind, bagFind, rpgFind, bag: bd, rpg, profileFind, card, cardFind } = require("../../functions/models");
+const { event, addCandy, eventFind, addCrystal, serverFind, bagFind, rpgFind, bag: bd, rpg, profileFind, card, cardFind } = require("../../functions/models");
 const { error, embed, firstUpperCase, delay } = require("../../functions/functions");
 const { main, none } = require("../../JSON/colours.json");
 const cards = require("../../JSON/cards.json");
 const heroes = require("../../JSON/heroes.json");
 const { tempPack: tm } = require("../../JSON/items");
-const { CRYSTAL, AGREE, DISAGREE, STAR, heroType } = require("../../config");
+const { HELL, CRYSTAL, AGREE, DISAGREE, STAR, heroType } = require("../../config");
 const { MessageEmbed, MessageSelectMenu, MessageActionRow, MessageButton } = require("discord.js");
 const { stripIndents } = require("common-tags");
 const Subs = require("../../functions/subscriptionClass");
+const EVENT = require("../../functions/eventClass");
 
 module.exports = {
   config: {
@@ -25,11 +26,11 @@ module.exports = {
 
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({ serverID: message.guild.id });
-    const { noCrystal, cardClass: cc, quiz, heroes: hh, buy: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar } = require(`../../languages/${LANG.lang}`);
+    const { noCandy, noCrystal, cardClass: cc, quiz, heroes: hh, buy: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar } = require(`../../languages/${LANG.lang}`);
 
     //const items = ["Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Broken", "Hunter", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
     const user = message.author;
-
+    await EVENT(user.id).checkDocument();
     ops.cards.set(user.id, { Card: "on" });
     const getTime = ops.buy2.get(user.id);
     setTimeout(() => ops.buy2.delete(user.id), 35000);
@@ -47,20 +48,24 @@ module.exports = {
       newData.save()
     }
     const heros = ["hero", "герой"];
+    const candies = ["candy", "конфеты"];
     rp = await rpg.findOne({ userID: user.id });
     let bag = await bd.findOne({ userID: user.id });
     let profile = await pd.findOne({ userID: user.id });
     const menuArray = [];
+    const ended = ["tempPack"]
     if (!args[0]) {
       ops.buy2.set(user.id, { id: "yes" });
       for (let itemm in ITEMS) {
         const item = ITEMS[itemm]
-        menuArray.push({
-          label: LANG.lang === "en" ? item.NAMEEN : item.NAME,
-          description: `${LANG.lang === "en" ? "Cost:" : "Цена:"} ${item.cost || "—"}`,
-          value: item.name,
-          emoji: item.emoji
-        });
+        if(!ended.includes(item.name)) {   
+            menuArray.push({
+              label: LANG.lang === "en" ? item.NAMEEN : item.NAME,
+              description: `${LANG.lang === "en" ? "Cost:" : "Цена:"} ${item.cost || "—"}`,
+              value: item.name,
+              emoji: item.emoji
+            });
+        }
 
       }
 
@@ -87,6 +92,7 @@ module.exports = {
 
         const need = ITEMS[i.values[0]];
         if (!need.cost) return error(message, b.noItem);
+
         const req = await message.channel.send(b.req);
         const newCollector = message.channel.createMessageCollector({
           filter: m => m.author.id === message.author.id,
@@ -101,6 +107,18 @@ module.exports = {
             newCollector.stop();
             const count = Math.round(m.content);
             const amount = count * need.cost;
+
+            if (need.costType && need.costType === "candy") {
+              const random = Math.ceil(Math.random() * 5);
+              const mm = await message.channel.send(cc.wait);
+              await delay(random * 1000)
+              mm.delete();
+              const newData = await eventFind(user.id);
+              if (amount > newData.candy) return error(message, noCandy);
+              await event.updateOne({userID: user.id}, {$inc: {candyBox: count}});
+              await addCandy(user.id, -amount);
+              return embed(message, cc.done2);
+            }
 
             const newRow = await getCardMenu(message);
 
@@ -173,26 +191,24 @@ module.exports = {
 
 
       return
-      if (!item.cost) return error(message, b.noItem);
-      const getCost = value * item.cost
-      if (bag.stars < getCost) return error(message, noStar);
-
-      await bd.updateOne({ userID: user.id }, { $inc: { stars: -getCost } });
-
-      if (it == 1) await rpg.updateOne({ userID: user.id }, { $inc: { box: value } });
-      if (it == 2) await rpg.updateOne({ userID: user.id }, { $inc: { hlt: value } });
-      if (it == 3) await rpg.updateOne({ userID: user.id }, { $inc: { dmg: value } });
-      if (it == 4) await rpg.updateOne({ userID: user.id }, { $inc: { lvl: value } });
-      if (it == 5) await rpg.updateOne({ userID: user.id }, { $inc: { meat: value } });
-      if (it == 6) await rpg.updateOne({ userID: user.id }, { $inc: { pack1: value } });
-      if (it == 7) await rpg.updateOne({ userID: user.id }, { $inc: { pack2: value } });
-      if (it == 8) await rpg.updateOne({ userID: user.id }, { $inc: { pack3: value } });
-      if (it == 9) await rpg.updateOne({ userID: user.id }, { $inc: { tempPack: value } });
-
-
-
-      return message.react(AGREE)
+      
     }
+
+    if (candies.includes(args[0].toLocaleLowerCase())) {
+      let numb = 1;
+      if (args[1] && !isNaN(args[1]) && Math.round(args[1]) >= 1) numb = Math.round(args[1]);
+
+      const one = 5;
+      if (numb < one) numb = one;
+      
+      if (!bag.crystal || bag.crystal < Math.round(numb/one) ) return error(message, noCrystal);
+
+      await addCrystal(user.id, -(Math.round(numb/one)));
+      await addCandy(user.id, numb);
+
+      return embed(message, b.event(numb, Math.round(numb/one), HELL.candy, CRYSTAL));
+    }
+    
     const slots = ["slot", "place", "слот", "место"];
     if (slots.includes(args[0].toLowerCase())) {
       if ((bag["vip2"] && rp.itemCount !== 20) || (!bag["vip2"] && rp.itemCount !== 10)) {

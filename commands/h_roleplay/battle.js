@@ -4,9 +4,9 @@ const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment } = require("discord.js");
-const { COIN, STAR, LEAGUE } = require("../../config");
-const { addPremiumStar } = require("../../functions/models");
-const { error, embed, perms, roundFunc, getHeroData } = require("../../functions/functions");
+const { COIN, STAR, LEAGUE, HELL } = require("../../config");
+const { addCandy, addPremiumStar } = require("../../functions/models");
+const { error, embed, perms, roundFunc, getHeroData, randomRange } = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 10000);
 const Canvas = require('canvas');
@@ -68,7 +68,7 @@ module.exports = {
       if (!mrp || mrp.item === null) return error(message, hm.noHero);
       const mItem = mrp.item
       let item;
-      const enem = ["Merlin", "Kindness", "Lyric", "Dranna", "Alfonso", "Red", "Shadow", "Tyrus", "Light", "Dido", "Koko", "Hookfang", "Tartarus", "Ancalgon", "X", "Toothless", "Zero", "Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Broken", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
+      const enem = ["Horseman", "Witch", "Mummy", "Plague-doctor", "Secret", "Merlin", "Kindness", "Lyric", "Dranna", "Alfonso", "Red", "Shadow", "Tyrus", "Light", "Dido", "Koko", "Hookfang", "Tartarus", "Ancalgon", "X", "Toothless", "Zero", "Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Broken", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
       const random = Math.floor(Math.random() * enem.length);
       item = enem[random]
 
@@ -159,6 +159,8 @@ module.exports = {
       setTimeout(async () => {
         let winData
         if (winner) {
+          const randomCandy = randomRange(1, 4);
+          await addCandy(winner.id, randomCandy);
           const winCup = Rate(message).winRewardGenerator(league);
           await Rate(message).rateUpdate(message.author.id, winCup);
           await rpg.findOneAndUpdate({ userID: winner.id }, { $inc: { wins: 1 } })
@@ -179,7 +181,7 @@ module.exports = {
             .setImage(`attachment://${hero.name}.png`)
             .setColor(main)
             .addField(`❤ ${hm.health} ${DATA.h}`, `**⚔ ${hm.damage} ${DATA.d}**`, true)
-            .addField(`${hm.reward} ${await addPremiumStar(bot, winner.id, value * 2, true)} ${STAR} +${winCup} ${LEAGUE.cup}`, `**🏆 ${hm.winrate} ${roundFunc(WinData.wins / WinData.totalGames * 100) || '0'}%**`, true)
+            .addField(`${hm.reward} ${await addPremiumStar(bot, winner.id, value * 2, true)} ${STAR} +${winCup} ${LEAGUE.cup} ${and} ${randomCandy} ${HELL.candy}`, `**🏆 ${hm.winrate} ${roundFunc(WinData.wins / WinData.totalGames * 100) || '0'}%**`, true)
           msg.delete()
           return message.channel.send({ embeds: [winEmb], files: [att] });
         } else {

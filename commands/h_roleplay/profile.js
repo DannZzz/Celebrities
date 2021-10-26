@@ -1,13 +1,14 @@
 const Rate = require("../../functions/rateClass");
 const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js');
 const { main } = require('../../JSON/colours.json');
-const { COIN, BANK, STAR, status, CRYSTAL } = require('../../config');
+const { HELL, COIN, BANK, STAR, status, CRYSTAL } = require('../../config');
 const Levels = require("discord-xp");
 Levels.setURL(process.env.MONGO);
 const devs = ["382906068319076372"];
 const moment = require('moment');
 const { formatNumber } = require("../../functions/functions");
-const { serverFind, vip, bagFind, marry, rpg, profile, clanFind, profileFind, rpgFind, vipFind } = require("../../functions/models");
+const EVENT = require("../../functions/eventClass");
+const { eventFind, serverFind, vip, bagFind, marry, rpg, profile, clanFind, profileFind, rpgFind, vipFind } = require("../../functions/models");
 const YTchannelInfo = require("yt-channel-info");
 
 module.exports = {
@@ -55,9 +56,10 @@ module.exports = {
       CL = p.noclan
     }
 
-
-
-    embed.addField(`${p.status} ${vip}\n${p.subs} ${getSub(bot, member.id, LANG.lang)}`, `${STAR} ${formatNumber(Math.round(data.stars)) || Math.round(data.stars)} ${devs.includes(member.id) ? "**Dev**" : ""}\n${CRYSTAL} ${formatNumber(Math.round(data.crystal || 0))}\n${await Rate(message).rateData(trophy)}\n${p.quiz} ${rp.quizCount}\n${CL}\n${p.gg} ${marData}\n<:heroes:886967552310407219> : ${rp.itemCount || 1}\n\n`)
+    await EVENT(member.id).checkDocument();
+    const event = await eventFind(member.id);
+  
+    embed.addField(`${p.status} ${vip}\n${p.subs} ${getSub(bot, member.id, LANG.lang)}`, `${STAR} ${formatNumber(Math.round(data.stars)) || Math.round(data.stars)} ${devs.includes(member.id) ? "**Dev**" : ""}\n${CRYSTAL} ${formatNumber(Math.round(data.crystal || 0))}\n${HELL.candy} ${formatNumber(Math.round(event.candy || 0))}\n${await Rate(message).rateData(trophy)}\n${p.quiz} ${rp.quizCount}\n${CL}\n${p.gg} ${marData}\n<:heroes:886967552310407219> : ${rp.itemCount || 1}\n\n`)
     embed.addField(`__${p.fishes}__\n`,
       `\`\`\`${p.junk}(🔧) - ${data.junk}\n${p.common}(🐟) - ${data.common}\n${p.unc}(🐠) - ${data.uncommon}\n${p.rare}(🦑) - ${data.rare}\n${p.leg}(🐋) - ${data.legendary}\`\`\`\n`, true)
 
