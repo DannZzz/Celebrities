@@ -12,6 +12,8 @@ exports.adminID = ["873237782825422968"];
 
 exports.LOADING = "<a:dannloading:876008681479749662>";
 
+exports.FORCE = "<:force:902518582175469598>";
+
 exports.CRYSTAL = "<:selendian:900804465102299177>";
 
 exports.status = {

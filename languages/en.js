@@ -263,6 +263,7 @@ module.exports = {
 
 
     "heroModel": {
+        "force": "Force:",
         "health": "Health:",
         "damage": "Damage:",
         "level": "Level:",
@@ -276,6 +277,7 @@ module.exports = {
         "furious": "Furious",
         "mythical": "Mythical",
         "private": "Private"
+
     },
 
 

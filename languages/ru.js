@@ -265,6 +265,7 @@ module.exports = {
 
 
     "heroModel": {
+        "force": "Сила:",
         "health": "Жизнь:",
         "damage": "Атака:",
         "level": "Уровень:",
