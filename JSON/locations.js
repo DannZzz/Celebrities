@@ -81,7 +81,7 @@ module.exports = {
                     case "hero":
                         const rpgData = await rpgFind(msg.author.id);
                         const get1 = rpgData.heroes.find(x => x.name === "Alfonso");
-                        if (rpgData.heroes.length >= rpg.itemCount || get1) return await this.generateReward();
+                        if (rpgData.heroes.length >= rpg.itemCount || get1) return await this.generateReward(bot, msg);
 
                         rpgData.heroes.push({
                             name: heroes["Alfonso"]["name"],
