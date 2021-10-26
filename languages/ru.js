@@ -19,6 +19,7 @@ module.exports = {
     "waiting": "Ждите...",
     "loading": "Ищу противника",
     "and": "и",
+    "again": "Попробуй снова",
     "buttonYes": "Да",
     "buttonNo": "Нет",
     "noStar": "У вас недостаточно голды.",
