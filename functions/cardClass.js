@@ -252,7 +252,7 @@ class CardClass {
                     mess.delete();
                     msgCollector.stop();
 
-                    const random = 5 //randomRange(60, 180)
+                    const random = randomRange(60, 180)
                     this.msg.react(AGREE);
                     await embed(this.msg, cardFix).then( (msg) => setTimeout(() => msg.delete(), 10000));
                     await delay(random * 1000);
