@@ -1,5 +1,5 @@
 const { MessageEmbed } = require("discord.js");
-const { COIN, BANK, STAR, status, CRYSTAL } = require('../config');
+const { COIN, BANK, STAR, status, CRYSTAL, HELL } = require('../config');
 const { makeTimestamp, formatNumber, rubToDollar } = require("../functions/functions");
 const { greenlight, redlight, main } = require('../JSON/colours.json');
 const heroes = require('../JSON/heroes.json');
@@ -23,6 +23,7 @@ module.exports = {
     "buttonYes": "Да",
     "buttonNo": "Нет",
     "noStar": "У вас недостаточно голды.",
+    "noCandy": "У тебя мало конфет.",
     "noCrystal": "У вас недостаточно селендианов.",
     "cardcooldown": "Пожалуйста закончите действия с картами.",
     "cooldown": (time, cmd) => `Подождите __${time}__ секунд, чтобы использовать __${cmd}__.`,
@@ -447,7 +448,7 @@ module.exports = {
 
     "use": {
         "desc": "Использовать предмет.",
-        "usage": "[номер предмета] [кол-во предметов]",
+        "usage": "[кол-во предметов]",
         "access": "Для всех",
         "err": "Вы не имеете этот предмет.",
         "boxDone": "Вам выпало:",
@@ -472,7 +473,7 @@ module.exports = {
         "cost": "Цена:",
         "avail": "Доступен:",
         "donate": "Донат",
-        "noavail": "Подарок от разработчика",
+        "noavail": "Нет",
         "nocost": "Не известна",
         "pack": "Временный пак",
         "loc": "Можно найти изучая локации",
@@ -574,7 +575,7 @@ module.exports = {
                     },
                     {
                         name: `Цены в рублях.`,
-                        value: `• VIP + 10000 ${STAR} - ${rubToDollar(45, formatNumber, "ru")} \n • Премиум + 20000 ${STAR} - ~~${rubToDollar(100, formatNumber, "ru")}~~ ${rubToDollar(90, formatNumber, "ru")}\n • Герой **Тайрус** - ${rubToDollar(160, formatNumber, "ru")}\n • 1000 ${CRYSTAL} - ${rubToDollar(90, formatNumber, "ru")}\n • 350 ${CRYSTAL} - ~~${rubToDollar(30, formatNumber, "ru")}~~ ${rubToDollar(20, formatNumber, "ru")}\n • 100 ${CRYSTAL} - ${rubToDollar(10, formatNumber, "ru")}\n • 600000 ${STAR} - ~~${rubToDollar(90, formatNumber, "ru")}~~ ${rubToDollar(75, formatNumber, "ru")}\n • 150000 ${STAR} - ${rubToDollar(30, formatNumber, "ru")}\n • 50000 ${STAR} - ${rubToDollar(15, formatNumber, "ru")}\n • Донат-бокс (50k-200k) - ${rubToDollar(15, formatNumber, "ru")}`,
+                        value: `• VIP + 10000 ${STAR} - ${rubToDollar(45, formatNumber, "ru")} \n • Премиум + 20000 ${STAR} - ~~${rubToDollar(100, formatNumber, "ru")}~~ ${rubToDollar(90, formatNumber, "ru")}\n • Герой **Тайрус** - ${rubToDollar(160, formatNumber, "ru")}\n • 1 ${CRYSTAL} = 10 ${HELL.candy} (\`?купить конфеты 10\`)\n • 1000 ${CRYSTAL} - ${rubToDollar(90, formatNumber, "ru")}\n • 350 ${CRYSTAL} - ~~${rubToDollar(30, formatNumber, "ru")}~~ ${rubToDollar(20, formatNumber, "ru")}\n • 100 ${CRYSTAL} - ${rubToDollar(10, formatNumber, "ru")}\n • 600000 ${STAR} - ~~${rubToDollar(90, formatNumber, "ru")}~~ ${rubToDollar(75, formatNumber, "ru")}\n • 150000 ${STAR} - ${rubToDollar(30, formatNumber, "ru")}\n • 50000 ${STAR} - ${rubToDollar(15, formatNumber, "ru")}\n • Донат-бокс (50k-200k) - ${rubToDollar(15, formatNumber, "ru")}`,
                         inline: false
                     },
                     {
@@ -590,18 +591,18 @@ module.exports = {
             return new MessageEmbed()
                 .setColor(main)
                 .setAuthor("Магазин баффов")
-                .addField(`**#1** ${item.box.emoji} Ящик предметов: ${item.box.cost} ${STAR}`, `Даёт рандомный предмет, и до ${item.box.max} голды`)
-                .addField(`**#2** ${item.hlt.emoji} Зелье жизни: ${item.hlt.cost} ${STAR}`, `Добавляет герою ${item.hlt.effect} единиц жизни`)
-                .addField(`**#3** ${item.dmg.emoji} Зелье атаки: ${item.dmg.cost} ${STAR}`, `Добавляет герою ${item.dmg.effect} единиц атаку`)
-                .addField(`**#4** ${item.lvl.emoji} Зелье уровня: Можно получить открывая ящики.`, `Увеличивает уровень героя ${item.lvl.effect} раз`)
-                .addField(`**#5** ${item.meat.emoji} Мясо жизни: Можно получить побеждая боссов или открывая ящики.`, `Добавляет герою ${item.meat.effect} единиц жизни`)
+                .addField(`${item.box.emoji} ${item.box.NAME}: ${item.box.cost} ${STAR}`, `Даёт рандомный предмет, и до ${item.box.max} голды`)
+                .addField(`${item.hlt.emoji} ${item.hlt.NANE} : ${item.hlt.cost} ${STAR}`, `Добавляет герою ${item.hlt.effect} единиц жизни`)
+                .addField(`${item.dmg.emoji} ${item.dmg.NAME} : ${item.dmg.cost} ${STAR}`, `Добавляет герою ${item.dmg.effect} единиц атаку`)
+                .addField(`${item.lvl.emoji} ${item.lvl.NAME} : Можно получить открывая ящики.`, `Увеличивает уровень героя ${item.lvl.effect} раз`)
+                .addField(`${item.meat.emoji} ${item.meat.NAME} : Можно получить побеждая боссов или открывая ящики.`, `Добавляет герою ${item.meat.effect} единиц жизни`)
                 .addField(`Паки`, "** **")
-                .addField(`**#6** ${item.pack1.emoji} Обычный пак: ${item.pack1.cost} ${STAR}`, `Откройте и получите одного из этих обычных героев: \`${item.pack1.list.map(i => heroes[i].nameRus).join(", ")}\``)
-                .addField(`**#7** ${item.pack2.emoji} Элитный пак: ${item.pack2.cost} ${STAR}`, `Откройте и получите одного из этих элитных героев: \`${item.pack2.list.map(i => heroes[i].nameRus).join(", ")}\``)
-                .addField(`**#8** ${item.pack3.emoji} Премиум пак: ${item.pack3.cost} ${STAR}`, `Откройте и получите одного из этих Премиум героев: \`${item.pack3.list.map(i => heroes[i].nameRus).join(", ")}\``)
-                .addField(`**#9** ${item.tempPack.emoji} Пак Древнеегипетских богов: ${item.tempPack.cost} ${STAR} __доступен до 31.10.2021__`, `Откройте и получите одного из этих временных героев: \`${item.tempPack.list.map(i => heroes[i].nameRus).join(", ")}\``)
-                .addField(`**#10** ${item.donateBox.emoji} Донат-бокс: 15₽`, `Откройте и получите ${item.donateBox.winRU}`)
-                .addField(`**#11** ${item.goldBox.emoji} Временный бокс: 15₽`, `Откройте и получите:  __200-650__ ${item.box.emoji} или __Премиум Статус__`)
+                .addField(`${item.pack1.emoji} ${item.pack1.NAME} : ${item.pack1.cost} ${STAR}`, `Откройте и получите одного из этих обычных героев: \`${item.pack1.list.map(i => heroes[i].nameRus).join(", ")}\``)
+                .addField(`${item.pack2.emoji} ${item.pack2.NAME} : ${item.pack2.cost} ${STAR}`, `Откройте и получите одного из этих элитных героев: \`${item.pack2.list.map(i => heroes[i].nameRus).join(", ")}\``)
+                .addField(`${item.pack3.emoji} ${item.pack2.NAME} : ${item.pack3.cost} ${STAR}`, `Откройте и получите одного из этих Премиум героев: \`${item.pack3.list.map(i => heroes[i].nameRus).join(", ")}\``)
+                .addField(`${item.halloween.emoji} ${item.halloween.NAME} : ${item.halloween.cost} ${HELL.box} __доступен до 30.11.2021__`, `Откройте и получите одного из этих временных героев: \`${item.halloween.validList.map(i => heroes[i].nameRus).join(", ")}\` или ничего`)
+                .addField(`${item.donateBox.emoji} ${item.donateBox.NAME} : 15₽`, `Откройте и получите ${item.donateBox.winRU}`)
+                .addField(`${item.goldBox.emoji} ${item.goldBox.NAME} : 15₽`, `Откройте и получите:  __200-650__ ${item.box.emoji} или __Премиум Статус__`)
 
         }
     },
@@ -858,6 +859,7 @@ module.exports = {
         "itemErr": "Предмет не найден.",
         "noItem": "Этот предмет не доступен.",
         "nh": "Герой не найден.",
+        "event": (f, s, fe, se) => `Вы успешно купили __${f}__ ${fe} за __${s}__ ${se}`,
         "vip": "Этот герой доступен только для __Премиум__ пользователей.",
         "love": "Вы должны быть в любви, чтобы купить этого героя.",
         "place": "У вас недостаточно мест.",

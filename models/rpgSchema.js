@@ -22,14 +22,7 @@ const rpgSchema = new mongoose.Schema({
   tempPack: { type: Number, default: 0 },
   donateBox: { type: Number, default: 0 },
   goldBox: { type: Number, default: 0 },
-  tasks: { type: Array, default: [] },
   trialMax: { type: Number, default: 0 },
-  tasksCount: { type: Number, default: 0 },
-  spendTask: { type: Number, default: 0 },
-  spendAll: { type: Number, default: 0 },
-  task1: { type: Number, default: 1 },
-  task2: { type: Number, default: 1 },
-  openedPacks: { type: Number, default: 0 },
   league: {
     type: Object, default: {
       id: 0,

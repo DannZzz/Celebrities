@@ -40,5 +40,19 @@
         "nameRU": "Временная Коллекция \"?\"",
         "nameEN": "Collection \"?\"",
         "reward": 3030000
+    },
+    {
+        "id": "hall11",
+        "list": ["Secret", "Witch", "Mummy"],
+        "nameRU": "Хеллоуин",
+        "nameEN": "Halloween",
+        "reward": 330000
+    },
+    {
+        "id": "hall12",
+        "list": ["Secret", "Witch", "Mummy", "Plague-doctor", "Horseman"],
+        "nameRU": "Хеллоуин Премиум",
+        "nameEN": "Halloween Premium",
+        "reward": 700000
     }
 ]

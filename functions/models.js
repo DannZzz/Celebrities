@@ -15,6 +15,7 @@ const powers = require("../models/powers.js");
 const mail = require("../models/mail.js");
 const lf = require("../models/locationFarm.js");
 const partner = require("../models/partner.js");
+const event = require("../models/event.js");
 
 module.exports = {
     rpg,
@@ -34,6 +35,27 @@ module.exports = {
     lf,
     mail,
     partner,
+    event,
+
+    addCandy: async (id, amount) => {
+        const data = await event.findOne({userID: id});
+        if (!data) {
+            const newData = await event.create({
+                userID: id
+            });
+            await newData.save();
+        };
+        await event.updateOne({userID: id}, {$inc: {candy: Math.round(amount)}}).catch(() => false);
+    },
+
+    eventFind: async (id) => {
+        const data = await event.findOne({userID: id});
+        if (!data) {
+            return false;
+        } else {
+            return data;
+        };
+    },
 
     partnerFindCode: async (code) => {
         const data = await partner.findOne({code: code});

@@ -16,6 +16,7 @@ const profileSchema = new mongoose.Schema({
   join: { type: Number, default: 0},
   trial: { type: Date},
   give: Date,
+  combine: Date,
   afkMessage: { type: String, default: null},
   random: { type: Number, default: 0},
   disabled: { type: Boolean, default: false}

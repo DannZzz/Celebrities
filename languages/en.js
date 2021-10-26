@@ -1,5 +1,5 @@
 const { MessageEmbed } = require("discord.js");
-const { COIN, BANK, STAR, status, CRYSTAL } = require('../config');
+const { COIN, BANK, STAR, status, CRYSTAL, HELL } = require('../config');
 const { greenlight, redlight, main } = require('../JSON/colours.json');
 const { makeTimestamp, rubToDollar, formatNumber } = require("../functions/functions");
 const item = require('../JSON/items');
@@ -23,6 +23,7 @@ module.exports = {
     "buttonYes": "Yes",
     "buttonNo": "No",
     "noStar": "You don't have enough golds.",
+    "noCandy": "You don't have enough candies.",
     "noCrystal": "You don't have enough selendians.",
     "cardcooldown": "Please end the actions with the cards.",
     "cooldown": (time, cmd) => `Wait __${time}__ seconds, before using __${cmd}__.`,
@@ -447,7 +448,7 @@ module.exports = {
 
     "use": {
         "desc": "Use an item.",
-        "usage": "[item number] [number of items]",
+        "usage": "[number of items]",
         "access": "For everyone",
         "err": "You do not have this item.",
         "boxDone": "You got:",
@@ -473,7 +474,7 @@ module.exports = {
         "cost": "Price:",
         "avail": "Available:",
         "donate": "Donate",
-        "noavail": "Gift from the developer",
+        "noavail": "No",
         "loc": "Can be found by exploring locations",
         "pack": "Temporary pack",
         "nocost": "Unknown",
@@ -546,11 +547,7 @@ module.exports = {
                 .setDescription(`Please be on [Support Server](https://discord.gg/Q6Guf7MmsT) to getting Boosts`)
                 .setFooter("Send your questions by command ?message")
         }
-    },
-
-
-
-    "shop": {
+    },": {
         "desc": "Bun Shop.",
         "usage": "[pack | packs]",
         "access": "For everyone",
@@ -575,7 +572,7 @@ module.exports = {
                         inline: false
                     }, {
                         name: `Prices in dollars.`,
-                    value: `• VIP + 10000 ${STAR} - ${rubToDollar(45, formatNumber)} \n • Premium + 20000 ${STAR} - ${rubToDollar(100, formatNumber)}\n • Hero **Tyrus** - ${rubToDollar(160, formatNumber)}\n • 1000 ${CRYSTAL} - ${rubToDollar(90, formatNumber)}\n • 350 ${CRYSTAL} - ${rubToDollar(30, formatNumber)}\n • 100 ${CRYSTAL} - ${rubToDollar(10, formatNumber)}\n • 600000 ${STAR} - ${rubToDollar(90, formatNumber)}\n • 150000 ${STAR} - ${rubToDollar(30, formatNumber)}\n • 50000 ${STAR} - ${rubToDollar(15, formatNumber)}\n • Donate-box (50k-200k) - ${rubToDollar(15, formatNumber)}`,
+                    value: `• VIP + 10000 ${STAR} - ${rubToDollar(45, formatNumber)} \n • Premium + 20000 ${STAR} - ${rubToDollar(100, formatNumber)}\n • Hero **Tyrus** - ${rubToDollar(160, formatNumber)}\n • 1 ${CRYSTAL} = 10 ${HELL.candy} (\`?buy candy 10\`)\n • 1000 ${CRYSTAL} - ${rubToDollar(90, formatNumber)}\n • 350 ${CRYSTAL} - ${rubToDollar(30, formatNumber)}\n • 100 ${CRYSTAL} - ${rubToDollar(10, formatNumber)}\n • 600000 ${STAR} - ${rubToDollar(90, formatNumber)}\n • 150000 ${STAR} - ${rubToDollar(30, formatNumber)}\n • 50000 ${STAR} - ${rubToDollar(15, formatNumber)}\n • Donate-box (50k-200k) - ${rubToDollar(15, formatNumber)}`,
                     inline: false
                 },
                     {
@@ -591,18 +588,18 @@ module.exports = {
             return new MessageEmbed()
                 .setColor(main)
                 .setAuthor("Buff Shop")
-                .addField(`**#1** ${item.box.emoji} Item Box: ${item.box.cost} ${STAR}`, `Gives a random item and up to ${item.box.max} golds`)
-                .addField(`**#2** ${item.hlt.emoji} Potion of Health: ${item.hlt.cost} ${STAR}`, `Adds ${item.hlt.effect} health to the hero`)
-                .addField(`**#3** ${item.dmg.emoji} Potion of Attack: ${item.dmg.cost} ${STAR}`, `Adds ${item.dmg.effect} damage to the hero`)
-                .addField(`**#4** ${item.lvl.emoji} Potion of Level: Can be obtained by opening boxes.`, `Increases the level of the hero ${item.lvl.effect} times`)
-                .addField(`**#5** ${item.meat.emoji} Meat of Health: Obtainable by defeating bosses or opening boxes.`, `Adds ${item.meat.effect} health to the hero`)
+                .addField(`${item.box.emoji} ${item.box.NAMEEN} : ${item.box.cost} ${STAR}`, `Gives a random item and up to ${item.box.max} golds`)
+                .addField(`${item.hlt.emoji} ${item.hlt.NAMEEN} : ${item.hlt.cost} ${STAR}`, `Adds ${item.hlt.effect} health to the hero`)
+                .addField(`${item.dmg.emoji} ${item.dmg.NAMEEN} : ${item.dmg.cost} ${STAR}`, `Adds ${item.dmg.effect} damage to the hero`)
+                .addField(`${item.lvl.emoji} ${item.lvl.NAMEEN} : Can be obtained by opening boxes.`, `Increases the level of the hero ${item.lvl.effect} times`)
+                .addField(`${item.meat.emoji} ${item.meat.NAMEEN} : Obtainable by defeating bosses or opening boxes.`, `Adds ${item.meat.effect} health to the hero`)
                 .addField(`Packs`, "** **")
-                .addField(`**#6** ${item.pack1.emoji} Common Pack: ${item.pack1.cost} ${STAR}`, `Open and get one of these common heroes: \`${item.pack1.list.join(", ")}\``)
-                .addField(`**#7** ${item.pack2.emoji} Elite Pack: ${item.pack2.cost} ${STAR}`, `Unlock and get one of these elite heroes: \`${item.pack2.list.join(", ")}\``)
-                .addField(`**#8** ${item.pack3.emoji} Premium pack: ${item.pack3.cost} ${STAR}`, `Open and get one of these Premium heroes: \`${item.pack3.list.join(", ")}\``)
-                .addField(`**#9** ${item.tempPack.emoji} Pak of Ancient Egyptian gods: ${item.tempPack.cost} ${STAR} __available until 10/31/2021__`, `Open and get one of these Temporary heroes: \`${item.tempPack.list.join(", ")}\``)
-                .addField(`**#10** ${item.donateBox.emoji} Donate-box: 0,2$`, `Open and get ${item.donateBox.winEN}`)
-                .addField(`**#11** ${item.goldBox.emoji} Temporary box: 0,2$`, `Open and get: __200-650__ ${item.box.emoji} or __Premium Status__`)
+                .addField(`${item.pack1.emoji} ${item.pack1.NAMEEN} : ${item.pack1.cost} ${STAR}`, `Open and get one of these common heroes: \`${item.pack1.list.join(", ")}\``)
+                .addField(`${item.pack2.emoji} ${item.pack2.NAMEEN} : ${item.pack2.cost} ${STAR}`, `Unlock and get one of these elite heroes: \`${item.pack2.list.join(", ")}\``)
+                .addField(`${item.pack3.emoji} ${item.pack3.NAMEEN} : ${item.pack3.cost} ${STAR}`, `Open and get one of these Premium heroes: \`${item.pack3.list.join(", ")}\``)
+                .addField(`${item.tempPack.emoji} ${item.tempPack.NAMEEN} : ${item.tempPack.cost} ${HELL.box} __available until 11/30/2021__`, `Open and get one of these Temporary heroes: \`${item.tempPack.list.join(", ")}\``)
+                .addField(`${item.donateBox.emoji} ${item.donateBox.NAMEEN} : 0,2$`, `Open and get ${item.donateBox.winEN}`)
+                .addField(`${item.goldBox.emoji} ${item.goldBox.NAMEEN} : 0,2$`, `Open and get: __200-650__ ${item.box.emoji} or __Premium Status__`)
 
         }
     },
@@ -859,6 +856,7 @@ module.exports = {
         "itemErr": "Item not found.",
         "noItem": "This item is not available.",
         "nh": "Hero not found.",
+        "event": (f, s, fe, se) => `You successfully bought __${f}__ ${fe} for __${s}__ ${se}`,
         "vip": "This hero is available only for __Premium__ users.",
         "love": "You must be in love to buy this hero.",
         "place": "You don't have enough place.",

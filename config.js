@@ -4,6 +4,11 @@ exports.VERSION = 'v6.3.7';
 
 exports.DEV = "Dann#0006";
 
+exports.HELL = {
+    box: "<:candies:902542723612037220>",
+    candy: "<:candy:902542724442517644>"
+}
+
 exports.MAIL = "<:inbox:887742555603734528>";
 
 exports.devID = ["382906068319076372"];

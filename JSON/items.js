@@ -1,4 +1,4 @@
-const {potLVL, potDMG, potHLT, meat, box, pack1, pack2, pack3, donate} = require('../config')
+const {potLVL, potDMG, potHLT, meat, box, pack1, pack2, pack3, donate, HELL} = require('../config')
 
 module.exports = {
     box: {
@@ -86,5 +86,16 @@ module.exports = {
         NAMEEN: "Temporary box", 
         emoji: "<:tempGold:896036200664674316>",
         list: ["premium", "box"]
+    },
+
+    halloween: {
+        emoji: HELL.box,
+        name: "halloween",
+        NAMEEN: "Basket of Candies",
+        NAME: "Корзина конфет",
+        cost: 200,
+        costType: "candy",
+        list: ["hero", "no", "no", "hero", "no", "no", "hero"],
+        validList: ["Witch", "Plague-doctor", "Secret", "Mummy"]
     }
 }

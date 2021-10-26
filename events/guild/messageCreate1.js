@@ -15,6 +15,7 @@ const buying = new Map();
 const cards = new Map();
 const trial = new Map();
 const explore = new Map();
+const using = new Map();
 const {error, embed, makeTimestamp} = require("../../functions/functions");
 const {main, none, reddark} = require('../../JSON/colours.json');
 const { RateLimiter } = require('discord.js-rate-limiter');
@@ -64,7 +65,8 @@ module.exports = async (bot, messageCreate) => {
       cards: cards,
       buy2: buy2,
       trial: trial,
-      explore: explore
+      explore: explore,
+      using
   }
   let ss = new MessageEmbed().setColor("#2f3136").setTimestamp()
   const imunCmd = ["enable", "disable", "channel-enable", "channel-disable", "message"]
