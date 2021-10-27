@@ -65,6 +65,14 @@ module.exports = {
 
 
 
+    "heroes-rate": {
+        "desc": "Rate of Heroes.",
+        "usage": "",
+        "access": "For everyone",
+    },
+
+
+
     "combine": {
         "desc": "Combine 2 heroes.",
         "usage": "[name of the main hero] [name of the minor hero]",
