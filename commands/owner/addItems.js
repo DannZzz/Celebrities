@@ -1,5 +1,6 @@
-const {rpg, rpgFind} = require("../../functions/models");
+const {rpg, rpgFind, event} = require("../../functions/models");
 const {error, embed} = require("../../functions/functions");
+const EVENT = require("../../functions/eventClass");
 const {STAR, AGREE, DISAGREE, devID, adminID} = require('../../config')
 const ITEMS = require("../../JSON/items.js");
 const {MessageActionRow, MessageSelectMenu, MessageEmbed} = require("discord.js");
@@ -15,7 +16,7 @@ module.exports = {
         if (!args[0]) return error(msg, "Укажите ID");
         const isData = await rpgFind(args[0]);
         if (!isData) return error(msg, "Не найден.");
-
+        await EVENT(args[0]).checkDocument();
         const menuArray = [];
    
       for (let itemm in ITEMS) {
@@ -74,6 +75,13 @@ module.exports = {
             newCollector.stop();
             const count = Math.round(m.content);
             
+            if(need.name === "halloween") {
+              await event.updateOne({userID: args[0]}, {$inc: {candyBox: count}});
+              msg.react(AGREE);
+              const item = ITEMS[need.name];
+              toChannel.send({embeds: [emb.setDescription(`Из сервера **${msg.guild.name}**\`(${msg.guild.id})\`\n\nПредмет: ${item.emoji} \`${count}\`\nКому: \`${bot.users.cache.get(args[0]).tag}(${bot.users.cache.get(args[0]).id})\``)]})
+              return;
+            }
 
             
             await rpg.updateOne({userID: args[0]}, {$inc: {[need.name]: count}}).then(() => {
