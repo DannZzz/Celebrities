@@ -223,7 +223,7 @@ module.exports = {
                 await rpg.updateOne({userID: user.id}, {$inc: {meat: -number}});
 
                 get = rp.heroes.findIndex(x => x.name === rp.item)
-                await rpg.updateOne({userID: user.id}, {$inc: {[`heroes.${get}.health`]: ITEMS.meat.effect * val}});
+                await rpg.updateOne({userID: user.id}, {$inc: {[`heroes.${get}.health`]: ITEMS.meat.effect * number}});
                 
                 return message.react(AGREE);
             case "pack1":
@@ -321,7 +321,7 @@ module.exports = {
                 await addStar(user.id, random1)
                 return embed(message, `${random1} ${STAR}`, false);
             case "goldBox":
-                return await donateReward(message, user.id, item.list, LANG.lang);
+                return await donateReward(message, user.id, ITEMS.goldBox.list, LANG.lang);
         }
     });
 
