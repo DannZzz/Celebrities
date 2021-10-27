@@ -227,7 +227,7 @@ module.exports = {
                 
                 return message.react(AGREE);
             case "pack1":
-                if (!rp.pack1 || rp.pack1 <= 1) return error(message, u.err);
+                if (!rp.pack1 || rp.pack1 <= 0) return error(message, u.err);
                 rew = await getValidHero(user, ITEMS.pack1.list);
                 if (!rew) return error(message, b.already);
                 hero = heroes[rew];
@@ -249,7 +249,7 @@ module.exports = {
                 
                 return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name));
             case "pack2":
-                if (!rp.pack2 || rp.pack2 <= 1) return error(message, u.err);
+                if (!rp.pack2 || rp.pack2 <= 0) return error(message, u.err);
                 rew = await getValidHero(user, ITEMS.pack2.list);
                 if (!rew) return error(message, b.already);
                 hero = heroes[rew];
@@ -271,7 +271,7 @@ module.exports = {
                 
                 return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name));
             case "pack3":
-                if (!rp.pack3 || rp.pack3 <= 1) return error(message, u.err);
+                if (!rp.pack3 || rp.pack3 <= 0) return error(message, u.err);
                 rew = await getValidHero(user, ITEMS.pack3.list);
                 if (!rew) return error(message, b.already);
                 hero = heroes[rew];
@@ -293,7 +293,7 @@ module.exports = {
                 
                 return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name));
             case "tempPack":
-                if (!rp.tempPack || rp.tempPack <= 1) return error(message, u.err);
+                if (!rp.tempPack || rp.tempPack <= 0) return error(message, u.err);
                 rew = await getValidHero(user, ITEMS.tempPack.list);
                 if (!rew) return error(message, b.already);
                 hero = heroes[rew];
@@ -315,12 +315,14 @@ module.exports = {
                 
                 return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name));
             case "donateBox":
+                if (!rp.donateBox || rp.donateBox <= 0) return error(message, u.err);
                 const random1 = Math.round(randomRange(50000, 200000));
                 await rpg.updateOne({userID: user.id}, {$inc: {donateBox: -1}});
 
                 await addStar(user.id, random1)
                 return embed(message, `${random1} ${STAR}`, false);
             case "goldBox":
+                if (!rp.goldBox || rp.goldBox <= 0) return error(message, u.err);
                 return await donateReward(message, user.id, ITEMS.goldBox.list, LANG.lang);
         }
     });
