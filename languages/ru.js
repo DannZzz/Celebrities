@@ -610,7 +610,7 @@ module.exports = {
                 .addField(`${item.pack3.emoji} ${item.pack2.NAME} : ${item.pack3.cost} ${STAR}`, `Откройте и получите одного из этих Премиум героев: \`${item.pack3.list.map(i => heroes[i].nameRus).join(", ")}\``)
                 .addField(`${item.halloween.emoji} ${item.halloween.NAME} : ${item.halloween.cost} ${HELL.candy} __доступен до 30.11.2021__`, `Откройте и получите одного из этих временных героев: \`${item.halloween.validList.map(i => heroes[i].nameRus).join(", ")}\` или ничего`)
                 .addField(`${item.donateBox.emoji} ${item.donateBox.NAME} : 15₽`, `Откройте и получите ${item.donateBox.winRU}`)
-                .addField(`${item.goldBox.emoji} ${item.goldBox.NAME} : 15₽`, `Откройте и получите:  __200-650__ ${item.box.emoji} или __Премиум Статус__`)
+                .addField(`${item.goldBox.emoji} ${item.goldBox.NAME} : 25₽`, `Откройте и получите:  __150-500__ ${item.box.emoji} или __Премиум Статус__`)
 
         }
     },
