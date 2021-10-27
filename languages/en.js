@@ -555,7 +555,11 @@ module.exports = {
                 .setDescription(`Please be on [Support Server](https://discord.gg/Q6Guf7MmsT) to getting Boosts`)
                 .setFooter("Send your questions by command ?message")
         }
-    },": {
+    },
+
+
+    
+    "shop": {
         "desc": "Bun Shop.",
         "usage": "[pack | packs]",
         "access": "For everyone",
