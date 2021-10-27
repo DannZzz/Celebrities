@@ -198,7 +198,7 @@ module.exports = {
       let numb = 1;
       if (args[1] && !isNaN(args[1]) && Math.round(args[1]) >= 1) numb = Math.round(args[1]);
 
-      const one = 5;
+      const one = 10;
       if (numb < one) numb = one;
       
       if (!bag.crystal || bag.crystal < Math.round(numb/one) ) return error(message, noCrystal);

@@ -351,7 +351,7 @@ async function donateReward (message, id, arr, lang = "ru") {
         await bd.updateOne({userID: id}, {$set: {vip1: true, vip2: true}});
         return embed(message, lang === "ru" ? "Вы получили __Премиум__!" : "You got __Premium__!");
     } 
-    const random = randomRange(200, 650);
+    const random = randomRange(150, 500);
     await rpg.updateOne({userID: id}, {$inc: {goldBox: -1}})
     await rpg.updateOne({userID: id}, {$inc: {box: random}});
     return embed(message, lang === "ru" ? `Вы получили ${random} ${ITEMS.box.emoji}` : `You got ${random} ${ITEMS.box.emoji}`)
