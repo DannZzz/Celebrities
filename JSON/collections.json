@@ -54,5 +54,13 @@
         "nameRU": "Хеллоуин Премиум",
         "nameEN": "Halloween Premium",
         "reward": 700000
+    },
+    {
+        "id": 6,
+        "list": ["Muratov", "Muratova"],
+        "nameRU": "Коллекция Генерала",
+        "nameEN": "General's Collection",
+        "reward": "Golden",
+        "rewardType": "hero"
     }
 ]

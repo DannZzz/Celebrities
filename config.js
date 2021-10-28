@@ -4,6 +4,8 @@ exports.VERSION = 'v6.3.7';
 
 exports.DEV = "Dann#0006";
 
+exports.devHeroes = ["Muratov", "Golden", "Horseman", "Witch", "Mummy", "Plague-doctor", "Secret", "Merlin", "Muratova", "Kindness", "Lyric", "Dranna", "Alfonso", "Gigantes", "Red", "Shadow", "Clarity", "Girl", "Tyrus", "Light", "Dido", "Koko", "Hookfang", "Tartarus", "Ancalgon", "X", "Toothless", "Zero", "Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Hunter", "Broken", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
+
 exports.heroNames = ["Horseman", "Witch", "Mummy", "Plague-doctor", "Secret", "Merlin", "Kindness", "Lyric", "Dranna", "Alfonso", "Red", "Shadow", "Tyrus", "Light", "Dido", "Koko", "Hookfang", "Tartarus", "Ancalgon", "X", "Toothless", "Zero", "Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Broken", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
 
 exports.HELL = {

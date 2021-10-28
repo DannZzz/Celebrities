@@ -29,7 +29,7 @@ class CollectionClass {
                 Герои нужны - ${obj.list.length}
                 ${getRuNames.join("\n")}
                 
-                Награда: __${obj.reward} ${STAR}__`;
+                Награда: ${obj.rewardType === "hero" ? `Герой __${heroes[obj.reward].nameRus}__` : `__${obj.reward} ${STAR}__`}`;
             };
 
             const enFunction = function () {
@@ -38,7 +38,7 @@ class CollectionClass {
                 Need heroes - ${obj.list.length}
                 ${getEnNames.join("\n")}
                 
-                Reward: __${obj.reward} ${STAR}__`;
+                Reward: ${obj.rewardType === "hero" ? `Hero __${heroes[obj.reward].name}__` : `__${obj.reward} ${STAR}__`}`;
             };
 
             return new MessageEmbed()
@@ -89,14 +89,34 @@ class CollectionClass {
         Collection.forEach(object => checking(object));
 
         if (arr.length === 0) return error(this.msg, bool ? "You haven't collected any new collections!" : "Вы не собрали ни одной новой коллекции!");
-
+        let heroTxt = bool ? "You can't get this collection right now." : "Вы не можете собрать эту коллекцию сейчас.";
         arr.forEach(async obj => {
-            rp.collections.push(obj.id);
-            await rp.save();
-            await addStar(this.id, obj.reward);
+            if (obj.rewardType && obj.rewardType === "hero") {
+                const get = myHeroes.find(x => x.name === obj.reward);
+                if (!get && myHeroes.length < rp.itemCount) {
+
+                    heroTxt = bool ? `Hero __${obj.reward}__` : `Герой __${heroes[obj.reward].nameRus}__`
+                    
+                    rp.collections.push(obj.id);
+                    await rp.save();
+
+                    const herData = heroes[obj.reward];
+                    rp.heroes.push({
+                        name: obj.reward,
+                        level: 1,
+                        health: herData.health,
+                        damage: herData.damage
+                    });
+                    await rp.save()
+                }
+            } else if (!obj.rewardType){
+                rp.collections.push(obj.id);
+                await rp.save();
+                await addStar(this.id, obj.reward);
+            }
         });
 
-        const texted = arr.map(obj => `${bool ? obj.nameEN : obj.nameRU} - ${obj.reward} ${STAR}`);
+        const texted = arr.map(obj => `${bool ? obj.nameEN : obj.nameRU} - ${obj.rewardType === "hero" ? `${heroTxt}` : `${obj.reward} ${STAR}`}`);
 
         const emb = new MessageEmbed()
         .setColor(main)

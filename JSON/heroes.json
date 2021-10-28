@@ -835,5 +835,37 @@
     "vip": false,
     "upgradeCost": 1000,
     "type": "private"
+  },
+  "Muratov": {
+    "name": "Muratov",
+    "nameRus": "Муратов",
+    "health": 244000,
+    "damage": 6550,
+    "cost": 1370000,
+    "costType": "star",
+    "url": "https://i.ibb.co/fSYmxH2/Muratov.jpg",
+    "path": "./images/heroes/Muratov.jpg",
+    "descriptionEN": "General Muratov - Muratov's husband, Commander of the heavenly warriors. His dragon is Mushan, blind and furious, he does not see, but he feels great!",
+    "description": "Генерал Муратов - Муж Муратовы, Командир небесных воинов. Его дракон - Мушан, слепой и яростный, он не видит, но чувствует отлично!",
+    "available": "Да",
+    "vip": false,
+    "upgradeCost": 1200,
+    "type": "mythical"
+  },
+  "Golden": {
+    "name": "Golden",
+    "nameRus": "Золотой",
+    "health": 644000,
+    "damage": 8500,
+    "cost": "Не известна.",
+    "costType": "dev",
+    "url": "https://i.ibb.co/JRfhFPZ/Golden.jpg",
+    "path": "./images/heroes/Golden.jpg",
+    "descriptionEN": "Do you like gold?\nWhat if you only love gold?\nNothing else.\nOnly gold, gold and gold.",
+    "description": "Любишь золото?\nА что, если любишь только золото?\nНичего другого.\nТолько золото, золото и золото.",
+    "available": "Под",
+    "vip": false,
+    "upgradeCost": 1000,
+    "type": "private"
   }
 }
