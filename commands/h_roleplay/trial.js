@@ -27,7 +27,7 @@ module.exports = {
 
         const prof = await profileFind(user.id);
         if (prof.trial && prof.trial > new Date()) {
-          return error(msg, trial.trial(prof.trial.getTime()));
+          //return error(msg, trial.trial(prof.trial.getTime()));
         }
 
         let time = 1800000;
@@ -205,17 +205,17 @@ module.exports = {
                   ops.trial.delete(user.id);
                   getNext.delete();
                   await addPremiumStar(bot, user.id, totalReward);
-                  embed(msg, `${LANG.lang === "ru" ? "Вы выиграли" : "You won"} ${await addPremiumStar(bot, winner.id, totalReward, true)} ${STAR}`)
+                  embed(msg, `${LANG.lang === "ru" ? "Вы выиграли" : "You won"} ${await addPremiumStar(bot, winner.id, totalReward, true).then(x => x)} ${STAR}`)
                 default:
                   break;
               }
             });
 
-            collector.on("end", () => {
+            collector.on("end", async () => {
               if (!bool) {
                 ops.trial.delete(user.id);
                 getNext.delete();
-                embed(msg, `${LANG.lang === "ru" ? "Время вышло, вы выиграли" : "Time out, you got"} ${totalReward} ${STAR}`);
+                await embed(msg, `${LANG.lang === "ru" ? "Время вышло, вы выиграли" : "Time out, you got"} ${await addPremiumStar(bot, user.id, totalReward, true).then(x => x)} ${STAR}`);
               }
             })
 
