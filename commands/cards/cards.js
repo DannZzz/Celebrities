@@ -2,7 +2,7 @@ const { main } = require('../../JSON/colours.json');
 const Card = require("../../functions/cardClass");
 const { MessageEmbed } = require("discord.js");
 const {error, firstUpperCase} = require("../../functions/functions");
-const {serverFind} = require("../../functions/models");
+const {serverFind, formatNumber} = require("../../functions/models");
 const cards = require('../../JSON/cards.json');
 
 module.exports = {
@@ -24,7 +24,7 @@ module.exports = {
         .setThumbnail(user.displayAvatarURL({dynamic: true}))
       const text = arr.forEach( card => {
         const cardData = cards[card.name]
-        emb.addField(`${cardData.emoji} ${firstUpperCase(sd.lang === "ru" ? `${cardData.nameRus} карта` : `${cardData.name} card`)}\n${cd.number} ${card.code}`, `${cd.balance} \`${Math.round(card.amount)}\` | ${cd.createdAt} ${card.createdAt.toLocaleDateString("ru-ru", {timeZone: "Europe/Moscow"})}\n${cd.maxSpace} ${cardData.maxSpace}\n${cd.maxAmount} ${cardData.maxGiveAmount}\n${cd.perc} ${cardData.percentage}%`)
+        emb.addField(`${cardData.emoji} ${firstUpperCase(sd.lang === "ru" ? `${cardData.nameRus} карта` : `${cardData.name} card`)}\n${cd.number} ${card.code}`, `${cd.balance} \`${formatNumber(Math.round(card.amount))}\` | ${cd.createdAt} ${card.createdAt.toLocaleDateString("ru-ru", {timeZone: "Europe/Moscow"})}\n${cd.maxSpace} ${formatNumber(cardData.maxSpace)}\n${cd.maxAmount} ${formatNumber(cardData.maxGiveAmount)}\n${cd.perc} ${cardData.percentage}%`)
       })
       
       return msg.channel.send({embeds: [emb]})
