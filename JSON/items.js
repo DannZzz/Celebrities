@@ -7,8 +7,8 @@ module.exports = {
         NAMEEN: "Loot-box", 
         emoji: box,
         cost: 750,
-        max: 350,
-        min: 100
+        max: 200,
+        min: 75
     },
     hlt: {
         name: "hlt",
