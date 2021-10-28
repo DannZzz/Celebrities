@@ -1,6 +1,6 @@
 const { main, reddark } = require('../../JSON/colours.json');
 const { MessageEmbed, MessageButton, MessageActionRow, MessageAttachment } = require("discord.js");
-const {STAR, AGREE } = require("../../config");
+const {STAR, AGREE, heroNames } = require("../../config");
 const {error, embed, perms, firstUpperCase, makeTimestamp, delay, roundFunc, getHeroData} = require("../../functions/functions");
 const {serverFind, rpgFind, addStar, bagFind, rpg, profileFind, profile, addPremiumStar } = require("../../functions/models");
 const heroes = require("../../JSON/heroes.json");
@@ -61,7 +61,7 @@ module.exports = {
         let l = heroData.level;
         const hero = heroes[data.item];
         
-        const enemiesArr = ["Horseman", "Witch", "Mummy", "Plague-doctor", "Secret", "Merlin", "Kindness", "Lyric", "Dranna", "Alfonso", "Red", "Shadow", "Tyrus", "Light", "Dido", "Koko", "Hookfang", "Tartarus", "Ancalgon", "X", "Toothless", "Zero", "Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Broken", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
+        const enemiesArr = heroNames;
 
         function getRandomEnemy(arr) {
             const random = Math.floor(Math.random() * arr.length)

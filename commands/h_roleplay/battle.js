@@ -4,7 +4,7 @@ const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment } = require("discord.js");
-const { COIN, STAR, LEAGUE, HELL } = require("../../config");
+const { COIN, STAR, LEAGUE, HELL, heroNames } = require("../../config");
 const { addCandy, addPremiumStar } = require("../../functions/models");
 const { error, embed, perms, roundFunc, getHeroData, randomRange } = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
@@ -68,7 +68,7 @@ module.exports = {
       if (!mrp || mrp.item === null) return error(message, hm.noHero);
       const mItem = mrp.item
       let item;
-      const enem = ["Horseman", "Witch", "Mummy", "Plague-doctor", "Secret", "Merlin", "Kindness", "Lyric", "Dranna", "Alfonso", "Red", "Shadow", "Tyrus", "Light", "Dido", "Koko", "Hookfang", "Tartarus", "Ancalgon", "X", "Toothless", "Zero", "Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Broken", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
+      const enem = heroNames;
       const random = Math.floor(Math.random() * enem.length);
       item = enem[random]
 
@@ -214,7 +214,7 @@ module.exports = {
 async function makeCanvas(data1, data2) {
   const canvas = Canvas.createCanvas(1110, 520);
   const ctx = canvas.getContext('2d');
-  const background = await Canvas.loadImage('https://i.ibb.co/BqPXZdq/vs-Template.jpg');
+  const background = await Canvas.loadImage('https://i.ibb.co/SyjjcGt/vstemp.jpg');
   ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
   const h = 280;
   const heroHeight = 120;
@@ -228,11 +228,11 @@ async function makeCanvas(data1, data2) {
   ctx.drawImage(second, secW, heroHeight, h, h);
 
   ctx.lineWidth = 3;
-  ctx.strokeStyle = "#852A4F";
+  ctx.strokeStyle = "#FDB416";
   ctx.strokeRect(firstW, heroHeight, h, h)
 
   ctx.lineWidth = 3;
-  ctx.strokeStyle = "#852A4F";
+  ctx.strokeStyle = "#FDB416";
   ctx.strokeRect(secW, heroHeight, h, h)
 
   return canvas
