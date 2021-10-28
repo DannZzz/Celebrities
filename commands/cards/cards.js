@@ -1,8 +1,8 @@
 const { main } = require('../../JSON/colours.json');
 const Card = require("../../functions/cardClass");
 const { MessageEmbed } = require("discord.js");
-const {error, firstUpperCase} = require("../../functions/functions");
-const {serverFind, formatNumber} = require("../../functions/models");
+const {error, firstUpperCase, formatNumber} = require("../../functions/functions");
+const {serverFind} = require("../../functions/models");
 const cards = require('../../JSON/cards.json');
 
 module.exports = {
