@@ -105,8 +105,8 @@ module.exports = {
     
       
       let timeoutt;
-        if (bag["vip2"] === true) { timeoutt = 1800000; } else {
-          timeoutt = 3559000;
+        if (bag["vip2"] === true) { timeoutt = 900000; } else {
+          timeoutt = 1800000;
         }
         if (author !== null && timeoutt - (Date.now() - author) > 0) {
             let time = new Date(timeoutt - (Date.now() - author));
@@ -167,7 +167,9 @@ module.exports = {
     .setColor(main)
     .setTimestamp()
     const att1 = new MessageAttachment(enemy.path, `${enemy.name}.png`);
-    const att2 = new MessageAttachment(hero.path, `${hero.name}.png`)
+    const att2 = new MessageAttachment(hero.path, `${hero.name}.png`);
+    await pd.findOneAndUpdate({userID: user.id}, {$set: {survive: Date.now()}})
+
     if(winner === hero){
       
 
@@ -188,7 +190,6 @@ module.exports = {
       .setTitle(`${enemy.nameRus} ${j.he}`)
       .setDescription(j.err)
       .setImage(enemy.url)
-      await pd.findOneAndUpdate({userID: user.id}, {$set: {survive: Date.now()}})
 
     }
     let msg = await message.channel.send({embeds: [lonely], files: [att]});
