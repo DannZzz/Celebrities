@@ -143,6 +143,7 @@ module.exports = {
 
           if (winner) {
             totalReward += reward;
+            let vizual = await addPremiumStar(bot, user.id, totalReward, true)
             winCount += 1;
             let newData = await rpg.findOneAndUpdate({userID: user.id}, {$inc: {wins: 1}})
             const trialMax = newData.trialMax || 0;
@@ -154,7 +155,7 @@ module.exports = {
             .setImage(`attachment://${hero.name}.png`)
             .setColor(main)
             .addField(`❤ ${hm.health} ${h}`, `**⚔ ${hm.damage} ${d}**`, true)
-            .addField(`${ (LANG.lang === "ru" ? "Текущий " : "Current ") + hm.reward} ${await addPremiumStar(bot, user.id, totalReward, true)} ${STAR}`, `**🏆 ${hm.winrate} ${roundFunc(newData.wins / newData.totalGames * 100) || '0'}%**`, true)
+            .addField(`${ (LANG.lang === "ru" ? "Текущий " : "Current ") + hm.reward} ${vizual} ${STAR}`, `**🏆 ${hm.winrate} ${roundFunc(newData.wins / newData.totalGames * 100) || '0'}%**`, true)
 
             let bool = false;
 
@@ -205,7 +206,7 @@ module.exports = {
                   ops.trial.delete(user.id);
                   getNext.delete();
                   await addPremiumStar(bot, user.id, totalReward);
-                  embed(msg, `${LANG.lang === "ru" ? "Вы выиграли" : "You won"} ${await addPremiumStar(bot, winner.id, totalReward, true).then(x => x)} ${STAR}`)
+                  embed(msg, `${LANG.lang === "ru" ? "Вы выиграли" : "You won"} ${vizual} ${STAR}`)
                 default:
                   break;
               }
@@ -215,7 +216,7 @@ module.exports = {
               if (!bool) {
                 ops.trial.delete(user.id);
                 getNext.delete();
-                await embed(msg, `${LANG.lang === "ru" ? "Время вышло, вы выиграли" : "Time out, you got"} ${await addPremiumStar(bot, user.id, totalReward, true).then(x => x)} ${STAR}`);
+                await embed(msg, `${LANG.lang === "ru" ? "Время вышло, вы выиграли" : "Time out, you got"} ${vizual} ${STAR}`);
               }
             })
 
