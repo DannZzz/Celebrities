@@ -105,8 +105,8 @@ module.exports = {
     
       
       let timeoutt;
-        if (bag["vip2"] === true) { timeoutt = 900000; } else {
-          timeoutt = 1800000;
+        if (bag["vip2"] === true) { timeoutt = 300000; } else {
+          timeoutt = 600000;
         }
         if (author !== null && timeoutt - (Date.now() - author) > 0) {
             let time = new Date(timeoutt - (Date.now() - author));

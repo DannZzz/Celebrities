@@ -37,6 +37,7 @@ module.exports = {
     .setThumbnail(user.displayAvatarURL({dynamic: true}))
     
     .addField(`${items.box.emoji} ${LANG.lang === "en" ? items.box.NAMEEN : items.box.NAME}:`, `${rp["box"] || 0}`, true)
+    .addField(`${items.megabox.emoji} ${LANG.lang === "en" ? items.megabox.NAMEEN : items.megabox.NAME}:`, `${rp["megabox"] || 0}`, true)
     .addField(`${items.hlt.emoji} ${LANG.lang === "en" ? items.hlt.NAMEEN : items.hlt.NAME}:`, `${rp["hlt"] || 0}`, true)
     .addField(`${items.dmg.emoji} ${LANG.lang === "en" ? items.dmg.NAMEEN : items.dmg.NAME}:`, `${rp["dmg"] || 0}`, true)
     .addField(`${items.lvl.emoji} ${LANG.lang === "en" ? items.lvl.NAMEEN : items.lvl.NAME}:`, `${rp["lvl"] || 0}`, true)

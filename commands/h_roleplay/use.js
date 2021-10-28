@@ -87,7 +87,7 @@ module.exports = {
 
     let bool1 = false;
     let bool2 = false;
-    let heroType, effect, get, rew, hero;
+    let heroType, effect, get, rew, hero, minusBox, count, obj, random, newData, text;
     coll.on("collect", async (i) => {
         bool1 = true;
         coll.stop();
@@ -123,13 +123,13 @@ module.exports = {
                 return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name));
             case "box":
                 if (rp.box <= 0 || !rp.box) return error(message, u.err);
-                let count = number;
-                let minusBox = count;
+                count = number;
+                minusBox = count;
                 if (rp.box < count) {
                     count = rp.box;
                     minusBox = rp.box;
                 };
-                const obj = {
+                obj = {
                     hlt: 0,
                     dmg: 0,
                     lvl: 0,
@@ -137,7 +137,7 @@ module.exports = {
                     stars: 0
                 };
                 for (count; count > 0; --count) {
-                const random = Math.floor(Math.random() * 40);
+                random = Math.floor(Math.random() * 40);
                 obj.stars += randomRange(ITEMS.box.min, ITEMS.box.max);
                 if ( random <= 2 ) {
                     obj.lvl += 1;
@@ -151,16 +151,63 @@ module.exports = {
                
                 };
 
-                const text = stripIndents`
+                text = stripIndents`
                 ${obj.hlt === 0 ? "" : `${ITEMS.hlt.emoji} ${obj.hlt}`}${obj.dmg === 0 ? "" : `\n${ITEMS.dmg.emoji} ${obj.dmg}`}${obj.lvl === 0 ? "" : `\n${ITEMS.lvl.emoji} ${obj.lvl}`}${obj.meat === 0 ? "" : `\n${ITEMS.meat.emoji} ${obj.meat}`}
                 ${STAR} ${obj.stars}
                 `
                 
-                const newData = await rpgFind(user.id);
+                newData = await rpgFind(user.id);
                 if (newData.box === 0 || newData.box === undefined || newData.box < minusBox) return error(message, u.err);
                 
                 await rpg.updateOne({userID: user.id}, {$inc: {
                     box: -minusBox,
+                    hlt: obj.hlt !== 0 ? obj.hlt : 0,
+                    dmg: obj.dmg !== 0 ? obj.dmg : 0,
+                    lvl: obj.lvl !== 0 ? obj.lvl : 0,
+                    meat: obj.meat !== 0 ? obj.meat : 0,
+                    }});
+                await bd.updateOne({userID: user.id}, {$inc: {stars: obj.stars}})
+                return embed(message, u.boxDone + `\n${text}`, false)
+            case "megabox":
+                if (rp.megabox <= 0 || !rp.megabox) return error(message, u.err);
+                count = number;
+                minusBox = count;
+                if (rp.megabox < count) {
+                    count = rp.megabox;
+                    minusBox = rp.megabox;
+                };
+                obj = {
+                    hlt: 0,
+                    dmg: 0,
+                    lvl: 0,
+                    meat: 0,
+                    stars: 0
+                };
+                for (count; count > 0; --count) {
+                random = Math.floor(Math.random() * 40);
+                obj.stars += randomRange(ITEMS.megabox.min, ITEMS.megabox.max);
+                if ( random <= 2 ) {
+                    obj.lvl += randomRange(2, 5);
+                } else if ( random <= 5 ) {
+                    obj.meat += randomRange(2, 5);
+                } else if (random <= 20) {
+                    obj.hlt += randomRange(2, 5);
+                } else if ( random <= 40) {
+                    obj.dmg += randomRange(2, 5);
+                }
+               
+                };
+
+                text = stripIndents`
+                ${obj.hlt === 0 ? "" : `${ITEMS.hlt.emoji} ${obj.hlt}`}${obj.dmg === 0 ? "" : `\n${ITEMS.dmg.emoji} ${obj.dmg}`}${obj.lvl === 0 ? "" : `\n${ITEMS.lvl.emoji} ${obj.lvl}`}${obj.meat === 0 ? "" : `\n${ITEMS.meat.emoji} ${obj.meat}`}
+                ${STAR} ${obj.stars}
+                `
+                
+                newData = await rpgFind(user.id);
+                if (newData.megabox === 0 || newData.megabox === undefined || newData.megabox < minusBox) return error(message, u.err);
+                
+                await rpg.updateOne({userID: user.id}, {$inc: {
+                    megabox: -minusBox,
                     hlt: obj.hlt !== 0 ? obj.hlt : 0,
                     dmg: obj.dmg !== 0 ? obj.dmg : 0,
                     lvl: obj.lvl !== 0 ? obj.lvl : 0,
