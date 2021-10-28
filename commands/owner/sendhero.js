@@ -2,7 +2,7 @@ const rpg = require("../../models/rpgSchema");
 const {MessageEmbed} = require("discord.js");
 const heroes = require('../../JSON/heroes.json');
 const {greenlight, redlight} = require('../../JSON/colours.json');
-const { COIN, AGREE } = require('../../config');
+const { COIN, AGREE, devHeroes } = require('../../config');
 let ownerID = '382906068319076372';
 const {error, embed, perms, firstUpperCase} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
@@ -38,7 +38,7 @@ module.exports = {
     
     
     if(!args[1]) return error(message, "Укажите подарок.")
-    const items = ["Horseman", "Witch", "Mummy", "Plague-doctor", "Secret", "Merlin", "Muratova", "Kindness", "Lyric", "Dranna", "Alfonso", "Gigantes", "Red", "Shadow", "Clarity", "Girl", "Tyrus", "Light", "Dido", "Koko", "Hookfang", "Tartarus", "Ancalgon", "X", "Toothless", "Zero", "Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Hunter", "Broken", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
+    const items = devHeroes;
     if (!items.includes(firstUpperCase(args[1].toLowerCase()))) return error(message, "Герой не найден.")
     let giftType = heroes[firstUpperCase(args[1].toLowerCase())]
     let get = rp.heroes.find(x => x.name === giftType.name) 
