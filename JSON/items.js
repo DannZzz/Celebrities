@@ -10,6 +10,15 @@ module.exports = {
         max: 200,
         min: 75
     },
+    megabox: {
+        name: "megabox",
+        NAME: "Мега Лут-Бокс",
+        NAMEEN: "Mega Loot-box", 
+        emoji: "<:megabox:903205160715685928>",
+        cost: 3000,
+        max: 600,
+        min: 200
+    },
     hlt: {
         name: "hlt",
         NAME: "Зелье жизни",
