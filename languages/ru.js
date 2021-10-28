@@ -600,6 +600,7 @@ module.exports = {
                 .setColor(main)
                 .setAuthor("Магазин баффов")
                 .addField(`${item.box.emoji} ${item.box.NAME}: ${item.box.cost} ${STAR}`, `Даёт рандомный предмет, и до ${item.box.max} голды`)
+                .addField(`${item.megabox.emoji} ${item.megabox.NAME}: ${item.megabox.cost} ${STAR}`, `Даёт рандомные предметы до 5, и до ${item.megabox.max} голды`)
                 .addField(`${item.hlt.emoji} ${item.hlt.NAME} : ${item.hlt.cost} ${STAR}`, `Добавляет герою ${item.hlt.effect} единиц жизни`)
                 .addField(`${item.dmg.emoji} ${item.dmg.NAME} : ${item.dmg.cost} ${STAR}`, `Добавляет герою ${item.dmg.effect} единиц атаку`)
                 .addField(`${item.lvl.emoji} ${item.lvl.NAME} : Можно получить открывая ящики.`, `Увеличивает уровень героя ${item.lvl.effect} раз`)

@@ -601,6 +601,7 @@ module.exports = {
                 .setColor(main)
                 .setAuthor("Buff Shop")
                 .addField(`${item.box.emoji} ${item.box.NAMEEN} : ${item.box.cost} ${STAR}`, `Gives a random item and up to ${item.box.max} golds`)
+                .addField(`${item.megabox.emoji} ${item.megabox.NAMEEN} : ${item.megabox.cost} ${STAR}`, `Gives a random items up to 5 and up to ${item.megabox.max} golds`)
                 .addField(`${item.hlt.emoji} ${item.hlt.NAMEEN} : ${item.hlt.cost} ${STAR}`, `Adds ${item.hlt.effect} health to the hero`)
                 .addField(`${item.dmg.emoji} ${item.dmg.NAMEEN} : ${item.dmg.cost} ${STAR}`, `Adds ${item.dmg.effect} damage to the hero`)
                 .addField(`${item.lvl.emoji} ${item.lvl.NAMEEN} : Can be obtained by opening boxes.`, `Increases the level of the hero ${item.lvl.effect} times`)
