@@ -123,8 +123,8 @@ class pvpClass {
                     let eh = Math.round( (e1D.health + e2D.health) + ((get1.level + get2.level) * 500) );
                     let ed = Math.round( (e1D.damage + e2D.damage) + ((get1.level + get2.level) * 40) );
 
-                    while (eh * 2 < allH1) eh += eh;
-                    while (ed * 2 < allD1) ed += ed;
+                    while (eh * 2 < allH1) eh += Math.round((eh / 2));
+                    while (ed * 2 < allD1) ed += Math.round((ed / 2));
 
                     await rpg.updateOne({ userID: this.id }, { $inc: { totalGames: 1 } });
                     await rpg.updateOne({ userID: member.id }, { $inc: { totalGames: 1 }});
