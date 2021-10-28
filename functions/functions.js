@@ -188,23 +188,17 @@ module.exports = {
     else {return false};
   },
 
-  getMember(message, toFind = '') {
-    toFind = toFind.toLowerCase();
+  getMember(message, toFind = false) {
+    var target;
 
-    var target = message.guild.members.cache.get(toFind);
+    if (!message.mentions.members && !toFind) target = message.member;
+    
+    if (message.mentions.members) target = message.mentions.members.first();
 
-    if (!target && message.mentions.members)
-      target = message.mentions.members.first();
-
-    if (!target && toFind) {
-      target = message.guild.members.cache.find(member => {
-        return member.displayName.toLowerCase().includes(toFind) ||
-          member.user.tag.toLowerCase().includes(toFind)
-      });
+    if (toFind && !message.mentions.members) {
+      target = message.guild.members.cache.get(toFind);
+      if (!target) target = message.member;
     }
-
-    if (!target)
-      target = message.member;
 
     return target;
   },

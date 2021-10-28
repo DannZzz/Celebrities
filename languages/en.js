@@ -57,6 +57,14 @@ module.exports = {
 
 
 
+    "2v2": {
+        "desc": "Fight against bots with somewone.",
+        "usage": "[ID | mention]",
+        "access": "For everyone",
+    },
+
+
+
     "forbs": {
         "desc": "List of the most richest members.",
         "usage": "",

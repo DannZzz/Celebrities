@@ -15,6 +15,7 @@ const profileSchema = new mongoose.Schema({
   boss: { type: Number, default: 0},
   join: { type: Number, default: 0},
   trial: { type: Date},
+  pvp2: Date,
   give: Date,
   combine: Date,
   afkMessage: { type: String, default: null},
