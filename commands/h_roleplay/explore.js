@@ -76,9 +76,9 @@ module.exports = {
             }
 
             const currentTime = new Date();
-            const expireTime = new Date( currentTime.getTime() + ( 6 * 3600000 * (v/powers[val]["default"] || 1) ) )
+            const expireTime = new Date( currentTime.getTime() + ( 2 * 3600000 * (v/powers[val]["default"] || 1) ) )
 
-            const cost = l * powers[val]["cost"];
+            const cost = l === 1 ? (l * powers[val]["cost"]) : ( (l * ( powers[val]["cost"] / 2 ) ) + powers[val]["cost"] );
             
             const bag = await bagFind(user.id);
             if (bag.stars < cost) {
