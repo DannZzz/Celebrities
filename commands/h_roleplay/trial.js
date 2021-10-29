@@ -27,7 +27,7 @@ module.exports = {
 
         const prof = await profileFind(user.id);
         if (prof.trial && prof.trial > new Date()) {
-          //return error(msg, trial.trial(prof.trial.getTime()));
+          return error(msg, trial.trial(prof.trial.getTime()));
         }
 
         let time = 1800000;
@@ -48,13 +48,13 @@ module.exports = {
            ops.trial.delete(user.id);
            return;
         }
-
+        await profile.updateOne({userID: user.id}, {$set: {trial: new Date(Date.now() + time)}})
         try {
 
         
 
         await addStar(user.id, -(value));
-        await profile.updateOne({userID: user.id}, {$set: {trial: new Date(Date.now() + time)}})
+        
         
         let h = await getHeroData(bot, user.id, data).then(x => x.h);
         let d = await getHeroData(bot, user.id, data).then(x => x.d);
