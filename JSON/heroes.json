@@ -563,8 +563,8 @@
   "Girl": {
     "name": "Girl",
     "nameRus": "Девушка",
-    "health": 220000,
-    "damage": 15000,
+    "health": 120000,
+    "damage": 7900,
     "cost": 0,
     "costType": "star",
     "url": "https://i.ibb.co/BG6pWzh/Girl.jpg",
@@ -580,8 +580,8 @@
   "Shadow": {
     "name": "Shadow",
     "nameRus": "Тень",
-    "health": 240000,
-    "damage": 18000,
+    "health": 145000,
+    "damage": 9500,
     "cost": 40000,
     "costType": "star",
     "url": "https://i.ibb.co/WPMm18b/Shadow.jpg",
@@ -597,8 +597,8 @@
   "Clarity": {
     "name": "Clarity",
     "nameRus": "Ясность",
-    "health": 320000,
-    "damage": 28000,
+    "health": 180000,
+    "damage": 11000,
     "cost": 0,
     "costType": "star",
     "url": "https://i.ibb.co/pdVtBrZ/Clarity.jpg",

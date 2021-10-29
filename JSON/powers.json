@@ -23,10 +23,10 @@
         "id": "gold",
         "nameRU": "Душа Дариуса",
         "nameEN": "Soul of Darius",
-        "default": 0,
+        "default": 0.2,
         "adding": 0.2,
         "emoji": "<a:danncoin:864467182310129674>",
-        "cost": 150000,
+        "cost": 50000,
         "available": true
     }
 }
