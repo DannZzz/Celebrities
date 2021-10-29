@@ -57,6 +57,14 @@ module.exports = {
 
 
 
+    "bank": {
+        "desc": "Invest money and get more.",
+        "usage": "[invest | card]",
+        "access": "For everyone",
+    },
+
+
+
     "2v2": {
         "desc": "Fight against bots with somewone.",
         "usage": "[ID | mention]",

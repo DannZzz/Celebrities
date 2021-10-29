@@ -16,6 +16,7 @@ const mail = require("../models/mail.js");
 const lf = require("../models/locationFarm.js");
 const partner = require("../models/partner.js");
 const event = require("../models/event.js");
+const bank = require("../models/bank.js");
 
 module.exports = {
     rpg,
@@ -36,6 +37,15 @@ module.exports = {
     mail,
     partner,
     event,
+    bank,
+
+    bankFind: async (id) => {
+        const data = await bank.findOne({userID: id});
+        if (!data) {
+            return false;
+        };
+        return data;
+    },
 
     addCandy: async (id, amount) => {
         const data = await event.findOne({userID: id});

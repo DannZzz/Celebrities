@@ -24,6 +24,7 @@ let msgLimiter = new RateLimiter(1, 2000);
 const Rate = require("../../functions/rateClass.js");
 const {bans, bansFind} = require("../../functions/models");
 const buy2 = new Map();
+const Bank = require("../../functions/bankClass")
 
 const cooldowns = new Map();
 
@@ -50,6 +51,8 @@ module.exports = async (bot, messageCreate) => {
   server.save()}
 
   prefix = serverData.prefix;
+
+  await Bank(bot, message, serverData).checkEnd();
 
   let args = message.content.slice(prefix.length).trim().split(/ +/g);
   let cmd = args.shift().toLowerCase();
