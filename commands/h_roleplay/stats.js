@@ -5,6 +5,7 @@ const {error, embed, perms, firstUpperCase, makeTimestamp, delay, roundFunc, get
 const {serverFind, rpgFind, addStar, bagFind, rpg, profileFind, profile, powersFind } = require("../../functions/models");
 const {stripIndents} = require("common-tags");
 const powers = require("../../JSON/powers.json");
+const Collections = require("../../JSON/collections.json");
 
 module.exports = {
     config: {
@@ -20,11 +21,28 @@ module.exports = {
         const rp = await rpgFind(user.id);
         const sd = await serverFind(server.id);
         const {stats, hero: h, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${sd.lang}`);
+        let collections = [];
+        if (rp.collections && rp.collections.length !== 0) {
+            collections = rp.collections.map(id => {
+                let a;
+                for (let coll in Collections) {
+                    const c = Collections[coll]
+                    if (c.id === id) a = c;
+                }
+                return a;
+            })
+        }
+        let textedCollections = [];
+        if (collections.length !== 0) textedCollections = collections.map(obj => `${obj[`name${(sd.lang || "ru").toUpperCase()}`]}`);
+
         
         const EMB = new MessageEmbed()
         .setColor(main)
         .setAuthor(user.username, user.displayAvatarURL({dynamic: true}))
         .setDescription(stripIndents`
+        ${sd.lang === "en" ? "My collections:" : "Мои коллецкии:"} [ ${textedCollections.length} ]
+        \`${textedCollections.length === 0 ? `—` : textedCollections.join("\n")}\`
+
         <:monsterboss:887750235646996570> ${h.journey}: ${rp.surviveLevel}
 
         <a:herodann:883382573231923201> ${stats.trial} ${rp.trialMax || 0}

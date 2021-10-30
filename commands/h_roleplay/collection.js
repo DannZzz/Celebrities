@@ -9,7 +9,7 @@ module.exports = {
   config: {
     name: "collection",
     category: "h_roleplay",
-    aliases: ["коллекция"]
+    aliases: ["collections", "коллекции", "коллецкия"]
   },
   run: async (bot, msg, args, ops) => {
 
