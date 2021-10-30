@@ -40,7 +40,7 @@ module.exports = {
         .setColor(main)
         .setAuthor(user.username, user.displayAvatarURL({dynamic: true}))
         .setDescription(stripIndents`
-        ${sd.lang === "en" ? "My collections:" : "Мои коллецкии:"} [ ${textedCollections.length} ]
+        ${sd.lang === "en" ? "My collections:" : "Мои коллекции:"} [ ${textedCollections.length} ]
         \`${textedCollections.length === 0 ? `—` : textedCollections.join("\n")}\`
 
         <:monsterboss:887750235646996570> ${h.journey}: ${rp.surviveLevel}
