@@ -11,7 +11,7 @@ module.exports = {
     name: "captcha",
     category: "h_roleplay",
     aliases: ["капча"],
-    cooldown: 5
+    cooldown: 60
   },
   run: async (bot, msg, args, ops) => {
     const server = msg.guild;
@@ -26,17 +26,18 @@ module.exports = {
     let captchaObj = async () => {
         const c = new Captcha();
         c.async = true;
+        c.drawCaptcha({"characters": 10, });
         c.addDecoy();
         c.drawTrace();
-        c.drawCaptcha();
+        
         return c;
     }
-    let reward = 500;
+    let reward = 150;
 
     const bag = await bagFind(user.id);
     if (bag.vip2) {
-        reward = 1000;
-    } else if (bag.vip1) reward = 750;
+        reward = 400;
+    } else if (bag.vip1) reward = 250;
     
     let captcha = await captchaObj();
 
