@@ -57,6 +57,14 @@ module.exports = {
 
 
 
+    "captcha": {
+        "desc": "Решить капчу и получать золото.",
+        "usage": "",
+        "access": "Для всех",
+    },
+
+
+
     "bank": {
         "desc": "Вложить деньги и получить больше.",
         "usage": "[invest | card]",

@@ -57,6 +57,14 @@ module.exports = {
 
 
 
+    "captcha": {
+        "desc": "Solve the captcha and get gold.",
+        "usage": "",
+        "access": "For everyone",
+    },
+
+
+
     "bank": {
         "desc": "Invest money and get more.",
         "usage": "[invest | card]",
