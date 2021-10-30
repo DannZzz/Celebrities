@@ -173,7 +173,7 @@ module.exports = {
                 const bodenew = newdata2.bodeGalaxy || 0; 
                 if (bodenew <= 0) return i.followUp({embeds: [errEmb.setDescription(l === "ru" ? "Вы не имеете этот предмет." : 'You don\'t have this item.')], ephemeral: true});
                 await mail.updateOne({userID: user.id}, {$inc: {bodeGalaxy: -1}});
-                const string1 = await bodeData.reward.generateReward(bot, msg);
+                const string1 = await bodeData.reward.generateReward(bot, msg, false, user.id);
                 i.followUp({embeds: [winEmb.setTitle(l === "ru" ? "Вам выпало:" : "You got:").setDescription(string1)], ephemeral: true});
                 break;
             case mbutton.customId:
@@ -220,7 +220,7 @@ module.exports = {
                     await pagination(i, arr, [button1, button2], 30000, [user.id]);
                     
                 } else {
-                    return msg.channel.send({embeds: [msgEmbed.setDescription(mapped.join("\n\n"))]});
+                    return i.followUp({embeds: [msgEmbed.setDescription(mapped.join("\n\n"))], ephemeral: true});
                 }
 
         };
