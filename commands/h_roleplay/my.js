@@ -1,4 +1,5 @@
 const heroes = require('../../JSON/heroes.json');
+const elements = require('../../JSON/elements.json');
 const { main } = require('../../JSON/colours.json');
 const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
@@ -26,7 +27,7 @@ module.exports = {
     
     const rp = await rpg.findOne({userID: message.author.id});
     if (!rp || rp.heroes.length === 0) return error(message, hm.noHero)
-
+    
     // if ((rp.heroes && rp.heroes.length === 0 && rp.item !== rp.heroes[0]["name"]) && rp.item !== null) {
     //     await rp.heroes.push({
     //             name: rp.item,
@@ -39,10 +40,11 @@ module.exports = {
     
     const item = rp.heroes[0]
     const h = heroes[item.name];
+    let textedElements = h.elements.map(el => elements[el].emoji).join(" ")
     const hero = new MessageEmbed()
     .setThumbnail(h.url)
     .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
-    .setTitle(`${h.name} (${h.nameRus})\n ${FORCE} ${hm.force} ${forceGenerator(item.health, item.level, item.damage)}`)
+    .setTitle(`${h.name} (${h.nameRus})\n ${FORCE} ${hm.force} ${forceGenerator(item.health, item.level, item.damage)}\n${LANG.lang === "en" ? "Elements:" : "Стихия:"} ${textedElements}`)
     .setDescription(h.description)
     .setColor(main)
     .addField(`💯 ${hm.level} ${item.level}\n❤ ${hm.health} ${formatNumber(item.health)}\n⚔ ${hm.damage} ${formatNumber(item.damage)}`, `** **`)
@@ -53,10 +55,11 @@ module.exports = {
     } else {
       let arr = rp.heroes.map((i) => {
         const h1 = heroes[i.name];
+        textedElements = h1.elements.map(el => elements[el].emoji).join(" ")
         return new MessageEmbed()
         .setThumbnail(h1.url)
         .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
-        .setTitle(`${heroType[h1.type]} ${h1.name} (${h1.nameRus})\n ${FORCE} ${hm.force} ${forceGenerator(i.health, i.level, i.damage)}`)
+        .setTitle(`${heroType[h1.type]} ${h1.name} (${h1.nameRus})\n ${FORCE} ${hm.force} ${forceGenerator(i.health, i.level, i.damage)}\n${LANG.lang === "en" ? "Elements:" : "Стихия:"} ${textedElements}`)
         .setDescription(h1.description)
         .setColor(main)
         .addField(`💯 ${hm.level} ${i.level}\n❤ ${hm.health} ${formatNumber(i.health)}\n⚔ ${hm.damage} ${formatNumber(i.damage)}`, `** **`)

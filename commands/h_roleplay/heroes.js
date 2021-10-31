@@ -1,5 +1,6 @@
 const heroes = require('../../JSON/heroes.json');
 const { main, reddark } = require('../../JSON/colours.json');
+const elements = require('../../JSON/elements.json');
 const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
 const { COIN, STAR, LEFT, RIGHT, DLEFT, FORCE, DRIGHT, CANCEL, heroType, CRYSTAL } = require("../../config");
 const { error, paginationBig, forceGenerator, formatNumber } = require("../../functions/functions");
@@ -88,10 +89,12 @@ module.exports = {
           let ccost = `${cCost(obj.cost, obj)} ${cType(obj.costType)}`;
           if (!isNaN(obj.cost) && obj.cost <= 0) ccost = LANG.lang === "ru" ? "Бесплатно" : "Free";
 
+          let textedElements = obj.elements.map(el => elements[el].emoji).join(" ")
+
           newdr.push(
             new MessageEmbed()
               .setColor(main)
-              .setTitle(`${heroType[obj.type]} ${obj.name} (${obj.nameRus}) ${cMar(obj.marry)} ${cVip(obj.vip)}\n${FORCE} ${hm.force} ${forceGenerator(obj.health, obj.damage, 1)}`)
+              .setTitle(`${heroType[obj.type]} ${obj.name} (${obj.nameRus}) ${cMar(obj.marry)} ${cVip(obj.vip)}\n${FORCE} ${hm.force} ${forceGenerator(obj.health, obj.damage, 1)}\n${LANG.lang === "en" ? "Elements:" : "Стихия:"} ${textedElements}`)
               .setThumbnail(obj.url)
               .setDescription(`${level ? `**${level}**\n\n` : ""}` + (LANG.lang === "en" ? obj.descriptionEN : obj.description))
               .addField(`${hh.cost} ${ccost}`, `**${hh.avail} ${cAv(obj.available)}**`, true)

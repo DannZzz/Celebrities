@@ -1,5 +1,6 @@
 const heroes = require('../../JSON/heroes.json');
 const { main } = require('../../JSON/colours.json');
+const elements = require('../../JSON/elements.json');
 const {rpgFind, serverFind} = require("../../functions/models");
 const {heroType, FORCE} = require("../../config");
 const { MessageEmbed, MessageAttachment } = require("discord.js");
@@ -33,10 +34,11 @@ module.exports = {
     const item = heroes[rp.item];
 
     const att = new MessageAttachment(item.path, `${item.name}.png`)
+    let textedElements = item.elements.map(el => elements[el].emoji).join(" ")
     
     let myHero = new MessageEmbed()
     .setAuthor(`${user.user.tag}`)
-    .setTitle(`${heroType[item.type]} ${item.name} (${item.nameRus})\n${hm.level} ${get.level}\n ${FORCE} ${hm.force} ${forceGenerator(get.health, get.level, get.damage)}`)
+    .setTitle(`${heroType[item.type]} ${item.name} (${item.nameRus})\n${hm.level} ${get.level}\n ${FORCE} ${hm.force} ${forceGenerator(get.health, get.level, get.damage)}\n${LANG.lang === "en" ? "Elements:" : "Стихия:"} ${textedElements}`)
     .setDescription(LANG.lang === "ru" ? item.description : item.descriptionEN)
     .setThumbnail(`attachment://${item.name}.png`)
     .addField(`❤ ${hm.health}`, `${formatNumber(get.health)}`, true)
