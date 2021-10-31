@@ -13,7 +13,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 65,
-    "type": "common"
+    "type": "common",
+    "elements": ["water"]
   },
   "Dilan": {
     "name": "Dilan",
@@ -29,7 +30,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 80,
-    "type": "common"
+    "type": "common",
+    "elements": ["fire"]
   },
   "Darius": {
     "name": "Darius",
@@ -45,7 +47,8 @@
     "available": "Под",
     "vip": false,
     "upgradeCost": 100,
-    "type": "private"
+    "type": "private",
+    "elements": ["legendary", "gold"]
   },
   "Selena": {
     "name": "Selena",
@@ -61,7 +64,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 120,
-    "type": "common"
+    "type": "common",
+    "elements": ["magic", "fire"]
   },
   "Cthulhu": {
     "name": "Cthulhu",
@@ -77,7 +81,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 140,
-    "type": "elite"
+    "type": "elite",
+    "elements": ["water", "nature"]
   },
   "Zeus": {
     "name": "Zeus",
@@ -93,7 +98,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 95,
-    "type": "private"
+    "type": "private",
+    "elements": ["legendary", "light"]
   },
   "Perfect-duo": {
     "name": "Perfect-Duo",
@@ -109,7 +115,8 @@
     "available": "Да",
     "vip": true,
     "upgradeCost": 130,
-    "type": "elite"
+    "type": "elite",
+    "elements": ["nature", "magic"]
   },
   "Eragon": {
     "name": "Eragon",
@@ -126,7 +133,8 @@
     "vip": true,
     "marry": true,
     "upgradeCost": 400,
-    "type": "mythical"
+    "type": "mythical",
+    "elements": ["legendary", "magic"]
   },
   "Ariel": {
     "name": "Ariel",
@@ -142,7 +150,8 @@
     "available": "Да",
     "vip": true,
     "upgradeCost": 140,
-    "type": "furious"
+    "type": "furious",
+    "elements": ["nature"]
   },
   "Archangel": {
     "name": "Archangel",
@@ -158,7 +167,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 45,
-    "type": "common"
+    "type": "common",
+    "elements": ["light"]
   },
   "Darkangel": {
     "name": "Darkangel",
@@ -174,7 +184,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 200,
-    "type": "furious"
+    "type": "furious",
+    "elements": ["magic", "fire"]
   },
   "Kumbhakarna": {
     "name": "Kumbhakarna",
@@ -190,7 +201,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 65,
-    "type": "elite"
+    "type": "elite",
+    "elements": ["fire", "nature"]
   },
   "Atalanta": {
     "name": "Atalanta",
@@ -206,7 +218,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 300,
-    "type": "elite"
+    "type": "elite",
+    "elements": ["light", "magic"]
   },
   "Athena": {
     "name": "Athena",
@@ -222,7 +235,8 @@
     "available": "Да",
     "vip": true,
     "upgradeCost": 450,
-    "type": "furious"
+    "type": "furious",
+    "elements": ["magic", "light"]
   },
   "Blazer": {
     "name": "Blazer",
@@ -238,7 +252,8 @@
     "available": "Да",
     "vip": true,
     "upgradeCost": 550,
-    "type": "furious"
+    "type": "furious",
+    "elements": ["fire", "fire"]
   },
   "Snake-woman": {
     "name": "Snake-woman",
@@ -254,7 +269,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 60,
-    "type": "common"
+    "type": "common",
+    "elements": ["nature", "magic"]
   },
   "Mistress-forest": {
     "name": "Mistress-forest",
@@ -270,7 +286,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 55,
-    "type": "common"
+    "type": "common",
+    "elements": ["nature", "nature"]
   },
   "Hunter": {
     "name": "Hunter",
@@ -286,7 +303,8 @@
     "available": "Да",
     "vip": true,
     "upgradeCost": 500,
-    "type": "mythical"
+    "type": "mythical",
+    "elements": ["magic", "nature"]
   },
   "Broken": {
     "name": "Broken",
@@ -302,7 +320,8 @@
     "available": "Под",
     "vip": false,
     "upgradeCost": 300,
-    "type": "private"
+    "type": "private",
+    "elements": ["legendary", "fire"]
   },
   "Horus": {
     "name": "Horus",
@@ -318,7 +337,8 @@
     "available": "Под",
     "vip": false,
     "upgradeCost": 75,
-    "type": "elite"
+    "type": "elite",
+    "elements": ["gold", "magic"]
   },
   "Thoth-amon": {
     "name": "Thoth-amon",
@@ -334,7 +354,8 @@
     "available": "Под",
     "vip": false,
     "upgradeCost": 105,
-    "type": "elite"
+    "type": "elite",
+    "elements": ["gold", "magic"]
   },
   "Anubis": {
     "name": "Anubis",
@@ -350,7 +371,8 @@
     "available": "Под",
     "vip": false,
     "upgradeCost": 350,
-    "type": "furious"
+    "type": "furious",
+    "elements": ["gold", "magic"]
   },
   "Sebek": {
     "name": "Sebek",
@@ -366,7 +388,8 @@
     "available": "Под",
     "vip": false,
     "upgradeCost": 405,
-    "type": "furious"
+    "type": "furious",
+    "elements": ["gold", "magic"]
   },
   "Hathor": {
     "name": "Hathor",
@@ -382,7 +405,8 @@
     "available": "Под",
     "vip": true,
     "upgradeCost": 600,
-    "type": "mythical"
+    "type": "mythical",
+    "elements": ["gold", "magic"]
   },
   "Supernatural-ramses": {
     "name": "Supernatural-ramses",
@@ -398,7 +422,8 @@
     "available": "Под",
     "vip": true,
     "upgradeCost": 750,
-    "type": "mythical"
+    "type": "mythical",
+    "elements": ["gold", "magic"]
   },
   "Zero": {
     "name": "Zero",
@@ -414,7 +439,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 1500,
-    "type": "mythical"
+    "type": "mythical",
+    "elements": ["magic", "light"]
   },
   "Toothless": {
     "name": "Toothless",
@@ -430,7 +456,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 1000,
-    "type": "private"
+    "type": "private",
+    "elements": ["magic", "magic"]
   },
   "X": {
     "name": "X",
@@ -446,7 +473,8 @@
     "available": "Да",
     "vip": true,
     "upgradeCost": 1800,
-    "type": "mythical"
+    "type": "mythical",
+    "elements": ["light", "magic"]
   },
   "Ancalgon": {
     "name": "Ancalgon",
@@ -462,7 +490,8 @@
     "available": "Да",
     "vip": true,
     "upgradeCost": 3000,
-    "type": "mythical"
+    "type": "mythical",
+    "elements": ["magic", "fire"]
   },
   "Tartarus": {
     "name": "Tartarus",
@@ -478,7 +507,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 1000,
-    "type": "private"
+    "type": "private",
+    "elements": ["light", "magic"]
   },
   "Hookfang": {
     "name": "Hookfang",
@@ -494,7 +524,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 600,
-    "type": "furious"
+    "type": "furious",
+    "elements": ["fire", "nature"]
   },
   "Koko": {
     "name": "Koko",
@@ -510,7 +541,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 200,
-    "type": "elite"
+    "type": "elite",
+    "elements": ["water", "water"]
   },
   "Dido": {
     "name": "Dido",
@@ -526,7 +558,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 540,
-    "type": "furious"
+    "type": "furious",
+    "elements": ["magic", "water"]
   },
   "Light": {
     "name": "Light",
@@ -542,7 +575,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 2000,
-    "type": "mythical"
+    "type": "mythical",
+    "elements": ["light", "magic"]
   },
   "Tyrus": {
     "name": "Tyrus",
@@ -558,7 +592,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 1000,
-    "type": "mythical"
+    "type": "mythical",
+    "elements": ["legendary", "nature"]
   },
   "Girl": {
     "name": "Girl",
@@ -575,7 +610,8 @@
     "vip": false,
     "upgradeCost": 1000,
     "type": "private",
-    "subLevel": 2
+    "subLevel": 2,
+    "elements": ["legendary", "magic"]
   },
   "Shadow": {
     "name": "Shadow",
@@ -592,7 +628,8 @@
     "vip": false,
     "upgradeCost": 1000,
     "type": "private",
-    "subLevel": 2
+    "subLevel": 2,
+    "elements": ["legendary", "magic"]
   },
   "Clarity": {
     "name": "Clarity",
@@ -609,7 +646,8 @@
     "vip": false,
     "upgradeCost": 1000,
     "type": "private",
-    "subLevel": 3
+    "subLevel": 3,
+    "elements": ["legendary", "light"]
   },
   "Red": {
     "name": "Red",
@@ -626,7 +664,8 @@
     "vip": false,
     "upgradeCost": 700,
     "type": "private",
-    "subLevel": 1
+    "subLevel": 1,
+    "elements": ["fire", "magic"]
   },
   "Alfonso": {
     "name": "Alfonso",
@@ -642,7 +681,8 @@
     "available": "loc",
     "vip": false,
     "upgradeCost": 833,
-    "type": "private"
+    "type": "private",
+    "elements": ["magic", "gold"]
   },
   "Gigantes": {
     "name": "Gigantes",
@@ -658,7 +698,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 1050,
-    "type": "private"
+    "type": "private",
+    "elements": ["legendary", "gold"]
   },
   "Dranna": {
     "name": "Dranna",
@@ -674,7 +715,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 655,
-    "type": "furious"
+    "type": "furious",
+    "elements": ["water", "magic"]
   },
   "Kindness": {
     "name": "Kindness",
@@ -690,7 +732,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 700,
-    "type": "furious"
+    "type": "furious",
+    "elements": ["magic", "light"]
   },
   "Merlin": {
     "name": "Merlin",
@@ -706,7 +749,8 @@
     "available": "Да",
     "vip": true,
     "upgradeCost": 756,
-    "type": "furious"
+    "type": "furious",
+    "elements": ["water", "fire"]
   },
   "Lyric": {
     "name": "Lyric",
@@ -722,7 +766,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 3333,
-    "type": "mythical"
+    "type": "mythical",
+    "elements": ["magic", "light"]
   },
   "Muratova": {
     "name": "Muratova",
@@ -738,7 +783,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 1000,
-    "type": "private"
+    "type": "private",
+    "elements": ["legendary", "light"]
   },
   "Centurion": {
     "name": "Centurion",
@@ -754,7 +800,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 963,
-    "type": "mythical"
+    "type": "mythical",
+    "elements": ["fire", "nature"]
   },
   "Mummy": {
     "name": "Mummy",
@@ -770,7 +817,8 @@
     "available": "пак",
     "vip": false,
     "upgradeCost": 230,
-    "type": "elite"
+    "type": "elite",
+    "elements": ["magic", "fire"]
   },
   "Plague-doctor": {
     "name": "Plague-doctor",
@@ -786,7 +834,8 @@
     "available": "пак",
     "vip": false,
     "upgradeCost": 450,
-    "type": "furious"
+    "type": "furious",
+    "elements": ["magic", "magic"]
   },
   "Secret": {
     "name": "Secret",
@@ -802,7 +851,8 @@
     "available": "пак",
     "vip": false,
     "upgradeCost": 555,
-    "type": "furious"
+    "type": "furious",
+    "elements": ["magic", "nature"]
   },
   "Witch": {
     "name": "Witch",
@@ -818,7 +868,8 @@
     "available": "пак",
     "vip": false,
     "upgradeCost": 855,
-    "type": "mythical"
+    "type": "mythical",
+    "elements": ["magic", "gold"]
   },
   "Horseman": {
     "name": "Horseman",
@@ -834,7 +885,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 1000,
-    "type": "private"
+    "type": "private",
+    "elements": ["legendary", "fire"]
   },
   "Muratov": {
     "name": "Muratov",
@@ -850,7 +902,8 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 1200,
-    "type": "mythical"
+    "type": "mythical",
+    "elements": ["light"]
   },
   "Golden": {
     "name": "Golden",
@@ -866,6 +919,7 @@
     "available": "Под",
     "vip": false,
     "upgradeCost": 1000,
-    "type": "private"
+    "type": "private",
+    "elements": ["legendary", "gold"]
   }
 }

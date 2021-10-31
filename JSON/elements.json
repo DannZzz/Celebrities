@@ -1,0 +1,30 @@
+{
+    "water": {
+        "id": "water",
+        "emoji": "<:water:904432950223974452>"
+    },
+    "fire": {
+        "id": "fire",
+        "emoji": "<:fire1:904432949921988689>" 
+    },
+    "nature": {
+        "id": "nature",
+        "emoji": "<:nature:904432950299467776>" 
+    },
+    "light": {
+        "id": "light",
+        "emoji": "<:lighting:904432949892620289>"
+    },
+    "gold": {
+        "id": "gold",
+        "emoji": "<:gold:904432950265917460>"
+    },
+    "magic": {
+        "id": "magic",
+        "emoji": "<:magic:904432950421110884>"
+    },
+    "legendary": {
+        "id": "legendary",
+        "emoji": "<:legendary:904432949162823682>"
+    }
+}

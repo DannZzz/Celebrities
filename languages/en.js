@@ -57,6 +57,30 @@ module.exports = {
 
 
 
+    "breeding": {
+        "desc": "Breed the heroes.",
+        "usage": "[first hero] [second hero]",
+        "access": "For everyone",
+    },
+
+
+
+    "collect": {
+        "desc": "Collect the hero.",
+        "usage": "[breeding number]",
+        "access": "For everyone",
+    },
+
+
+
+    "throw": {
+        "desc": "Throw the hero.",
+        "usage": "[breeding number]",
+        "access": "For everyone",
+    },
+
+
+
     "captcha": {
         "desc": "Solve the captcha and get gold.",
         "usage": "",
