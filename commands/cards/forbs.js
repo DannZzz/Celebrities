@@ -12,7 +12,7 @@ module.exports = {
     },
     run: async (bot, msg, args, ops) => {
         const data = await bag.find().sort([['stars', 'descending']]).exec();
-        const blackList = ["873237782825422968"];
+        const blackList = [];
 
         const LANG = await serverFind(msg.guild.id)
         
