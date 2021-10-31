@@ -32,6 +32,7 @@ module.exports = {
     const user = message.author;
     await EVENT(user.id).checkDocument();
     ops.cards.set(user.id, { Card: "on" });
+    
     const getTime = ops.buy2.get(user.id);
     setTimeout(() => ops.buy2.delete(user.id), 35000);
 
@@ -160,6 +161,7 @@ module.exports = {
             });
 
             lastCollector.on("end", () => {
+              ops.cards.delete(user.id);
               if (!bool3) {
                 ops.buy2.delete(user.id);
                 newMsg.delete();
@@ -174,6 +176,7 @@ module.exports = {
           if (!bool2) {
             ops.buy2.delete(user.id);
             req.delete();
+            ops.cards.delete(user.id);
             return error(message, cc.timeOut)
           }
         })
@@ -182,6 +185,7 @@ module.exports = {
 
       collector.on("end", () => {
         if (!bool) {
+          ops.cards.delete(user.id);
           ops.buy2.delete(user.id);
 
           first.delete();
@@ -205,12 +209,13 @@ module.exports = {
 
       await addCrystal(user.id, -(Math.round(numb/one)));
       await addCandy(user.id, numb);
-
+      ops.cards.delete(user.id);
       return embed(message, b.event(numb, Math.round(numb/one), HELL.candy, CRYSTAL));
     }
     
     const slots = ["slot", "place", "слот", "место"];
     if (slots.includes(args[0].toLowerCase())) {
+      ops.cards.delete(user.id);
       if ((bag["vip2"] && rp.itemCount !== 20) || (!bag["vip2"] && rp.itemCount !== 10)) {
         if (bag.stars >= 2000 * (rp.itemCount || 1)) {
           await bd.updateOne({ userID: message.author.id }, { $inc: { stars: -(2000 * (rp.itemCount || 1)) } })
@@ -228,6 +233,7 @@ module.exports = {
 
 
     if (heros.includes(args[0].toLowerCase())) {
+      ops.cards.delete(user.id);
       const curr = ops.buying.get(message.author.id);
       if (curr) return
       ops.buying.set(message.author.id, { action: "buying" });
