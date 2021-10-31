@@ -65,7 +65,7 @@ module.exports = {
     await EVENT(member.id).checkDocument();
     const event = await eventFind(member.id);
   
-    embed.addField(`${p.status} ${vip}\n${p.subs} ${getSub(bot, member.id, LANG.lang)}`, `${STAR} ${formatNumber(Math.round(data.stars)) || Math.round(data.stars)} ${znacok}\n${CRYSTAL} ${formatNumber(Math.round(data.crystal || 0))}\n${HELL.candy} ${formatNumber(Math.round(event.candy || 0))}\n${await Rate(message).rateData(trophy)}\n${p.quiz} ${rp.quizCount}\n${CL}\n${p.gg} ${marData}\n<:heroes:886967552310407219> : ${rp.itemCount || 1}\n\n`)
+    embed.addField(`${p.status} ${vip}\n${p.subs} ${getSub(bot, member.id, LANG.lang)}`, `${STAR} ${formatNumber(Math.round(data.stars)) || Math.round(data.stars)} ${znachok}\n${CRYSTAL} ${formatNumber(Math.round(data.crystal || 0))}\n${HELL.candy} ${formatNumber(Math.round(event.candy || 0))}\n${await Rate(message).rateData(trophy)}\n${p.quiz} ${rp.quizCount}\n${CL}\n${p.gg} ${marData}\n<:heroes:886967552310407219> : ${rp.itemCount || 1}\n\n`)
     embed.addField(`__${p.fishes}__\n`,
       `\`\`\`${p.junk}(🔧) - ${data.junk}\n${p.common}(🐟) - ${data.common}\n${p.unc}(🐠) - ${data.uncommon}\n${p.rare}(🦑) - ${data.rare}\n${p.leg}(🐋) - ${data.legendary}\`\`\`\n`, true)
 
