@@ -10,7 +10,8 @@ module.exports = {
   config: {
     name: "skip",
     category: "h_roleplay",
-    aliases: ["пропустить"]
+    aliases: ["пропустить"],
+    cooldown: 16
   },
   run: async (bot, msg, args, ops) => {
 
