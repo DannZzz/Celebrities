@@ -88,7 +88,7 @@ class breedingClass {
         data.breeding.splice(index, 1)
         await data.save();
 
-        return embed(this.msg, this.sd.lang === "en" ? `You threw hero: __${hero.name}__` : `Вы получили героя: __${hero.nameRus}__`);
+        return embed(this.msg, this.sd.lang === "en" ? `You threw hero: __${hero.name}__` : `Вы бросили героя: __${hero.nameRus}__`);
     };
 
 
