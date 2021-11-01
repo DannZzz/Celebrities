@@ -457,7 +457,7 @@
     "vip": false,
     "upgradeCost": 1000,
     "type": "private",
-    "elements": ["magic", "magic"]
+    "elements": ["legendary", "magic"]
   },
   "X": {
     "name": "X",
@@ -508,7 +508,7 @@
     "vip": false,
     "upgradeCost": 1000,
     "type": "private",
-    "elements": ["light", "magic"]
+    "elements": ["legendary", "light"]
   },
   "Hookfang": {
     "name": "Hookfang",
