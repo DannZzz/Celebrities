@@ -57,6 +57,14 @@ module.exports = {
 
 
 
+    "vote": {
+        "desc": "Vote for bot.",
+        "usage": "",
+        "access": "For everyone",
+    },
+
+
+
     "breeding": {
         "desc": "Breed the heroes.",
         "usage": "[first hero] [second hero]",
