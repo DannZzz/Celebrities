@@ -73,6 +73,14 @@ module.exports = {
 
 
 
+    "skip": {
+        "desc": "Skip the breeding.",
+        "usage": "",
+        "access": "For everyone",
+    },
+
+
+
     "throw": {
         "desc": "Throw the hero.",
         "usage": "[breeding number]",

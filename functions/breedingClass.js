@@ -1,9 +1,9 @@
-const { bank, bankFind, rpg, profile, profileFind, cardFind, bagFind, serverFind, card: cd, addStar, rpgFind, addPremiumStar, addCandy } = require("./models");
+const { bank, bankFind, rpg, profile, profileFind, cardFind, bagFind, serverFind, card: cd, addStar, rpgFind, addPremiumStar, addCandy, addCrystal } = require("./models");
 const { error, embed, firstUpperCase, randomRange, delay, sendToMail, pagination, getMember, getHeroData, makeTimestamp, formatNumber } = require("./functions");
 const heroes = require("../JSON/heroes.json");
 const elements = require("../JSON/elements.json");
 const { none, main } = require("../JSON/colours.json");
-const { AGREE, DISAGREE, STAR, LEFT, RIGHT, heroNames, LEAGUE, HELL, LOADING } = require("../config");
+const { AGREE, DISAGREE, STAR, LEFT, RIGHT, heroNames, LEAGUE, HELL, LOADING, CRYSTAL } = require("../config");
 const { stripIndents } = require("common-tags");
 const Rate = require("./rateClass");
 const { MessageEmbed, MessageActionRow, MessageSelectMenu, MessageCollector, MessageButton, MessageAttachment } = require("discord.js");
@@ -89,6 +89,72 @@ class breedingClass {
         await data.save();
 
         return embed(this.msg, this.sd.lang === "en" ? `You threw hero: __${hero.name}__` : `Вы получили героя: __${hero.nameRus}__`);
+    };
+
+
+    async skip() {
+        const data = await rpgFind(this.id);
+
+        if (!data.breeding || data.breeding.length === 0) return error(this.msg, this.sd.lang === "en" ? "You don't have any breedings!" : "У тебя нет никаких разведений!");
+        
+        const emb = new MessageEmbed()
+        .setColor(main)
+        .setAuthor(this.user.tag, this.user.displayAvatarURL({dynamic: true}))
+        .setTitle(this.sd.lang === "en" ? "Write number of breeding!" : "Напишите номер скрещиваний!")
+        
+        data.breeding.forEach((obj, pos) => {
+            if (obj.date > new Date()) {
+                const expire = obj.date - new Date();
+                const minutes = Math.round(expire / (60 * 1000) );
+                let count = Math.ceil(minutes / 20);
+                if (count <= 1) count = 1;
+                const cost = Math.round(count * 1);
+                const name = this.sd.lang === "en" ? `${pos+1}. Ends <t:${makeTimestamp(obj.date.getTime())}:R> - ${cost} ${CRYSTAL}` : `${pos+1}. Закончится <t:${makeTimestamp(obj.date.getTime())}:R> - ${cost} ${CRYSTAL}`;
+                const value = this.sd.lang === "en" ? `Heroes: \`${obj.first}, ${obj.second}\`` : `Герои: \`${heroes[obj.first].nameRus}, ${heroes[obj.second].nameRus}\``
+                emb.addField(name, value);
+            } else {
+                const name = this.sd.lang === "en" ? `${pos+1}. Ended` : `${pos+1}. Закончился`;
+                const value = this.sd.lang === "en" ? `Heroes: \`${obj.first}, ${obj.second}\`` : `Герои: \`${heroes[obj.first].nameRus}, ${heroes[obj.second].nameRus}\``
+                emb.addField(name, value);
+            }
+        });
+
+        const m1 = await this.msg.reply({embeds: [emb]});
+
+        const c = await this.channel.createMessageCollector({
+            filter: m => m.author.id === this.id,
+            time: 15000
+        });
+        let bool = false;
+        c.on("collect", async message => {
+            const m = Math.round(message.content);
+            const newData = await rpgFind(this.id);
+            if (!isNaN(m) && m <= newData.breeding.length && m > 0) {
+                const index = m - 1;
+                bool = true;
+                c.stop();
+                if (newData.breeding[index]["date"] < new Date()) return error(this.msg, this.sd.lang === "en" ? "This breeding is ended." : "Этот скрещивание закончилось.");
+                const obj = newData.breeding[index];
+                const expire = obj.date - new Date();
+                const minutes = Math.round(expire / (60 * 1000) );
+                let count = Math.ceil(minutes / 20);
+                if (count <= 1) count = 1;
+                const cost = Math.round(count * 1);
+                const bag = await bagFind(this.id);
+                if (bag.crystal < cost) return error(this.msg, require(`../languages/${this.sd.lang || "ru"}`).noCrystal);
+                await rpg.updateOne({userID: this.id}, {$set: {[`breeding.${index}.date`]: new Date()}});
+                await addCrystal(this.id, -cost);
+                return this.msg.react(AGREE);
+            }
+        });
+
+        c.on("end", () => {
+            m1.delete();
+            if (!bool) return error(this.msg, require(`../languages/${this.sd.lang || "ru"}`).timeOut);
+        })
+
+
+        
     }
 
     async addBreeding (hero1, hero2) {
