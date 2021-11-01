@@ -24,6 +24,7 @@ module.exports = {
             return error(msg, `${sd.lang === "en" ? "Specify heroes!" : "Укажите героев!"}\n\n\`${sd.prefix || "a!"}${sd.usage}\``);
         } else {
             const data = await rpgFind(user.id);
+            if (args[0].toLowerCase() === args[1].toLowerCase()) return error(msg, `${sd.lang === "en" ? "Specify other heroes!" : "Укажите других героев!"}`);
             const get1 = data.heroes.find(x => x.name === firstUpperCase(args[0].toLowerCase()));
             const get2 = data.heroes.find(x => x.name === firstUpperCase(args[1].toLowerCase()));
             if (!get1 || !get2) return error(msg, `${sd.lang === "en" ? "Specify heroes!" : "Укажите героев!"}\n\n\`${sd.prefix || "a!"}${sd.usage}\``);
