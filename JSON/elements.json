@@ -1,30 +1,30 @@
 {
     "water": {
         "id": "water",
-        "emoji": "<:water:904432950223974452>"
+        "emoji": "<:png:904768539649536071>"
     },
     "fire": {
         "id": "fire",
-        "emoji": "<:fire1:904432949921988689>" 
+        "emoji": "<:png:904768538860982362>" 
     },
     "nature": {
         "id": "nature",
-        "emoji": "<:nature:904432950299467776>" 
+        "emoji": "<:png:904768538860982365>" 
     },
     "light": {
         "id": "light",
-        "emoji": "<:lighting:904432949892620289>"
+        "emoji": "<:png:904768539410460674>"
     },
     "gold": {
         "id": "gold",
-        "emoji": "<:gold:904432950265917460>"
+        "emoji": "<:png:904768539691466762>"
     },
     "magic": {
         "id": "magic",
-        "emoji": "<:magic:904432950421110884>"
+        "emoji": "<:png:904768539599175700>"
     },
     "legendary": {
         "id": "legendary",
-        "emoji": "<:legendary:904432949162823682>"
+        "emoji": "<:png:904768539544682526>"
     }
 }
