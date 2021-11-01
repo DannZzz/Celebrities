@@ -183,6 +183,9 @@ class breedingClass {
         const el2 = hero2.elements;
 
         let validHeroes = [];
+        let mainHeroes = [];
+        
+        const arr = manualBreeding();
 
         for (let i in heroes) {
             const heroObj = heroes[i];
@@ -196,13 +199,27 @@ class breedingClass {
                 });
             }  
         };
+
+        validHeroes.forEach(obj => {
+            obj.elements.forEach(o => {
+                if (el1.includes(o) && el2.includes(o) && !mainHeroes.includes(obj)) mainHeroes.push(obj);
+            });
+        })
+        
         const heroTypeTaker = randomRange(0, 100);
         let ht = heroTypeTaker;
         if (el1.length === 1 && el2.length ===1) {
             ht += 9;
         } else if (el1.length === 1 || el2.length ===1) {
             ht += 5;
-        }
+        };
+
+        arr.forEach(obj => {
+            if (obj.need.includes(hero1.name) && obj.need.includes(hero2.name)) {
+                ht -= 15;
+            }
+        })
+        
         let heroType;
         if (ht >= percs.common) {
             heroType = "common";
@@ -216,12 +233,26 @@ class breedingClass {
             heroType = "private";
         };
 
-        let heroTypeHeroes = validHeroes.filter(obj => obj.type === heroType);
+        let heroTypeHeroes = mainHeroes.filter(obj => obj.type === heroType);
+        if (!heroTypeHeroes || heroTypeHeroes.length === 0) {
+            heroTypeHeroes = validHeroes.filter(obj => obj.type === heroType);
+        }
+
         if (!heroTypeHeroes || heroTypeHeroes.length === 0) {
             const r1 = Math.floor(Math.random() * validHeroes.length);
             heroTypeHeroes = [validHeroes[r1]];
         }
 
+        
+        arr.forEach(obj => {
+            if (obj.need.includes(hero1.name) && obj.need.includes(hero2.name)) {
+                obj.reward.forEach(reward => {
+                    const hd = heroes[reward] 
+                    if (heroType === hd.type) heroTypeHeroes = [hd];
+                })
+            }
+        })
+        
         const random = Math.floor(Math.random() * heroTypeHeroes.length);
         const reward = heroTypeHeroes[random];
 
@@ -240,3 +271,33 @@ class breedingClass {
 module.exports = function(bot, msg, sd) {
     return new breedingClass(bot, msg, sd);
 } 
+
+function manualBreeding () {
+    return [
+        {
+            need: ["Muratov", "Muratova"],
+            reward: ["Golden"]
+        },
+        {
+            need: ["Light", "Clarity"],
+            reward: ["Centurion"]
+        },
+        {
+            need: ["Centurion", "Zero"],
+            reward: ["X"]
+        },
+        {
+            need: ["Mummy", "Secret"],
+            reward: ["Witch", "Horseman"]
+        },
+        {
+            need: ["Archangel", "Zeenou"],
+            reward: ["Koko"]
+        },
+        {
+            need: ["Athena", "Ariel"],
+            reward: ["Eragon"]
+        }
+
+    ]
+}
