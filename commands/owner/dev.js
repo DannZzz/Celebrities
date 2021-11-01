@@ -1,5 +1,5 @@
-const {rpg} = require("../../functions/models");
-const F = require("../../functions/functions");
+const {rpg, bag} = require("../../functions/models");
+const {error} = require("../../functions/functions");
 const {STAR, AGREE, DISAGREE, devID, adminID} = require('../../config')
 
 module.exports = {
@@ -9,20 +9,16 @@ module.exports = {
     },
     run: async (bot, msg, args) => {
         if(!devID.includes(msg.author.id)) return;
-        await rpg.updateMany({}, {$unset: {
-            loses: "",
-            spendTask: "",
-            spencAll: "",
-            spendAll: "",
-            tasks: "",
-            task1: "",
-            task2: "",
-            openedPacks: "",
-            tasksCount: "",
-            level: "",
-            health: "",
-            damage: "",
-        }});
-        return msg.react(AGREE);
+
+        if (!args[0] || !args[1] || !isNaN(args[0]) || isNaN(args[1])) return error(msg, "[gold или selendian] <кол-во>");
+        if (args[0].toLowerCase() === "gold") {
+            await bag.updateMany({}, {$inc: {stars: Math.round(args[1])}});
+            return msg.react(AGREE);
+        } else if (args[0].toLowerCase() === "selendian") {
+            await bag.updateMany({}, {$inc: {crystal: Math.round(args[1])}});
+            return msg.react(AGREE);
+        }
+
+    
     }
 }
