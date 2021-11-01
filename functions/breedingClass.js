@@ -93,7 +93,7 @@ class breedingClass {
 
     async addBreeding (hero1, hero2) {
         let data = await rpgFind(this.id);
-        if (data.breeding && data.breeding.length !== 0) return error(this.msg, `${this.sd.lang === "en" ? "Wait for the breeding to end." : "Дождитесь окончания разведения."}`);
+        if (data.breeding && data.breeding.length >= 3) return error(this.msg, `${this.sd.lang === "en" ? "Wait for the breeding to end." : "Дождитесь окончания разведения."}`);
         if (!data.breeding) await rpg.updateOne({userID: this.id}, {$set: {breeding: []}});
         data = await rpgFind(this.id);
         const percs = {
