@@ -481,20 +481,20 @@ module.exports = {
 
 
     "give": {
-        "desc": "Give the hero to the member for the number of golds.",
+        "desc": "Give the hero to the member for the number of selendians.",
         "usage": "[hero name] [mention | ID] [price]",
         "access": "For everyone",
         "specH": "Specify a hero.",
-        "cost": "specify the price.",
+        "cost": "Specify the price.",
         "noHero": "No hero found.",
-        "min": "The minimum amount is __100__.",
+        "min": "The minimum amount is __10__.",
         "not": "You cannot sell this hero.",
         "double": "The price cannot be more than twice.",
         "sure": (trans, cost) => `offers you a __${trans}__ hero for __${cost}__`,
         "find": "Looking for a member...",
         "place": "This member has enough heroes.",
         "already": "This member already has this hero.",
-        "star": "This member does not have that many golds.",
+        "star": "This member does not have that many selendians.",
         "sell": (name, cost) => `You sold the hero: __${name}__ for __${cost}__ (20% tax)`
     },
 
