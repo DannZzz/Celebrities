@@ -33,7 +33,6 @@ module.exports = {
       newData.save()
     }
     rp = await rpg.findOne({userID: user.id})
-    if(rp.heroes.length === rp.itemCount) return error(message, "Участник имеет достаточно героев.")
 
     
     
