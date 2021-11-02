@@ -17,6 +17,7 @@ const lf = require("../models/locationFarm.js");
 const partner = require("../models/partner.js");
 const event = require("../models/event.js");
 const bank = require("../models/bank.js");
+const count = require("../models/count.js");
 
 module.exports = {
     rpg,
@@ -38,6 +39,26 @@ module.exports = {
     partner,
     event,
     bank,
+    count,
+
+    addCount: async (id, cmd) => {
+        let data = await count.findOne({userID: id});
+        if (!data) {
+            const newD = await count.create({userID: id});
+            await newD.save();
+        };
+        data = await count.findOne({userID: id});
+        if (data[cmd] % 10 === 0) await bag.updateOne({userID: id}, {$inc: {crystal: 1}});
+        await count.updateOne({userID: id}, {$inc: {[cmd]: 1}});
+    },
+
+    countFind: async (id) => {
+        const data = await count.findOne({userID: id});
+        if (!data) {
+            return false;
+        };
+        return data;
+    },
 
     bankFind: async (id) => {
         const data = await bank.findOne({userID: id});

@@ -1,4 +1,4 @@
-const { rpg, profile, profileFind, cardFind, bagFind, serverFind, card: cd, addStar, rpgFind, addPremiumStar, addCandy } = require("./models");
+const { rpg, profile, profileFind, cardFind, bagFind, serverFind, card: cd, addStar, rpgFind, addPremiumStar, addCandy, addCount } = require("./models");
 const { error, embed, firstUpperCase, randomRange, delay, sendToMail, pagination, getMember, getHeroData, makeTimestamp } = require("./functions");
 const heroes = require("../JSON/heroes.json");
 const { none, main } = require("../JSON/colours.json");
@@ -104,6 +104,7 @@ class pvpClass {
                 case but1.customId:
                     return error(this.msg, `${member} ${l["declined"]}`);
                 case but2.customId:
+                    await addCount(this.id, "2v2");
                     const data1 = await getHeroData(this.bot, this.id, rp1);
                     const data2 = await getHeroData(this.bot, member.id, rp2);
 
