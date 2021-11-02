@@ -97,7 +97,7 @@ class CollectionClass {
         arr.forEach(async obj => {
             if (obj.rewardType && obj.rewardType === "hero") {
                 const get = myHeroes.find(x => x.name === obj.reward);
-                if (!get && myHeroes.length < rp.itemCount) {
+                if (!get) {
 
                     heroTxt = bool ? `Hero __${obj.reward}__` : `Герой __${heroes[obj.reward].nameRus}__`
                     
