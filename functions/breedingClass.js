@@ -296,6 +296,18 @@ function manualBreeding () {
         {
             need: ["Athena", "Ariel"],
             reward: ["Eragon"]
+        },
+        {
+            need: ["Darkangel", "Selena"],
+            reward: ["Zero"]
+        },
+        {
+            need: ["Zero", "Darkangel"],
+            reward: ["Hella"]
+        },
+        {
+            need: ["Dranna", "Darkangel"],
+            reward: ["Humanoid"]
         }
 
     ]
