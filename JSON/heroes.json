@@ -522,7 +522,7 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 1000,
-    "type": "mythical",
+    "type": "private",
     "elements": ["legendary", "nature"]
   },
   "Girl": {
