@@ -663,7 +663,7 @@
     "available": "Да",
     "vip": false,
     "upgradeCost": 700,
-    "type": "private",
+    "type": "mythical",
     "subLevel": 1,
     "elements": ["fire", "magic"]
   },
@@ -681,7 +681,7 @@
     "available": "loc",
     "vip": false,
     "upgradeCost": 833,
-    "type": "private",
+    "type": "legendary",
     "elements": ["magic", "gold"]
   },
   "Gigantes": {

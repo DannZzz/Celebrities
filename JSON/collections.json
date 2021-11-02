@@ -61,6 +61,7 @@
         "nameRU": "Коллекция Генерала",
         "nameEN": "General's Collection",
         "reward": "Golden",
-        "rewardType": "hero"
+        "rewardType": "hero",
+        "disabled": true
     }
 ]
