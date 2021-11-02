@@ -71,5 +71,13 @@
         "nameEN": "Dark Collection",
         "reward": "Stranger",
         "rewardType": "hero"
+    },
+    {
+        "id": 8,
+        "list": ["Noctum", "Tyrus", "Gigantes", "Lebas", "Underman"],
+        "nameRU": "Коллекция супергероя",
+        "nameEN": "SuperHero Collection",
+        "reward": "Venom",
+        "rewardType": "hero"
     }
 ]
