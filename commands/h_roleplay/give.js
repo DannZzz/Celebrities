@@ -1,7 +1,7 @@
 const heroes = require('../../JSON/heroes.json');
 const { main, reddark } = require('../../JSON/colours.json');
 const { MessageEmbed, MessageAttachment, MessageButton, MessageActionRow } = require("discord.js");
-const { COIN, STAR, AGREE, CRYSTAL } = require("../../config");
+const { COIN, STAR, AGREE, CRYSTAL, DISAGREE } = require("../../config");
 const {error, embed, perms, firstUpperCase, randomRange, makeTimestamp, sendToMail} = require("../../functions/functions");
 const {bagFind, rpgFind, rpg, addStar, profile, profileFind, addCrystal} = require("../../functions/models");
 
