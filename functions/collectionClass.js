@@ -67,7 +67,7 @@ class CollectionClass {
 
         const { heroModel: hm } = require(`../languages/${sd.lang || "ru"}`);
 
-        const rp = await rpgFind(this.id);
+        let rp = await rpgFind(this.id);
 
         const bool = sd.lang === "en";
         
@@ -95,6 +95,7 @@ class CollectionClass {
         if (arr.length === 0) return error(this.msg, bool ? "You haven't collected any new collections!" : "Вы не собрали ни одной новой коллекции!");
         let heroTxt = bool ? "You can't get this collection right now." : "Вы не можете собрать эту коллекцию сейчас.";
         arr.forEach(async obj => {
+            rp = await rpgFind(this.id);
             if (obj.rewardType && obj.rewardType === "hero") {
                 const get = myHeroes.find(x => x.name === obj.reward);
                 if (!get) {
@@ -102,8 +103,6 @@ class CollectionClass {
                     heroTxt = bool ? `Hero __${obj.reward}__` : `Герой __${heroes[obj.reward].nameRus}__`
                     
                     rp.collections.push(obj.id);
-                    await rp.save();
-
                     const herData = heroes[obj.reward];
                     rp.heroes.push({
                         name: obj.reward,

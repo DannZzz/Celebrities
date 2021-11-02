@@ -226,8 +226,8 @@ class breedingClass {
             heroType = "elite";
         } else if (ht >= percs.furious) {
             heroType = "furious";
-        } else if (ht >= percs.mythical) {
-            heroType = "furious";
+        } else if (ht >= percs.mythical || ht < -1) {
+            heroType = "mythical";
         } else if (ht <= percs.private) {
             heroType = "private";
         };
