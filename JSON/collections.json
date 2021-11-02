@@ -63,5 +63,13 @@
         "reward": "Golden",
         "rewardType": "hero",
         "disabled": true
+    },
+    {
+        "id": 7,
+        "list": ["Skeletron", "Humanoid", "Hella", "Zero", "Darkangel"],
+        "nameRU": "Темная коллекция",
+        "nameEN": "Dark Collection",
+        "reward": "Stranger",
+        "rewardType": "hero"
     }
 ]
