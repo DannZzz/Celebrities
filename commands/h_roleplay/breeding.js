@@ -22,13 +22,13 @@ module.exports = {
 
     if (args[0]) {
         if (!args[1]) {
-            return error(msg, `${sd.lang === "en" ? "Specify heroes!" : "Укажите героев!"}\n\n\`${sd.prefix || "a!"}${breeding.usage}\``);
+            return error(msg, `${sd.lang === "en" ? "Specify heroes!" : "Укажите героев!"}\n\n\`${sd.prefix || "a!"}breeding ${breeding.usage}\``);
         } else {
             const data = await rpgFind(user.id);
             if (args[0].toLowerCase() === args[1].toLowerCase()) return error(msg, `${sd.lang === "en" ? "Specify other heroes!" : "Укажите других героев!"}`);
             const get1 = data.heroes.find(x => x.name === firstUpperCase(args[0].toLowerCase()));
             const get2 = data.heroes.find(x => x.name === firstUpperCase(args[1].toLowerCase()));
-            if (!get1 || !get2) return error(msg, `${sd.lang === "en" ? "Specify heroes!" : "Укажите героев!"}\n\n\`${sd.prefix || "a!"}${breeding.usage}\``);
+            if (!get1 || !get2) return error(msg, `${sd.lang === "en" ? "Specify heroes!" : "Укажите героев!"}\n\n\`${sd.prefix || "a!"}breeding ${breeding.usage}\``);
             return await Breeding(bot, msg, sd).addBreeding(heroes[get1.name], heroes[get2.name]);
         }
     }
