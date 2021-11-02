@@ -22,30 +22,32 @@ class CollectionClass {
 
         const { } = require(`../languages/${sd.lang || "ru"}`);
 
-        const texted = Collection.map(obj => {
-            const ruFunction = function () {
-                const getRuNames = obj.list.map((name, pos) => `> ${pos+1}. ${heroes[name]["nameRus"]}`);
-                return stripIndents`**${obj.nameRU}**\n
-                Герои нужны - ${obj.list.length}
-                ${getRuNames.join("\n")}
-                
-                Награда: ${obj.rewardType === "hero" ? `Герой __${heroes[obj.reward].nameRus}__` : `__${obj.reward} ${STAR}__`}`;
-            };
+        const texted = [];
+        Collection.forEach(obj => {
+            if (!obj.disabled) {
+                const ruFunction = function () {
+                    const getRuNames = obj.list.map((name, pos) => `> ${pos+1}. ${heroes[name]["nameRus"]}`);
+                    return stripIndents`**${obj.nameRU}**\n
+                    Герои нужны - ${obj.list.length}
+                    ${getRuNames.join("\n")}
+                    
+                    Награда: ${obj.rewardType === "hero" ? `Герой __${heroes[obj.reward].nameRus}__` : `__${obj.reward} ${STAR}__`}`;
+                };
 
-            const enFunction = function () {
-                const getEnNames = obj.list.map((name, pos) => `> ${pos+1}. ${heroes[name]["name"]}`);
-                return stripIndents`**${obj.nameEN}**\n
-                Need heroes - ${obj.list.length}
-                ${getEnNames.join("\n")}
-                
-                Reward: ${obj.rewardType === "hero" ? `Hero __${heroes[obj.reward].name}__` : `__${obj.reward} ${STAR}__`}`;
-            };
+                const enFunction = function () {
+                    const getEnNames = obj.list.map((name, pos) => `> ${pos+1}. ${heroes[name]["name"]}`);
+                    return stripIndents`**${obj.nameEN}**\n
+                    Need heroes - ${obj.list.length}
+                    ${getEnNames.join("\n")}
+                    
+                    Reward: ${obj.rewardType === "hero" ? `Hero __${heroes[obj.reward].name}__` : `__${obj.reward} ${STAR}__`}`;
+                };
 
-            return new MessageEmbed()
-                .setColor(main)
-                .setThumbnail(this.bot.user.displayAvatarURL({ dynamic: true }))
-                .setDescription(sd.lang === "en" ? enFunction() : ruFunction())
-
+                return texted.push(new MessageEmbed()
+                    .setColor(main)
+                    .setThumbnail(this.bot.user.displayAvatarURL({ dynamic: true }))
+                    .setDescription(sd.lang === "en" ? enFunction() : ruFunction()))
+            }
         });
 
         const button1 = new MessageButton()
@@ -86,7 +88,9 @@ class CollectionClass {
             }; 
         };
 
-        Collection.forEach(object => checking(object));
+        Collection.forEach(object => {
+            if (!object.disabled) checking(object);
+        });
 
         if (arr.length === 0) return error(this.msg, bool ? "You haven't collected any new collections!" : "Вы не собрали ни одной новой коллекции!");
         let heroTxt = bool ? "You can't get this collection right now." : "Вы не можете собрать эту коллекцию сейчас.";
