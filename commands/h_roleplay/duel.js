@@ -8,7 +8,7 @@ const { COIN, LEAGUE } = require("../../config");
 const {error, embed, perms, roundFunc, getHeroData} = require("../../functions/functions");
 const Canvas = require('canvas');
 const Rate = require("../../functions/rateClass");
-const {rpgFind} = require("../../functions/models");
+const {rpgFind, addCount} = require("../../functions/models");
 
 module.exports = {
   config: {
@@ -57,6 +57,9 @@ module.exports = {
     let h2 = await getHeroData (bot, mUser.id, mrp).then(x => x.h);
     let d1 = await getHeroData (bot, user.id, rp).then(x => x.d);
     let d2 = await getHeroData (bot, mUser.id, mrp).then(x => x.d);
+
+    await addCount(mUser.id, "duel")
+    
     let winner;
     let loser;
 

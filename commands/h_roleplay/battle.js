@@ -5,7 +5,7 @@ const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment } = require("discord.js");
 const { COIN, STAR, LEAGUE, HELL, heroNames } = require("../../config");
-const { addCandy, addPremiumStar } = require("../../functions/models");
+const { addCandy, addPremiumStar, addCount } = require("../../functions/models");
 const { error, embed, perms, roundFunc, getHeroData, randomRange } = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 10000);
@@ -73,6 +73,7 @@ module.exports = {
       item = enem[random]
 
       await bd.updateOne({ userID: message.author.id }, { $inc: { stars: -value } });
+      await addCount(message.author.id, "battle");
 
       const data1 = heroes[mItem];
       const data2 = heroes[item];

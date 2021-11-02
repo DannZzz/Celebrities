@@ -7,7 +7,7 @@ const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment } = require("discord.js");
 const { COIN, STAR } = require("../../config");
 const {error, embed, perms, getHeroData} = require("../../functions/functions");
-const { addPremiumStar } = require("../../functions/models");
+const { addPremiumStar, addCount } = require("../../functions/models");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 const Canvas = require('canvas');
@@ -40,6 +40,8 @@ module.exports = {
     const levelRewardAdd = 46;
     const levelReward = levelRewardAdd * nowLevel
     const argsWords = ['info', 'инфо']
+
+    await addCount(user.id, "journey")
 
     const hero = heroes[rp.item];
     let enemy;
