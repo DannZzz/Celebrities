@@ -32,6 +32,7 @@ module.exports = {
     const user = message.author;
     await EVENT(user.id).checkDocument();
     ops.cards.set(user.id, { Card: "on" });
+    const ln = LANG.lang || "ru";
     
     const getTime = ops.buy2.get(user.id);
     setTimeout(() => ops.buy2.delete(user.id), 35000);
@@ -220,108 +221,30 @@ module.exports = {
       if (curr) return
       ops.buying.set(message.author.id, { action: "buying" });
       let bool = false;
-      let bool0 = false;
 
-      const common = new MessageButton()
-        .setCustomId("common")
-        .setStyle("PRIMARY")
-        .setEmoji(heroType.common)
-
-      const elite = new MessageButton()
-        .setCustomId("elite")
-        .setStyle("PRIMARY")
-        .setEmoji(heroType.elite)
-
-      const furious = new MessageButton()
-        .setCustomId("furious")
-        .setStyle("PRIMARY")
-        .setEmoji(heroType.furious)
-
-      const mythical = new MessageButton()
-        .setCustomId("mythical")
-        .setStyle("PRIMARY")
-        .setEmoji(heroType.mythical)
-
-      const private = new MessageButton()
-        .setCustomId("private")
-        .setStyle("PRIMARY")
-        .setEmoji(heroType.private)
-
-      const buttonList = [common, elite, furious, mythical, private];
-
+     
       const msg = message;
-
-      const firstEmbed = new MessageEmbed()
-        .setColor(main)
-        .setAuthor(msg.author.username, msg.author.displayAvatarURL({ dynamic: true }))
-        .setTitle(LANG.lang === "ru" ? "Выберите тип героев" : "Choose hero type")
-        .setDescription(`${heroType.common} : ${hm.common}\n${heroType.elite} : ${hm.elite}\n${heroType.furious} : ${hm.furious}\n${heroType.mythical} : ${hm.mythical}\n${heroType.private} : ${hm.private}`)
-
-      const row = new MessageActionRow().addComponents(buttonList);
-
-      const firstMsg = await msg.channel.send({ embeds: [firstEmbed], components: [row] });
-      const collectorType = await msg.channel.createMessageComponentCollector({
-        filter: i => i.user.id === msg.author.id && (i.customId === common.customId || i.customId === elite.customId || i.customId === furious.customId || i.customId === mythical.customId || i.customId === private.customId),
-        time: 20000
-      })
-
-      const server = msg.guild;
-      const serverData = await serverFind(server.id);
-      const ln = serverData.lang;
-
-      collectorType.on("collect", async (i) => {
-        firstMsg.delete();
-        i.deferUpdate();
-        bool0 = true;
-        collectorType.stop();
-        const user = msg.author;
 
         const coinData = await profileFind(user.id);
         const rp = await rpgFind(user.id);
         const bag = await bagFind(user.id);
 
         const { buy: b, heroModel: hm, heroes: hh } = require(`../../languages/${ln}`);
-
-        const heroArr = [];
-        for (let item in heroes) {
-          var hero = heroes[item];
-          if (hero.type === i.customId) {
-            let ccost = cCost(hero.cost);
-            if (!isNaN(ccost) && ccost <= 0) ccost = LANG.lang === "ru" ? "Бесплатно" : "Free";
-            heroArr.push({
-              label: `${ln === "en" ? hero.name : hero.nameRus} ${cMar(hero.marry)} ${cVip(hero.vip)}`,
-              value: hero.name,
-              description: `${hh.cost} ${ccost}`,
-              emoji: cType(hero.costType, hero.available)
-            })
-          }
-
-        }
         const emb = new MessageEmbed()
           .setColor(none)
+          .setImage(ln === "ru" ? "https://i.ibb.co/z2Q3srW/buyRU.gif" : "https://i.ibb.co/4ZtRfsw/buyEN.gif")
+          .setAuthor(user.tag, user.displayAvatarURL({dynamic: true}))
+          .setDescription(ln === "ru" ? "Напишите название героя на английском!" : "Write a hero name.")
 
-        const cont = ln === "ru" ? "https://i.ibb.co/z2Q3srW/buyRU.gif" : "https://i.ibb.co/4ZtRfsw/buyEN.gif";
-
-        const select = new MessageActionRow()
-          .addComponents(
-            new MessageSelectMenu()
-              .setCustomId("first-menu")
-              .setPlaceholder(b.pick)
-              .addOptions([heroArr])
-          )
-
-        const filter = (i) => i.isSelectMenu() && i.user.id === user.id;
-        const mms = await msg.channel.send({ content: cont, components: [select] });
-
-        const collector = await mms.createMessageComponentCollector({
+        const filter = (m) => m.author.id === user.id;
+        const mms = await msg.reply({embeds: [emb]});
+        const collector = await msg.channel.createMessageCollector({
           filter,
-          max: "1",
-          time: 45000
+          time: 20000
         });
-        collector.on("collect", async (i) => {
-          const val = i.values[0];
+        collector.on("collect", async (m) => {
+          const val = firstUpperCase(m.content.toLowerCase());
           const item = heroes[val];
-          i.deferUpdate();
           if (!mms.deleted) mms.delete();
           bool = true;
           ops.buying.delete(message.author.id);
@@ -381,24 +304,14 @@ module.exports = {
 
         });
 
-        collector.on("end", async (i) => {
+        collector.on("end", async () => {
           if (!bool) {
             if (!mms.deleted) mms.delete()
             ops.buying.delete(message.author.id);
             return error(msg, quiz.err)
           }
         })
-      });
-
-
-      collectorType.on("end", () => {
-        if (!bool0) {
-          ops.buying.delete(message.author.id);
-          msg.react(DISAGREE);
-          firstMsg.delete();
-        }
-      })
-
+      
 
 
       function cAv(av) {
