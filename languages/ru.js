@@ -649,11 +649,6 @@ module.exports = {
                         name: `Цены в рублях.`,
                         value: `• VIP + 10000 ${STAR} - ${rubToDollar(45, formatNumber, "ru")} \n • Премиум + 20000 ${STAR} - ~~${rubToDollar(100, formatNumber, "ru")}~~ ${rubToDollar(90, formatNumber, "ru")}\n • Герой **Тайрус** - ${rubToDollar(160, formatNumber, "ru")}\n • 1 ${CRYSTAL} = 10 ${HELL.candy} (\`?купить конфеты 10\`)\n • 1000 ${CRYSTAL} - ${rubToDollar(90, formatNumber, "ru")}\n • 350 ${CRYSTAL} - ~~${rubToDollar(30, formatNumber, "ru")}~~ ${rubToDollar(20, formatNumber, "ru")}\n • 100 ${CRYSTAL} - ${rubToDollar(10, formatNumber, "ru")}\n • 600000 ${STAR} - ~~${rubToDollar(90, formatNumber, "ru")}~~ ${rubToDollar(75, formatNumber, "ru")}\n • 150000 ${STAR} - ${rubToDollar(30, formatNumber, "ru")}\n • 50000 ${STAR} - ${rubToDollar(15, formatNumber, "ru")}\n • Донат-бокс (50k-200k) - ${rubToDollar(15, formatNumber, "ru")}`,
                         inline: false
-                    },
-                    {
-                        name: `Дополнительное место для героев.`,
-                        value: `• Стоит: Кол-во твоих мест * 2000 ${STAR}\n\`?buy place\``,
-                        inline: false
                     }
                 )
                 .setTimestamp()

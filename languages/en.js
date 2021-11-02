@@ -646,14 +646,10 @@ module.exports = {
                         name: `${status.premium} Premium`,
                         value: `Gives access to unique heroes, reduces **cooldown** for all commands **two** times, makes it possible to issue a rank card, and also gives more bet limit for all games, increases the max value of gift to 2500.`,
                         inline: false
-                    }, {
-                        name: `Prices in dollars.`,
-                    value: `• VIP + 10000 ${STAR} - ${rubToDollar(45, formatNumber)} \n • Premium + 20000 ${STAR} - ${rubToDollar(100, formatNumber)}\n • Hero **Tyrus** - ${rubToDollar(160, formatNumber)}\n • 1 ${CRYSTAL} = 10 ${HELL.candy} (\`?buy candy 10\`)\n • 1000 ${CRYSTAL} - ${rubToDollar(90, formatNumber)}\n • 350 ${CRYSTAL} - ${rubToDollar(30, formatNumber)}\n • 100 ${CRYSTAL} - ${rubToDollar(10, formatNumber)}\n • 600000 ${STAR} - ${rubToDollar(90, formatNumber)}\n • 150000 ${STAR} - ${rubToDollar(30, formatNumber)}\n • 50000 ${STAR} - ${rubToDollar(15, formatNumber)}\n • Donate-box (50k-200k) - ${rubToDollar(15, formatNumber)}`,
-                    inline: false
-                },
+                    },
                     {
-                        name: `Extra place for heroes.`,
-                        value: `• Cost: Your place count * 2000 ${STAR}\n \`?buy place\``,
+                        name: `Prices in dollars.`,
+                        value: `• VIP + 10000 ${STAR} - ${rubToDollar(45, formatNumber)} \n • Premium + 20000 ${STAR} - ${rubToDollar(100, formatNumber)}\n • Hero **Tyrus** - ${rubToDollar(160, formatNumber)}\n • 1 ${CRYSTAL} = 10 ${HELL.candy} (\`?buy candy 10\`)\n • 1000 ${CRYSTAL} - ${rubToDollar(90, formatNumber)}\n • 350 ${CRYSTAL} - ${rubToDollar(30, formatNumber)}\n • 100 ${CRYSTAL} - ${rubToDollar(10, formatNumber)}\n • 600000 ${STAR} - ${rubToDollar(90, formatNumber)}\n • 150000 ${STAR} - ${rubToDollar(30, formatNumber)}\n • 50000 ${STAR} - ${rubToDollar(15, formatNumber)}\n • Donate-box (50k-200k) - ${rubToDollar(15, formatNumber)}`,
                         inline: false
                     }
                 )

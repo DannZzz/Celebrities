@@ -32,12 +32,12 @@ class breedingClass {
             emb.setTitle(`${this.sd.lang === "en" ? "You don't have any breedings!" : "У тебя нет никаких разведений!"}`).setDescription(`${this.sd.lang === "en" ? "For start breeding, write `breeding [first hero] [second hero]`" : "Чтобы начать разведение, напиши `breeding [первый герой] [второй герой]`"}`);
         } else {
             emb.setTitle(`${this.sd.lang === "en" ? "Your currently breedings!" : "Ваши текущие разведения!"}`)
-            emb.setDescription(`${this.sd.lang === "en" ? "For getting, write \`collect [number of breeding]\`\nFor throwing, write \`throw [number of breeding]\`" : "Чтобы забрать, напишите \`collect [номер скрещиваний]\`\nЧтобы удалить, напиште \`throw [номер скрещиваний]\`"}`)
+            emb.setDescription(`${this.sd.lang === "en" ? "For getting, write \`collect [number of breeding]\`\nFor throwing, write \`throw [number of breeding]\`" : "Чтобы забрать, напишите \`collect [номер скрещиваний]\`\nЧтобы удалить, напишите \`throw [номер скрещиваний]\`"}`)
             data.breeding.forEach((obj, pos) => {
                 if (obj.date < new Date()) {
                     return emb.addField(`${pos+1}. ${this.sd.lang === "en" ? "Breeding ended!" : "Скрещивание закончилось!"}`, `${this.sd.lang === "en" ? `You got hero: ${obj.hero}` : `Вы получили героя: ${heroes[obj.hero].nameRus}`}`)
                 } else {
-                    return emb.addField(`${pos+1}. ${this.sd.lang === "en" ? `Breeding ends <t:${makeTimestamp(obj.date.getTime())}:R>` : `Скрещивание закончится <t:${makeTimestamp(obj.date.getTime())}:R>`}`, `${this.sd.lang === "en" ? `Heroes:\n${obj.first}\n${obj.second}` : `Герои:\n${heroes[obj.first].nameRus}\n${heroes[obj.second].nameRus}`}`)
+                    return emb.addField(`${pos+1}. ${this.sd.lang === "en" ? `Breeding ends <t:${makeTimestamp(obj.date.getTime())}:R>` : `Скрещивание закончится <t:${makeTimestamp(obj.date.getTime())}:R>`}`, `${this.sd.lang === "en" ? `Heroes: ${obj.first}, ${obj.second}` : `Герои: ${heroes[obj.first].nameRus}, ${heroes[obj.second].nameRus}`}`)
                 }
             });
         }
@@ -50,7 +50,6 @@ class breedingClass {
         const data = await rpgFind(this.id);
 
         if (!data.breeding || data.breeding.length === 0) return error(this.msg, this.sd.lang === "en" ? "You don't have any breedings!" : "У тебя нет никаких разведений!");
-        if (data.itemCount <= data.heroes.length) return error(this.msg, this.sd.lang === "en" ? "You don't have enough place!" : "У тебя недостаточно мест!");
         
 
         const index = number - 1;
