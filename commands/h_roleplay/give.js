@@ -1,9 +1,9 @@
 const heroes = require('../../JSON/heroes.json');
 const { main, reddark } = require('../../JSON/colours.json');
 const { MessageEmbed, MessageAttachment, MessageButton, MessageActionRow } = require("discord.js");
-const { COIN, STAR, AGREE } = require("../../config");
+const { COIN, STAR, AGREE, CRYSTAL } = require("../../config");
 const {error, embed, perms, firstUpperCase, randomRange, makeTimestamp, sendToMail} = require("../../functions/functions");
-const {bagFind, rpgFind, rpg, addStar, profile, profileFind} = require("../../functions/models");
+const {bagFind, rpgFind, rpg, addStar, profile, profileFind, addCrystal} = require("../../functions/models");
 
 module.exports = {
   config: {
@@ -37,7 +37,7 @@ module.exports = {
 
     if (!args[1]) return error(msg, specify + `\n\`${g.usage}\``);
     if (!args[2] || isNaN(args[2]) || args[2] < 1) return error(msg, g.cost + `\n\`${g.usage}\``)
-    if (args[2] < 100) return error(msg, g.min)
+    if (args[2] < 10) return error(msg, g.min)
     const trans = firstUpperCase(args[0].toLowerCase());
     const member = msg.mentions.members.first() || msg.guild.members.cache.get(args[1]);
     if (!member) return error(msg, notUser);
@@ -50,7 +50,7 @@ module.exports = {
     const getting = mbData.heroes.find(x => x.name === trans)
     if (getting) return error(message, LANG.lang === "en" ? "This member already has this hero." : "Этот участник уже имеет этого героя.")
     const heroData = heroes[trans];
-    if (heroData.costType !== "star" || heroData.subLevel) return error(msg, g.not);
+    if (heroData.subLevel) return error(msg, g.not);
     if (cost > heroData.cost * 2) return error(msg, g.double);
 
     let asd = true
@@ -72,7 +72,7 @@ module.exports = {
       const Emb = new MessageEmbed()
       .setColor(main)
       .setAuthor(user.username, user.displayAvatarURL({dynamic: true}))
-      .setDescription(`${member}, ${msg.guild.members.cache.get(user.id)} ${g.sure(trans, cost)} ${STAR}`)
+      .setDescription(`${member}, ${msg.guild.members.cache.get(user.id)} ${g.sure(trans, cost)} ${CRYSTAL}`)
 
 
       const row = new MessageActionRow().addComponents(buttonList);
@@ -117,10 +117,10 @@ module.exports = {
             if (rp.heroes.length === rp.itemCount) return;
             const get = rp.heroes.find(x => x.name === trans)
             if (get) return;
-            if (memberData.stars < cost) return;
+            if (memberData.crystal < cost) return;
             
-            await addStar(member.id, -cost);
-            await addStar(user.id, Math.floor(cost/100*80));
+            await addCrystal(member.id, -cost);
+            await addCrystal(user.id, Math.floor(cost/100*80));
             
             rp.heroes.push(getHero)
             rp.save()
@@ -138,7 +138,7 @@ module.exports = {
             await profile.updateOne({userID: user.id}, {$set: {
               give: new Date(Date.now() + timeout)
             }});
-            await sendToMail(user.id, {textMessage: `${g.sell(trans, Math.floor(cost/100*80))} ${STAR}`, createdAt: new Date()});
+            await sendToMail(user.id, {textMessage: `${g.sell(trans, Math.floor(cost/100*80))} ${CRYSTAL}`, createdAt: new Date()});
         }, a * 1000)
 
           
