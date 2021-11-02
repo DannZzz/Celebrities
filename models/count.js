@@ -9,6 +9,6 @@ const Schema = new mongoose.Schema({
   duel: { type: Number, default: 0 },
 });
 
-const model = mongoose.model("BegModels", Schema);
+const model = mongoose.model("count", Schema);
 
 module.exports = model;
