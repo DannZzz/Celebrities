@@ -215,7 +215,7 @@ class breedingClass {
 
         arr.forEach(obj => {
             if (obj.need.includes(hero1.name) && obj.need.includes(hero2.name)) {
-                ht -= 15;
+                ht -= 8;
             }
         })
         
