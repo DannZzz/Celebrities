@@ -50,7 +50,7 @@ module.exports = {
     const getting = mbData.heroes.find(x => x.name === trans)
     if (getting) return error(message, LANG.lang === "en" ? "This member already has this hero." : "Этот участник уже имеет этого героя.")
     const heroData = heroes[trans];
-    if (heroData.subLevel) return error(msg, g.not);
+    if (heroData.subLevel || heroData.available === "Под") return error(msg, g.not);
     if (cost > heroData.cost * 2) return error(msg, g.double);
 
     let asd = true
