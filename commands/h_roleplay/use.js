@@ -104,7 +104,6 @@ module.exports = {
                 rew = await getValidHero(user, ITEMS.halloween.validList);
                 if (!rew) return error(message, b.already);
                 hero = heroes[rew];
-                if (rp.heroes.length === rp.itemCount) return error(message, b.place)
                 get = rp.heroes.find(x => x.name === hero.name)
                 if (get) return error(message, b.already)
                 
@@ -278,7 +277,6 @@ module.exports = {
                 rew = await getValidHero(user, ITEMS.pack1.list);
                 if (!rew) return error(message, b.already);
                 hero = heroes[rew];
-                if (rp.heroes.length === rp.itemCount) return error(message, b.place)
                 get = rp.heroes.find(x => x.name === hero.name)
                 if (get) return error(message, b.already)
                 
@@ -300,7 +298,6 @@ module.exports = {
                 rew = await getValidHero(user, ITEMS.pack2.list);
                 if (!rew) return error(message, b.already);
                 hero = heroes[rew];
-                if (rp.heroes.length === rp.itemCount) return error(message, b.place)
                 get = rp.heroes.find(x => x.name === hero.name)
                 if (get) return error(message, b.already)
                 
@@ -322,7 +319,6 @@ module.exports = {
                 rew = await getValidHero(user, ITEMS.pack3.list);
                 if (!rew) return error(message, b.already);
                 hero = heroes[rew];
-                if (rp.heroes.length === rp.itemCount) return error(message, b.place)
                 get = rp.heroes.find(x => x.name === hero.name)
                 if (get) return error(message, b.already)
                 
@@ -344,7 +340,6 @@ module.exports = {
                 rew = await getValidHero(user, ITEMS.tempPack.list);
                 if (!rew) return error(message, b.already);
                 hero = heroes[rew];
-                if (rp.heroes.length === rp.itemCount) return error(message, b.place)
                 get = rp.heroes.find(x => x.name === hero.name)
                 if (get) return error(message, b.already)
                 

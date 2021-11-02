@@ -213,24 +213,6 @@ module.exports = {
       return embed(message, b.event(numb, Math.round(numb/one), HELL.candy, CRYSTAL));
     }
     
-    const slots = ["slot", "place", "слот", "место"];
-    if (slots.includes(args[0].toLowerCase())) {
-      ops.cards.delete(user.id);
-      if ((bag["vip2"] && rp.itemCount !== 20) || (!bag["vip2"] && rp.itemCount !== 10)) {
-        if (bag.stars >= 2000 * (rp.itemCount || 1)) {
-          await bd.updateOne({ userID: message.author.id }, { $inc: { stars: -(2000 * (rp.itemCount || 1)) } })
-          await rpg.updateOne({ userID: message.author.id }, { $inc: { itemCount: 1 } })
-          return embed(message, b.donePlace)
-        } else {
-          return error(message, noStar + ` ${2000 * (rp.itemCount || 1)} ${STAR}`)
-        }
-      } else if (!bag["vip2"] && rp.itemCount === 10) {
-        return error(message, vipTwo)
-      } else {
-        return error(message, b.errPlace)
-      }
-    }
-
 
     if (heros.includes(args[0].toLowerCase())) {
       ops.cards.delete(user.id);
@@ -354,7 +336,6 @@ module.exports = {
           const sub = Subs(bot, msg, item.name).heroHighSubLevel();
           if (!sub) return error(msg, `${b.subError} **${await Subs(bot, msg, item.name).getStringById(item.subLevel)}**`);
 
-          if (rp.heroes.length === rp.itemCount) return error(msg, b.place)
           const idk = rp.heroes.find(x => x.name === val)
           if (idk) return error(msg, b.already)
 

@@ -37,6 +37,23 @@ module.exports = {
     //         })
     //     rp.save()
     // }
+    const ARGS = ["list"];
+    if (args[0] && ARGS.includes(args[0].toLowerCase())) {
+      const emb = new MessageEmbed()
+      .setColor(main)
+      .setTitle(LANG.lang === "en" ? "Heroes" : "Герои")
+      let text = []
+      rp.heroes.forEach((t, pos) => {
+        const item = heroes[t.name];
+        let textedElements = item.elements.map(el => elements[el].emoji).join(" ")
+        text.push(`${pos+1}. ${heroType[item.type]} | ${textedElements} ${item.name} (${item.nameRus})`)
+        
+      });
+
+      emb.setDescription(`${text.join("\n")}`)
+      return message.reply({embeds: [emb]});
+    }
+    
     
     const item = rp.heroes[0]
     const h = heroes[item.name];
@@ -45,7 +62,6 @@ module.exports = {
     .setThumbnail(h.url)
     .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
     .setTitle(`${h.name} (${h.nameRus})\n ${FORCE} ${hm.force} ${forceGenerator(item.health, item.level, item.damage)}\n${LANG.lang === "en" ? "Elements:" : "Стихия:"} ${textedElements}`)
-    .setDescription(h.description)
     .setColor(main)
     .addField(`💯 ${hm.level} ${item.level}\n❤ ${hm.health} ${formatNumber(item.health)}\n⚔ ${hm.damage} ${formatNumber(item.damage)}`, `** **`)
     .setFooter(`1 / 1`)
@@ -60,7 +76,6 @@ module.exports = {
         .setThumbnail(h1.url)
         .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
         .setTitle(`${heroType[h1.type]} ${h1.name} (${h1.nameRus})\n ${FORCE} ${hm.force} ${forceGenerator(i.health, i.level, i.damage)}\n${LANG.lang === "en" ? "Elements:" : "Стихия:"} ${textedElements}`)
-        .setDescription(h1.description)
         .setColor(main)
         .addField(`💯 ${hm.level} ${i.level}\n❤ ${hm.health} ${formatNumber(i.health)}\n⚔ ${hm.damage} ${formatNumber(i.damage)}`, `** **`)
         

@@ -39,7 +39,6 @@ module.exports = {
     let myHero = new MessageEmbed()
     .setAuthor(`${user.user.tag}`)
     .setTitle(`${heroType[item.type]} ${item.name} (${item.nameRus})\n${hm.level} ${get.level}\n ${FORCE} ${hm.force} ${forceGenerator(get.health, get.level, get.damage)}\n${LANG.lang === "en" ? "Elements:" : "Стихия:"} ${textedElements}`)
-    .setDescription(LANG.lang === "ru" ? item.description : item.descriptionEN)
     .setThumbnail(`attachment://${item.name}.png`)
     .addField(`❤ ${hm.health}`, `${formatNumber(get.health)}`, true)
     .addField(`⚔ ${hm.damage}`, `${formatNumber(get.damage)}`, true)

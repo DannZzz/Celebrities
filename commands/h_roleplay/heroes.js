@@ -3,7 +3,7 @@ const { main, reddark } = require('../../JSON/colours.json');
 const elements = require('../../JSON/elements.json');
 const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
 const { COIN, STAR, LEFT, RIGHT, DLEFT, FORCE, DRIGHT, CANCEL, heroType, CRYSTAL } = require("../../config");
-const { error, paginationBig, forceGenerator, formatNumber } = require("../../functions/functions");
+const { error, paginationBig, forceGenerator, formatNumber, pagination } = require("../../functions/functions");
 const Subs = require("../../functions/subscriptionClass");
 
 module.exports = {
@@ -19,6 +19,35 @@ module.exports = {
     const LANG = await getLang.findOne({ serverID: message.guild.id });
     const { timeOut, ERROR, interError, heroes: hh, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar } = require(`../../languages/${LANG.lang}`);
     const msg = message;
+    const ARGS = ["list"];
+    if (args[0] && ARGS.includes(args[0].toLowerCase())) {
+      let arr = [];
+      ["common", "elite", "furious", "mythical", "private"].forEach(t => {
+        const emb = new MessageEmbed()
+          .setColor(main)
+          .setTitle(heroType[t] + (LANG.lang === "en" ? "Heroes" : "Герои"))
+        let text = []
+        for (let i in heroes) {
+          const item = heroes[i];
+          let textedElements = item.elements.map(el => elements[el].emoji).join(" ")
+          if (item.type === t) text.push(`${textedElements} ${item.name} (${item.nameRus})`)
+        }
+        emb.setDescription(`${text.join("\n")}`)
+        return arr.push(emb)
+      });
+
+      const ll = new MessageButton()
+      .setCustomId("lefttt")
+      .setStyle("SECONDARY")
+      .setEmoji(LEFT)
+
+    const rr = new MessageButton()
+      .setCustomId("righttt")
+      .setStyle("SECONDARY")
+      .setEmoji(RIGHT)
+
+      return await pagination(message, arr, [ll, rr], 100000, [msg.author.id]);
+    }
 
     const common = new MessageButton()
       .setCustomId("COMMON")
@@ -96,7 +125,7 @@ module.exports = {
               .setColor(main)
               .setTitle(`${heroType[obj.type]} ${obj.name} (${obj.nameRus}) ${cMar(obj.marry)} ${cVip(obj.vip)}\n${FORCE} ${hm.force} ${forceGenerator(obj.health, obj.damage, 1)}\n${LANG.lang === "en" ? "Elements:" : "Стихия:"} ${textedElements}`)
               .setThumbnail(obj.url)
-              .setDescription(`${level ? `**${level}**\n\n` : ""}` + (LANG.lang === "en" ? obj.descriptionEN : obj.description))
+              .setDescription(`${level ? `**${level}**\n\n` : ""}`)
               .addField(`${hh.cost} ${ccost}`, `**${hh.avail} ${cAv(obj.available)}**`, true)
               .addField(`${hm.health} ${formatNumber(obj.health)} ❤`, `**${hm.damage} ${formatNumber(obj.damage)}** ⚔`, true)
           )

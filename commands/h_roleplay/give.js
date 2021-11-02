@@ -42,7 +42,6 @@ module.exports = {
     const member = msg.mentions.members.first() || msg.guild.members.cache.get(args[1]);
     if (!member) return error(msg, notUser);
     const memberRPG = await rpgFind(member.id);
-    if ((memberRPG.itemCount || 0) === memberRPG.heroes.length) return error(msg, LANG.lang === "en" ? "This member hasn't enough place." : "Этот участник не имеет достаточно мест.");
     const cost = Math.round(args[2]);
     let getHero = mrp.heroes.find(x => x.name === trans);
     if (!getHero) return error(msg, g.noHero);
