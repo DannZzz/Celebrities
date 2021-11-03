@@ -53,19 +53,17 @@ module.exports = {
         
         pages();
         function pages () {
-            let v = rp.heroes.slice(i, i+15);
-            let text = [];
+            let v = text.slice(i, i+15);
+            let texted = [];
             const EMBED = new MessageEmbed()
             .setColor(main)
             .setTitle(LANG.lang === "en" ? "Heroes" : "Герои")
 
             v.forEach((t, pos) => {
-            const item = heroes[t.name];
-            let textedElements = item.elements.map(el => elements[el].emoji).join(" ")
-            text.push(`${pos+1}. ${heroType[item.type]} | ${textedElements} ${item.name} (${item.nameRus})`)
+            texted.push(t)
             
             });
-            EMBED.setDescription(`${text.join("\n")}`)
+            EMBED.setDescription(`${texted.join("\n")}`)
             
             arr.push(EMBED);
             i += 15;
