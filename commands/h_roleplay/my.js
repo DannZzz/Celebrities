@@ -6,10 +6,7 @@ const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { COIN, STAR, LEFT, RIGHT, DLEFT, DRIGHT, CANCEL, heroType, FORCE } = require("../../config");
 const { MessageEmbed, MessageButton } = require("discord.js");
-const {error, paginationBig, formatNumber, forceGenerator} = require("../../functions/functions");
-const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 3000);
-
+const {error, paginationBig, formatNumber, forceGenerator, pagination} = require("../../functions/functions");
 module.exports = {
   config: {
     name: "my",
@@ -17,8 +14,6 @@ module.exports = {
     category: 'h_roleplay'
   },
   run: async (bot, message, args) => {
-    let limited = rateLimiter.take(message.author.id)
-    if (limited) return
 
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
@@ -39,7 +34,7 @@ module.exports = {
     // }
     const ARGS = ["list"];
     if (args[0] && ARGS.includes(args[0].toLowerCase())) {
-      const emb = new MessageEmbed()
+       const emb = new MessageEmbed()
       .setColor(main)
       .setTitle(LANG.lang === "en" ? "Heroes" : "Герои")
       let text = []
@@ -51,7 +46,51 @@ module.exports = {
       });
 
       emb.setDescription(`${text.join("\n")}`)
-      return message.reply({embeds: [emb]});
+      
+      if (rp.heroes.length > 15) {
+        let arr = [];
+        let i = 0;
+        
+        pages();
+        function pages () {
+            let v = rp.heroes.slice(i, i+15);
+            let text = [];
+            const EMBED = new MessageEmbed()
+            .setColor(main)
+            .setTitle(LANG.lang === "en" ? "Heroes" : "Герои")
+
+            v.forEach((t, pos) => {
+            const item = heroes[t.name];
+            let textedElements = item.elements.map(el => elements[el].emoji).join(" ")
+            text.push(`${pos+1}. ${heroType[item.type]} | ${textedElements} ${item.name} (${item.nameRus})`)
+            
+            });
+            EMBED.setDescription(`${text.join("\n")}`)
+            
+            arr.push(EMBED);
+            i += 15;
+            if (i < rp.heroes.length) {
+                pages();
+            }
+
+        };
+
+        const button1 = new MessageButton()
+        .setCustomId("lefting")
+        .setEmoji(LEFT)
+        .setStyle("SECONDARY")
+        const button2 = new MessageButton()
+        .setCustomId("righting")
+        .setEmoji(RIGHT)
+        .setStyle("SECONDARY")
+        
+        return await pagination(message, arr, [button1, button2], 30000, [message.author.id]);
+        
+    } else {
+        return message.reply({embeds: [emb]});
+    }
+      
+     
     }
     
     
