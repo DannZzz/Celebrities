@@ -190,11 +190,11 @@ class breedingClass {
             const heroObj = heroes[i];
             if (heroObj.available !== "Под") {
                 el1.forEach(element => {
-                    if (heroObj.elements.includes(element) && !validHeroes.includes(heroObj) && element !== "legendary") validHeroes.push(heroObj);
+                    if (!heroObj.blockBreeding && heroObj.elements.includes(element) && !validHeroes.includes(heroObj) && element !== "legendary") validHeroes.push(heroObj);
                 });
     
                 el2.forEach(element => {
-                    if (heroObj.elements.includes(element) && !validHeroes.includes(heroObj) && element !== "legendary") validHeroes.push(heroObj);
+                    if (!heroObj.blockBreeding && heroObj.elements.includes(element) && !validHeroes.includes(heroObj) && element !== "legendary") validHeroes.push(heroObj);
                 });
             }  
         };
@@ -308,6 +308,10 @@ function manualBreeding () {
         {
             need: ["Dranna", "Darkangel"],
             reward: ["Humanoid"]
+        },
+        {
+            need: ["Zero", "Ancalgon"],
+            reward: ["Monster-zero"]
         }
 
     ]
