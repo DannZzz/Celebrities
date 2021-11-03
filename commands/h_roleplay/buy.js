@@ -2,7 +2,7 @@ const pd = require("../../models/profileSchema");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 const ITEMS = require('../../JSON/items');
-const { event, addCandy, eventFind, addCrystal, serverFind, bagFind, rpgFind, bag: bd, rpg, profileFind, card, cardFind } = require("../../functions/models");
+const { event, addCandy, eventFind, addCrystal, serverFind, bagFind, rpgFind, bag: bd, rpg, profileFind, card, cardFind, addStar } = require("../../functions/models");
 const { error, embed, firstUpperCase, delay } = require("../../functions/functions");
 const { main, none } = require("../../JSON/colours.json");
 const cards = require("../../JSON/cards.json");
@@ -51,6 +51,7 @@ module.exports = {
     }
     const heros = ["hero", "герой"];
     const candies = ["candy", "конфеты"];
+    const golds = ["golds", "голды", "gold", "голда", "золото", "золота"];
     rp = await rpg.findOne({ userID: user.id });
     let bag = await bd.findOne({ userID: user.id });
     let profile = await pd.findOne({ userID: user.id });
@@ -198,6 +199,21 @@ module.exports = {
       return
       
     }
+
+    if (golds.includes(args[0].toLocaleLowerCase())) {
+      let numb = 1;
+      if (args[1] && !isNaN(args[1]) && Math.round(args[1]) >= 1) numb = Math.round(args[1]);
+
+      const one = 5000;
+      if (numb < one) numb = one;
+      
+      if (!bag.crystal || bag.crystal < Math.round(numb/one) ) return error(message, noCrystal);
+
+      await addCrystal(user.id, -(Math.round(numb/one)));
+      await addStar(user.id, numb);
+      ops.cards.delete(user.id);
+      return embed(message, b.event(numb, Math.round(numb/one), STAR, CRYSTAL));
+    };
 
     if (candies.includes(args[0].toLocaleLowerCase())) {
       let numb = 1;
