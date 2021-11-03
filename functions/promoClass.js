@@ -1,7 +1,7 @@
-const { clan, clanFind, rpg, rpgFind, bagFind, serverFind, bag, addStar, promocodes, promoFind } = require("./models");
+const { clan, clanFind, rpg, rpgFind, bagFind, serverFind, bag, addStar, promocodes, promoFind, addCrystal } = require("./models");
 const { error, embed, firstUpperCase, randomRange, delay, pagination } = require("./functions");
 const {none, main} = require("../JSON/colours.json");
-const {AGREE, DISAGREE, STAR, HERO, CLAN, LEFT, RIGHT} = require("../config");
+const {AGREE, DISAGREE, STAR, HERO, CLAN, LEFT, RIGHT, CRYSTAL} = require("../config");
 const {MessageAttachment, MessageEmbed, MessageActionRow, MessageSelectMenu, MessageCollector, MessageButton} = require("discord.js");
 const Subs = require("./subscriptionClass");
 
@@ -35,7 +35,7 @@ class TeamClass {
             reward
         });
         creating.save().then(() => {
-            toChannel.send({embeds: [emb.setDescription(`Promocode: \`${code}\`\nMax Uses: \`${uses}\`\nНаграда: \`${reward}\` ${STAR}`)]})
+            toChannel.send({embeds: [emb.setDescription(`Promocode: \`${code}\`\nMax Uses: \`${uses}\`\nНаграда: \`${reward}\` ${CRYSTAL}`)]})
             this.msg.react(AGREE)
         }).catch(() => this.msg.react(DISAGREE));
 
@@ -182,14 +182,14 @@ class TeamClass {
 
         data.users.push(this.user.id);
         await data.save()
-        await addStar(this.user.id, data.reward);
-        return embed(this.msg, `${pc.done} - ${data.reward} ${STAR}`)
+        await addCrystal(this.user.id, data.reward);
+        return embed(this.msg, `${pc.done}: ${data.reward} ${CRYSTAL}`)
     }
 
     async getAllPromo() {
         const data = await promocodes.find().exec();
         const mapped = data.map( ({reward, code, max, users, subLevel=false}) => {
-            return `Promo: \`${code}\` | Use: \`${users.length}/${max}\` | ${reward} ${STAR} | Subscription: \`${subLevel ? subLevel : 0}\``
+            return `Promo: \`${code}\` | Use: \`${users.length}/${max}\` | ${reward} ${CRYSTAL} | Subscription: \`${subLevel ? subLevel : 0}\``
         })
 
         if (mapped.length > 15) {
