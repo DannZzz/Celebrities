@@ -350,7 +350,7 @@ module.exports = {
         "elite": "Элитный",
         "furious": "Яростный",
         "mythical": "Мифический",
-        "private": "Приватный"
+        "private": "Легендарный"
     },
 
 
@@ -647,7 +647,7 @@ module.exports = {
                     },
                     {
                         name: `Цены в рублях.`,
-                        value: `• VIP + 10000 ${STAR} - ${rubToDollar(45, formatNumber, "ru")} \n • Премиум + 20000 ${STAR} - ~~${rubToDollar(100, formatNumber, "ru")}~~ ${rubToDollar(90, formatNumber, "ru")}\n • Герой **Тайрус** - ${rubToDollar(160, formatNumber, "ru")}\n • 1 ${CRYSTAL} = 10 ${HELL.candy} (\`?купить конфеты 10\`)\n • 1000 ${CRYSTAL} - ${rubToDollar(90, formatNumber, "ru")}\n • 350 ${CRYSTAL} - ~~${rubToDollar(30, formatNumber, "ru")}~~ ${rubToDollar(20, formatNumber, "ru")}\n • 100 ${CRYSTAL} - ${rubToDollar(10, formatNumber, "ru")}\n • 600000 ${STAR} - ~~${rubToDollar(90, formatNumber, "ru")}~~ ${rubToDollar(75, formatNumber, "ru")}\n • 150000 ${STAR} - ${rubToDollar(30, formatNumber, "ru")}\n • 50000 ${STAR} - ${rubToDollar(15, formatNumber, "ru")}\n • Донат-бокс (50k-200k) - ${rubToDollar(15, formatNumber, "ru")}`,
+                        value: `• VIP + 10000 ${STAR} - ${rubToDollar(45, formatNumber, "ru")} \n • Премиум + 20000 ${STAR} - ~~${rubToDollar(100, formatNumber, "ru")}~~ ${rubToDollar(90, formatNumber, "ru")}\n • 1 ${CRYSTAL} = 10 ${HELL.candy} (\`?купить конфеты 10\`)\n • 1 ${CRYSTAL} = 5.000 ${STAR} (\`?купить голды 100000\`)\n • 1000 ${CRYSTAL} - ${rubToDollar(120, formatNumber, "ru")}\n • 350 ${CRYSTAL} - ${rubToDollar(45, formatNumber, "ru")}\n • 100 ${CRYSTAL} - ${rubToDollar(20, formatNumber, "ru")}\n • Донат-бокс (50k-200k) - ${rubToDollar(15, formatNumber, "ru")}`,
                         inline: false
                     }
                 )
@@ -669,8 +669,8 @@ module.exports = {
                 .addField(`${item.pack2.emoji} ${item.pack2.NAME} : ${item.pack2.cost} ${STAR}`, `Откройте и получите одного из этих элитных героев: \`${item.pack2.list.map(i => heroes[i].nameRus).join(", ")}\``)
                 .addField(`${item.pack3.emoji} ${item.pack2.NAME} : ${item.pack3.cost} ${STAR}`, `Откройте и получите одного из этих Премиум героев: \`${item.pack3.list.map(i => heroes[i].nameRus).join(", ")}\``)
                 .addField(`${item.halloween.emoji} ${item.halloween.NAME} : ${item.halloween.cost} ${HELL.candy} __доступен до 30.11.2021__`, `Откройте и получите одного из этих временных героев: \`${item.halloween.validList.map(i => heroes[i].nameRus).join(", ")}\` или ничего`)
-                .addField(`${item.donateBox.emoji} ${item.donateBox.NAME} : 15₽`, `Откройте и получите ${item.donateBox.winRU}`)
-                .addField(`${item.goldBox.emoji} ${item.goldBox.NAME} : 25₽`, `Откройте и получите:  __150-500__ ${item.box.emoji} или __Премиум Статус__`)
+                .addField(`${item.donateBox.emoji} ${item.donateBox.NAME} : ${rubToDollar(15, formatNumber, "ru")}`, `Откройте и получите ${item.donateBox.winRU}`)
+                .addField(`${item.goldBox.emoji} ${item.goldBox.NAME} : ${rubToDollar(25, formatNumber, "ru")}`, `Откройте и получите:  __150-500__ ${item.box.emoji} или __Премиум Статус__`)
 
         }
     },

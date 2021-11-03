@@ -349,7 +349,7 @@ module.exports = {
         "elite": "Elite",
         "furious": "Furious",
         "mythical": "Mythical",
-        "private": "Private"
+        "private": "Legendary"
 
     },
 
@@ -649,11 +649,11 @@ module.exports = {
                     },
                     {
                         name: `Prices in dollars.`,
-                        value: `• VIP + 10000 ${STAR} - ${rubToDollar(45, formatNumber)} \n • Premium + 20000 ${STAR} - ${rubToDollar(100, formatNumber)}\n • Hero **Tyrus** - ${rubToDollar(160, formatNumber)}\n • 1 ${CRYSTAL} = 10 ${HELL.candy} (\`?buy candy 10\`)\n • 1000 ${CRYSTAL} - ${rubToDollar(90, formatNumber)}\n • 350 ${CRYSTAL} - ${rubToDollar(30, formatNumber)}\n • 100 ${CRYSTAL} - ${rubToDollar(10, formatNumber)}\n • 600000 ${STAR} - ${rubToDollar(90, formatNumber)}\n • 150000 ${STAR} - ${rubToDollar(30, formatNumber)}\n • 50000 ${STAR} - ${rubToDollar(15, formatNumber)}\n • Donate-box (50k-200k) - ${rubToDollar(15, formatNumber)}`,
+                        value: `• VIP + 10000 ${STAR} - ${rubToDollar(45, formatNumber)} \n • Premium + 20000 ${STAR} - ${rubToDollar(100, formatNumber)}\n • 1 ${CRYSTAL} = 10 ${HELL.candy} (\`?buy candy 10\`)\n • 1 ${CRYSTAL} = 5.000 ${STAR} (\`?buy golds 100000\`)\n • 1000 ${CRYSTAL} - ${rubToDollar(120, formatNumber)}\n • 350 ${CRYSTAL} - ${rubToDollar(45, formatNumber)}\n • 100 ${CRYSTAL} - ${rubToDollar(20, formatNumber)}\n • Donate-box (50k-200k) - ${rubToDollar(15, formatNumber)}`,
                         inline: false
                     }
                 )
-                .setTitle("Любая подписка дает доступ к секретным промокодам!")
+                .setTitle("Any subscription gives you access to secret promotional codes!")
                 .setFooter("Send your questions by command ?message")
         },
         "items": () => {
@@ -671,8 +671,8 @@ module.exports = {
                 .addField(`${item.pack2.emoji} ${item.pack2.NAMEEN} : ${item.pack2.cost} ${STAR}`, `Unlock and get one of these elite heroes: \`${item.pack2.list.join(", ")}\``)
                 .addField(`${item.pack3.emoji} ${item.pack3.NAMEEN} : ${item.pack3.cost} ${STAR}`, `Open and get one of these Premium heroes: \`${item.pack3.list.join(", ")}\``)
                 .addField(`${item.tempPack.emoji} ${item.tempPack.NAMEEN} : ${item.tempPack.cost} ${HELL.candy} __available until 11/30/2021__`, `Open and get one of these Temporary heroes: \`${item.tempPack.list.join(", ")}\``)
-                .addField(`${item.donateBox.emoji} ${item.donateBox.NAMEEN} : 0,2$`, `Open and get ${item.donateBox.winEN}`)
-                .addField(`${item.goldBox.emoji} ${item.goldBox.NAMEEN} : 0,35$`, `Open and get: __150-500__ ${item.box.emoji} or __Premium Status__`)
+                .addField(`${item.donateBox.emoji} ${item.donateBox.NAMEEN} : ${rubToDollar(15, formatNumber)}`, `Open and get ${item.donateBox.winEN}`)
+                .addField(`${item.goldBox.emoji} ${item.goldBox.NAMEEN} : ${rubToDollar(25, formatNumber)}`, `Open and get: __150-500__ ${item.box.emoji} or __Premium Status__`)
 
         }
     },
