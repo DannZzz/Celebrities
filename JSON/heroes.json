@@ -102,7 +102,7 @@
     "vip": true,
     "upgradeCost": 130,
     "type": "elite",
-    "elements": ["nature", "magic"]
+    "elements": ["nature", "land"]
   },
   "Eragon": {
     "name": "Eragon",
@@ -163,7 +163,7 @@
     "vip": false,
     "upgradeCost": 200,
     "type": "furious",
-    "elements": ["magic", "fire"]
+    "elements": ["land", "fire"]
   },
   "Kumbhakarna": {
     "name": "Kumbhakarna",
@@ -283,7 +283,7 @@
     "vip": false,
     "upgradeCost": 300,
     "type": "private",
-    "elements": ["legendary", "fire"]
+    "elements": ["legendary", "land"]
   },
   "Horus": {
     "name": "Horus",
@@ -433,7 +433,7 @@
     "vip": true,
     "upgradeCost": 3000,
     "type": "mythical",
-    "elements": ["magic", "fire"]
+    "elements": ["magic", "land"]
   },
   "Tartarus": {
     "name": "Tartarus",
@@ -797,7 +797,7 @@
     "vip": false,
     "upgradeCost": 1200,
     "type": "mythical",
-    "elements": ["light"]
+    "elements": ["light", "land"]
   },
   "Golden": {
     "name": "Golden",
@@ -827,7 +827,7 @@
     "vip": false,
     "upgradeCost": 1000,
     "type": "private",
-    "elements": ["legendary", "nature"]
+    "elements": ["legendary", "land"]
   },
   "Hella": {
     "name": "Hella",
@@ -948,5 +948,112 @@
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "gold"]
+  },
+  "Golem": {
+    "name": "Golem",
+    "nameRus": "Голем",
+    "health": 8000,
+    "damage": 400,
+    "cost": 50,
+    "costType": "crystal",
+    "url": "https://i.ibb.co/GRNLb0j/Golem.jpg",
+    "path": "./images/heroes/Golem.jpg",
+    "available": "Да",
+    "vip": false,
+    "upgradeCost": 100,
+    "type": "common",
+    "elements": ["land"]
+  },
+  "Gladiator": {
+    "name": "Gladiator",
+    "nameRus": "Гладиатор",
+    "health": 15000,
+    "damage": 1300,
+    "cost": 200,
+    "costType": "crystal",
+    "url": "https://i.ibb.co/jRyZQP2/Gladiator.jpg",
+    "path": "./images/heroes/Gladiator.jpg",
+    "available": "Да",
+    "vip": false,
+    "upgradeCost": 300,
+    "type": "elite",
+    "elements": ["land", "fire"]
+  },
+  "Plasma": {
+    "name": "Plasma",
+    "nameRus": "Плазма",
+    "health": 50000,
+    "damage": 2000,
+    "cost": 500,
+    "costType": "crystal",
+    "url": "https://i.ibb.co/k5JXWjh/Plasma.jpg",
+    "path": "./images/heroes/Plasma.jpg",
+    "available": "Да",
+    "vip": false,
+    "upgradeCost": 500,
+    "type": "furious",
+    "elements": ["land", "light"]
+  },
+  "Electro": {
+    "name": "Electro",
+    "nameRus": "Электро",
+    "health": 200000,
+    "damage": 6000,
+    "cost": 1000,
+    "costType": "crystal",
+    "url": "https://i.ibb.co/VChTsMW/Electro.jpg",
+    "path": "./images/heroes/Electro.jpg",
+    "available": "Да",
+    "vip": true,
+    "upgradeCost": 750,
+    "type": "mythical",
+    "elements": ["light", "land"]
+  },
+  "Monster-zero": {
+    "name": "Monster-zero",
+    "nameRus": "Монстр-зеро",
+    "health": 500000,
+    "damage": 10000,
+    "cost": 1500,
+    "costType": "crystal",
+    "url": "https://i.ibb.co/NnhGdBh/Monster-zero.jpg",
+    "path": "./images/heroes/Monster-zero.jpg",
+    "available": "Да",
+    "vip": true,
+    "upgradeCost": 1000,
+    "type": "private",
+    "elements": ["legendary", "magic"]
+  },
+  "Alena": {
+    "name": "Alena",
+    "nameRus": "Алэна",
+    "health": 500000,
+    "damage": 10000,
+    "cost": 1500,
+    "costType": "crystal",
+    "url": "https://i.ibb.co/0yc7Jy2/Alena.jpg",
+    "path": "./images/heroes/Alena.jpg",
+    "available": "Да",
+    "vip": true,
+    "upgradeCost": 1000,
+    "type": "private",
+    "elements": ["legendary", "land"],
+    "blockBreeding": true
+  },
+  "Volcano": {
+    "name": "Volcano",
+    "nameRus": "Вулкан",
+    "health": 750000,
+    "damage": 15000,
+    "cost": "Не известна.",
+    "costType": "dev",
+    "url": "https://i.ibb.co/PzzCRrq/Volcano.jpg",
+    "path": "./images/heroes/Volcano.jpg",
+    "available": "Под",
+    "vip": true,
+    "upgradeCost": 1000,
+    "type": "private",
+    "elements": ["legendary", "land"],
+    "blockBreeding": true
   }
 }

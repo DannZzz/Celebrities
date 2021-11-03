@@ -79,5 +79,13 @@
         "nameEN": "SuperHero Collection",
         "reward": "Venom",
         "rewardType": "hero"
+    },
+    {
+        "id": 9,
+        "list": ["Monster-zero", "Golem", "Zero", "Electro", "Underman", "Plasma"],
+        "nameRU": "Коллекция Земли",
+        "nameEN": "Earth Collection",
+        "reward": "Volcano",
+        "rewardType": "hero"
     }
 ]
