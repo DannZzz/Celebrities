@@ -223,8 +223,8 @@ module.exports = {
                 get = rp.heroes.findIndex(x => x.name === rp.item)
                 heroType = heroes[rp.item];
                 effect = ITEMS.hlt.effect;
-                if (heroType.type === "mythical") effect = effect / 2;
-                if (heroType.type === "furious") effect = effect / 4 * 3;
+                if (heroType.type === "private") effect = effect / 2;
+                if (heroType.type === "mythical") effect = effect / 4 * 3;
     
                 await rpg.updateOne({userID: user.id}, {$inc: {[`heroes.${get}.health`]: effect * number}});
                 return message.react(AGREE);
@@ -238,8 +238,8 @@ module.exports = {
                 get = rp.heroes.findIndex(x => x.name === rp.item) 
                 heroType = heroes[rp.item];
                 effect = ITEMS.dmg.effect
-                if (heroType.type === "mythical") effect = effect / 2;
-                if (heroType.type === "furious") effect = effect / 4 * 3;
+                if (heroType.type === "private") effect = effect / 2;
+                if (heroType.type === "mythical") effect = effect / 4 * 3;
                 
                  
                 await rpg.updateOne({userID: user.id}, {$inc: {[`heroes.${get}.damage`]: effect * number}});

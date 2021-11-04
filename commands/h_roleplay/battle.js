@@ -101,9 +101,9 @@ module.exports = {
       if (eLevel <= 1) eLevel = 2
       let eHealth = ((eLevel - 1) * 500) + data2.health;
       let eDamage = ((eLevel - 1) * 40) + data2.damage;
-      if (myHealth / 2 > eHealth) {
-        eHealth += eHealth + (500 * (eLevel / 1.8));
-        eDamage += eDamage + (40 * (eLevel / 1.8));
+      while (myHealth / 2 > eHealth || myDamage / 2 > eDamage) {
+        eHealth += eHealth + (500 * (eLevel * 1.5));
+        eDamage += eDamage + (40 * (eLevel * 1.5));
       }
       let h1 = Math.round(eHealth)
       let h2 = Math.round(myHealth)
