@@ -10,6 +10,7 @@ const {  MessageActionRow,
   MessageEmbed,
   MessageButton,} = require('discord.js');
 const {main, none, greenlight, reddark} = require('./../JSON/colours.json')
+const heroes = require('./../JSON/heroes.json')
 const { powersFind, powers, serverFind, mail, mailFind } = require("./models.js");
 
 module.exports = {
@@ -17,6 +18,25 @@ module.exports = {
     const get = data.heroes.find(x => x.name === data.item);
     const {health, damage} = get;
     const server = bot.guilds.cache.get("882589567377637408");
+    const hero = heroes[get.name];
+    let perc = 1;
+    switch (hero.type) {
+      case "private":
+        perc = 5;
+        break;
+      case "mythical":
+        perc = 4;
+        break;
+      case "furious":
+        perc = 3;
+        break;
+      case "elite":
+        perc = 2;
+        break;
+      default:
+        break;
+    };
+
 
     const boosterRoleIds = {
       classic: "897172766929858601",
@@ -54,10 +74,13 @@ module.exports = {
     };
     
 
-    const finalHealth = Math.round(health + (health * pows.h / 100));
-    const finalDamage = Math.round(damage + (damage * pows.d / 100));
+    let finalHealth = Math.round(health + (health * pows.h / 100));
+    let finalDamage = Math.round(damage + (damage * pows.d / 100));
+
+    finalHealth += (finalHealth * perc / 100)
+    
     return {
-      h: finalHealth,
+      h: Math.round(finalHealth),
       d: finalDamage
     }
   },
