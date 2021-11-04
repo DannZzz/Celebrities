@@ -1055,5 +1055,35 @@
     "type": "private",
     "elements": ["legendary", "land"],
     "blockBreeding": true
+  },
+  "Tricky": {
+    "name": "Tricky",
+    "nameRus": "Хитрая",
+    "health": 500000,
+    "damage": 10000,
+    "cost": 1500,
+    "costType": "crystal",
+    "url": "https://i.ibb.co/3m9HNth/Tricky.jpg",
+    "path": "./images/heroes/Tricky.jpg",
+    "available": "Да",
+    "vip": true,
+    "upgradeCost": 1000,
+    "type": "private",
+    "elements": ["legendary", "nature"]
+  },
+  "Sleepy": {
+    "name": "Sleepy",
+    "nameRus": "Сонный",
+    "health": 500000,
+    "damage": 10000,
+    "cost": 1500,
+    "costType": "crystal",
+    "url": "https://i.ibb.co/HgT99hY/Sleepy.jpg",
+    "path": "./images/heroes/Sleepy.jpg",
+    "available": "Да",
+    "vip": true,
+    "upgradeCost": 1000,
+    "type": "private",
+    "elements": ["legendary", "land"]
   }
 }
