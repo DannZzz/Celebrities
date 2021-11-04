@@ -81,30 +81,25 @@ module.exports = {
       const myLevel = get.level;
       const myHealth = await getHeroData(bot, message.author.id, mrp).then(x => x.h);
       const myDamage = await getHeroData(bot, message.author.id, mrp).then(x => x.d);
-      let eLevel;
+      let eLevel = myLevel;
       const rand1 = Math.floor(Math.random() * 40);
-      if (rand1 > 20) {
-        if (rand1 > 27) {
-          eLevel = myLevel + 2
-        } else if (rand1 > 35) {
-          eLevel = myLevel + 4
-        } else {
-          eLevel = myLevel + 1
-        }
-      } else {
-        if (rand1 > 10) {
-          eLevel = myLevel - 1
-        } else if (rand1 >= 0) {
-          eLevel = myLevel - 2
-        }
+      let eHealth = myHealth;
+      let eDamage = myDamage;
+      
+      const trues = [true, false, false, true];
+      const randTrue = Math.floor(Math.random() * trues.length);
+
+      let addingHealth = Math.round((data2.health / 10) * (rand1 % 10));
+      let addingDamage = Math.round((data2.damage / 10) * (rand1 % 10));
+      
+      if (trues[randTrue]) {
+        addingHealth = -addingHealth;
+        addingDamage = -addingDamage;
       }
-      if (eLevel <= 1) eLevel = 2
-      let eHealth = ((eLevel - 1) * 500) + data2.health;
-      let eDamage = ((eLevel - 1) * 40) + data2.damage;
-      while (myHealth / 2 > eHealth || myDamage / 2 > eDamage) {
-        eHealth += eHealth + (500 * (eLevel * 1.5));
-        eDamage += eDamage + (40 * (eLevel * 1.5));
-      }
+      eHealth += addingHealth;
+      eDamage += addingDamage;
+      
+      
       let h1 = Math.round(eHealth)
       let h2 = Math.round(myHealth)
       let d1 = Math.round(eDamage)
