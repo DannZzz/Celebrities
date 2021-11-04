@@ -5,8 +5,6 @@ const bot = new Client({restGlobalRateLimit: 50, restWsBridgeTimeout: 0, shards:
 const fs = require('fs');
 const mongoose = require('mongoose');
 const Levels = require("discord-xp");
-const dotenv = require('dotenv');
-dotenv.config();
 
 const { addCrystal } = require("./functions/models");
 const crystalToTopOne = 50;
