@@ -89,8 +89,8 @@ module.exports = {
             let h1 = Math.round(enemy.health + (getUpgrade(enemy.type) * l) * uppingLevel);
             let d1 = Math.round(enemy.damage + (getUpgrade(enemy.type) / 10 * l) * uppingLevel);
 
-            while (h / 2 > h1) h1 += (h1 * 1.5);
-            while (d / 2 > d1) d1 += (d1 * 1.5);
+            while (h / 2 > h1) h1 += Math.round(h1 * 1.5);
+            while (d / 2 > d1) d1 += Math.round(d1 * 1.5);
             
             await rpg.updateOne({userID: user.id}, {$inc: {totalGames: 1}})
             uppingLevel += 2;
