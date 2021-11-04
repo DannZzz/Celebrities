@@ -5,6 +5,11 @@ const bot = new Client({restGlobalRateLimit: 50, restWsBridgeTimeout: 0, shards:
 const fs = require('fs');
 const mongoose = require('mongoose');
 const Levels = require("discord-xp");
+const dotenv = require('dotenv');
+dotenv.config();
+
+const { addCrystal } = require("./functions/models");
+const crystalToTopOne = 50;
 
 const MONGO = process.env.MONGO
 Levels.setURL(MONGO);
@@ -12,7 +17,7 @@ const Canvas = require('canvas')
 Canvas.registerFont(`./AlumniSans-SemiBold.ttf`, { family: "Alumni Sans"})
 
 mongoose.connect(MONGO, {useNewUrlParser: true, useUnifiedTopology: true})
-mongoose.set('useFindAndModify', false)
+mongoose.set('useFindAndModify', false);
 
 const serverModel = require("./models/serverSchema");
 const profileModel = require("./models/profileSchema");
@@ -34,7 +39,7 @@ bot.categories = fs.readdirSync("./commands/");
   require(`./handler/${handler}`)(bot);
 });
 
-bot.on('error',function(err){})
+bot.on('error',function(err){});
 
 bot.on("guildCreate", async guild => {
   let serverData = await serverModel.findOne({ serverID: guild.id });
@@ -204,6 +209,9 @@ async function runOncePerDay(){
   const asd = await hasOneDayPassed()
   if( !asd ) return;
   // your code below
+  const rpgAll = await rpg.find({userID: {$exists: true}}).sort([['totalGames', 'descending']]).exec();
+  
+  await addCrystal(rpgAll[0]["userID"], crystalToTopOne);
   await memberModel.updateMany({}, {$set: {messages: 0}})
 }
 runOncePerDay()
