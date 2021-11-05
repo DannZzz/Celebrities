@@ -6,6 +6,7 @@ const { none, main } = require("../JSON/colours.json");
 const { AGREE, DISAGREE, STAR, LEFT, RIGHT, heroNames, LEAGUE, HELL, LOADING, CRYSTAL } = require("../config");
 const { stripIndents } = require("common-tags");
 const Rate = require("./rateClass");
+const Subscription = require("./subscriptionClass");
 const { MessageEmbed, MessageActionRow, MessageSelectMenu, MessageCollector, MessageButton, MessageAttachment } = require("discord.js");
 
 
@@ -158,7 +159,12 @@ class breedingClass {
 
     async addBreeding (hero1, hero2) {
         let data = await rpgFind(this.id);
-        if (data.breeding && data.breeding.length >= 3) return error(this.msg, `${this.sd.lang === "en" ? "Wait for the breeding to end." : "Дождитесь окончания разведения."}`);
+
+        let breedingCount = 3;
+        const myBoostLevel = await Subscription(this.bot, this.msg, "Tyrus").getSubId();
+        breedingCount += myBoostLevel;
+        
+        if (data.breeding && data.breeding.length >= breedingCount) return error(this.msg, `${this.sd.lang === "en" ? "Wait for the breeding to end." : "Дождитесь окончания разведения."}`);
         if (!data.breeding) await rpg.updateOne({userID: this.id}, {$set: {breeding: []}});
         data = await rpgFind(this.id);
         const percs = {
