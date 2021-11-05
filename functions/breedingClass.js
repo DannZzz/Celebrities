@@ -178,9 +178,9 @@ class breedingClass {
         const dates = {
             common: 1000 * 60 * 5,
             elite: 60 * 60 * 1000,
-            furious: 43200 * 1000,
-            mythical: 86400 * 1000,
-            private: 86400 * 1000 * 2
+            furious: 21600 * 1000,
+            mythical:43200 * 1000,
+            private: 86400 * 1000
         };
 
         const el1 = hero1.elements;
