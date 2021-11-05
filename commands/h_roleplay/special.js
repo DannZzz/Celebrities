@@ -57,7 +57,7 @@ module.exports = {
 
     const button = new MessageButton()
     .setCustomId("specialOffer")
-    .setLabel(`${sd.lang === "en" ? `Купить за ${totalCost}` : `Buy for ${totalCost}`}`)
+    .setLabel(`${sd.lang === "ru" ? `Купить за ${totalCost}` : `Buy for ${totalCost}`}`)
     .setStyle("SECONDARY")
     .setEmoji(CRYSTAL);
 
