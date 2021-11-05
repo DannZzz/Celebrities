@@ -601,17 +601,17 @@ module.exports = {
                     },
                     {
                         name: `Classic Boost 💛`,
-                        value: '**[50₽ Monthly](https://boosty.to/iamdann/purchase/575346?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n+10% Soul of Tyrus\n+10% Soul of Ancalgon\n+5% Soul of Darius\nPrivate channel access',
+                        value: '**[50₽ Monthly](https://boosty.to/iamdann/purchase/575346?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n**+1 breeding slot**\n+10% Soul of Tyrus\n+10% Soul of Ancalgon\n+5% Soul of Darius\nPrivate channel access',
                         inline: false
                     },
                     {
                         name: `Average Boost 💚`,
-                        value: '**[100₽ Monthly](https://boosty.to/iamdann/purchase/575347?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n+15% Soul of Tyrus\n+15% Soul of Ancalgon\n+10% Soul of Darius\nPrivate channel access',
+                        value: '**[100₽ Monthly](https://boosty.to/iamdann/purchase/575347?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n**+2 breeding slot**\n+15% Soul of Tyrus\n+15% Soul of Ancalgon\n+10% Soul of Darius\nPrivate channel access',
                         inline: false
                     },
                     {
                         name: `Maximum Boost 💜`,
-                        value: '**[200₽ Monthly](https://boosty.to/iamdann/purchase/575348?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n+20% Soul of Tyrus\n+20% Soul of Ancalgon\n+15% Soul of Darius\nPrivate channel access',
+                        value: '**[200₽ Monthly](https://boosty.to/iamdann/purchase/575348?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n**+3 breeding slot**\n+20% Soul of Tyrus\n+20% Soul of Ancalgon\n+15% Soul of Darius\nPrivate channel access',
                         inline: false
                     },
                 )
