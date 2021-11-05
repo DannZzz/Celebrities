@@ -57,6 +57,14 @@ module.exports = {
 
 
 
+    "special": {
+        "desc": "Special temporary offer.",
+        "usage": "",
+        "access": "For everyone",
+    },
+
+
+
     "vote": {
         "desc": "Vote for bot.",
         "usage": "",
