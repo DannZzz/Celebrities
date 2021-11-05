@@ -318,6 +318,10 @@ function manualBreeding () {
         {
             need: ["Zero", "Ancalgon"],
             reward: ["Monster-zero"]
+        },
+        {
+            need: ["Alena", "Sleepy"],
+            reward: ["Tricky"]
         }
 
     ]
