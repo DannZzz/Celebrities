@@ -86,7 +86,7 @@ module.exports = {
       let eHealth = myHealth;
       let eDamage = myDamage;
       
-      const trues = [true, false, false, true];
+      const trues = [true, false, false, true, true, true, false];
       const randTrue = Math.floor(Math.random() * trues.length);
 
       let addingHealth = Math.round((data2.health / 10) * (rand1 % 10));
