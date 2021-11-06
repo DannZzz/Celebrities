@@ -374,7 +374,7 @@ module.exports = {
         "members": "Участники",
         "noMembers": "Пусто",
         "specN": "Укажите номер.",
-        "notLeader": "Вы не лидер гильдии",
+        "notLeader": "Вы не лидер гильдии.",
         "noApps": "Нет заявок.",
         "noHero": "Нет героя"
     },
