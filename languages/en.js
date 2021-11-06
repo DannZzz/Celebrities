@@ -1047,6 +1047,7 @@ The more fish, the higher the price!
             \`guild delete\` — Delete a guild.
             \`guild message\` — Send a message to every member of the guild.
             \`guild give (amount)\` — Use budget and give some golds to every member.
+            \`guild shop\` — Guild shop.
             `
             return text;
         },
@@ -1056,6 +1057,7 @@ The more fish, the higher the price!
         "bonusHealth": "Heroes life bonus:",
         "bonusDamage": "Heroes attack bonus:",
         "forEach": "for all member.",
+        "write": "Write the number of item, to buy it.",
         // create
         "doing": "Executing a request...",
         "name": "Enter your guild name.",
