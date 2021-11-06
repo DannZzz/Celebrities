@@ -17,6 +17,8 @@ const clanSchema = new mongoose.Schema({
   total: {type: Number, default: 0},
   wins: {type: Number, default: 0},
   war: {type: Date, default: undefined},
+  addHealth: { type: Number, default: 0 },
+  addDamage: { type: Number, default: 0 },
 });
 
 const model = mongoose.model("clans", clanSchema);
