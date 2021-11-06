@@ -98,7 +98,9 @@ module.exports = {
       }
       eHealth += addingHealth;
       eDamage += addingDamage;
-      
+
+      if (eHealth <= 0) eHealth = myHealth;
+      if (eDamage <= 0) eDamage = myDamage;
       
       let h1 = Math.round(eHealth)
       let h2 = Math.round(myHealth)
