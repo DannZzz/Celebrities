@@ -364,9 +364,9 @@ module.exports = {
 
 
     "clanModel": {
-        "noClan": "You are not a member of a clan.",
-        "clan": "You are already a member of a clan.",
-        "notClan": "Clan not found.",
+        "noClan": "You are not a member of a guild.",
+        "clan": "You are already a member of a guild.",
+        "notClan": "Guild not found.",
         "leader": "Leader:",
         "level": "Level:",
         "budget": "Budget:",
@@ -374,7 +374,7 @@ module.exports = {
         "members": "Members",
         "noMembers": "Empty",
         "specN": "Please enter a number.",
-        "notLeader": "You are not a clan leader.",
+        "notLeader": "You are not a guild leader.",
         "noApps": "There are no applications.",
         "noHero": "No hero"
     },
@@ -820,9 +820,9 @@ module.exports = {
         "status": "Status:",
         "subs": "Subscription:",
         "none": "Unknown",
-        "clan": "Clan:",
+        "clan": "Guild:",
         "level": "Level:",
-        "noclan": "Not a member of a clan.",
+        "noclan": "Not a member of a guild.",
         "quiz": "Quiz:",
         "gg": "Spouse:",
         "from": "from",
@@ -874,12 +874,12 @@ module.exports = {
 
 
     "join": {
-        "desc": "Apply to join the clan.",
-        "usage": "[number of clan]",
+        "desc": "Apply to join the guild.",
+        "usage": "[number of the guild]",
         "access": "For everyone",
         "time": time => `Try again in **${time.getMinutes()} minutes ${time.getSeconds()} seconds**.`,
-        "offed": "Applications to join this clan are disabled!",
-        "limit": "There are enough members in this clan!",
+        "offed": "Applications to join this guild are disabled!",
+        "limit": "There are enough members in this guild!",
         "done": "You have successfully submitted your application."
     },
 
@@ -975,15 +975,15 @@ The more fish, the higher the price!
 
 
 
-    "clans": {
-        "desc": "All clans in current server.",
+    "guilds": {
+        "desc": "All guilds.",
         "usage": "",
         "access": "For everyone",
         "lvl": "Lvl.",
         "members": "Members:",
         "budget": "Budget:",
-        "clans": "Server's clans",
-        "noClans": "No one clan not found."
+        "clans": "All guilds",
+        "noClans": "No one guild not found."
     },
 
 
@@ -1017,46 +1017,52 @@ The more fish, the higher the price!
 
 
 
-    "clan": {
-        "desc": "Clan information.",
+    "guild": {
+        "desc": "Guild information.",
         "usage": "[help]",
         "access": "For everyone",
         "trans": "I am translating...",
         "unk": "Unknown",
         "min": star => `The minimum amount is __10__ ${star}`,
-        "done": (val, emoji) => `You have successfully transferred __ ${val} __ ${emoji} to your clan`,
+        "done": (val, emoji) => `You have successfully transferred __ ${val} __ ${emoji} to your guild`,
         "actions": "All available functions!",
         "helpCommand": (star, clan) => {
             const text = `
-            \`clan (number)\` - Drop golds to the clan budget. (__2 ${star}__ = __1 ${clan}__)
-            \`clan create [name]\` - Create your own clan (price 5000 ${star})
-            \`clan kick [member number]\` - Kick a member out of the clan.
-            \`clan up [member number]\` - Promote member.
-            \`clan down [member number]\` - Demote member.
-            \`clan apps\` - View clan applications.
-            \`clan apps clear\` - Delete all orders.
-            \`clan apps enable\` — Enable applications for joining the clan.
-            \`clan apps disable\` — Disable applications for joining a clan.
-            \`clan reject [номер заявки]\` — Reject the member's application..
-            \`clan accept [номер заявки]\` — Accept a member to the clan..
-            \`clan upgrade (info)\` — Upgrade the clan.
-            \`clan description [текст]\` — Description for the clan.
-            \`clan logo [ссылка на лого]\` — Logo for the clan.
-            \`clan reward\` — Get daily golds.
-            \`clan leave\` — Leave the clan.
-            \`clan delete\` — Delete a clan.
-            \`clan message\` — Send a message to every member of the clan.
-            \`clan give (amount)\` — Use budget and give some golds to every member.
+            \`guild (number)\` - Drop golds to the guild budget. (__2 ${star}__ = __1 ${clan}__)
+            \`guild create [name]\` - Create your own guild (price 5000 ${star})
+            \`guild kick [member number]\` - Kick a member out of the guild.
+            \`guild up [member number]\` - Promote member.
+            \`guild down [member number]\` - Demote member.
+            \`guild apps\` - View guild applications.
+            \`guild apps clear\` - Delete all orders.
+            \`guild apps enable\` — Enable applications for joining the guild.
+            \`guild apps disable\` — Disable applications for joining a guild.
+            \`guild reject [номер заявки]\` — Reject the member's application..
+            \`guild accept [номер заявки]\` — Accept a member to the guild..
+            \`guild upgrade (info)\` — Upgrade the guild.
+            \`guild description [текст]\` — Description for the guild.
+            \`guild logo [ссылка на лого]\` — Logo for the guild.
+            \`guild reward\` — Get daily golds.
+            \`guild leave\` — Leave the guild.
+            \`guild delete\` — Delete a guild.
+            \`guild message\` — Send a message to every member of the guild.
+            \`guild give (amount)\` — Use budget and give some golds to every member.
             `
             return text;
         },
+         // shop
+        "cost": "Price:",
+        "shopName": "Guild Shop",
+        "bonusHealth": "Heroes life bonus:",
+        "bonusDamage": "Heroes attack bonus:",
+        "forEach": "for all member.",
         // create
         "doing": "Executing a request...",
-        "name": "Enter your clan name.",
-        "doneC": "You have successfully created your clan!",
+        "name": "Enter your guild name.",
+        "doneC": "You have successfully created your guild!",
         // kick
-        "noMember": "No clan member found!",
-        "uLeader": "You are the leader of the clan.",
+        "noMember": "No guild member found!",
+        "uLeader": "You are the leader of the guild.",
         "uStaff": "Can't kick employee out.",
         "kicked": name => `You have successfully kicked the member __${name}__.`,
         // apps
@@ -1065,7 +1071,7 @@ The more fish, the higher the price!
         "appsD": "Applications have been successfully disabled.",
         "appsDD": "Applications are already disabled!",
         "appsClear": "All applications were rejected.",
-        "appsError": "You are not the clan leader, or you specified something incorrectly.",
+        "appsError": "You are not the guild leader, or you specified something incorrectly.",
         "appType": {
             "m": 'Member:',
             "h": "Hero:",
@@ -1077,34 +1083,34 @@ The more fish, the higher the price!
         "rejDone": "Application was successfully rejected.",
         // accept
         "accepting": "I accept...",
-        "enoughMembers": "There are enough members in your clan, upgrade your clan.",
-        "already": "This member is already in another clan.",
+        "enoughMembers": "There are enough members in your guild, upgrade your guild.",
+        "already": "This member is already in another guild.",
         "acceptDone": "The application was successfully accepted.",
         // upgrade
-        "upLimit": "Your clan has been maximized!",
-        "upInfoTitle": "Clan upgrade information.",
-        "upInfo": (cost, emoji, space, level) => `Price - __${cost}__ ${emoji}\nNumber of maximum members: __${space}__ + __5__\n${level === 5 ? 'Clan description and logo will be available!' : ''}`,
-        "upVip": "You must have at least __VIP__ to upgrade your clan.",
+        "upLimit": "Your guild has been maximized!",
+        "upInfoTitle": "guild upgrade information.",
+        "upInfo": (cost, emoji, space, level) => `Price - __${cost}__ ${emoji}\nNumber of maximum members: __${space}__ + __5__\n${level === 5 ? 'Guild description and logo will be available!' : ''}`,
+        "upVip": "You must have at least __VIP__ to upgrade your guild.",
         "upDo": "Improving...",
         "errorRub": "Not enough rubies!",
-        "upped": level => `Clan level successfully upgraded to __${level}__.`,
+        "upped": level => `Guild level successfully upgraded to __${level}__.`,
         // description
         "descError": "Please provide a description.",
-        "clanLevel5": "This feature is available for clans with level 5 or higher.",
-        "descDone": "The clan description was successfully set.",
+        "clanLevel5": "This feature is available for guilds with level 5 or higher.",
+        "descDone": "The guild description was successfully set.",
         // logo
-        "logoDone": "The clan logo was successfully installed.",
+        "logoDone": "The guild logo was successfully installed.",
         // delete
-        "quest": "Are you sure you want to delete the clan?",
+        "quest": "Are you sure you want to delete the guild?",
         "canceled": "Action was successfully canceled",
-        "deleteDone": "You have successfully deleted your clan.",
+        "deleteDone": "You have successfully deleted your guild.",
         // reward
         "rewardTime": time => `Try again in **${time.getUTCHours()} hours ${time.getMinutes()} minutes**.`,
-        "getReward": (val, emoji) => `All clan members received each - __${val}__ ${emoji}`,
+        "getReward": (val, emoji) => `All guild members received each - __${val}__ ${emoji}`,
         // leave
-        "leaveQuest": "Are you sure you want to leave the clan?",
-        "ldCant": "Leader can't leave the clan.",
-        "leaveDone": "You have successfully left the clan.",
+        "leaveQuest": "Are you sure you want to leave the guild?",
+        "ldCant": "Leader can't leave the guild.",
+        "leaveDone": "You have successfully left the guild.",
         // up
         "uError": "You have already promoted this member.",
         "uLimit": "You already have enough employees.",
@@ -1114,9 +1120,9 @@ The more fish, the higher the price!
         "dDone": "You have successfully demoted a member.",
         // message
         "mDone": "The message was successfully sent to everyone.",
-        "mTitle": "You have a message from the clan leader",
+        "mTitle": "You have a message from the guild leader",
         // action error
-        "actionError": "Specify an action.\n\`?clan help\`"
+        "actionError": "Specify an action.\n\`guild help\`"
     },
 
     "boss": {
