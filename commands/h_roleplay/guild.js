@@ -646,6 +646,8 @@ module.exports = {
       .setColor(main)
       .setAuthor(cc.shopName)
       .setDescription(stripIndents`
+      ${cc.write}
+      
       ${cc.bonusHealth} **${addHealth}%**
       ${cc.bonusDamage} **${addDamage}%**
       `)
