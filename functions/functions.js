@@ -11,12 +11,23 @@ const {  MessageActionRow,
   MessageButton,} = require('discord.js');
 const {main, none, greenlight, reddark} = require('./../JSON/colours.json')
 const heroes = require('./../JSON/heroes.json')
-const { powersFind, powers, serverFind, mail, mailFind } = require("./models.js");
+const { powersFind, powers, serverFind, mail, mailFind, clanFind } = require("./models.js");
 
 module.exports = {
   getHeroData: async (bot, sponsorID, data) => {
     const get = data.heroes.find(x => x.name === data.item);
     const {health, damage} = get;
+
+    let healthFromClan = 0;
+    let damageFromClan = 0;
+
+    if(data.clanID) {
+      const clanData = await clanFind(data.clanID);
+
+      healthFromClan += (clanData.addHealth || 0);
+      damageFromClan += (clanData.addDamage || 0);
+    };
+    
     const server = bot.guilds.cache.get("882589567377637408");
     const hero = heroes[get.name];
     let perc = 1;
@@ -77,11 +88,13 @@ module.exports = {
     let finalHealth = Math.round(health + (health * pows.h / 100));
     let finalDamage = Math.round(damage + (damage * pows.d / 100));
 
-    finalHealth += (finalHealth * perc / 100)
+    finalHealth += (finalHealth * perc / 100);
+    finalHealth += (health * healthFromClan / 100);
+    finalDamage += (damage * damageFromClan / 100);
     
     return {
       h: Math.round(finalHealth),
-      d: finalDamage
+      d: Math.round(finalDamage)
     }
   },
 
