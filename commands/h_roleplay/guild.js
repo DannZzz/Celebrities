@@ -91,8 +91,8 @@ module.exports = {
       📈 ${cm.level} ${mc.level}
       💰 ${cm.budget} ${formatNumber(mc.budget)} ${CLAN}
       🎁 ${cm.reward} ${formatNumber(mc.level * 300)} ${mc.reward && (86400 * 1000) - (Date.now() - mc.reward) > 0 ? "<:disagree:870586968734580767>" : "<:agree:870586969606979664>"}
-      ❤ ${cc.bonusHealth} ${addHealth}
-      ⚔ ${cc.bonusDamage} ${addDamage}${mc.description ? "\n\n" + mc.description : ''}
+      ❤ ${cc.bonusHealth} ${addHealth}%
+      ⚔ ${cc.bonusDamage} ${addDamage}%${mc.description ? "\n\n" + mc.description : ''}
       
       **${cm.members} - ${a.length } / ${mc.space}**
       ${b.length !== 0 ? b.join("\n") : cm.noMembers}`)
@@ -647,7 +647,7 @@ module.exports = {
       .setAuthor(cc.shopName)
       .setDescription(stripIndents`
       ${cc.write}
-      
+
       ${cc.bonusHealth} **${addHealth}%**
       ${cc.bonusDamage} **${addDamage}%**
       `)
