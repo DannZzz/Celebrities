@@ -78,7 +78,7 @@ module.exports = {
         NAME: "Пак героев",
         NAMEEN: "Hero pack", 
         emoji: "<:HeroPack:906852510948544532>",
-        cost: 1000,
+        cost: 800,
         costType: "crystal",
         list: devHeroes
     },
