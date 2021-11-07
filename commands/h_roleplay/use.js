@@ -359,8 +359,7 @@ module.exports = {
             case "heroPack":
                 if (!rp.heroPack || rp.heroPack <= 0) return error(message, u.err);
                 rew = await getValidHero(user, ITEMS.heroPack.list);
-                const randomForPack = randomRange(1, 100);
-                while (rew && (heroes[rew]["available"] !== "Да" || heroes[rew]["costType"] === "dev" || (randomForPack < 90 && heroes[rew]["type"] === "private"))) rew = await getValidHero(user, ITEMS.heroPack.list);
+                while (rew && (heroes[rew]["available"] !== "Да" || heroes[rew]["costType"] === "dev")) rew = await getValidHero(user, ITEMS.heroPack.list);
                 if (!rew) return error(message, b.already);
                 hero = heroes[rew];
                 get = rp.heroes.find(x => x.name === hero.name)
