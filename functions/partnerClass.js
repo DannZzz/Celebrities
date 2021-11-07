@@ -1,12 +1,12 @@
-const { cardFind, bagFind, serverFind, card: cd, bag, addStar, rpgFind, partner, partnerFind, partnerFindCode } = require("./models");
+const { cardFind, bagFind, serverFind, card: cd, bag, addStar, rpgFind, partner, partnerFind, partnerFindCode, addCrystal } = require("./models");
 const { error, embed, firstUpperCase, randomRange, delay, sendToMail, pagination } = require("./functions");
 const { none, main } = require("../JSON/colours.json");
-const { AGREE, DISAGREE, STAR, LEFT, RIGHT } = require("../config");
+const { AGREE, DISAGREE, STAR, LEFT, RIGHT, CRYSTAL } = require("../config");
 const { stripIndents } = require("common-tags");
 const { MessageEmbed, MessageActionRow, MessageSelectMenu, MessageCollector, MessageButton } = require("discord.js");
 
-const donator = 35000;
-const part = 25000;
+const donator = 25;
+const part = 15;
 
 class PartnerClass {
     constructor(bot, msg) {
@@ -21,7 +21,7 @@ class PartnerClass {
     async createPartnerCode() {
         const langData = {
             en: {
-                first: "You can give this promo code to your friend or acquaintance, and if, during the subsequent donation, a person indicates your promo code, he will receive 35k gold as a bonus, and you will also receive a bonus of 25k gold for using your promo code.\n\n**Important!\nYou will not be able to use your personal code for yourself.**",
+                first: `You can give this promo code to your friend or acquaintance, and if, during the subsequent donation, a person indicates your promo code, he will receive ${donator} ${CRYSTAL} as a bonus, and you will also receive a bonus of ${part} ${CRYSTAL} for using your promo code.\n\n**Important!\nYou will not be able to use your personal code for yourself.**`,
                 already: "You already have a personal code.",
                 canceled: "Action canceled successfully.",
                 done: "You have successfully created a personal code - ",
@@ -29,7 +29,7 @@ class PartnerClass {
             },
 
             ru: {
-                first: "Вы можете дать этот промо-код своему другу или знакомому и, если при последующем донате человек укажет Ваш промо-код, то он получит - 35к голды бонусом, Вам же будет бонус в размере - 25к голды за использование вашего промо-кода.\n\n**Важно!\nВы не сможете использовать свой персональный код для себя.**",
+                first: `Вы можете дать этот промо-код своему другу или знакомому и, если при последующем донате человек укажет Ваш промо-код, то он получит - ${donator} ${CRYSTAL} бонусом, Вам же будет бонус в размере - ${part} ${CRYSTAL} за использование вашего промо-кода.\n\n**Важно!\nВы не сможете использовать свой персональный код для себя.**`,
                 already: "Вы уже имеете персональный код.",
                 canceled: "Действие успешно отменено.",
                 done: "Вы успешно создали персональный код - ",
@@ -119,7 +119,7 @@ class PartnerClass {
             .setColor(main)
             .setAuthor(this.user.username, this.user.displayAvatarURL({ dynamic: true }))
             .setTitle(bool ? "Your personal code is:" : "Твой персональный код:")
-            .setDescription(bool ? `\`${data.code}\`\n\nYou can give this promo code to your friend or acquaintance, and if, during the subsequent donation, a person indicates your promo code, he will receive 35k gold as a bonus, and you will also receive a bonus of 25k gold for using your promo code.\n\n**Important!\nYou will not be able to use your personal code for yourself.**` : `\`${data.code}\`\n\nВы можете дать этот промо-код своему другу или знакомому и, если при последующем донате человек укажет Ваш промо-код, то он получит - 35к голды бонусом, Вам же будет бонус в размере - 25к голды за использование вашего промо-кода.\n\n**Важно!\nВы не сможете использовать свой персональный код для себя.**`)
+            .setDescription(bool ? `\`${data.code}\`\n\nYou can give this promo code to your friend or acquaintance, and if, during the subsequent donation, a person indicates your promo code, he will receive ${donator} ${CRYSTAL} as a bonus, and you will also receive a bonus of ${part} ${CRYSTAL} for using your promo code.\n\n**Important!\nYou will not be able to use your personal code for yourself.**` : `\`${data.code}\`\n\nВы можете дать этот промо-код своему другу или знакомому и, если при последующем донате человек укажет Ваш промо-код, то он получит - ${donator} ${CRYSTAL} бонусом, Вам же будет бонус в размере - ${part} ${CRYSTAL} за использование вашего промо-кода.\n\n**Важно!\nВы не сможете использовать свой персональный код для себя.**`)
 
         return this.msg.reply({ embeds: [emb] });
     };
@@ -130,11 +130,11 @@ class PartnerClass {
         const user = this.bot.users.cache.get(id);
         if (!user) return error(this.msg, "Айди донатера не найден!");
         if (data.userID === id) return error(this.msg, "Айди донатера и партнера совпадает!");
-        await addStar(data.userID, part);
-        await addStar(id, donator);
+        await addCrystal(data.userID, part);
+        await addCrystal(id, donator);
 
-        await sendToMail(data.userID, {textMessage: `Вы получили ${part} ${STAR}, по персональному коду.`, createdAt: new Date()});
-        await sendToMail(id, {textMessage: `Вы получили ${donator} ${STAR}, используя промокод партнера.`, createdAt: new Date()});
+        await sendToMail(data.userID, {textMessage: `+ ${part} ${CRYSTAL}, Partner: \`${code}\`.`, createdAt: new Date()});
+        await sendToMail(id, {textMessage: `+ ${donator} ${CRYSTAL}, Partner: \`${code}\`.`, createdAt: new Date()});
         this.msg.react(AGREE);
     }
 
