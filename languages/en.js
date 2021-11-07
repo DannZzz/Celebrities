@@ -681,7 +681,7 @@ module.exports = {
                 .addField(`${item.heroPack.emoji} ${item.heroPack.NAMEEN} : ${item.heroPack.cost} ${CRYSTAL}`, `Open and get one random hero.`)
                 .addField(`${item.tempPack.emoji} ${item.tempPack.NAMEEN} : ${item.tempPack.cost} ${HELL.candy} __available until 11/30/2021__`, `Open and get one of these Temporary heroes: \`${item.tempPack.list.join(", ")}\``)
                 .addField(`${item.donateBox.emoji} ${item.donateBox.NAMEEN} : ${rubToDollar(15, formatNumber)}`, `Open and get ${item.donateBox.winEN}`)
-                .addField(`${item.goldBox.emoji} ${item.goldBox.NAMEEN} : ${rubToDollar(25, formatNumber)}`, `Open and get: __150-500__ ${item.box.emoji} or __Premium Status__`)
+                .addField(`${item.goldBox.emoji} ${item.goldBox.NAMEEN} : ${rubToDollar(25, formatNumber)}`, `Open and get: __50-250__ ${CRYSTAL}`)
 
         }
     },

@@ -679,7 +679,7 @@ module.exports = {
                 .addField(`${item.heroPack.emoji} ${item.heroPack.NAME} : ${item.heroPack.cost} ${CRYSTAL}`, `Откройте и получите одного любого героя.`)
                 .addField(`${item.halloween.emoji} ${item.halloween.NAME} : ${item.halloween.cost} ${HELL.candy} __доступен до 30.11.2021__`, `Откройте и получите одного из этих временных героев: \`${item.halloween.validList.map(i => heroes[i].nameRus).join(", ")}\` или ничего`)
                 .addField(`${item.donateBox.emoji} ${item.donateBox.NAME} : ${rubToDollar(15, formatNumber, "ru")}`, `Откройте и получите ${item.donateBox.winRU}`)
-                .addField(`${item.goldBox.emoji} ${item.goldBox.NAME} : ${rubToDollar(25, formatNumber, "ru")}`, `Откройте и получите:  __150-500__ ${item.box.emoji} или __Премиум Статус__`)
+                .addField(`${item.goldBox.emoji} ${item.goldBox.NAME} : ${rubToDollar(25, formatNumber, "ru")}`, `Откройте и получите:  __50-250__ ${CRYSTAL}`)
 
         }
     },
