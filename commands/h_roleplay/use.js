@@ -356,6 +356,29 @@ module.exports = {
                 
                 
                 return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name));
+            case "heroPack":
+                if (!rp.heroPack || rp.heroPack <= 0) return error(message, u.err);
+                rew = await getValidHero(user, ITEMS.heroPack.list);
+                const randomForPack = randomRange(1, 100);
+                while (rew && (heroes[rew]["available"] !== "Да" || heroes[rew]["costType"] === "dev" || (randomForPack < 90 && heroes[rew]["type"] === "private"))) rew = await getValidHero(user, ITEMS.heroPack.list);
+                if (!rew) return error(message, b.already);
+                hero = heroes[rew];
+                get = rp.heroes.find(x => x.name === hero.name)
+                if (get) return error(message, b.already)
+                
+                await rpg.updateOne({userID: user.id}, {$inc: {heroPack: -1}});
+                await rpg.updateOne({userID: user.id}, {$set: {item: hero.name}});
+                
+                await rp.heroes.push({
+                name: hero.name,
+                health: hero.health,
+                damage: hero.damage,
+                level: 1
+                })
+                rp.save();
+                
+                
+                return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name));
             case "donateBox":
                 if (!rp.donateBox || rp.donateBox <= 0) return error(message, u.err);
                 const random1 = Math.round(randomRange(50000, 200000));

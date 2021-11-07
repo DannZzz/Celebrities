@@ -45,6 +45,7 @@ module.exports = {
     .addField(`${items.pack1.emoji} ${LANG.lang === "en" ? items.pack1.NAMEEN : items.pack1.NAME}:`, `${rp["pack1"] || 0}`, true)
     .addField(`${items.pack2.emoji} ${LANG.lang === "en" ? items.pack2.NAMEEN : items.pack2.NAME}:`, `${rp["pack2"] || 0}`, true)
     .addField(`${items.pack3.emoji} ${LANG.lang === "en" ? items.pack3.NAMEEN : items.pack3.NAME}:`, `${rp["pack3"] || 0}`, true)
+    .addField(`${items.heroPack.emoji} ${LANG.lang === "en" ? items.heroPack.NAMEEN : items.heroPack.NAME}:`, `${rp["heroPack"] || 0}`, true)
     .addField(`${items.tempPack.emoji} ${LANG.lang === "en" ? items.tempPack.NAMEEN : items.tempPack.NAME}:`, `${rp["tempPack"] || 0}`, true)
     .addField(`${items.donateBox.emoji} ${LANG.lang === "en" ? items.donateBox.NAMEEN : items.donateBox.NAME}:`, `${rp["donateBox"] || 0}`, true)
     .addField(`${items.goldBox.emoji} ${LANG.lang === "en" ? items.goldBox.NAMEEN : items.goldBox.NAME}:`, `${rp["goldBox"] || 0}`, true)

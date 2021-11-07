@@ -121,6 +121,18 @@ module.exports = {
               await event.updateOne({userID: user.id}, {$inc: {candyBox: count}});
               await addCandy(user.id, -amount);
               return embed(message, cc.done2);
+            } else if (need.costType && need.costType === "crystal") {
+              const random = Math.ceil(Math.random() * 5);
+              const mm = await message.channel.send(cc.wait);
+              await delay(random * 1000)
+              mm.delete();
+
+              const newData = await bagFind(user.id);
+              if (amount > newData.crystal) return error(message, noCrystal);
+              await rpg.updateOne({userID: user.id}, {$inc: {[need.name]: count}});
+              await addCrystal(user.id, -amount);
+              return embed(message, cc.done2);
+              
             }
 
             const newRow = await getCardMenu(message);
@@ -402,6 +414,7 @@ async function getCardMenu(msg) {
   }
 
   const myData = await bagFind(msg.author.id);
+  
   options.unshift(
     {
       label: ln.lang === "en" ? "Golds" : "Голды",
