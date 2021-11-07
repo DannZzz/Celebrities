@@ -4,8 +4,8 @@ const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageSelectMenu, MessageActionRow, MessageEmbed } = require("discord.js");
-const { COIN, AGREE, STAR } = require("../../config");
-const { event, eventFind, addStar, bagFind, rpgFind } = require("../../functions/models");
+const { COIN, AGREE, STAR, CRYSTAL } = require("../../config");
+const { event, eventFind, addStar, bagFind, rpgFind, addCrystal } = require("../../functions/models");
 const {error, embed, perms, firstUpperCase, randomRange} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
@@ -387,7 +387,12 @@ module.exports = {
                 return embed(message, `${random1} ${STAR}`, false);
             case "goldBox":
                 if (!rp.goldBox || rp.goldBox <= 0) return error(message, u.err);
-                return await donateReward(message, user.id, ITEMS.goldBox.list, LANG.lang);
+                const random2 = Math.round(randomRange(50, 250));
+                await rpg.updateOne({userID: user.id}, {$inc: {goldBox: -1}});
+
+                await addCrystal(user.id, random2)
+                return embed(message, `${random2} ${CRYSTAl}`, false);
+                //return await donateReward(message, user.id, ITEMS.goldBox.list, LANG.lang);
         }
     });
 
