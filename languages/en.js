@@ -678,6 +678,7 @@ module.exports = {
                 .addField(`${item.pack1.emoji} ${item.pack1.NAMEEN} : ${item.pack1.cost} ${STAR}`, `Open and get one of these common heroes: \`${item.pack1.list.join(", ")}\``)
                 .addField(`${item.pack2.emoji} ${item.pack2.NAMEEN} : ${item.pack2.cost} ${STAR}`, `Unlock and get one of these elite heroes: \`${item.pack2.list.join(", ")}\``)
                 .addField(`${item.pack3.emoji} ${item.pack3.NAMEEN} : ${item.pack3.cost} ${STAR}`, `Open and get one of these Premium heroes: \`${item.pack3.list.join(", ")}\``)
+                .addField(`${item.heroPack.emoji} ${item.heroPack.NAMEEN} : ${item.heroPack.cost} ${CRYSTAL}`, `Open and get one random hero.`)
                 .addField(`${item.tempPack.emoji} ${item.tempPack.NAMEEN} : ${item.tempPack.cost} ${HELL.candy} __available until 11/30/2021__`, `Open and get one of these Temporary heroes: \`${item.tempPack.list.join(", ")}\``)
                 .addField(`${item.donateBox.emoji} ${item.donateBox.NAMEEN} : ${rubToDollar(15, formatNumber)}`, `Open and get ${item.donateBox.winEN}`)
                 .addField(`${item.goldBox.emoji} ${item.goldBox.NAMEEN} : ${rubToDollar(25, formatNumber)}`, `Open and get: __150-500__ ${item.box.emoji} or __Premium Status__`)
