@@ -19,6 +19,7 @@ const rpgSchema = new mongoose.Schema({
   pack1: { type: Number, default: 0 },
   pack2: { type: Number, default: 0 },
   pack3: { type: Number, default: 0 },
+  heroPack: { type: Number, default: 0 },
   megabox: { type: Number, default: 0 },
   tempPack: { type: Number, default: 0 },
   donateBox: { type: Number, default: 0 },
