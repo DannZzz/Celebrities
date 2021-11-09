@@ -6,7 +6,6 @@ const memberModel = require("../../models/memberSchema");
 const begModel = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const vipModel = require("../../models/vipSchema");
-const customModel = require("../../models/customSchema");
 const {error, embed, makeTimestamp} = require("../../functions/functions");
 const {main, none, reddark} = require('../../JSON/colours.json');
 const { RateLimiter } = require('discord.js-rate-limiter');

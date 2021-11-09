@@ -16,7 +16,6 @@
     "nodemon": "^2.0.12"
   },
   "dependencies": {
-    "@top-gg/sdk": "^3.1.2",
     "amethyste-api": "^1.1.5",
     "axios": "^0.22.0",
     "canvas": "^2.8.0",
@@ -26,7 +25,6 @@
     "discord.js": "^13.1.0",
     "discord.js-rate-limiter": "^1.2.0",
     "donationalerts-api": "^1.1.0",
-    "express": "^4.17.1",
     "fs": "0.0.1-security",
     "giphy-api": "^2.0.2",
     "moment": "^2.29.1",

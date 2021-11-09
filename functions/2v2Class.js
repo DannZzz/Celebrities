@@ -1,5 +1,5 @@
 const { rpg, profile, profileFind, cardFind, bagFind, serverFind, card: cd, addStar, rpgFind, addPremiumStar, addCandy, addCount } = require("./models");
-const { error, embed, firstUpperCase, randomRange, delay, sendToMail, pagination, getMember, getHeroData, makeTimestamp } = require("./functions");
+const { error, embed, firstUpperCase, randomRange, delay, sendToMail, pagination, getMember, getHeroData, makeTimestamp, missingArgument } = require("./functions");
 const heroes = require("../JSON/heroes.json");
 const { none, main } = require("../JSON/colours.json");
 const { AGREE, DISAGREE, STAR, LEFT, RIGHT, heroNames, LEAGUE, HELL, LOADING } = require("../config");
@@ -38,7 +38,7 @@ class pvpClass {
     async start(MEMBER = false) {
         const member = getMember(this.msg, MEMBER);
         const sd = await serverFind(this.server.id);
-        const { and, battle: b, timeOut, ERROR, interError, buttonYes, buttonNo, again, heroModel: hm } = require(`../languages/${sd.lang || "ru"}`);
+        const { and, battle: b, timeOut, ERROR, interError, buttonYes, buttonNo, again, heroModel: hm, "2v2": vv } = require(`../languages/${sd.lang || "ru"}`);
         const l = LANG[sd.lang || "ru"];
 
         const bag = await bagFind(this.id);
@@ -51,7 +51,7 @@ class pvpClass {
             return error(this.msg, again + ` <t:${makeTimestamp(pd.pvp2.getTime())}:R>`);
         }
         
-        if (member.id === this.id) return error(this.msg, l["membError"]);
+        if (!member || member.id === this.id) return await missingArgument(this.msg, l["membError"], `2v2 ${vv.usage}`, this.bot.commands.get("2v2").config.examples);
 
         const rp1 = await rpgFind(this.id);
         if (!rp1 || !rp1.item) return error(this.msg, h.noHero);

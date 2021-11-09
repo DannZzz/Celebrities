@@ -695,7 +695,7 @@ module.exports = {
         "t1": "Hello! I am",
         "t2": "My global prefix:",
         "t3": "My prefix on this server is:",
-        "t4": "More information:",
+        "t4": "You can view all information about the team by writing:",
         "t5": "Number of commands:",
         "info": "Information",
         "vip": "VIP",

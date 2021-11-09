@@ -1,7 +1,6 @@
 const rpg = require("../models/rpgSchema");
 const bag = require("../models/begSchema");
 const clan = require("../models/clanSchema");
-const custom = require("../models/customSchema");
 const marry = require("../models/marry");
 const member = require("../models/memberSchema");
 const profile = require("../models/profileSchema");
@@ -23,7 +22,6 @@ module.exports = {
     rpg,
     bag,
     clan,
-    custom,
     marry,
     profile,
     member,

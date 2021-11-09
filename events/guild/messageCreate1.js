@@ -6,7 +6,6 @@ const memberModel = require("../../models/memberSchema");
 const begModel = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const vipModel = require("../../models/vipSchema");
-const customModel = require("../../models/customSchema");
 const queue2 = new Map();
 const queue3 = new Map();
 const queue = new Map();
@@ -22,9 +21,11 @@ const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 2000);
 let msgLimiter = new RateLimiter(1, 2000);
 const Rate = require("../../functions/rateClass.js");
-const {bans, bansFind} = require("../../functions/models");
+const {bans, bansFind, addCrystal} = require("../../functions/models");
 const buy2 = new Map();
 const Bank = require("../../functions/bankClass")
+
+const { vote } = require('../../rewards.json');
 
 const cardCommandsBlock = ["battle", "slot", "upgrade", "clan", "buy", "gift", "take", "close", "gcard", "send", "bank"];
 
@@ -33,6 +34,13 @@ const cooldowns = new Map();
 module.exports = async (bot, messageCreate) => {
   try {
   let message = messageCreate;
+  if (message.channel.id === "897201817526612028") {
+    try {
+      await addCrystal(message.embeds[0]["title"], vote);
+    } catch (error) {
+      console.log("error voting");
+    }
+  }
   if (message.author.bot) return
   const getLang = require("../../models/serverSchema");
   const LANG = await getLang.findOne({serverID: message.guild.id});
@@ -130,12 +138,8 @@ module.exports = async (bot, messageCreate) => {
       
       commandfile.run(bot, message, args, ops)
     }//.catch(()=> message.react("❌"))}
-  else if (!serverData.disabledChannels.includes(message.channel.id)) {await customModel.findOne({serverID: message.guild.id, command: cmd}, async(err, data) =>{
-  if(err) throw Error();
-  if(data) return message.channel.send({embeds: [ss.setDescription(data.content)]}).catch(()=> message.react("❌"));
-  else return
-  }
-  )}
+
+ 
   } catch (e) {
         console.log(e);
   

@@ -185,11 +185,44 @@ module.exports = {
     }
     return msg.channel.send({embeds: [Emb]})
   },
+
+  missingArgument: async (msg, description, usage = "", examples = []) => {
+    const sd = await serverFind(msg.guild.id);
+    
+    const Emb = new MessageEmbed()
+    .setColor(reddark)
+    .setDescription(DISAGREE + " " + description)
+    .addField(sd.lang === "en" ? "Usage" : "Применение", `\`${usage}\``)
+    .addField(sd.lang === "en" ? "Examples" : "Примеры", `\`${examples.join("\n")}\``)
+
+    return msg.reply({embeds: [Emb]}).then(message => setTimeout(() => message.delete(), 30000))
+  },
+  
   error: function (msg, text = 'Ошибка') {
     const Emb = new MessageEmbed()
     .setColor(reddark)
     //.setAuthor(msg.author.username, msg.author.displayAvatarURL({dynamic: true}))
     .setDescription(`${DISAGREE} ${text}`)
+
+    function _getCallerFile() {
+      try {
+          var err = new Error();
+          var callerfile;
+          var currentfile;
+  
+      Error.prepareStackTrace = function (err, stack) { return stack; };
+  
+      currentfile = err.stack.shift().getFileName();
+  
+      while (err.stack.length) {
+          callerfile = err.stack.shift().getFileName();
+  
+          if(currentfile !== callerfile) return callerfile;
+      }
+    } catch (err) {}
+    return undefined;  
+    }
+   
 
     const button = new MessageButton()
       .setStyle("LINK")
@@ -199,7 +232,7 @@ module.exports = {
     const row = new MessageActionRow().addComponents([button]);
     
     msg.react(DISAGREE)
-    return msg.reply({embeds: [Emb]}).then(message => setTimeout(() => message.delete(), 30000))
+    return msg.reply({embeds: [Emb]}).then(message => setTimeout(() => message.delete(), 15000))
   },
   progressBar: function (perc, ofMaxValue, size, line = '❤', slider = '🖤') {
   if (!perc) throw new Error('Perc value is either not provided or invalid');
