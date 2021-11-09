@@ -10,7 +10,8 @@ module.exports = {
     name: "2v2",
     category: "h_roleplay",
     aliases: ["2vs2", "2на2"],
-    cooldown: 16
+    cooldown: 16,
+    examples: ["2v2 @Dann#0006", "2v2 382906068319076372"]
   },
   run: async (bot, msg, args, ops) => {
 

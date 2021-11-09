@@ -6,7 +6,7 @@ const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment } = require("discord.js");
 const { COIN, STAR, LEAGUE, HELL, heroNames } = require("../../config");
 const { addCandy, addPremiumStar, addCount } = require("../../functions/models");
-const { error, embed, perms, roundFunc, getHeroData, randomRange } = require("../../functions/functions");
+const { error, embed, perms, roundFunc, getHeroData, randomRange, missingArgument } = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 10000);
 const Canvas = require('canvas');
@@ -17,9 +17,10 @@ module.exports = {
     name: "battle",
     aliases: ["битва"],
     category: 'h_roleplay',
-    cooldown: 30
+    cooldown: 30,
+    examples: ["battle 100"]
   },
-  run: async (bot, message, args, ops) => {
+  run: async function (bot, message, args, ops) {
     const now = ops.games.get(message.author.id);
     if (now) return;
     ops.games.set(message.author.id, { battling: "on" });
@@ -42,11 +43,12 @@ module.exports = {
 
       return error(message, b.time(time));
     }
+    let text = `${this.config.name} ${b.usage}`, examples = this.config.examples;
     let a = Math.round(Math.random() * 6) + 1
     let mgs = await message.channel.send(`<a:dannloading:876008681479749662> ${b.find}`)
     setTimeout(async function () {
       mgs.delete()
-      if (!args[0] || isNaN(args[0])) return error(message, b.bet);
+      if (!args[0] || isNaN(args[0])) return await missingArgument(message, b.bet, text, examples);
       let value = Math.floor(args[0])
 
       if (value < 1) return error(message, b.min);

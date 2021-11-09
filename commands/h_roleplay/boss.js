@@ -6,7 +6,7 @@ const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageAttachment, MessageButton, MessageActionRow } = require("discord.js");
 const { COIN, STAR, AGREE } = require("../../config");
-const {error, embed, perms, delay, getHeroData} = require("../../functions/functions");
+const {error, embed, perms, delay, getHeroData, missingArgument} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 const { addPremiumStar } = require("../../functions/models");
 let rateLimiter = new RateLimiter(1, 3000);
@@ -18,9 +18,10 @@ module.exports = {
     name: "boss",
     aliases: ['босс'],
     category: 'h_roleplay',
-    cooldown: 15
+    cooldown: 15,
+    examples: ["boss @Dann @Darius", "boss 382906068319076372 726784476377514045"]
   },
-  run: async (bot, message, args) => {
+  run: async function (bot, message, args) {
    
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
@@ -40,7 +41,7 @@ module.exports = {
 
         return error(message, b.time(time));
     }
-    if (!args[0]) return error(message, b.error);
+    if (!args[0]) return await missingArgument(message, b.error, `${this.config.name} ${b.usage}`, this.config.examples);
     const user1 = message.mentions.members.first() || message.guild.members.cache.get(args[0])
     if(!user1) return error(message, notUser);
     if(user1.user.bot) return error(message, b.error1);
@@ -48,7 +49,7 @@ module.exports = {
     if(user1.id === mUser.id) return error(message, b.error1);
     let count = 0;
 
-    if(!args[1]) return error(message, specify);
+    if(!args[1]) return await missingArgument(message, specify, `${this.config.name} ${b.usage}`, this.config.examples);
     const user2 = message.mentions.members.last() || message.guild.members.cache.get(args[1]);
     if(!user2) return error(message, notUser);
     if(user2.id === user1.id) return error(message, b.error1)
