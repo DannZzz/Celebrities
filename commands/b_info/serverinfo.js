@@ -1,6 +1,6 @@
 const { MessageEmbed } = require("discord.js");
 const { main, none } = require("../../JSON/colours.json");
-const { profile, profileFind, serverFind, bagFind, custom: omg } = require("../../functions/models");
+const { profile, profileFind, serverFind, bagFind } = require("../../functions/models");
 const {error, embed, perms, makeTimestamp} = require("../../functions/functions");
 const moment = require('moment');
 
@@ -52,11 +52,7 @@ module.exports = {
           .setTimestamp()
           .setColor(main)
 
-          const data = await omg.find({serverID: message.guild.id});
-          const filteredData = data.filter(function({command}) {
-            return command
-          }).map(({command}) => command).join(', ')
-          if(filteredData.length !== 0) serverembed.addField(s.f11, '' + filteredData + '', false)
+          
           if (server.banner) serverembed.setImage(server.bannerURL({dynamic: true}) + "?size=4096")
           return message.channel.send({embeds: [serverembed]});
         }
