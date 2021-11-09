@@ -79,7 +79,7 @@ module.exports = {
 
             const legCount = get(obj.heroes);
             const name = bot.users.cache.get(obj.userID) ?  bot.users.cache.get(obj.userID).tag : (LANG.lang === "en" ? "Unknown" : "Неизвестный");
-            return `**${emoji} ${position} ${name}** | ${legCount} ${elements["legendary"]["emoji"]} | ${obj.heroes.length} ${HERO}`; 
+            return `**${emoji} ${position}${name}** | ${legCount} ${elements["legendary"]["emoji"]} | ${obj.heroes.length} ${HERO}`; 
         });
 
         const emb2 = new MessageEmbed()

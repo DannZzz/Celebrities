@@ -1,15 +1,16 @@
 const {MessageEmbed} = require('discord.js');
 const { main, none } = require("../../JSON/colours.json");
 const { profile, profileFind, serverFind } = require("../../functions/models");
-const {error, embed, perms} = require("../../functions/functions");
+const {error, embed, perms, missingArgument} = require("../../functions/functions");
 
 module.exports = {
   config: {
     name: 'message',
     aliases: ["bug", 'сообщение'],
-    category: 'b_info'
+    category: 'b_info',
+    examples: ["bug I have found a bug!"]
   },
-  run: async (bot, message, args) => {
+  run: async function (bot, message, args) {
     const LANG = await serverFind(message.guild.id);
     const {message: m} = require(`../../languages/${LANG.lang}`);
     
@@ -30,7 +31,7 @@ module.exports = {
       let time = new Date(timeout - (Date.now() - author));
       return error(message, m.time(time));
     } else {
-      if(!args[0]) return error(message, m.error);
+      if(!args[0]) return await missingArgument(message, m.error, `${this.config.name} ${m.usage}`, this.config.examples);
       embed(message, m.done)
       toChannel.send({embeds: [emb.setDescription(
         `

@@ -17,7 +17,7 @@ module.exports = {
     
     if (args[0]) {
         ops.cards.set(msg.author.id, {get: "true"});
-        setTimeout(() => {ops.cards.delete(msg.author.id)}, 32000)
+        setTimeout(() => {ops.cards.delete(msg.author.id)}, 35000)
         if (cardLink.includes(args[0].toLowerCase())) {
           await Bank(bot, msg, sd).linkCard(args[1]);
           return 

@@ -20,7 +20,7 @@ module.exports = {
 
     const emb = new MessageEmbed()
     .setColor(main)
-    .setDescription(sd.lang === "en" ? `Vote [here](https://discordbotlist.com/bots/adana/upvote) and get 15 ${CRYSTAL}!` : `Голосуй [тут](https://discordbotlist.com/bots/adana/upvote) и получи 15 ${CRYSTAL}!`)
+    .setDescription(sd.lang === "en" ? `Vote [here](https://top.gg/bot/726784476377514045/vote) and get 15 ${CRYSTAL}!` : `Голосуй [тут](https://top.gg/bot/726784476377514045/vote) и получи 15 ${CRYSTAL}!`)
 
     return msg.reply({embeds: [emb]});
 

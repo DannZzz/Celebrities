@@ -2,7 +2,7 @@ const { main } = require('../../JSON/colours.json');
 const Team = require("../../functions/teamClass");
 const { CLAN } = require("../../config");
 const { MessageEmbed } = require("discord.js");
-const {error, firstUpperCase} = require("../../functions/functions");
+const {error, firstUpperCase, missingArgument} = require("../../functions/functions");
 const {serverFind, rpgFind, clanFind} = require("../../functions/models");
 const heroes = require('../../JSON/heroes.json');
 
@@ -10,9 +10,10 @@ module.exports = {
   config: {
     name: "war",
     aliases: ['война'],
-    category: 'cards'
+    category: 'cards',
+    examples: ["war 6 15000", "war 3 33000"]
   },
-  run: async (bot, msg, args, ops) => {
+  run: async function (bot, msg, args, ops) {
     const curr = ops.games.get(msg.author.id);
     if (curr) return;
 
@@ -34,9 +35,9 @@ module.exports = {
       return error(msg, cm.noClan);
     }
     
-    if (!args[0]) return error(msg, cm.specN), ops.games.delete(msg.author.id);;
-    if (!args[1] || isNaN(args[1])) return error(msg, w.bet), ops.games.delete(msg.author.id);;
-    if (Math.round(args[1]) > 50000 || Math.round(args[1]) <= 10) return error(msg, w.betError+` ${CLAN}`), ops.games.delete(msg.author.id);;
+    if (!args[0]) return await missingArgument(msg, cm.specN, `${this.config.name} ${w.usage}`, this.config.examples), ops.games.delete(msg.author.id);
+    if (!args[1] || isNaN(args[1])) return await missingArgument(msg, w.bet, `${this.config.name} ${w.usage}`, this.config.examples), ops.games.delete(msg.author.id);
+    if (Math.round(args[1]) > 50000 || Math.round(args[1]) <= 10) return await missingArgument(msg, w.betError+` ${CLAN}`, `${this.config.name} ${w.usage}`, this.config.example), ops.games.delete(msg.author.id);;
     await Team(msg).startBattle(args[0], Math.round(args[1]))
     return setTimeout( () => {
       ops.games.delete(msg.author.id);
