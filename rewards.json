@@ -1,5 +1,6 @@
 {
     "vote": 15,
+    "voteGoal": 700,
     "partnerServer" : {
         "requiredCountOfMembers": 15,
         "reward": 150
