@@ -21,11 +21,11 @@ const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 2000);
 let msgLimiter = new RateLimiter(1, 2000);
 const Rate = require("../../functions/rateClass.js");
-const {bans, bansFind, addCrystal} = require("../../functions/models");
+const {bans, bansFind, addCrystal, voteFind, vote: v} = require("../../functions/models");
 const buy2 = new Map();
 const Bank = require("../../functions/bankClass")
 
-const { vote } = require('../../rewards.json');
+const { vote, voteGoal } = require('../../rewards.json');
 
 const cardCommandsBlock = ["battle", "slot", "upgrade", "clan", "buy", "gift", "take", "close", "gcard", "send", "bank"];
 
@@ -37,6 +37,10 @@ module.exports = async (bot, messageCreate) => {
   if (message.channel.id === "897201817526612028") {
     try {
       await addCrystal(message.embeds[0]["title"], vote);
+      let Vote = await voteFind(message.embeds[0]["title"]);
+      await v.updateOne({userID: message.embeds[0]["title"]}, {$set: {topggDate: new Date(Date.now() + (3600000 * 12))}, $inc: {topggCount: 1}});
+      Vote = await voteFind(message.embeds[0]["title"]);
+      if (Vote.topggCount !== 0 && Vote.topggCount % 10 === 0) await addCrystal(message.embeds[0]["title"], voteGoal);
     } catch (error) {
       console.log("error voting");
     }
