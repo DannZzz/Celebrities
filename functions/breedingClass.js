@@ -322,6 +322,10 @@ function manualBreeding () {
         {
             need: ["Alena", "Sleepy"],
             reward: ["Tricky"]
+        },
+        {
+            need: ["Arun", "Montra"],
+            reward: ["Poseidon"]
         }
 
     ]
