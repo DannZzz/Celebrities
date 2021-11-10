@@ -2,8 +2,6 @@ const Rate = require("../../functions/rateClass");
 const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js');
 const { main } = require('../../JSON/colours.json');
 const { HELL, COIN, BANK, STAR, status, CRYSTAL, devID, adminID } = require('../../config');
-const Levels = require("discord-xp");
-Levels.setURL(process.env.MONGO);
 const devs = ["382906068319076372"];
 const moment = require('moment');
 const { formatNumber } = require("../../functions/functions");
@@ -22,7 +20,7 @@ module.exports = {
     const { crystal, profile: p, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar } = require(`../../languages/${LANG.lang}`);
 
     let member = await message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(r => r.user.username.toLowerCase() === args.join(' ').toLocaleLowerCase()) || message.guild.members.cache.find(r => r.displayName.toLowerCase() === args.join(' ').toLocaleLowerCase()) || message.member;
-    let person = await Levels.fetch(member.user.id, message.guild.id, true)
+  
     let embed = new MessageEmbed()
       .setColor(main)
       .setAuthor(`${p.pr} ` + member.user.tag, member.user.displayAvatarURL({ dynamic: true }))
