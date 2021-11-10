@@ -4,13 +4,14 @@ const {PREFIX} = require('./config')
 const bot = new Client({restGlobalRateLimit: 50, restWsBridgeTimeout: 0, shards: "auto", restTimeOffset: 0, allowedMentions: { parse: [], repliedUser: false}, intents: [Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] });
 const fs = require('fs');
 const mongoose = require('mongoose');
-const Levels = require("discord-xp");
+
+const dotenv = require('dotenv');
+dotenv.config();
 
 const { addCrystal } = require("./functions/models");
 const crystalToTopOne = 50;
 
 const MONGO = process.env.MONGO
-Levels.setURL(MONGO);
 const Canvas = require('canvas')
 Canvas.registerFont(`./AlumniSans-SemiBold.ttf`, { family: "Alumni Sans"})
 
@@ -149,14 +150,6 @@ bot.on('messageCreate', async message => {
         server.save()}
 
         prefix = serverData.prefix;
-        const server = await serverModel.findOne( {serverID: message.guild.id});
-        if (server.rank) {
-          let random = Math.floor(Math.random() * 4) + 1;
-          if (message.author.bot) return;
-          if (message.channel.type === "DM") return;
-          await Levels.appendXp(message.author.id, message.guild.id, random);
-
-        }
 
       } catch (e) {
           console.log('error')

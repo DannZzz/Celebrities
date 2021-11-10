@@ -1,3 +1,7 @@
 {
-    "vote": 15
+    "vote": 15,
+    "partnerServer" : {
+        "requiredCountOfMembers": 15,
+        "reward": 150
+    }
 }
