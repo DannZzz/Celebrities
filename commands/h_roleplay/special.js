@@ -96,7 +96,7 @@ module.exports = {
         rp.heroes.push({
           name: hd1.name,
           health: hd1.health,
-          damage: hd1.health,
+          damage: hd1.damage,
           level: 1
         });
       };
@@ -105,7 +105,7 @@ module.exports = {
         rp.heroes.push({
           name: hd2.name,
           health: hd2.health,
-          damage: hd2.health,
+          damage: hd2.damage,
           level: 1
         })
       };
