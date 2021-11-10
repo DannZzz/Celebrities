@@ -4,6 +4,7 @@ const clanSchema = new mongoose.Schema({
   owner: { type: String, unique: true},
   ID: { type: String, unique: true},
   name: { type: String},
+  premium: { type: Boolean, default: false },
   level: { type: Number, default: 1},
   space: { type: Number, default: 5},
   reward: { type: Number, default: 0},
