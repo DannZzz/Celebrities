@@ -635,7 +635,7 @@ module.exports = {
       const addHealth = getCl.addHealth || 0;
       const addDamage = getCl.addDamage || 0;
       const adding = 0.2;
-      const cost = 100000;
+      const cost = 100000; //
 
       const hero = {
         name: "Humanoid",
@@ -674,6 +674,7 @@ module.exports = {
             const newClanData = await clanFind(rp.clanID);
 
             if (newClanData.budget < cost) return error(message, cc.errorRub);
+            if (!newClanData.premium && newClanData.addHealth >= 40) return error(message, cc.notAvailableLimit);
 
             await clan.updateOne({ID: rp.clanID}, {$inc: {
               addHealth: adding,
@@ -684,6 +685,7 @@ module.exports = {
             const newClanData = await clanFind(rp.clanID);
 
             if (newClanData.budget < cost) return error(message, cc.errorRub);
+            if (!newClanData.premium && newClanData.addDamage >= 40) return error(message, cc.notAvailableLimit);
 
             await clan.updateOne({ID: rp.clanID}, {$inc: {
               addDamage: adding,
