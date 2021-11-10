@@ -20,7 +20,7 @@ module.exports = {
     const user = msg.author;
     const channel = msg.channel;
 
-    const her = ["Alena", "Sleepy"];
+    const her = ["Arun", "Montra"];
     const sd = await serverFind(server.id);
 
     let rp = await rpgFind(user.id);
@@ -32,7 +32,7 @@ module.exports = {
     
     const hd1 = heroes[her[0]];
     const hd2 = heroes[her[1]];
-    const hd3 = heroes["Tricky"];
+    const hd3 = heroes["Poseidon"];
 
     let firstText = `${sd.lang === "en" ? hd1.name : hd1.nameRus} - ~~${hd1.cost}~~ ${hd1.cost / 2} ${CRYSTAL}`;
     let secondText = `${sd.lang === "en" ? hd2.name : hd2.nameRus} - ~~${hd2.cost}~~ ${hd2.cost / 2} ${CRYSTAL}`;
