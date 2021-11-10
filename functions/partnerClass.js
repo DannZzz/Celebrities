@@ -1,7 +1,8 @@
-const { cardFind, bagFind, serverFind, card: cd, bag, addStar, rpgFind, partner, partnerFind, partnerFindCode, addCrystal } = require("./models");
-const { error, embed, firstUpperCase, randomRange, delay, sendToMail, pagination } = require("./functions");
+const { server, cardFind, bagFind, serverFind, card: cd, bag, addStar, rpgFind, partner, partnerFind, partnerFindCode, addCrystal } = require("./models");
+const { error, embed, firstUpperCase, randomRange, delay, sendToMail, pagination, makeTimestamp } = require("./functions");
 const { none, main } = require("../JSON/colours.json");
 const { AGREE, DISAGREE, STAR, LEFT, RIGHT, CRYSTAL } = require("../config");
+const { partnerServer } = require("../rewards.json");
 const { stripIndents } = require("common-tags");
 const { MessageEmbed, MessageActionRow, MessageSelectMenu, MessageCollector, MessageButton } = require("discord.js");
 
@@ -21,7 +22,7 @@ class PartnerClass {
     async createPartnerCode() {
         const langData = {
             en: {
-                first: `You can give this promo code to your friend or acquaintance, and if, during the subsequent donation, a person indicates your promo code, he will receive ${donator} ${CRYSTAL} as a bonus, and you will also receive a bonus of ${part} ${CRYSTAL} for using your promo code.\n\n**Important!\nYou will not be able to use your personal code for yourself.**`,
+                first: `You can give this promo code to your friend or acquaintance, and if, during the subsequent donation, a person indicates your promo code, he will receive ${donator} ${CRYSTAL} as a bonus, and you will also receive a bonus of ${part} ${CRYSTAL} for using your promo code.\n\nA server with ${partnerServer.requiredCountOfMembers} members can connect your code, you will get ${partnerServer.reward} ${CRYSTAL}. Only the owner of the server can connect!\n\n**Important!\nYou will not be able to use your personal code for yourself.**`,
                 already: "You already have a personal code.",
                 canceled: "Action canceled successfully.",
                 done: "You have successfully created a personal code - ",
@@ -29,7 +30,7 @@ class PartnerClass {
             },
 
             ru: {
-                first: `Вы можете дать этот промо-код своему другу или знакомому и, если при последующем донате человек укажет Ваш промо-код, то он получит - ${donator} ${CRYSTAL} бонусом, Вам же будет бонус в размере - ${part} ${CRYSTAL} за использование вашего промо-кода.\n\n**Важно!\nВы не сможете использовать свой персональный код для себя.**`,
+                first: `Вы можете дать этот промо-код своему другу или знакомому и, если при последующем донате человек укажет Ваш промо-код, то он получит - ${donator} ${CRYSTAL} бонусом, Вам же будет бонус в размере - ${part} ${CRYSTAL} за использование вашего промо-кода.\n\nСервер, имеюший ${partnerServer.requiredCountOfMembers} участников, может подключить ваш код, вы получите ${partnerServer.reward} ${CRYSTAL}. Подключить может только Владелец сервера!\n\n**Важно!\nВы не сможете использовать свой персональный код для себя.**`,
                 already: "Вы уже имеете персональный код.",
                 canceled: "Действие успешно отменено.",
                 done: "Вы успешно создали персональный код - ",
@@ -109,6 +110,35 @@ class PartnerClass {
 
     };
 
+    async serverCode(code) {
+        let sd = await serverFind(this.server.id);
+        const { again } = require(`../languages/${sd.lang || "ru"}`);
+        if (!sd.partnerCode || (sd.partnerCode && sd.partnerCode.date < new Date)) {
+            await server.updateOne({serverID: this.server.id}, {$set: {partnerCode: undefined}});
+            sd = await serverFind(this.server.id);
+            const partner = await partnerFindCode(code);
+            if (!partner) return error(this.msg, sd.lang === "en" ? "Partner not found." : "Партнер не найден!");
+            
+            const memberCount = this.server.members.cache.filter(member => !member.user.bot);
+            if (partnerServer.requiredCountOfMembers > (memberCount.length || memberCount.size)) return error(this.msg, sd.lang === "en" ? `This server need ${partnerServer.requiredCountOfMembers} for connecting a partner code.` : `Сервер должен иметь не менее ${partnerServer.requiredCountOfMembers} участников, чтобы подключить партнер-код.`);
+
+            await server.updateOne({serverID: this.server.id}, {$set: {partnerCode: {
+                code,
+                date: new Date(Date.now() + (86400000 * 7) )
+            }}});
+
+            await addCrystal(partner.userID, partnerServer.reward);
+
+            await sendToMail(partner.userID, {textMessage: `+ ${partnerServer.reward} ${CRYSTAL}, Server: \`${this.server.name}\`.`, createdAt: new Date()});
+            
+            return this.msg.react(AGREE);
+        } else {
+            return error(this.msg, `${sd.lang === "en" ? "This server's partner code -" : "Партнер-код этого сервера -"} \`${sd.partnerCode.code}\`\n${again} <t:${makeTimestamp(sd.partnerCode.date.getTime())}:R>`);
+        }
+        
+        
+    }
+
     async getData() {
         const sd = await serverFind(this.server.id);
         const bool = sd.lang === "en";
@@ -119,7 +149,7 @@ class PartnerClass {
             .setColor(main)
             .setAuthor(this.user.username, this.user.displayAvatarURL({ dynamic: true }))
             .setTitle(bool ? "Your personal code is:" : "Твой персональный код:")
-            .setDescription(bool ? `\`${data.code}\`\n\nYou can give this promo code to your friend or acquaintance, and if, during the subsequent donation, a person indicates your promo code, he will receive ${donator} ${CRYSTAL} as a bonus, and you will also receive a bonus of ${part} ${CRYSTAL} for using your promo code.\n\n**Important!\nYou will not be able to use your personal code for yourself.**` : `\`${data.code}\`\n\nВы можете дать этот промо-код своему другу или знакомому и, если при последующем донате человек укажет Ваш промо-код, то он получит - ${donator} ${CRYSTAL} бонусом, Вам же будет бонус в размере - ${part} ${CRYSTAL} за использование вашего промо-кода.\n\n**Важно!\nВы не сможете использовать свой персональный код для себя.**`)
+            .setDescription(bool ? `\`${data.code}\`\n\nYou can give this promo code to your friend or acquaintance, and if, during the subsequent donation, a person indicates your promo code, he will receive ${donator} ${CRYSTAL} as a bonus, and you will also receive a bonus of ${part} ${CRYSTAL} for using your promo code.\n\nA server with ${partnerServer.requiredCountOfMembers} members can connect your code, you will get ${partnerServer.reward} ${CRYSTAL}. Only the owner of the server can connect!\n\n**Important!\nYou will not be able to use your personal code for yourself.**` : `\`${data.code}\`\n\nВы можете дать этот промо-код своему другу или знакомому и, если при последующем донате человек укажет Ваш промо-код, то он получит - ${donator} ${CRYSTAL} бонусом, Вам же будет бонус в размере - ${part} ${CRYSTAL} за использование вашего промо-кода.\n\nСервер, имеюший ${partnerServer.requiredCountOfMembers} участников, может подключить ваш код, вы получите ${partnerServer.reward} ${CRYSTAL}. Подключить может только Владелец сервера!\n\n**Важно!\nВы не сможете использовать свой персональный код для себя.**`)
 
         return this.msg.reply({ embeds: [emb] });
     };
