@@ -2,9 +2,6 @@ const { MessageEmbed, MessageAttachment, MessageButton, MessageActionRow } = req
 const { main, none } = require("../../JSON/colours.json");
 const { profile, profileFind, serverFind, bagFind, server: serVer } = require("../../functions/models");
 const {error, embed, perms} = require("../../functions/functions");
-const Levels = require("discord-xp");
-Levels.setURL(process.env.MONGO);
-
 
 module.exports = {
   config: {
