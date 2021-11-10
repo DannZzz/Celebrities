@@ -1085,5 +1085,52 @@
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "land"]
+  },
+  "Arun": {
+    "name": "Arun",
+    "nameRus": "Арун",
+    "health": 500000,
+    "damage": 10000,
+    "cost": 1500,
+    "costType": "crystal",
+    "url": "https://i.ibb.co/KKx89yM/Arun.jpg",
+    "path": "./images/heroes/Arun.jpg",
+    "available": "Да",
+    "vip": false,
+    "upgradeCost": 1000,
+    "type": "private",
+    "elements": ["legendary", "water"]
+  },
+  "Montra": {
+    "name": "Montra",
+    "nameRus": "Монтра",
+    "health": 500000,
+    "damage": 10000,
+    "cost": 1500,
+    "costType": "crystal",
+    "url": "https://i.ibb.co/160rC1t/Montra.jpg",
+    "path": "./images/heroes/Montra.jpg",
+    "available": "Да",
+    "vip": false,
+    "upgradeCost": 1000,
+    "type": "private",
+    "elements": ["legendary", "water"],
+    "blockBreeding": true
+  },
+  "Poseidon": {
+    "name": "Poseidon",
+    "nameRus": "Посейдон",
+    "health": 1000000,
+    "damage": 30000,
+    "cost": 2300,
+    "costType": "crystal",
+    "url": "https://i.ibb.co/WPtDc3Q/Poseidon.jpg",
+    "path": "./images/heroes/Poseidon.jpg",
+    "available": "Да",
+    "vip": true,
+    "upgradeCost": 1000,
+    "type": "private",
+    "elements": ["legendary", "water"],
+    "blockBreeding": true
   }
 }
