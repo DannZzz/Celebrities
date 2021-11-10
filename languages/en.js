@@ -647,12 +647,12 @@ module.exports = {
                     },
                     {
                         name: `${status.vip} VIP`,
-                        value: `Access to commands - AFK, embed, channel, levels (enabling the level system) and bio profile, and also increases the cost of fish (by 33%), increases the max value of gift to 1000, and also increases the bet of batlle.`,
+                        value: `Access to commands - AFK, embed, channel, and bio profile, and also increases the cost of fish (by 33%), increases the max value of gift to 5000, and also increases the bet of all games.`,
                         inline: false
                     },
                     {
                         name: `${status.premium} Premium`,
-                        value: `Gives access to unique heroes, reduces **cooldown** for all commands **two** times, makes it possible to issue a rank card, and also gives more bet limit for all games, increases the max value of gift to 2500.`,
+                        value: `Gives access to unique heroes, reduces **cooldown** for all commands **two** times, and also gives more bet limit for all games, increases the max value of gift to 1000.`,
                         inline: false
                     },
                     {
@@ -1059,6 +1059,7 @@ The more fish, the higher the price!
         "bonusDamage": "Heroes attack bonus:",
         "forEach": "for all member.",
         "write": "Write the number of item, to buy it.",
+        "notAvailableLimit": "This item is not available anymore for your guild!",
         // create
         "doing": "Executing a request...",
         "name": "Enter your guild name.",
