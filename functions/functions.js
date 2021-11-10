@@ -11,7 +11,7 @@ const {  MessageActionRow,
   MessageButton,} = require('discord.js');
 const {main, none, greenlight, reddark} = require('./../JSON/colours.json')
 const heroes = require('./../JSON/heroes.json')
-const { powersFind, powers, serverFind, mail, mailFind, clanFind } = require("./models.js");
+const { voteFind, powersFind, powers, serverFind, mail, mailFind, clanFind } = require("./models.js");
 
 module.exports = {
   getHeroData: async (bot, sponsorID, data) => {
@@ -234,8 +234,26 @@ module.exports = {
     msg.react(DISAGREE)
     return msg.reply({embeds: [Emb]}).then(message => setTimeout(() => message.delete(), 15000))
   },
+
+  voteTime: async function (id, lang) {
+    const vote = await voteFind(id);
+
+    if (!vote.topggDate || (vote.topggDate < new Date()) ) {
+      if (lang === "en") {
+        return `You are ready for voting!`;
+      } else {
+        return `Вы готовы для голосования!`;
+      }
+    } else {
+      if (lang === "en") {
+        return `You can vote <t:${Math.round(vote.topggDate.getTime() / 1000)}:R>`;
+      } else {
+        return `Ты можешь голосовать <t:${Math.round(vote.topggDate.getTime() / 1000)}:R>`
+      }
+    }
+  },
+  
   progressBar: function (perc, ofMaxValue, size, line = '❤', slider = '🖤') {
-  if (!perc) throw new Error('Perc value is either not provided or invalid');
   if (!perc && perc !== 0) throw new Error('Perc value is either not provided or invalid');
   if (isNaN(perc)) throw new Error('Perc value is not an integer');
   if (isNaN(ofMaxValue)) throw new Error('ofMaxValue value is not an integer');

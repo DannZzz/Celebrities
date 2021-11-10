@@ -17,6 +17,7 @@ const partner = require("../models/partner.js");
 const event = require("../models/event.js");
 const bank = require("../models/bank.js");
 const count = require("../models/count.js");
+const vote = require("../models/vote.js");
 
 module.exports = {
     rpg,
@@ -38,6 +39,17 @@ module.exports = {
     event,
     bank,
     count,
+    vote,
+
+    voteFind: async (id) => {
+        let data = await vote.findOne({userID: id});
+        if (!data) {
+            const newD = await vote.create({userID: id});
+            await newD.save();
+        };
+        data = await vote.findOne({userID: id});
+        return data;
+    },
 
     addCount: async (id, cmd) => {
         let data = await count.findOne({userID: id});
