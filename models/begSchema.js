@@ -8,8 +8,8 @@ const begSchema = new mongoose.Schema({
   uncommon: { type: Number, default: 0 },
   rare: { type: Number, default: 0 },
   legendary: { type: Number, default: 0 },
-  stars: { type: Number, default: 0 },
-  crystal: { type: Number, default: 0 },
+  stars: { type: Number, default: 50000 },
+  crystal: { type: Number, default: 50 },
   vip1: { type: Boolean, default: false },
   vip2: { type: Boolean, default: false }
 });
