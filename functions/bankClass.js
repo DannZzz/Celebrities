@@ -6,6 +6,7 @@ const { none, main } = require("../JSON/colours.json");
 const { AGREE, DISAGREE, STAR, LEFT, RIGHT, heroNames, LEAGUE, HELL, LOADING } = require("../config");
 const { stripIndents } = require("common-tags");
 const Rate = require("./rateClass");
+const Subscription = require("./subscriptionClass");
 const { MessageEmbed, MessageActionRow, MessageSelectMenu, MessageCollector, MessageButton, MessageAttachment } = require("discord.js");
 
 
@@ -49,20 +50,21 @@ class bankClass {
                 await bank.updateOne({userID: id}, {$set: {paymentMethod: undefined}});
             }
         }
+        const slots = await getSlots(this.bot, this.msg);
 
         const en = new MessageEmbed()
         .setColor(main)
         .setAuthor(this.user.tag, this.user.displayAvatarURL({dynamic: true}))
         .setTitle("AdaBank")
         .setThumbnail(this.bot.user.displayAvatarURL())
-        .setDescription(`You data:\nYou card for payments: ${cardString}\nTotal invests: ${formatNumber(data.totalInvests) || 0} ${STAR}\nTotal amount of gold received: ${formatNumber(data.totalGotten) || 0} ${STAR}`);
+        .setDescription(`You data:\nYour slots: ${slots}\nYou card for payments: ${cardString}\nTotal invests: ${formatNumber(data.totalInvests) || 0} ${STAR}\nTotal amount of gold received: ${formatNumber(data.totalGotten) || 0} ${STAR}`);
 
         const ru = new MessageEmbed()
         .setColor(main)
         .setAuthor(this.user.tag, this.user.displayAvatarURL({dynamic: true}))
         .setTitle("АдаБанк")
         .setThumbnail(this.bot.user.displayAvatarURL())
-        .setDescription(`Ваши данные:\nТвоя карта для выплат: ${cardString}\nОбщие вложения: ${formatNumber(data.totalInvests) || 0} ${STAR}\nОбщее количество полученного золота: ${formatNumber(data.totalGotten) || 0} ${STAR}`);
+        .setDescription(`Ваши данные:\nТвои слоты: ${slots}\nТвоя карта для выплат: ${cardString}\nОбщие вложения: ${formatNumber(data.totalInvests) || 0} ${STAR}\nОбщее количество полученного золота: ${formatNumber(data.totalGotten) || 0} ${STAR}`);
 
         if (data.mining && data.mining.length !== 0) {
             var getEngString = data.mining.map((a, p) => {
@@ -103,6 +105,7 @@ class bankClass {
         if (!id) id = this.id;
         const data = await this.checkDocument(id);
         const { noStar, timeOut } = require(`../languages/${this.sd.lang || "ru"}`);
+        const myBoostLevel = await Subscription(this.bot, this.msg, "Tyrus").getSubId();
 
         const perms = {
             none: {
@@ -121,15 +124,15 @@ class bankClass {
 
         const perc = {
             "1": {
-                percentage: 3,
+                percentage: 10,
                 expire: 43200 * 1000 
             },
             "2": {
-                percentage: 14,
+                percentage: 20,
                 expire: 86400 * 1000 * 2
             },
             "3": {
-                percentage: 35,
+                percentage: 50,
                 expire: 86400 * 1000 * 5
             }
         };
@@ -141,7 +144,7 @@ class bankClass {
             myPerm = "premium";
         } else if (bag.vip1) myPerm = "vip";
 
-        if (perms[myPerm].slots <= data.mining.length) return error(this.msg, this.sd.lang === "en" ? "You don't have enough space for mining." : "У тебя недостаточно мест для майнинга.");
+        if ((perms[myPerm].slots + myBoostLevel) <= data.mining.length) return error(this.msg, this.sd.lang === "en" ? "You don't have enough space for mining." : "У тебя недостаточно мест для майнинга.");
 
         const emb = new MessageEmbed()
         .setColor(main)
@@ -275,3 +278,30 @@ class bankClass {
 module.exports = function(bot, msg, sd) {
     return new bankClass(bot, msg, sd);
 } 
+
+async function getSlots(bot, msg) {
+    const myBoostLevel = await Subscription(bot, msg, "Tyrus").getSubId();
+
+    const perms = {
+        none: {
+            slots: 2,
+            max: 100000
+        },
+        vip: {
+            slots: 3,
+            max: 500000
+        },
+        premium: {
+            slots: 4,
+            max: 1000000
+        }
+    };
+    
+    let myPerm = "none";
+    const bag = await bagFind(msg.author.id);
+
+    if(bag.vip2) {
+        myPerm = "premium";
+    } else if (bag.vip1) myPerm = "vip";
+    return perms[myPerm].slots + myBoostLevel;
+}

@@ -9,6 +9,7 @@ const Rate = require("./rateClass");
 const Subscription = require("./subscriptionClass");
 const { MessageEmbed, MessageActionRow, MessageSelectMenu, MessageCollector, MessageButton, MessageAttachment } = require("discord.js");
 
+let allSlots = 3;
 
 class breedingClass {
     constructor(bot, msg, sd) {
@@ -23,16 +24,16 @@ class breedingClass {
 
     async createInterface() {
         const data = await rpgFind(this.id);
-        
+        const slots = await getSlots(this.bot, this.msg);
         const emb = new MessageEmbed()
         .setColor(main)
         .setThumbnail(this.user.displayAvatarURL({dynamic: true}))
         .setAuthor(this.user.tag, this.user.displayAvatarURL({dynamic: true}))
         
         if (!data.breeding || data.breeding.length === 0) {
-            emb.setTitle(`${this.sd.lang === "en" ? "You don't have any breedings!" : "У тебя нет никаких разведений!"}`).setDescription(`${this.sd.lang === "en" ? "For start breeding, write `breeding [first hero] [second hero]`" : "Чтобы начать разведение, напиши `breeding [первый герой] [второй герой]`"}`);
+            emb.setTitle(`${this.sd.lang === "en" ? "You don't have any breedings!" : "У тебя нет никаких разведений!"}\n${this.sd.lang === "en" ? "Your slots:" : "Твои слоты:"} ${slots}`).setDescription(`${this.sd.lang === "en" ? "For start breeding, write `breeding [first hero] [second hero]`" : "Чтобы начать разведение, напиши `breeding [первый герой] [второй герой]`"}`);
         } else {
-            emb.setTitle(`${this.sd.lang === "en" ? "Your currently breedings!" : "Ваши текущие разведения!"}`)
+            emb.setTitle(`${this.sd.lang === "en" ? "Your currently breedings!" : "Ваши текущие разведения!"}\n${this.sd.lang === "en" ? "Your slots:" : "Твои слоты:"} ${slots}`)
             emb.setDescription(`${this.sd.lang === "en" ? "For getting, write \`collect [number of breeding]\`\nFor throwing, write \`throw [number of breeding]\`" : "Чтобы забрать, напишите \`collect [номер скрещиваний]\`\nЧтобы удалить, напишите \`throw [номер скрещиваний]\`"}`)
             data.breeding.forEach((obj, pos) => {
                 if (obj.date < new Date()) {
@@ -160,7 +161,7 @@ class breedingClass {
     async addBreeding (hero1, hero2) {
         let data = await rpgFind(this.id);
 
-        let breedingCount = 3;
+        let breedingCount = allSlots;
         const myBoostLevel = await Subscription(this.bot, this.msg, "Tyrus").getSubId();
         breedingCount += myBoostLevel;
         
@@ -276,6 +277,11 @@ class breedingClass {
 module.exports = function(bot, msg, sd) {
     return new breedingClass(bot, msg, sd);
 } 
+
+async function getSlots(bot, msg) {
+    const myBoostLevel = await Subscription(bot, msg, "Tyrus").getSubId();
+    return allSlots + myBoostLevel;
+}
 
 function manualBreeding () {
     return [
