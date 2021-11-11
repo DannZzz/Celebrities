@@ -174,26 +174,26 @@ class bankClass {
 
                 const m2 = await this.msg.reply({embeds: [this.sd.lang === "en" ? emb.setDescription(stripIndents`Choose a plan (write a number)
                 1. Duration: 12h.
-                Adds: 3%
+                Adds: ${perc["1"].percentage}%
                 You'll get: ${formatNumber(myAmount + (myAmount * perc["1"]["percentage"] / 100))} ${STAR}
                 
                 2. Duration: 2 days.
-                Adds: 14%
+                Adds: ${perc["2"].percentage}%
                 You'll get: ${formatNumber(myAmount + (myAmount * perc["2"]["percentage"] / 100))} ${STAR}
                 
                 3. Duration: 5d.
-                Adds: 35%
+                Adds: ${perc["3"].percentage}%
                 You'll get: ${formatNumber(myAmount + (myAmount * perc["3"]["percentage"] / 100))} ${STAR}`) : emb.setDescription(stripIndents`Выберите план (напишите номер)
                 1. Длиться: 12ч.
-                Добавляет: 3%
+                Добавляет: ${perc["1"].percentage}%
                 Вы получите: ${formatNumber(myAmount + (myAmount * perc["1"]["percentage"] / 100))} ${STAR}
                 
                 2. Длиться: 2д.
-                Добавляет: 14%
+                Добавляет: ${perc["2"].percentage}%
                 Вы получите: ${formatNumber(myAmount + (myAmount * perc["2"]["percentage"] / 100))} ${STAR}
                 
                 3. Длиться: 5д.
-                Добавляет: 35%
+                Добавляет: ${perc["3"].percentage}%
                 Вы получите: ${formatNumber(myAmount + (myAmount * perc["3"]["percentage"] / 100))} ${STAR}`)]});
 
                 const cl2 = await this.channel.createMessageCollector({
