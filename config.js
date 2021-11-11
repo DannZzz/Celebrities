@@ -1,6 +1,6 @@
 exports.PREFIX = 'a!';
 
-exports.VERSION = 'v7.5.3';
+exports.VERSION = 'v8.0.4';
 
 exports.DEV = "Dann#0006";
 

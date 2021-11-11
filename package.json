@@ -21,7 +21,6 @@
     "canvas": "^2.8.0",
     "captcha-canvas": "^3.1.0",
     "common-tags": "^1.8.0",
-    "discord-xp": "^1.1.16",
     "discord.js": "^13.1.0",
     "discord.js-rate-limiter": "^1.2.0",
     "donationalerts-api": "^1.1.0",
@@ -35,6 +34,7 @@
     "node-superfetch": "^0.2.3",
     "npm": "^7.20.6",
     "superagent": "^6.1.0",
+    "topgg-autoposter": "^2.0.0",
     "valid-url": "^1.0.9",
     "yt-channel-info": "^2.2.0"
   }
