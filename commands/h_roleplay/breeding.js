@@ -33,7 +33,7 @@ module.exports = {
             if (!get1 || !get2) return await missingArgument(msg, `${sd.lang === "en" ? "Specify heroes!" : "Укажите героев!"}`, `${this.config.name} ${breeding.usage}`, this.config.examples);
             return await Breeding(bot, msg, sd).addBreeding(heroes[get1.name], heroes[get2.name]);
         }
-    } else if (lists.includes(args[0].toLowerCase())) {
+    } else if (args[0] && lists.includes(args[0].toLowerCase())) {
       return Breeding(bot, msg, sd).list();
     }
 
