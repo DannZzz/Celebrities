@@ -2,7 +2,7 @@ const heroes = require('../../JSON/heroes.json');
 const { main, reddark } = require('../../JSON/colours.json');
 const elements = require('../../JSON/elements.json');
 const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
-const { COIN, STAR, LEFT, RIGHT, DLEFT, FORCE, DRIGHT, CANCEL, heroType, CRYSTAL } = require("../../config");
+const { COIN, STAR, LEFT, RIGHT, DLEFT, FORCE, DRIGHT, CANCEL, heroType, CRYSTAL, AGREE, DISAGREE } = require("../../config");
 const { error, paginationBig, forceGenerator, formatNumber, pagination } = require("../../functions/functions");
 const Subs = require("../../functions/subscriptionClass");
 
@@ -29,8 +29,10 @@ module.exports = {
         let text = []
         for (let i in heroes) {
           const item = heroes[i];
+          let checkingBreeding = true;
+          if (item.available === "Под" || item.blockBreeding) checkingBreeding = false;
           let textedElements = item.elements.map(el => elements[el].emoji).join(" ")
-          if (item.type === t) text.push(`${textedElements} ${item.name} (${item.nameRus})`)
+          if (item.type === t) text.push(`${textedElements} ${item.name} (${item.nameRus}) ${checkingBreeding ? "❤" : "💔"}`)
         }
         emb.setDescription(`${text.join("\n")}`)
         return arr.push(emb)
@@ -118,14 +120,16 @@ module.exports = {
           let ccost = `${cCost(obj.cost, obj)} ${cType(obj.costType)}`;
           if (!isNaN(obj.cost) && obj.cost <= 0) ccost = LANG.lang === "ru" ? "Бесплатно" : "Free";
 
-          let textedElements = obj.elements.map(el => elements[el].emoji).join(" ")
+          let textedElements = obj.elements.map(el => elements[el].emoji).join(" ");
+          let checkingBreeding = true;
+          if (obj.available === "Под" || obj.blockBreeding) checkingBreeding = false;
 
           newdr.push(
             new MessageEmbed()
               .setColor(main)
               .setTitle(`${heroType[obj.type]} ${obj.name} (${obj.nameRus}) ${cMar(obj.marry)} ${cVip(obj.vip)}\n${FORCE} ${hm.force} ${forceGenerator(obj.health, obj.damage, 1)}\n${LANG.lang === "en" ? "Elements:" : "Стихия:"} ${textedElements}`)
               .setThumbnail(obj.url)
-              .setDescription(`${level ? `**${level}**\n\n` : ""}`)
+              .setDescription(`${level ? `**${level}**` : ""}\n${LANG.lang === "en" ? "Breeding:" : "Скрещивание:"} ${checkingBreeding ? AGREE : DISAGREE}`)
               .addField(`${hh.cost} ${ccost}`, `**${hh.avail} ${cAv(obj.available)}**`, true)
               .addField(`${hm.health} ${formatNumber(obj.health)} ❤`, `**${hm.damage} ${formatNumber(obj.damage)}** ⚔`, true)
           )
