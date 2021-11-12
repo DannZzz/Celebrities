@@ -2,6 +2,7 @@ const { bank, bankFind, rpg, profile, profileFind, cardFind, bagFind, serverFind
 const { error, embed, firstUpperCase, randomRange, delay, sendToMail, pagination, getMember, getHeroData, makeTimestamp, formatNumber } = require("./functions");
 const heroes = require("../JSON/heroes.json");
 const elements = require("../JSON/elements.json");
+const breeding = require("../JSON/breeding.json");
 const { none, main } = require("../JSON/colours.json");
 const { AGREE, DISAGREE, STAR, LEFT, RIGHT, heroNames, LEAGUE, HELL, LOADING, CRYSTAL } = require("../config");
 const { stripIndents } = require("common-tags");
@@ -91,6 +92,18 @@ class breedingClass {
 
         return embed(this.msg, this.sd.lang === "en" ? `You threw hero: __${hero.name}__` : `Вы бросили героя: __${hero.nameRus}__`);
     };
+
+    list() {
+        const arr = breeding;
+        let texted = arr.map(obj => {
+            if (this.sd.lang === "en") {
+                return `${obj.need.map(hero => hero).join(" ❤ ")} --> ${obj.reward.map(hero => hero).join(", ")}`;
+            } else {
+                return `${obj.need.map(hero => heroes[hero].nameRus).join(" ❤ ")} --> ${obj.reward.map(hero => heroes[hero].nameRus).join(", ")}`;
+            }
+        });
+        return embed(this.msg, texted.join("\n"), false);
+    }
 
 
     async skip() {
@@ -191,7 +204,7 @@ class breedingClass {
         let validHeroes = [];
         let mainHeroes = [];
         
-        const arr = manualBreeding();
+        const arr = breeding;
 
         for (let i in heroes) {
             const heroObj = heroes[i];
@@ -283,56 +296,3 @@ async function getSlots(bot, msg) {
     return allSlots + myBoostLevel;
 }
 
-function manualBreeding () {
-    return [
-        {
-            need: ["Muratov", "Muratova"],
-            reward: ["Golden"]
-        },
-        {
-            need: ["Light", "Clarity"],
-            reward: ["Centurion"]
-        },
-        {
-            need: ["Centurion", "Zero"],
-            reward: ["X"]
-        },
-        {
-            need: ["Mummy", "Secret"],
-            reward: ["Witch", "Horseman"]
-        },
-        {
-            need: ["Archangel", "Zeenou"],
-            reward: ["Koko"]
-        },
-        {
-            need: ["Athena", "Ariel"],
-            reward: ["Eragon"]
-        },
-        {
-            need: ["Darkangel", "Selena"],
-            reward: ["Zero"]
-        },
-        {
-            need: ["Zero", "Darkangel"],
-            reward: ["Hella"]
-        },
-        {
-            need: ["Dranna", "Darkangel"],
-            reward: ["Humanoid"]
-        },
-        {
-            need: ["Zero", "Ancalgon"],
-            reward: ["Monster-zero"]
-        },
-        {
-            need: ["Alena", "Sleepy"],
-            reward: ["Tricky"]
-        },
-        {
-            need: ["Arun", "Montra"],
-            reward: ["Poseidon"]
-        }
-
-    ]
-}
