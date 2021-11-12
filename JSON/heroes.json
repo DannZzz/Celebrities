@@ -1132,5 +1132,37 @@
     "type": "private",
     "elements": ["legendary", "water"],
     "blockBreeding": true
+  },
+  "Leonard": {
+    "name": "Leonard",
+    "nameRus": "Леонард",
+    "health": 200000,
+    "damage": 6000,
+    "cost": 1000,
+    "costType": "crystal",
+    "url": "https://i.ibb.co/zRDmgK0/Leonard.jpg",
+    "path": "./images/heroes/Leonard.jpg",
+    "available": "Да",
+    "vip": true,
+    "upgradeCost": 750,
+    "type": "mythical",
+    "elements": ["water", "land"],
+    "blockBreeding": true
+  },
+  "Overlord": {
+    "name": "Overlord",
+    "nameRus": "Владыка",
+    "health": 1000000,
+    "damage": 30000,
+    "cost": 2300,
+    "costType": "crystal",
+    "url": "https://i.ibb.co/G0rt4N0/Overlord.jpg",
+    "path": "./images/heroes/Overlord.jpg",
+    "available": "Да",
+    "vip": true,
+    "upgradeCost": 1000,
+    "type": "private",
+    "elements": ["legendary", "magic"],
+    "blockBreeding": true
   }
 }

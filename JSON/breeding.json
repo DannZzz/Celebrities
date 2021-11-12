@@ -1,0 +1,55 @@
+[
+    {
+        "need": ["Muratov", "Muratova"],
+        "reward": ["Golden"]
+    },
+    {
+        "need": ["Light", "Clarity"],
+        "reward": ["Centurion"]
+    },
+    {
+        "need": ["Centurion", "Zero"],
+        "reward": ["X"]
+    },
+    {
+        "need": ["Mummy", "Secret"],
+        "reward": ["Witch", "Horseman"]
+    },
+    {
+        "need": ["Archangel", "Zeenou"],
+        "reward": ["Koko"]
+    },
+    {
+        "need": ["Athena", "Ariel"],
+        "reward": ["Eragon"]
+    },
+    {
+        "need": ["Darkangel", "Selena"],
+        "reward": ["Zero"]
+    },
+    {
+        "need": ["Zero", "Darkangel"],
+        "reward": ["Hella"]
+    },
+    {
+        "need": ["Dranna", "Darkangel"],
+        "reward": ["Humanoid"]
+    },
+    {
+        "need": ["Zero", "Ancalgon"],
+        "reward": ["Monster-zero"]
+    },
+    {
+        "need": ["Alena", "Sleepy"],
+        "reward": ["Tricky"]
+    },
+    {
+        "need": ["Ariel", "Montra"],
+        "reward": ["Leonard"]
+    },
+    {
+        "need": ["Leonard", "Poseidon"],
+        "reward": ["Overlord"]
+    }
+
+]
