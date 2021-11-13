@@ -4,6 +4,7 @@ const { greenlight, redlight, main } = require('../JSON/colours.json');
 const { makeTimestamp, rubToDollar, formatNumber } = require("../functions/functions");
 const item = require('../JSON/items');
 const heroes = require('../JSON/heroes.json');
+const { games } = require("../rewards.json");
 
 module.exports = {
     "previous": "Previous",
@@ -804,9 +805,9 @@ module.exports = {
         "find": "Looking for an enemy...",
         "bet": "Enter your bet.",
         "min": "Minimum bet **1**.",
-        "vip1": "Maximum rate **150**!\nOr buy __VIP__",
-        "vip2": "Maximum rate **250**!\nOr buy __Premium__",
-        "vipError": "Maximum bet **400**!",
+        "vip1": `Maximum rate **${games.main.none}**!\nOr buy __VIP__`,
+        "vip2": `Maximum rate **${games.main.vip}**!\nOr buy __Premium__`,
+        "vipError": `Maximum bet **${games.main.premium}**!`,
         "winner": "Winner:",
         "between": "Battle between",
     },

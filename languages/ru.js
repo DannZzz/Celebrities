@@ -4,6 +4,7 @@ const { makeTimestamp, formatNumber, rubToDollar } = require("../functions/funct
 const { greenlight, redlight, main } = require('../JSON/colours.json');
 const heroes = require('../JSON/heroes.json');
 const item = require('../JSON/items');
+const { games } = require("../rewards.json");
 
 module.exports = {
     "previous": "Предыдущая",
@@ -802,9 +803,9 @@ module.exports = {
         "find": "Ищем противника...",
         "bet": "Укажите ставку.",
         "min": "Минимальная ставка **1**.",
-        "vip1": "Максимальная ставка **150**!\nЛибо купите __VIP__",
-        "vip2": "Максимальная ставка **250**!\nЛибо купите __Премиум__",
-        "vipError": "Максимальная ставка **400**!",
+        "vip1": `Максимальная ставка **${games.main.none}**!\nЛибо купите __VIP__`,
+        "vip2": `Максимальная ставка **${games.main.vip}**!\nЛибо купите __Премиум__`,
+        "vipError": `Максимальная ставка **${games.main.premium}**!`,
         "winner": "Победитель:",
         "between": "Поединок между",
     },
