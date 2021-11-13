@@ -6,8 +6,8 @@ const bd = require("../../models/begSchema");
 const clan = require("../../models/clanSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
-const { COIN, STAR, CLAN, AGREE } = require("../../config");
-const {error, embed, perms, firstUpperCase, formatNumber} = require("../../functions/functions");
+const { COIN, STAR, CLAN, AGREE, HERO, STAFF, LOADING } = require("../../config");
+const {error, embed, perms, firstUpperCase, formatNumber, randomRange, delay} = require("../../functions/functions");
 const {isWebUri} = require('valid-url');
 const { clanFind } = require("../../functions/models");
 const { stripIndents } = require("common-tags");
@@ -72,14 +72,21 @@ module.exports = {
         let asd;
         if (rpp && rpp.item) { 
           if (LANG.lang === "ru") {
-            asd =  `  <a:herodann:883382573231923201> ${heroes[rpp.item].nameRus} (${ccc.lvl} ${rpp.heroes.length !== 0 ? await rpp.heroes.find(x => x.name === rpp.item).level : ""})`
+            asd =  ` ${HERO} ${heroes[rpp.item].nameRus} (${ccc.lvl} ${rpp.heroes.length !== 0 ? await rpp.heroes.find(x => x.name === rpp.item).level : ""})`
           } else {
-              asd =  `  <a:herodann:883382573231923201> ${rpp.item} (${ccc.lvl} ${rpp.heroes.length !== 0 ? await rpp.heroes.find(x => x.name === rpp.item).level : ""})`
+              asd =  ` ${HERO} ${rpp.item} (${ccc.lvl} ${rpp.heroes.length !== 0 ? await rpp.heroes.find(x => x.name === rpp.item).level : ""})`
             }
           } else {
             asd = cm.noHero
           }
-        return `__${p+1}.__ ${message.guild.members.cache.get(docs.userID) ? `${message.guild.members.cache.get(docs.userID)} ${docs.userID === mc.owner ? "   <:danncrown:880492405390979132>" : ""} ${mc.staff.includes(docs.userID) ? "   <:dannstaff:881110710057332766>" : ""}` : (bot.users.cache.get(docs.userID) ? `${bot.users.cache.get(docs.userID).tag} ${docs.userID === mc.owner ? "   <:danncrown:880492405390979132>" : ""}` : cc.unk)} ${asd}`
+          let emoji = "";
+          if (docs.userID === mc.owner) {
+            emoji = STAFF.owner;
+          } else if (mc.coowner && mc.coowner === docs.userID) {
+            emoji = STAFF.coowner;
+          } else if (mc.staff.includes(docs.userID)) emoji = STAFF.staff;
+
+        return `__${p+1}.__ ${message.guild.members.cache.get(docs.userID) ? `${message.guild.members.cache.get(docs.userID)}` : (bot.users.cache.get(docs.userID) ? `${bot.users.cache.get(docs.userID).tag}` : cc.unk)} ${emoji} ${asd}`
        }))
       
       
@@ -178,7 +185,7 @@ module.exports = {
     } else if (kicks.includes(resp)) {
       if (rp.clanID === null) return error(message, cm.noClan);
       let getCl = await clan.findOne({ID: rp.clanID});
-      if(message.author.id !== getCl.owner) return error(message, cm.notLeader);
+      if(message.author.id !== getCl.owner && user.id !== getCl.coowner) return error(message, cm.notLeader);
       if (!args[1] || isNaN(args[1])) return error(message, cm.specN);
       let a = await rpg.find({clanID: rp.clanID}).map(b => b);
 
@@ -196,7 +203,7 @@ module.exports = {
       
       const c = await clan.findOne({ID: rp.clanID});
       if (rp.clanID === null) return error(message, cm.noClan);
-      if (message.author.id !== c.owner && !c.staff.includes(user.id)) return error(message, 'У вас недостаточно прав!');
+      if (message.author.id !== c.owner && !c.staff.includes(user.id) && user.id !== c.coowner) return error(message, 'У вас недостаточно прав!');
       if (user.id == c.owner && args[1]) {
         if (args[1] && args[1] === 'enable' && user.id === c.owner) {
         if (c.appsStatus) return error(message, cc.appsEE);
@@ -204,7 +211,7 @@ module.exports = {
         await clan.updateOne({ID: c.ID}, {$set: {appsStatus: true}});
 
         return embed(message, cc.appsE);
-      } else if (args[1] && args[1] === 'disable' && user.id === c.owner) {
+      } else if (args[1] && args[1] === 'disable' && (user.id === c.owner || user.id === c.coowner)) {
         if (!c.appsStatus) return error(message, cc.appsDD);
 
         await clan.updateOne({ID: c.ID}, {$set: {appsStatus: false}});
@@ -237,7 +244,7 @@ module.exports = {
     } else if (reject.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
       if (rp.clanID === null) return error(message, cm.noClan);
-      if (message.author.id !== c.owner  && !c.staff.includes(user.id)) return error(message, perm);
+      if (message.author.id !== c.owner && !c.staff.includes(user.id) && user.id !== c.coowner) return error(message, perm);
       if(c.apps.length === 0) return error(message, cm.noApps);
       if(!args[1] || isNaN(args[1])) return error(message, cm.specN);
 
@@ -257,7 +264,7 @@ module.exports = {
         msg.delete()
         const c = await clan.findOne({ID: rp.clanID});
         if (rp.clanID === null) return error(message, cm.noClan);
-        if (message.author.id !== c.owner && !c.staff.includes(user.id)) return error(message, perm);
+        if (message.author.id !== c.owner && !c.staff.includes(user.id) && user.id !== c.coowner) return error(message, perm);
         const members = await rpg.find({clanID: c.ID});
         if(c.space === members) return error(message, cc.enoughMembers);
         if(c.apps.length === 0) return error(message, cm.noApps);
@@ -279,7 +286,7 @@ module.exports = {
     } else if (upgrade.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
       if (rp.clanID === null) return error(message, cm.noClan);
-      if (user.id !== c.owner) return error(message, cm.notLeader);
+      if (user.id !== c.owner && user.id !== c.coowner) return error(message, cm.notLeader);
 
       let up = 3000;
       let cost = c.level * up;
@@ -311,7 +318,7 @@ module.exports = {
     } else if (description.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
       if (rp.clanID === null) return error(message, cm.noClan);
-      if (user.id !== c.owner) return error(message, cm.notLeader);
+      if (user.id !== c.owner && user.id !== c.coowner) return error(message, cm.notLeader);
       if (!args[1]) return error(message, cc.descError)
       if (c.level < 5) return error(message, cc.clanLevel5)
       let getLimit = args.slice(1).join(" ").split("")
@@ -323,7 +330,7 @@ module.exports = {
     } else if (logo.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
       if (rp.clanID === null) return error(message, cm.noClan);
-      if (user.id !== c.owner) return error(message, cm.notLeader);
+      if (user.id !== c.owner && user.id !== c.coowner) return error(message, cm.notLeader);
       if (!args[1]) return error(message, specifyL)
       if (c.level < 5) return error(message, cc.clanLevel5)
       if(!isWebUri(args.slice(1).join(""))) return error(message, specifyL)
@@ -426,7 +433,7 @@ module.exports = {
     } else if (reward.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
       if (rp.clanID === null) return error(message, cm.noCLan);
-      if (user.id !== c.owner && !c.staff.includes(user.id)) return error(message, perm);
+      if (user.id !== c.owner && !c.staff.includes(user.id) && user.id !== c.coowner) return error(message, perm);
       
       let author = await c.reward;
       let timeout = 86400 * 1000 
@@ -553,13 +560,18 @@ module.exports = {
       const memb = a[i]["userID"];
       if(memb === c.owner) return error(message, cc.uLeader);
       
-      if(c.staff.includes(memb)) return error(message, cc.uError);
+      if(c.staff.includes(memb) && c.coowner) return error(message, cc.uError);
       const count = c.space / 5;
-      if (count === c.staff.length) return error(message, cc.uLimit);
-
-      await c.staff.push(memb);
-      c.save()
-
+      if (!c.staff.includes(memb) && count === c.staff.length) return error(message, cc.uLimit);
+      if (!c.staff.includes(memb)) {
+        c.staff.push(memb);
+        c.save();
+      } else {
+        c.coowner = (memb);
+        c.staff.splice(c.staff.indexOf(memb), 1);
+        c.save();
+      }
+      
       return embed(message, cc.uDone)
       
     } else if (down.includes(resp)) {
@@ -577,16 +589,21 @@ module.exports = {
       const memb = a[i]["userID"];
       if(memb === c.owner) return error(message, cc.uLeader);
       
-      if(!c.staff.includes(memb)) return error(message, cc.dError);
+      if(!c.staff.includes(memb) && c.coowner !== memb) return error(message, cc.dError);
       
-      await c.staff.splice(c.staff.indexOf(memb), 1);
-      c.save()
+      if (c.coowner === memb) {
+        c.coowner = undefined;
+        c.save();
+      } else {
+        c.staff.splice(c.staff.indexOf(memb), 1);
+        c.save();
+      }
 
       return embed(message, cc.dDone)
     } else if (mess.includes(resp)) {
       if (rp.clanID === null) return error(message, cm.noClan);
       let getCl = await clan.findOne({ID: rp.clanID});
-      if(message.author.id !== getCl.owner) return error(message, cm.notLeader);
+      if(message.author.id !== getCl.owner && user.id !== getCl.coowner) return error(message, cm.notLeader);
 
       if (!args[1]) return error(message, specifyT);
       let text = args.slice(1).join(" ").split("")
@@ -607,10 +624,10 @@ module.exports = {
         
      })
      return embed(message, cc.mDone)
-    } else if(give.includes(resp)) {
+    } else if (give.includes(resp)) {
       if (!rp.clanID) return error(message, cm.noClan);
       let getCl = await clan.findOne({ID: rp.clanID});
-      if(message.author.id !== getCl.owner) return error(message, cm.notLeader);
+      if(message.author.id !== getCl.owner && user.id !== getCl.coowner) return error(message, cm.notLeader);
       let budget = getCl.budget;
       if (args[1] && !isNaN(args[1]) && args[1] <= budget) {budget = Math.floor(args[1])};
       const space = await rpg.find({clanID: getCl.ID}).exec();
@@ -626,10 +643,10 @@ module.exports = {
     
       message.react(AGREE)
 
-    } else if(shop.includes(resp)) {
+    } else if (shop.includes(resp)) {
       if (!rp.clanID) return error(message, cm.noClan);
       let getCl = await clan.findOne({ID: rp.clanID});
-      if(message.author.id !== getCl.owner) return error(message, cm.notLeader);
+      if(message.author.id !== getCl.owner && user.id !== getCl.coowner) return error(message, cm.notLeader);
       let budget = getCl.budget;
 
       const addHealth = getCl.addHealth || 0;
@@ -669,6 +686,12 @@ module.exports = {
         if (!isNaN(m) && Math.round(m) > 0 && Math.round(m) <= 3) {
           bool = true;
           collector.stop();
+          const random = randomRange(1, 10);
+          const m1 = await message.reply(LOADING);
+          await delay(random * 1000);
+          m1.delete();
+        }
+        if (!isNaN(m) && Math.round(m) > 0 && Math.round(m) <= 3) {
           m = Math.round(m);
           if (m === 1) {
             const newClanData = await clanFind(rp.clanID);
