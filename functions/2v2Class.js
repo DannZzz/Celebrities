@@ -7,7 +7,8 @@ const { stripIndents } = require("common-tags");
 const Rate = require("./rateClass");
 const { MessageEmbed, MessageActionRow, MessageSelectMenu, MessageCollector, MessageButton, MessageAttachment } = require("discord.js");
 const Canvas = require("canvas");
-const value = 1500;
+const { games } = require("../rewards.json");
+const value = games.twoVtwo;
 
 const LANG = {
     en: {

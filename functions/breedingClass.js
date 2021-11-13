@@ -80,8 +80,20 @@ class breedingClass {
         const data = await rpgFind(this.id);
 
         if (!data.breeding || data.breeding.length === 0) return error(this.msg, this.sd.lang === "en" ? "You don't have any breedings!" : "У тебя нет никаких разведений!");
-        
-        const index = number - 1;
+        const alls = ["all", "все"];
+       
+
+        if (isNaN(number) && alls.includes(number.toLowerCase())) {
+            const ended = data.breeding.filter(obj => {
+                if (obj.date > new Date()) return obj;
+            });
+
+            await rpg.updateOne({userID: this.id}, {$set: {breeding: ended}});
+              
+            return this.msg.react(AGREE)
+        }
+
+        const index = Math.round(number - 1);
         if (number > data.breeding.length || number <= 0) return error(this.msg, this.sd.lang === "en" ? "Breeding not found." : "Скрещивание не найдено.");
         if (data.breeding[index]["date"] > new Date()) return error(this.msg, this.sd.lang === "en" ? "This breeding is not ended." : "Этот скрещивание не закончилось.")
 
