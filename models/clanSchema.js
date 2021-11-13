@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const clanSchema = new mongoose.Schema({
   owner: { type: String, unique: true},
+  coowner: { type: String, default: undefined },
   ID: { type: String, unique: true},
   name: { type: String},
   premium: { type: Boolean, default: false },
