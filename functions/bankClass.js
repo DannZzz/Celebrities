@@ -209,9 +209,10 @@ class bankClass {
                     if (arr.includes(m)) {
                         b2 = true;
                         cl2.stop();
-
+                        const randomInt = randomRange(1, 4);
+                        await delay(1000 * randomInt);
                         const bagData1 = await bagFind(id);
-                        if (am > bagData.stars1) return error(this.msg, noStar);
+                        if (am > bagData1.stars) return error(this.msg, noStar);
                         await addStar(id, -am);
                         await bank.updateOne({userID: id}, {$inc: {totalInvests: am}});
                         data.mining.push({
