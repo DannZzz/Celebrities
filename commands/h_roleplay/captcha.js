@@ -5,6 +5,7 @@ const { error, embed, perms, firstUpperCase, makeTimestamp, delay, roundFunc, ge
 const { serverFind, rpgFind, addStar, bagFind, rpg, profileFind, profile, addPremiumStar } = require("../../functions/models");
 const { Captcha } = require("captcha-canvas");
 const cd = new Map();
+const { games } = require("../../rewards.json");
 
 module.exports = {
   config: {
@@ -32,12 +33,12 @@ module.exports = {
         
         return c;
     }
-    let reward = 150;
+    let reward = games.captcha.none;
 
     const bag = await bagFind(user.id);
     if (bag.vip2) {
-        reward = 400;
-    } else if (bag.vip1) reward = 250;
+        reward = games.captcha.premium;
+    } else if (bag.vip1) reward = games.captcha.vip;
     
     let captcha = await captchaObj();
 

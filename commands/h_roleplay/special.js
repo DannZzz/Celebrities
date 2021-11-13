@@ -6,6 +6,7 @@ const { stripIndents } = require("common-tags");
 const { error, embed, perms, firstUpperCase, makeTimestamp, delay, roundFunc, getHeroData, formatNumber } = require("../../functions/functions");
 const { serverFind, rpgFind, addStar, bagFind, rpg, profileFind, profile, addPremiumStar, addCrystal } = require("../../functions/models");
 const items = require("../../JSON/items");
+const { special } = require("../../rewards.json");
 
 module.exports = {
   config: {
@@ -20,7 +21,7 @@ module.exports = {
     const user = msg.author;
     const channel = msg.channel;
 
-    const her = ["Ariel", "Montra"];
+    const her = [special.first, special.second];
     const sd = await serverFind(server.id);
 
     let rp = await rpgFind(user.id);
@@ -32,7 +33,7 @@ module.exports = {
     
     const hd1 = heroes[her[0]];
     const hd2 = heroes[her[1]];
-    const hd3 = heroes["Leonard"];
+    const hd3 = heroes[special.third];
 
     let firstText = `${sd.lang === "en" ? hd1.name : hd1.nameRus} - ~~${hd1.cost}~~ ${hd1.cost / 2} ${CRYSTAL}`;
     let secondText = `${sd.lang === "en" ? hd2.name : hd2.nameRus} - ~~${hd2.cost}~~ ${hd2.cost / 2} ${CRYSTAL}`;

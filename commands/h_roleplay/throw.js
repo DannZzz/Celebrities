@@ -19,9 +19,9 @@ module.exports = {
     const channel = msg.channel;
     const sd = await serverFind(server.id);
 
-    if (!args[0] || isNaN(args[0])) return error(msg, sd.lang === "en" ? "Specify a number." : "Укажите номер.");
+    if (!args[0]) return error(msg, sd.lang === "en" ? "Specify a number or all." : "Укажите номер или все (all).");
 
-    await Breeding(bot, msg, sd).throw(Math.round(args[0]));
+    await Breeding(bot, msg, sd).throw(args[0]);
 
   }
 }

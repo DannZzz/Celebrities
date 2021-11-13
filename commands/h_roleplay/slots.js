@@ -5,6 +5,8 @@ const { greenlight, redlight } = require('../../JSON/colours.json');
 const { STAR, AGREE, DISAGREE } = require('../../config');
 const { error, embed, perms } = require('../../functions/functions');
 const { bagFind, addStar, serverFind } = require('../../functions/models');
+const { games } = require("../../rewards.json");
+
 module.exports = {
     config: {
         name: "slots",
@@ -25,11 +27,11 @@ module.exports = {
 
         if (money < 1) return error(message, b.min);
 
-        if (!bag["vip1"] && money > 150) {
+        if (!bag["vip1"] && money > games.main.none) {
             return error(message, b.vip1);
-        } else if (!bag["vip2"] && money > 250) {
+        } else if (!bag["vip2"] && money > games.main.vip) {
             return error(message, b.vip2);
-        } else if (bag["vip2"] && money > 400) {
+        } else if (bag["vip2"] && money > games.main.premium) {
             return error(message, b.vipError);
           }
 

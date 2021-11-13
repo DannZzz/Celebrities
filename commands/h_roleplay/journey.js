@@ -11,6 +11,7 @@ const { addPremiumStar, addCount } = require("../../functions/models");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 const Canvas = require('canvas');
+const { games } = require("../../rewards.json");
 
 module.exports = {
   config: {
@@ -37,7 +38,7 @@ module.exports = {
     if (!rp.surviveLevel || rp.surviveLevel === null) await rpg.findOneAndUpdate({userID: user.id}, {$set: {surviveLevel: 1}});
     rp = await rpg.findOne({userID: user.id});
     const nowLevel = rp.surviveLevel;
-    const levelRewardAdd = 46;
+    const levelRewardAdd = games.journey;
     const levelReward = levelRewardAdd * nowLevel
     const argsWords = ['info', 'инфо']
 

@@ -11,6 +11,7 @@ const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 10000);
 const Canvas = require('canvas');
 const Rate = require("../../functions/rateClass");
+const {games} = require(`../../rewards.json`);
 
 module.exports = {
   config: {
@@ -53,11 +54,11 @@ module.exports = {
 
       if (value < 1) return error(message, b.min);
 
-      if (!bag["vip1"] && value > 150) {
+      if (!bag["vip1"] && value > games.main.none) {
         return error(message, b.vip1);
-      } else if (!bag["vip2"] && value > 250) {
+      } else if (!bag["vip2"] && value > games.main.vip) {
         return error(message, b.vip2);
-      } else if (bag["vip2"] && value > 400) {
+      } else if (bag["vip2"] && value > games.main.premium) {
         return error(message, b.vipError);
       }
 

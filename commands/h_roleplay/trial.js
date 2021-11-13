@@ -5,6 +5,7 @@ const {error, embed, perms, firstUpperCase, makeTimestamp, delay, roundFunc, get
 const {serverFind, rpgFind, addStar, bagFind, rpg, profileFind, profile, addPremiumStar } = require("../../functions/models");
 const heroes = require("../../JSON/heroes.json");
 const Canvas = require("canvas");
+const { games } = require("../../rewards.json");
 
 module.exports = {
     config: {
@@ -19,7 +20,7 @@ module.exports = {
         const user = msg.author;
         const channel = msg.channel;
 
-        const value = 500;
+        const value = games.trial.cost;
         
         const LANG = await serverFind(server.id);
         const {interError, ERROR, trial, battle: b, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);     
@@ -71,11 +72,11 @@ module.exports = {
         let uppingLevel = 2;
         if (l < 15 && h > 50000) uppingLevel = 6;
         let winCount = 0;
-        let reward = 500;
+        let reward = games.trial.none;
         if (bag.vip2) {
-          reward = 1500;
+          reward = games.trial.premium;
         } else if (bag.vip1) {
-          reward = 1000;
+          reward = games.trial.vip;
         }
         let totalReward = 0;
 

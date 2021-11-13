@@ -6,6 +6,7 @@ const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 5000);
 const { error, embed } = require("../../functions/functions");
 const { addCrystal } = require("../../functions/models");
+const { games } = require("../../rewards.json");
 
 module.exports = {
     config: {
@@ -22,7 +23,7 @@ module.exports = {
         const { daily: d, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar } = require(`../../languages/${LANG.lang}`);
 
 
-        let amount = 1;
+        let amount = games.daily;
 
         let profileData = await profileModel.findOne({ userID: user.id });
         let beg = await begModel.findOne({ userID: user.id })
