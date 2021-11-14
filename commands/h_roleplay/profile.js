@@ -1,7 +1,7 @@
 const Rate = require("../../functions/rateClass");
 const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js');
 const { main } = require('../../JSON/colours.json');
-const { HELL, COIN, BANK, STAR, status, CRYSTAL, devID, adminID } = require('../../config');
+const { HELL, COIN, BANK, STAR, status, CRYSTAL, devID, adminID, STAFF } = require('../../config');
 const devs = ["382906068319076372"];
 const moment = require('moment');
 const { formatNumber } = require("../../functions/functions");
@@ -56,8 +56,8 @@ module.exports = {
 
     let znachok = "";
     if (devID.includes(member.id)) {
-      znachok = "**Dev**";
-    } else if (adminID.includes(member.id)) znachok = "**Admin**";
+      znachok = STAFF.dev;
+    } else if (adminID.includes(member.id)) znachok = STAFF.coowner;
 
 
     await EVENT(member.id).checkDocument();
