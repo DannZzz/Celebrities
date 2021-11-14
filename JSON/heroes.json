@@ -393,9 +393,9 @@
   "Toothless": {
     "name": "Toothless",
     "nameRus": "Беззубик",
-    "health": 100000,
-    "damage": 8000,
-    "cost": 1500,
+    "health": 700000,
+    "damage": 20000,
+    "cost": 1900,
     "costType": "crystal",
     "url": "https://i.ibb.co/kqrnSWH/Toothless.png",
     "path": "./images/heroes/Toothless.png",
