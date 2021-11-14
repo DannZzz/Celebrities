@@ -6,7 +6,7 @@ module.exports = {
         NAME: "Лут-Бокс",
         NAMEEN: "Loot-box", 
         emoji: box,
-        cost: 750,
+        cost: 375,
         max: 200,
         min: 75
     },
@@ -15,7 +15,7 @@ module.exports = {
         NAME: "Мега Лут-Бокс",
         NAMEEN: "Mega Loot-box", 
         emoji: "<:megabox:903205160715685928>",
-        cost: 3000,
+        cost: 1500,
         max: 600,
         min: 200
     },
@@ -25,7 +25,7 @@ module.exports = {
         NAMEEN: "Potion of health", 
         emoji: potHLT,
         effect: 20,
-        cost: 400
+        cost: 200
     },
     dmg: {
         name: "dmg",
@@ -33,7 +33,7 @@ module.exports = {
         NAMEEN: "Potion of attack", 
         emoji: potDMG,
         effect: 4,
-        cost: 400
+        cost: 200
     },
     lvl: {
         name: "lvl",
@@ -54,7 +54,7 @@ module.exports = {
         NAME: "Обычный пак",
         NAMEEN: "Common pack", 
         emoji: pack1,
-        cost: 350,
+        cost: 175,
         list: ["Mistress-forest", "Snake-woman", "Dilan", "Archangel", "Selena", "Kumbhakarna"]
     },
     pack2: {
@@ -62,7 +62,7 @@ module.exports = {
         NAME: "Элитный пак",
         NAMEEN: "Elite pack", 
         emoji: pack2,
-        cost: 1000,
+        cost: 500,
         list: ["Cthulhu", "Perfect-duo", "Darkangel", "Atalanta"]
     },
     pack3: {
@@ -70,7 +70,7 @@ module.exports = {
         NAME: "VIP пак",
         NAMEEN: "VIP pack", 
         emoji: pack3,
-        cost: 5000,
+        cost: 2500,
         list: ["Hunter", "Blazer", "Ariel", "Athena"]
     },
     heroPack: {
@@ -78,7 +78,7 @@ module.exports = {
         NAME: "Пак героев",
         NAMEEN: "Hero pack", 
         emoji: "<:HeroPack:906852510948544532>",
-        cost: 800,
+        cost: 400,
         costType: "crystal",
         list: devHeroes
     },
@@ -110,7 +110,7 @@ module.exports = {
         name: "halloween",
         NAMEEN: "Basket of Candies",
         NAME: "Корзина конфет",
-        cost: 200,
+        cost: 100,
         costType: "candy",
         list: ["hero", "no", "no", "hero", "no", "no", "hero"],
         validList: ["Witch", "Plague-doctor", "Secret", "Mummy"]
