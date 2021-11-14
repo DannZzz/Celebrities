@@ -620,7 +620,7 @@ module.exports = {
                     },
                     {
                         name: `Максимальный Буст 💜`,
-                        value: `**[~~${rubToDollar(donate.maximumBoost, formatNumber, "ru")}~~ ${rubToDollar(donate.maximumBoost/2, formatNumber, "ru")} Ежемесячно](https://boosty.to/iamdann/purchase/575348?ssource=DIRECT&share=subscription_link)**\n**Доступ к приватным героям**\n**+3 слот скрещиваний**\n**+3 слот майнинга**\n+20% Душа Тайруса\n+20% Душа Анкалгона\n+15% Душа Дариуса\nДоступ к приватному каналу`,
+                        value: `**[${rubToDollar(donate.maximumBoost, formatNumber, "ru")} Ежемесячно](https://boosty.to/iamdann/purchase/575348?ssource=DIRECT&share=subscription_link)**\n**Доступ к приватным героям**\n**+3 слот скрещиваний**\n**+3 слот майнинга**\n+20% Душа Тайруса\n+20% Душа Анкалгона\n+15% Душа Дариуса\nДоступ к приватному каналу`,
                         inline: false
                     },
                 )

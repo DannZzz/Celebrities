@@ -622,7 +622,7 @@ module.exports = {
                     },
                     {
                         name: `Maximum Boost 💜`,
-                        value: `**[~~${rubToDollar(donate.maximumBoost, formatNumber)}~~ ${rubToDollar(donate.maximumBoost/2, formatNumber)} Monthly](https://boosty.to/iamdann/purchase/575348?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n**+3 breeding slot**\n**+3 mining slot**\n+20% Soul of Tyrus\n+20% Soul of Ancalgon\n+15% Soul of Darius\nPrivate channel access`,
+                        value: `**[${rubToDollar(donate.maximumBoost, formatNumber)} Monthly](https://boosty.to/iamdann/purchase/575348?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n**+3 breeding slot**\n**+3 mining slot**\n+20% Soul of Tyrus\n+20% Soul of Ancalgon\n+15% Soul of Darius\nPrivate channel access`,
                         inline: false
                     },
                 )
