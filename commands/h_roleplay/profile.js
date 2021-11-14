@@ -57,7 +57,7 @@ module.exports = {
     let znachok = "";
     if (devID.includes(member.id)) {
       znachok = STAFF.dev;
-    } else if (adminID.includes(member.id)) znachok = STAFF.coowner;
+    } else if (adminID.includes(member.id)) znachok = STAFF.owner;
 
 
     await EVENT(member.id).checkDocument();
