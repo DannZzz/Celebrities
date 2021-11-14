@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-let ownerID = '382906068319076372';
+const { devID, adminID } = require("../../config")
 const { MessageEmbed, MessageAttachment, MessageButton, MessageActionRow } = require('discord.js');
 const {greenlight, redlight, main} = require('../../JSON/colours.json');
 const {error, pagination} = require("../../functions/functions");
@@ -14,7 +14,7 @@ module.exports = {
     accessableby: "Для разработчика"
   },
   run: async (bot, message, args) => {
-    if (message.author.id == ownerID) {
+    if (!devID.includes(message.author.id) && !adminID.includes(message.author.id)) {
 
       let array = []
       function asd(arr, count = 0) {
