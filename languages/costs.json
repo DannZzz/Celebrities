@@ -1,0 +1,16 @@
+{
+    "donate": {
+        "just": 30,
+        "classicBoost": 50,
+        "averageBoost": 100,
+        "maximumBoost": 200
+    },
+    "shop": {
+        "vip": 45,
+        "premium": 100,
+        "hazarCrystal": 120,
+        "ereq50Crystal": 45,
+        "haryurCrystal": 20,
+        "donateBox": 15
+    }
+}

@@ -5,6 +5,8 @@ const { makeTimestamp, rubToDollar, formatNumber } = require("../functions/funct
 const item = require('../JSON/items');
 const heroes = require('../JSON/heroes.json');
 const { games } = require("../rewards.json");
+const { donate, shop } = require("./costs.json");
+const { stripIndents } = require("common-tags");
 
 module.exports = {
     "previous": "Previous",
@@ -605,22 +607,22 @@ module.exports = {
                 .addFields(
                     {
                         name: `Support the developer`,
-                        value: '**[30₽ Monthly](https://boosty.to/iamdann/purchase/575340?ssource=DIRECT&share=subscription_link)**',
+                        value: `**[${rubToDollar(donate.just, formatNumber)} Monthly](https://boosty.to/iamdann/purchase/575340?ssource=DIRECT&share=subscription_link)**`,
                         inline: false
                     },
                     {
                         name: `Classic Boost 💛`,
-                        value: '**[50₽ Monthly](https://boosty.to/iamdann/purchase/575346?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n**+1 breeding slot**\n**+1 mining slot**\n+10% Soul of Tyrus\n+10% Soul of Ancalgon\n+5% Soul of Darius\nPrivate channel access',
+                        value: `**[~~${rubToDollar(donate.classicBoost, formatNumber)}~~ ${rubToDollar(donate.classicBoost/2, formatNumber)} Monthly](https://boosty.to/iamdann/purchase/575346?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n**+1 breeding slot**\n**+1 mining slot**\n+10% Soul of Tyrus\n+10% Soul of Ancalgon\n+5% Soul of Darius\nPrivate channel access`,
                         inline: false
                     },
                     {
                         name: `Average Boost 💚`,
-                        value: '**[100₽ Monthly](https://boosty.to/iamdann/purchase/575347?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n**+2 breeding slot**\n**+2 mining slot**\n+15% Soul of Tyrus\n+15% Soul of Ancalgon\n+10% Soul of Darius\nPrivate channel access',
+                        value: `**[~~${rubToDollar(donate.averageBoost, formatNumber)}~~ ${rubToDollar(donate.averageBoost/2, formatNumber)} Monthly](https://boosty.to/iamdann/purchase/575347?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n**+2 breeding slot**\n**+2 mining slot**\n+15% Soul of Tyrus\n+15% Soul of Ancalgon\n+10% Soul of Darius\nPrivate channel access`,
                         inline: false
                     },
                     {
                         name: `Maximum Boost 💜`,
-                        value: '**[200₽ Monthly](https://boosty.to/iamdann/purchase/575348?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n**+3 breeding slot**\n**+3 mining slot**\n+20% Soul of Tyrus\n+20% Soul of Ancalgon\n+15% Soul of Darius\nPrivate channel access',
+                        value: `**[~~${rubToDollar(donate.maximumBoost, formatNumber)}~~ ${rubToDollar(donate.maximumBoost/2, formatNumber)} Monthly](https://boosty.to/iamdann/purchase/575348?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n**+3 breeding slot**\n**+3 mining slot**\n+20% Soul of Tyrus\n+20% Soul of Ancalgon\n+15% Soul of Darius\nPrivate channel access`,
                         inline: false
                     },
                 )
@@ -658,7 +660,15 @@ module.exports = {
                     },
                     {
                         name: `Prices in dollars.`,
-                        value: `• VIP + 10000 ${STAR} - ${rubToDollar(45, formatNumber)} \n • Premium + 20000 ${STAR} - ${rubToDollar(100, formatNumber)}\n • 1 ${CRYSTAL} = 10 ${HELL.candy} (\`?buy candy 10\`)\n • 1 ${CRYSTAL} = 5.000 ${STAR} (\`?buy golds 100000\`)\n • 1000 ${CRYSTAL} - ${rubToDollar(120, formatNumber)}\n • 350 ${CRYSTAL} - ${rubToDollar(45, formatNumber)}\n • 100 ${CRYSTAL} - ${rubToDollar(20, formatNumber)}\n • Donate-box (50k-200k) - ${rubToDollar(15, formatNumber)}`,
+                        value: stripIndents`
+                        • VIP + 10000 ${STAR} - ~~${rubToDollar(shop.vip, formatNumber)}~~ ${rubToDollar(shop.vip/2, formatNumber)}
+                        • Premium + 20000 ${STAR} - ~~${rubToDollar(shop.premium, formatNumber)}~~ ${rubToDollar(shop.premium/2, formatNumber)}
+                        • 1 ${CRYSTAL} = 10 ${HELL.candy} (\`?buy candy 10\`)
+                        • 1 ${CRYSTAL} = 5.000 ${STAR} (\`?buy golds 100000\`)
+                        • 1000 ${CRYSTAL} - ~~${rubToDollar(shop.hazarCrystal, formatNumber)}~~ ${rubToDollar(shop.hazarCrystal/2, formatNumber)}
+                        • 350 ${CRYSTAL} - ~~${rubToDollar(shop.ereq50Crystal, formatNumber)}~~ ${rubToDollar(shop.ereq50Crystal/2, formatNumber)}
+                        • 100 ${CRYSTAL} - ~~${rubToDollar(shop.haryurCrystal, formatNumber)}~~ ${rubToDollar(shop.haryurCrystal/2, formatNumber)}
+                        • Donate-box (50k-200k) - ${rubToDollar(shop.donateBox, formatNumber)}`,
                         inline: false
                     }
                 )
@@ -669,18 +679,18 @@ module.exports = {
             return new MessageEmbed()
                 .setColor(main)
                 .setAuthor("Buff Shop")
-                .addField(`${item.box.emoji} ${item.box.NAMEEN} : ${item.box.cost} ${STAR}`, `Gives a random item and up to ${item.box.max} golds`)
-                .addField(`${item.megabox.emoji} ${item.megabox.NAMEEN} : ${item.megabox.cost} ${STAR}`, `Gives a random items up to 5 and up to ${item.megabox.max} golds`)
-                .addField(`${item.hlt.emoji} ${item.hlt.NAMEEN} : ${item.hlt.cost} ${STAR}`, `Adds ${item.hlt.effect} health to the hero`)
-                .addField(`${item.dmg.emoji} ${item.dmg.NAMEEN} : ${item.dmg.cost} ${STAR}`, `Adds ${item.dmg.effect} damage to the hero`)
+                .addField(`${item.box.emoji} ${item.box.NAMEEN} : ~~${item.box.cost*2}~~ ${item.box.cost} ${STAR}`, `Gives a random item and up to ${item.box.max} golds`)
+                .addField(`${item.megabox.emoji} ${item.megabox.NAMEEN} : ~~${item.megabox.cost*2}~~ ${item.megabox.cost} ${STAR}`, `Gives a random items up to 5 and up to ${item.megabox.max} golds`)
+                .addField(`${item.hlt.emoji} ${item.hlt.NAMEEN} : ~~${item.hlt.cost*2}~~ ${item.hlt.cost} ${STAR}`, `Adds ${item.hlt.effect} health to the hero`)
+                .addField(`${item.dmg.emoji} ${item.dmg.NAMEEN} : ~~${item.dmg.cost*2}~~ ${item.dmg.cost} ${STAR}`, `Adds ${item.dmg.effect} damage to the hero`)
                 .addField(`${item.lvl.emoji} ${item.lvl.NAMEEN} : Can be obtained by opening boxes.`, `Increases the level of the hero ${item.lvl.effect} times`)
                 .addField(`${item.meat.emoji} ${item.meat.NAMEEN} : Obtainable by defeating bosses or opening boxes.`, `Adds ${item.meat.effect} health to the hero`)
                 .addField(`Packs`, "** **")
-                .addField(`${item.pack1.emoji} ${item.pack1.NAMEEN} : ${item.pack1.cost} ${STAR}`, `Open and get one of these common heroes: \`${item.pack1.list.join(", ")}\``)
-                .addField(`${item.pack2.emoji} ${item.pack2.NAMEEN} : ${item.pack2.cost} ${STAR}`, `Unlock and get one of these elite heroes: \`${item.pack2.list.join(", ")}\``)
-                .addField(`${item.pack3.emoji} ${item.pack3.NAMEEN} : ${item.pack3.cost} ${STAR}`, `Open and get one of these Premium heroes: \`${item.pack3.list.join(", ")}\``)
-                .addField(`${item.heroPack.emoji} ${item.heroPack.NAMEEN} : ${item.heroPack.cost} ${CRYSTAL}`, `Open and get one random hero.`)
-                .addField(`${item.tempPack.emoji} ${item.tempPack.NAMEEN} : ${item.tempPack.cost} ${HELL.candy} __available until 11/30/2021__`, `Open and get one of these Temporary heroes: \`${item.tempPack.list.join(", ")}\``)
+                .addField(`${item.pack1.emoji} ${item.pack1.NAMEEN} : ~~${item.pack1.cost*2}~~ ${item.pack1.cost} ${STAR}`, `Open and get one of these common heroes: \`${item.pack1.list.join(", ")}\``)
+                .addField(`${item.pack2.emoji} ${item.pack2.NAMEEN} : ~~${item.pack2.cost*2}~~ ${item.pack2.cost} ${STAR}`, `Unlock and get one of these elite heroes: \`${item.pack2.list.join(", ")}\``)
+                .addField(`${item.pack3.emoji} ${item.pack3.NAMEEN} : ~~${item.pack3.cost*2}~~ ${item.pack3.cost} ${STAR}`, `Open and get one of these Premium heroes: \`${item.pack3.list.join(", ")}\``)
+                .addField(`${item.heroPack.emoji} ${item.heroPack.NAMEEN} : ~~${item.heroPack.cost*2}~~ ${item.heroPack.cost} ${CRYSTAL}`, `Open and get one random hero.`)
+                .addField(`${item.tempPack.emoji} ${item.tempPack.NAMEEN} : ~~${item.tempPack.cost*2}~~ ${item.tempPack.cost} ${HELL.candy} __available until 11/30/2021__`, `Open and get one of these Temporary heroes: \`${item.tempPack.list.join(", ")}\``)
                 .addField(`${item.donateBox.emoji} ${item.donateBox.NAMEEN} : ${rubToDollar(15, formatNumber)}`, `Open and get ${item.donateBox.winEN}`)
                 .addField(`${item.goldBox.emoji} ${item.goldBox.NAMEEN} : ${rubToDollar(25, formatNumber)}`, `Open and get: __50-250__ ${CRYSTAL}`)
 
