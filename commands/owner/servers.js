@@ -14,7 +14,7 @@ module.exports = {
     accessableby: "Для разработчика"
   },
   run: async (bot, message, args) => {
-    if (!devID.includes(message.author.id) && !adminID.includes(message.author.id)) {
+    if (devID.includes(message.author.id) || adminID.includes(message.author.id)) {
 
       let array = []
       function asd(arr, count = 0) {
