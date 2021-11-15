@@ -87,5 +87,13 @@
         "nameEN": "Earth Collection",
         "reward": "Volcano",
         "rewardType": "hero"
+    },
+    {
+        "id": "Marvel1",
+        "list": ["Thanos", "Carnage", "Venom", "Surtur", "Galactus"],
+        "nameRU": "Коллекция Марвел",
+        "nameEN": "Marvel Collection",
+        "reward": "Ghost-rider",
+        "rewardType": "hero"
     }
 ]
