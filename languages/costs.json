@@ -12,5 +12,10 @@
         "ereq50Crystal": 45,
         "haryurCrystal": 20,
         "donateBox": 15
+    },
+    "cards": {
+        "vipCard": 150,
+        "changeCodeToNumber": 40,
+        "changeCodeToString": 100
     }
 }

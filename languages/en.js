@@ -5,7 +5,7 @@ const { makeTimestamp, rubToDollar, formatNumber } = require("../functions/funct
 const item = require('../JSON/items');
 const heroes = require('../JSON/heroes.json');
 const { games } = require("../rewards.json");
-const { donate, shop } = require("./costs.json");
+const { donate, shop, cards } = require("./costs.json");
 const { stripIndents } = require("common-tags");
 
 module.exports = {
@@ -670,6 +670,15 @@ module.exports = {
                         • 100 ${CRYSTAL} - ~~${rubToDollar(shop.haryurCrystal, formatNumber)}~~ ${rubToDollar(shop.haryurCrystal/2, formatNumber)}
                         • Donate-box (50k-200k) - ${rubToDollar(shop.donateBox, formatNumber)}`,
                         inline: false
+                    },
+                    {
+                        name: `Customization`,
+                        value: stripIndents`
+                        • VIP card - ~~${rubToDollar(cards.vipCard, formatNumber)}~~ ${rubToDollar(100, formatNumber)} (Everything is Unlimited) 
+                        • Change number of card + pin-code - ${rubToDollar(cards.changeCodeToNumber, formatNumber)}
+                        • Change number of card to a text + pin-code - ${rubToDollar(cards.changeCodeToString, formatNumber)}
+                        Indicate in the donation message what you want and open __direct messages__.
+                        `
                     }
                 )
                 .setTitle("Any subscription gives you access to secret promotional codes!")

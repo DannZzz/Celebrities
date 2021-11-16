@@ -5,7 +5,7 @@ const { greenlight, redlight, main } = require('../JSON/colours.json');
 const heroes = require('../JSON/heroes.json');
 const item = require('../JSON/items');
 const { games } = require("../rewards.json");
-const { donate, shop } = require("./costs.json");
+const { donate, shop, cards } = require("./costs.json");
 const { stripIndents } = require("common-tags");
 
 module.exports = {
@@ -668,6 +668,15 @@ module.exports = {
                         • 100 ${CRYSTAL} - ~~${rubToDollar(shop.haryurCrystal, formatNumber, "ru")}~~ ${rubToDollar(shop.haryurCrystal/2, formatNumber, "ru")}
                         • Донат-бокс (50k-200k) - ${rubToDollar(shop.donateBox, formatNumber, "ru")}`,
                         inline: false
+                    },
+                    {
+                        name: `Кастомизация карт`,
+                        value: stripIndents`
+                        • VIP карта - ~~${rubToDollar(cards.vipCard, formatNumber, "ru")}~~ ${rubToDollar(100, formatNumber, "ru")} (Всё безлимитно) 
+                        • Изменить номер карты + пин-код - ${rubToDollar(cards.changeCodeToNumber, formatNumber, "ru")}
+                        • Изменить номер карты на текст + пин-код - ${rubToDollar(cards.changeCodeToString, formatNumber, "ru")}
+                        Укажите в сообщение доната, то, что хотите, и откройте __личные сообщения__.
+                        `
                     }
                 )
                 .setTimestamp()
