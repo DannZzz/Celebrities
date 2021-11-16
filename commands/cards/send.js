@@ -18,7 +18,7 @@ module.exports = {
     const {cardClass: cc, cards: cd, send} = require(`../../languages/${sd.lang}`);
     
     const user = msg.author;
-    if (!args[0] || args[0].length !== 9) return await missingArgument(msg, cc.specCode, `${this.config.name} ${send.usage}`, this.config.examples);
+    if (!args[0]) return await missingArgument(msg, cc.specCode, `${this.config.name} ${send.usage}`, this.config.examples);
     if (!args[1] || isNaN(args[1])) return await missingArgument(msg, cc.specAmount, `${this.config.name} ${send.usage}`, this.config.examples);
 
     ops.cards.set(user.id, {Card: "on"});
