@@ -8,13 +8,9 @@ module.exports = {
   config: {
     name: "сервера",
     aliases: ["servers", 'лист'],
-    category: "",
-    description: "Показывает все сервера где находится бот!",
-    usage: "",
-    accessableby: "Для разработчика"
+    admin: true
   },
   run: async (bot, message, args) => {
-    if (devID.includes(message.author.id) || adminID.includes(message.author.id)) {
 
       let array = []
       function asd(arr, count = 0) {
@@ -176,12 +172,6 @@ module.exports = {
         // Remove the reaction when the user react to the message
         await reaction.users.remove(message.author.id);
       });
-    } else {
-      let embed = new Discord.MessageEmbed()
-      .setColor(redlight)
-      .setTimestamp()
-      .setAuthor(message.member.user.tag, message.member.user.displayAvatarURL({dynamic: true}))
-      return message.channel.send(embed.setDescription("❌ К сожалению вы не мой разработчик."))
-    }
+    
   }
 };

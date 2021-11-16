@@ -11,16 +11,11 @@ const ms = require("ms")
 module.exports = {
   config: {
     name: "account",
-    description: "",
-    category: "",
-    aliases: "",
-    accessableby: "Для разработчика.",
-    usage: "[ID] [кол-во монет] "
+    admin: true
   },
   run: async (bot, message, args) => {
     
        
-    if(!devID.includes(message.author.id) && !adminID.includes(message.author.id)) return;
     if (!args[0]) return error(message, "Укажите участника.");
     
     let user = bot.users.cache.get(args[0]);

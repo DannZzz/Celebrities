@@ -11,17 +11,12 @@ let rateLimiter = new RateLimiter(1, 5000);
 module.exports = {
   config: {
     name: "sendhero",
-    description: "",
-    category: "",
-    aliases: "",
-    accessableby: "Для разработчика.",
-    usage: "[ID] [название] "
+    dev: true
   },
   run: async (bot, message, args) => {
     
        
     try {
-    if (message.member.user.id !== ownerID) return 
     if (!args[0]) return error(message, "Укажите участника.")
 
     let user = bot.users.cache.get(args[0]);

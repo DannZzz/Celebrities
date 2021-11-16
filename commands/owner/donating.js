@@ -6,11 +6,11 @@ const Partner = require("../../functions/partnerClass");
 module.exports = {
     config: {
         name: "donating",
-        aliases: ''
+        aliases: '',
+        dev: true
     },
     run: async (bot, msg, args) => {
-        if(!devID.includes(msg.author.id)) return
-        if (!args[0] || !args[1]) return error(msg, "[код] [айди донатера]");
+        if (!args[0] || !args[1]) return F.error(msg, "[код] [айди донатера]");
         await Partner(bot, msg).addNewPartner(args[0], args[1]);
     }
 }

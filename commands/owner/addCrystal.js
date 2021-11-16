@@ -8,10 +8,10 @@ const { main } = require('../../JSON/colours.json');
 module.exports = {
   config: {
     name: "addcrystal",
-    aliases: ''
+    aliases: '',
+    dev: true
   },
   run: async (bot, msg, args) => {
-    if (!devID.includes(msg.author.id)) return;
     if (!args[0]) return error(msg, "Укажите ID");
     const isData = await rpgFind(args[0]);
     if (!isData) return error(msg, "Не найден.");

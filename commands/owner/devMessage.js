@@ -10,16 +10,11 @@ let rateLimiter = new RateLimiter(1, 5000);
 module.exports = {
   config: {
     name: "devmessage",
-    description: "",
-    category: "",
-    aliases: "",
-    accessableby: "Для разработчика.",
-    usage: "[ID] [сообщение] "
+    dev: true
   },
   run: async (bot, message, args) => {
     
        
-     if(message.member.user.id !== ownerID) return 
     if (!args[0]) return error(message, "Укажите участника.");
 
     let user = bot.users.cache.get(args[0]);

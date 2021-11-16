@@ -5,10 +5,10 @@ const {STAR, AGREE, DISAGREE, devID, adminID} = require('../../config')
 module.exports = {
     config: {
         name: "dev",
-        aliases: ''
+        aliases: '',
+        dev: true
     },
     run: async (bot, msg, args) => {
-        if(!devID.includes(msg.author.id)) return;
 
         if (!args[0] || !args[1] || !isNaN(args[0]) || isNaN(args[1])) return error(msg, "[gold или selendian] <кол-во>");
         if (args[0].toLowerCase() === "gold") {

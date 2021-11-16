@@ -7,10 +7,10 @@ const {STAR, AGREE, DISAGREE, devID} = require('../../config')
 module.exports = {
     config: {
         name: "addcandy",
-        aliases: ''
+        aliases: '',
+        dev: true
     },
     run: async (bot, msg, args) => {
-        if(!devID.includes(msg.author.id)) return
         if (!args[0]) return error(message, "Укажите участника.");
 
         let user = bot.users.cache.get(args[0]);

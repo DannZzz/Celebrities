@@ -10,16 +10,9 @@ let rateLimiter = new RateLimiter(1, 5000);
 module.exports = {
   config: {
     name: "addstars",
-    description: "",
-    category: "",
-    aliases: "",
-    accessableby: "Для разработчика.",
-    usage: "[ID] [кол-во монет] "
+    admin: true
   },
   run: async (bot, message, args) => {
-    
-       
-     if(!devID.includes(message.author.id) && !adminID.includes(message.author.id)) return
     if (!args[0]) return error(message, "Укажите участника.");
 
     let user = bot.users.cache.get(args[0]);

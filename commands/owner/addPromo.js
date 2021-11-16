@@ -6,10 +6,10 @@ const Promo = require("../../functions/promoClass");
 module.exports = {
     config: {
         name: "addpromo",
-        aliases: ''
+        aliases: '',
+        admin: true
     },
     run: async (bot, msg, args) => {
-        if(!devID.includes(msg.author.id) && !adminID.includes(msg.author.id)) return
         await Promo(msg).addPromo(bot, args[0], args[1], args[2])
         msg.react(AGREE)
     }
