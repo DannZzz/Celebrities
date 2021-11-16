@@ -2,6 +2,9 @@ exports.PREFIX = 'a!';
 
 exports.VERSION = 'v8.1.0';
 
+const devArr = ["382906068319076372"];
+const adminArr = ["873237782825422968"];
+
 exports.DEV = "Dann#0006";
 
 exports.devHeroes = ["Thanos", "Carnage", "Surtur", "Galactus", "Ghost-rider", "Overlord", "Leonard", "Arun", "Montra", "Poseidon", "Tricky", "Sleepy", "Alena", "Volcano", "Monster-zero", "Golem", "Electro", "Plasma", "Stranger", "Noctum", "Centurion", "Lebas", "Venom", "Humanoid", "Skeletron", "Underman", "Heavenly", "Hella", "Muratov", "Golden", "Horseman", "Witch", "Mummy", "Plague-doctor", "Secret", "Merlin", "Muratova", "Kindness", "Lyric", "Dranna", "Alfonso", "Gigantes", "Red", "Shadow", "Clarity", "Girl", "Tyrus", "Light", "Dido", "Koko", "Hookfang", "Tartarus", "Ancalgon", "X", "Toothless", "Zero", "Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses", "Hunter", "Broken", "Mistress-forest", "Snake-woman", "Blazer", "Athena", "Atalanta", "Kumbhakarna", "Zeenou", "Dilan", "Darius", "Selena", "Cthulhu", "Zeus", "Perfect-duo", "Eragon", "Ariel", "Archangel", "Darkangel"];
@@ -15,9 +18,9 @@ exports.HELL = {
 
 exports.MAIL = "<:inbox:887742555603734528>";
 
-exports.devID = ["382906068319076372"];
+exports.devID = devArr;
 
-exports.adminID = ["873237782825422968"];
+exports.adminID = devArr.concat(adminArr);
 
 exports.LOADING = "<a:dannloading:876008681479749662>";
 

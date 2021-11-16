@@ -4,13 +4,13 @@ const cards = require("../JSON/cards.json");
 const {none, main} = require("../JSON/colours.json");
 const cardModel = require("../models/cards");
 const {AGREE, DISAGREE, STAR} = require("../config");
-const {MessageEmbed, MessageActionRow, MessageSelectMenu, MessageCollector} = require("discord.js");
+const {MessageEmbed, MessageActionRow, MessageSelectMenu, MessageCollector, MessageButton} = require("discord.js");
 
 class CardClass {
-    constructor(msg, vipLevel = 0) {
+    constructor(msg, bot = false) {
         this.msg = msg;
         this.user = msg.author;
-        this.vip = vipLevel;
+        this.bot = bot;
     }
 
     async openCard(cardName) {
@@ -59,25 +59,92 @@ class CardClass {
         return 
     }
 
+    async addCustomCard(id, name, code, pin) {
+        const cardData = await cardFind(id, name);
+        const byCode = await cd.findOne({code: code});
+        const user = this.bot.users.cache.get(id);
+        if (!user) return error(this.msg, "Участник не найден!");
+        if (cardData) return error(this.msg, "Такая карта уже существует!");
+        if (byCode) return error(this.msg, "Карта с этим номером уже существует!");
+        if (!["free", "premium", "gold", "VIP"].includes(name)) name = "free";
+
+        function getCode() {
+            return `${randomRange(1000, 9999)}-${randomRange(1000, 9999)}`
+        };
+
+        if (code.toLowerCase() === "default") code = getCode();
+
+        const pinCode = randomRange(1000, 9999);
+        
+        const newCard = await cardModel.create({
+            userID: id,
+            name,
+            createdAt: new Date(),
+            code,
+            pin: pin ? pin : pinCode,
+            amount: 0
+        });
+        newCard.save();
+        return this.msg.react(AGREE);
+
+    }
+
     async sendPin() {
         const ln = await serverFind(this.msg.guild.id);
-        const { cardClass: cc } = require(`../languages/${ln.lang}`);
+        const { cardClass: cc, timeOut, interError, ERROR } = require(`../languages/${ln.lang}`);
+
+        const button = new MessageButton()
+        .setLabel("Click me")
+        .setCustomId("pins")
+        .setStyle("SECONDARY");
+
+        const row = new MessageActionRow().addComponents([button]);
+
+        const m = await this.msg.channel.send({content: "Ok..", components: [row]});
+        let bool = false;
+        const collector = await m.createMessageComponentCollector({
+            filter: i => {
+                if (button.customId === i.customId && i.user.id === this.user.id) {
+                    return true;
+                } else if (button.customId === i.customId && i.user.id !== this.user.id) {
+                    const intEmbed = new MessageEmbed()
+                    .setColor(reddark)
+                    .setTitle(ERROR)
+                    .setDescription(interError)
+                
+                    return i.reply({embeds: [intEmbed], ephemeral: true});
+                }
+                
+            },
+            time: 15000
+        });
+
+        collector.on("collect", async i => {
+            bool = true;
+            collector.stop();
+
+            const data = await cardModel.find({userID: this.user.id}).exec();
+            const emb = new MessageEmbed()
+            .setThumbnail(this.user.displayAvatarURL({dynamic: true}))
+            .setColor(none)
+            if (data && data.length !== 0) {
+                const mapped = data.map( (card, p) => {
+                    const cd = cards[card.name];
+                    return emb.addField(`${p+1}. ${cd.emoji} ${card.code}`, `PIN: ||${card.pin}||`, false);
+                });
+            
+            return i.reply({embeds: [emb], ephemeral: true}).catch( () =>  error(this.msg, "Error"))
+            } else {
+                return;
+            }
+        })
         
-        const data = await cardModel.find({userID: this.user.id}).exec();
-        const emb = new MessageEmbed()
-        .setThumbnail(this.user.displayAvatarURL({dynamic: true}))
-        .setColor(none)
-        if (data && data.length !== 0) {
-            const mapped = data.map( (card, p) => {
-                const cd = cards[card.name];
-                return emb.addField(`${p+1}. ${cd.emoji} ${card.code}`, `PIN: ||${card.pin}||`, false);
-            });
-        
-        return this.user.send({embeds: [emb]}).catch( () =>  error(this.msg, cc.dm))
-        
-        } else {
-            return false;
-        }
+
+        collector.on("end", () => {
+            m.delete();
+            if (!bool) return error(this.msg, timeOut);
+        });    
+       
     }
 
     async getCards() {
@@ -373,8 +440,8 @@ class CardClass {
     
 }
 
-function Card(msg) {
-    return new CardClass(msg)
+function Card(msg, bot) {
+    return new CardClass(msg, bot)
 }
 
 

@@ -116,6 +116,9 @@ module.exports = async (bot, messageCreate) => {
 
       
       var command = commandfile.config;
+
+      if (command.dev && !devID.includes(message.author.id)) return; 
+      if (command.admin && !adminID.includes(message.author.id)) return; 
       
       if (!message.member.permissions.has(command.permissions || [])) return error(message, perm)
       
