@@ -358,8 +358,12 @@ module.exports = {
                 return embed(message, u.hero(LANG.lang === "ru" ? hero.nameRus : hero.name));
             case "heroPack":
                 if (!rp.heroPack || rp.heroPack <= 0) return error(message, u.err);
-                rew = await getValidHero(user, ITEMS.heroPack.list);
-                while (rew && (heroes[rew]["available"] !== "Да" || heroes[rew]["costType"] === "dev")) rew = await getValidHero(user, ITEMS.heroPack.list);
+                let heroesArr = [];
+                for (let hi in heroes) {
+                    let it = heroes[hi];
+                    if(it.available === "Да" || it.costType !== "dev") heroesArr.push(it.name);
+                }
+                rew = await getValidHero(user, heroesArr);
                 if (!rew) return error(message, b.already);
                 hero = heroes[rew];
                 get = rp.heroes.find(x => x.name === hero.name)

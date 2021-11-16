@@ -39,11 +39,11 @@ module.exports = {
 
             error(message, d.time(time));
         } else {
-            await profileModel.findOneAndUpdate({ userID: user.id }, { $set: { daily: Date.now() } })
+            await profileModel.findOneAndUpdate({ userID: user.id }, { $set: { daily: Date.now() } });
 
-            embed(message, `${d.done} ${amount} ${CRYSTAL} ${and} ${amount} ${box}`)
+            embed(message, `${d.done} ${amount} ${CRYSTAL} ${and} ${amount} ${box}`);
             await addCrystal(user.id, amount);
-            await rpg.findOneAndUpdate({ userID: user.id }, { $inc: { box: 1 } })
+            await rpg.findOneAndUpdate({ userID: user.id }, { $inc: { box: amount } });
         }
     }
 }
