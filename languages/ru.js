@@ -7,6 +7,7 @@ const item = require('../JSON/items');
 const { games } = require("../rewards.json");
 const { donate, shop, cards } = require("./costs.json");
 const { stripIndents } = require("common-tags");
+const everyone = "Для всех";
 
 module.exports = {
     "previous": "Предыдущая",
@@ -1067,6 +1068,7 @@ module.exports = {
             \`guild message\` — Отправлять сообщение каждому участнику.
             \`guild give (сумма)\` — Использовать бюджет и отдать каждому участнику немного голды.
             \`guild shop\` — Магазин гильдии.
+            \`guild boss (fight)\` — Бой с боссом.
             `
             return text;
         },

@@ -18,6 +18,7 @@ const profileSchema = new mongoose.Schema({
   pvp2: Date,
   give: Date,
   combine: Date,
+  guildBoss: Date,
   afkMessage: { type: String, default: null},
   random: { type: Number, default: 0},
   disabled: { type: Boolean, default: false}

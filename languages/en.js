@@ -7,6 +7,7 @@ const heroes = require('../JSON/heroes.json');
 const { games } = require("../rewards.json");
 const { donate, shop, cards } = require("./costs.json");
 const { stripIndents } = require("common-tags");
+const everyone = "For everyone";
 
 module.exports = {
     "previous": "Previous",
@@ -1069,6 +1070,7 @@ The more fish, the higher the price!
             \`guild message\` — Send a message to every member of the guild.
             \`guild give (amount)\` — Use budget and give some golds to every member.
             \`guild shop\` — Guild shop.
+            \`guild boss (fight)\` — Figth with the boss.
             `
             return text;
         },

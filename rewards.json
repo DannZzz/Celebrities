@@ -1,6 +1,8 @@
 {
     "vote": 15,
     "voteGoal": 700,
+    "defaultGuildBossReward": 150000,
+    "guildBossKiller": 150,
     "partnerServer" : {
         "requiredCountOfMembers": 15,
         "reward": 150

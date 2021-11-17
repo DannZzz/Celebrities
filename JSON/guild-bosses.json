@@ -1,0 +1,11 @@
+{
+    "Smaug": {
+        "name": "Smaug",
+        "nameRus": "Смауг",
+        "health": 7000000,
+        "damage": 250000,
+        "rewardLevel": 1,
+        "path": "./images/guild-bosses/Smaug.jpg",
+        "url": "https://i.ibb.co/P5JZC7T/Smaug.jpg"
+    }
+}
