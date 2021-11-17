@@ -5,12 +5,16 @@ const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const clan = require("../../models/clanSchema");
 const rpg = require("../../models/rpgSchema");
-const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
-const { COIN, STAR, CLAN, AGREE, HERO, STAFF, LOADING } = require("../../config");
-const {error, embed, perms, firstUpperCase, formatNumber, randomRange, delay} = require("../../functions/functions");
+const { MessageEmbed, MessageButton, MessageActionRow, MessageAttachment } = require("discord.js");
+const { COIN, STAR, CLAN, AGREE, HERO, STAFF, LOADING, CRYSTAL } = require("../../config");
+const {error, embed, perms, firstUpperCase, formatNumber, randomRange, delay, makeTimestamp, getHeroData} = require("../../functions/functions");
 const {isWebUri} = require('valid-url');
-const { clanFind } = require("../../functions/models");
+const { clanFind, addCrystal } = require("../../functions/models");
 const { stripIndents } = require("common-tags");
+const Canvas = require("canvas");
+const bosses = require("../../JSON/guild-bosses.json");
+const bossCooldown = new Map();
+const rewards = require("../../rewards.json");
 
 module.exports = {
   config: {
@@ -24,7 +28,7 @@ module.exports = {
 
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
-    const {guild: cc, guilds: ccc, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar, timeOut} = require(`../../languages/${LANG.lang}`);   
+    const {battle: b, guild: cc, guilds: ccc, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar, timeOut, again} = require(`../../languages/${LANG.lang}`);   
    
     
     const data = await bd.findOne({userID: message.author.id})
@@ -58,6 +62,7 @@ module.exports = {
     const mess = ["message"];
     const give = ["give"];
     const shop = ["shop"];
+    const boss = ["boss"];
     
     if (!args[0]) {
       const mc = await clan.findOne({ID: rp.clanID});
@@ -150,7 +155,7 @@ module.exports = {
       //const clanData = await clan.findOne({owner: user.id})
       setTimeout(async () => {
         msg.delete()
-        if (rp.clanID !== null) return error(message, cm.clan);
+        if (rp.clanID) return error(message, cm.clan);
 
         if (bag.stars < 5000) return error(message, noStar);
         
@@ -183,7 +188,7 @@ module.exports = {
       }, a * 1000)
       
     } else if (kicks.includes(resp)) {
-      if (rp.clanID === null) return error(message, cm.noClan);
+      if (!rp.clanID) return error(message, cm.noClan);
       let getCl = await clan.findOne({ID: rp.clanID});
       if(message.author.id !== getCl.owner && user.id !== getCl.coowner) return error(message, cm.notLeader);
       if (!args[1] || isNaN(args[1])) return error(message, cm.specN);
@@ -202,7 +207,7 @@ module.exports = {
     } else if (apps.includes(resp)) {
       
       const c = await clan.findOne({ID: rp.clanID});
-      if (rp.clanID === null) return error(message, cm.noClan);
+      if (!rp.clanID) return error(message, cm.noClan);
       if (message.author.id !== c.owner && !c.staff.includes(user.id) && user.id !== c.coowner) return error(message, 'У вас недостаточно прав!');
       if (user.id == c.owner && args[1]) {
         if (args[1] && args[1] === 'enable' && user.id === c.owner) {
@@ -243,7 +248,7 @@ module.exports = {
       return message.channel.send({embeds: [emb]});
     } else if (reject.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
-      if (rp.clanID === null) return error(message, cm.noClan);
+      if (!rp.clanID) return error(message, cm.noClan);
       if (message.author.id !== c.owner && !c.staff.includes(user.id) && user.id !== c.coowner) return error(message, perm);
       if(c.apps.length === 0) return error(message, cm.noApps);
       if(!args[1] || isNaN(args[1])) return error(message, cm.specN);
@@ -263,7 +268,7 @@ module.exports = {
       setTimeout(async () => {
         msg.delete()
         const c = await clan.findOne({ID: rp.clanID});
-        if (rp.clanID === null) return error(message, cm.noClan);
+        if (!rp.clanID) return error(message, cm.noClan);
         if (message.author.id !== c.owner && !c.staff.includes(user.id) && user.id !== c.coowner) return error(message, perm);
         const members = await rpg.find({clanID: c.ID});
         if(c.space === members) return error(message, cc.enoughMembers);
@@ -285,7 +290,7 @@ module.exports = {
       }, a * 1000);
     } else if (upgrade.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
-      if (rp.clanID === null) return error(message, cm.noClan);
+      if (!rp.clanID) return error(message, cm.noClan);
       if (user.id !== c.owner && user.id !== c.coowner) return error(message, cm.notLeader);
 
       let up = 3000;
@@ -317,7 +322,7 @@ module.exports = {
       }, a * 1000)
     } else if (description.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
-      if (rp.clanID === null) return error(message, cm.noClan);
+      if (!rp.clanID) return error(message, cm.noClan);
       if (user.id !== c.owner && user.id !== c.coowner) return error(message, cm.notLeader);
       if (!args[1]) return error(message, cc.descError)
       if (c.level < 5) return error(message, cc.clanLevel5)
@@ -329,7 +334,7 @@ module.exports = {
       return embed(message, cc.descDone);
     } else if (logo.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
-      if (rp.clanID === null) return error(message, cm.noClan);
+      if (!rp.clanID) return error(message, cm.noClan);
       if (user.id !== c.owner && user.id !== c.coowner) return error(message, cm.notLeader);
       if (!args[1]) return error(message, specifyL)
       if (c.level < 5) return error(message, cc.clanLevel5)
@@ -341,7 +346,7 @@ module.exports = {
       const now = ops.queue.get(user.id);
       if (now) return
       const c = await clan.findOne({ID: rp.clanID});
-      if (rp.clanID === null) return error(message, cm.noClan);
+      if (!rp.clanID) return error(message, cm.noClan);
       if (user.id !== c.owner) return error(message, cm.notLeader);
 
       const button1 = new MessageButton()
@@ -432,7 +437,7 @@ module.exports = {
       
     } else if (reward.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
-      if (rp.clanID === null) return error(message, cm.noCLan);
+      if (!rp.clanID) return error(message, cm.noCLan);
       if (user.id !== c.owner && !c.staff.includes(user.id) && user.id !== c.coowner) return error(message, perm);
       
       let author = await c.reward;
@@ -454,7 +459,7 @@ module.exports = {
       const now = ops.queue.get(user.id);
       if (now) return
       const c = await clan.findOne({ID: rp.clanID});
-      if (rp.clanID === null) return error(message, cm.noClan);
+      if (!rp.clanID) return error(message, cm.noClan);
       if (user.id === c.owner) return error(message, cc.ldCant);
 
       const button1 = new MessageButton()
@@ -548,7 +553,7 @@ module.exports = {
       
     } else if (up.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
-      if (rp.clanID === null) return error(message, cm.noClan);
+      if (!rp.clanID) return error(message, cm.noClan);
       if (user.id !== c.owner) return error(message, cm.notLeader);
       const a = await rpg.find({clanID: c.ID}).exec()
       const a1 = args[1];
@@ -576,7 +581,7 @@ module.exports = {
       
     } else if (down.includes(resp)) {
       const c = await clan.findOne({ID: rp.clanID});
-      if (rp.clanID === null) return error(message, cm.noClan);
+      if (!rp.clanID) return error(message, cm.noClan);
       if (user.id !== c.owner) return error(message, cm.notLeader);
 
       const a = await rpg.find({clanID: c.ID}).exec()
@@ -601,7 +606,7 @@ module.exports = {
 
       return embed(message, cc.dDone)
     } else if (mess.includes(resp)) {
-      if (rp.clanID === null) return error(message, cm.noClan);
+      if (!rp.clanID) return error(message, cm.noClan);
       let getCl = await clan.findOne({ID: rp.clanID});
       if(message.author.id !== getCl.owner && user.id !== getCl.coowner) return error(message, cm.notLeader);
 
@@ -746,6 +751,135 @@ module.exports = {
         if (!bool) return error(message, timeOut);
       })
       
+    } else if (boss.includes(resp)) {
+      if (!rp.clanID) return error(message, cm.noClan);
+      let c = await clan.findOne({ID: rp.clanID});
+
+      if (c.boss && c.boss.date > new Date()) {
+        
+        if (c.boss.health > 0) {
+          const bossData = bosses[c.boss.name];
+          const reward = Math.round(bossData.rewardLevel * rewards.defaultGuildBossReward * (c.level || 1));
+          const fights = ["fight"];
+
+          if (!args[1] || args[1] && !fights.includes(args[1].toLowerCase())) {
+            const att = new MessageAttachment(bossData.path, "boss.png");
+            const emb = new MessageEmbed()
+            .setAuthor(LANG.lang === "en" ? bossData.name : bossData.nameRus)
+            .setColor(main)
+            .setTitle(stripIndents`
+            ❤ ${formatNumber(c.boss.health)}
+            ⚔ ${formatNumber(c.boss.damage)}
+            `)
+            .setDescription(stripIndents`
+            ${LANG.lang === "en" ? "Ends" : "Закончится"} <t:${makeTimestamp(c.boss.date.getTime())}:R>
+            `)
+            .setThumbnail(`attachment://boss.png`)
+            .addField(LANG.lang === "en" ? "Reward:" : "Награда:", `${formatNumber(reward)} ${CLAN}`);
+  
+            return message.reply({embeds: [emb], files: [att]})
+          } else if (args[1] && fights.includes(args[1].toLowerCase())) {
+            if (bossCooldown.has(c.ID)) return;
+            if (!rp.item || rp.heroes.length === 0) return error(message, hm.noHero);
+            const profileData = await pd.findOne({userID: message.author.id});
+            if (profileData.guildBoss && profileData.guildBoss > new Date()) {
+              return error(message, `${again} <t:${makeTimestamp(profileData.guildBoss.getTime())}:R>`);
+            };
+            if (bossCooldown.has(c.ID)) return;
+            bossCooldown.set(c.ID, message.author.id);
+            const bag = await bd.findOne({userID: message.author.id});
+            let timeout = 2 * 3600000;
+            if (bag.vip2) timeout /= 2;
+            await pd.updateOne({userID: message.author.id}, {$set: {guildBoss: new Date(Date.now() + timeout) }});
+
+            //const myHero = rp.heroes.find(x => x.name === rp.item);
+            const hero = heroes[rp.item];
+            let myHealth = await getHeroData(bot, message.author.id, rp).then(x => x.h);
+            let myDamage = await getHeroData(bot, message.author.id, rp).then(x => x.d);
+
+            let bossDamage = c.boss.damage;
+            let bossHealth = c.boss.health;
+            
+            let damn = await message.reply(LOADING);
+            const CC = await makeCanvas(hero.path, bossData.path)
+            const att = new MessageAttachment(CC.toBuffer(), 'fight.png')
+
+            const fight_embed = new MessageEmbed()
+            .setColor(main)
+            .setAuthor(hm.battle)
+            .setThumbnail('https://media.giphy.com/media/SwUwZMPpgwHNQGIjI7/giphy.gif')
+            .addField(LANG.lang === "en" ? hero.name : hero.nameRus, `❤ ${formatNumber(myHealth)}\n⚔ ${formatNumber(myDamage)}`)
+            .addField(LANG.lang === "en" ? bossData.name : bossData.nameRus, `❤ ${formatNumber(c.boss.health)}\n⚔ ${formatNumber(c.boss.damage)}`)
+            .setImage("attachment://fight.png");
+            const m = await message.reply({embeds: [fight_embed], files: [att]});
+            damn.delete();
+            await delay(20000);
+            let winner = false;
+            while (true) {
+              myHealth -= bossDamage;
+              bossHealth -= myDamage;
+              if (myHealth <= 0) {
+                break;
+              } else if (bossHealth <= 0) {
+                winner = true;
+                break;
+              }
+            }
+            if (bossHealth <= 0) winner = true;
+            let finalEmb = new MessageEmbed()
+            .setColor(main)
+            m.delete();
+            if (winner) {
+              finalEmb
+              .setThumbnail(bossData.url)
+              .setImage(hero.url)
+              .setAuthor(b.winner + ` ${message.author.username}`)
+              .setDescription(LANG.lang === "en" ? `Congratulations, you killed the boss!\nYou additionally get ${rewards.guildBossKiller} ${CRYSTAL}\nGuild receives ${reward} ${CLAN}` : `Поздравляю, вы убили босса!\nВы дополнительно получаете ${rewards.guildBossKiller} ${CRYSTAL}\nГильдия получает ${reward} ${CLAN}`)
+
+              await clan.updateOne({ID: c.ID}, {$set: {"boss.health": Math.round(bossHealth), "boss.killer": message.author.id}});
+
+              await addCrystal(message.author.id, rewards.guildBossKiller);
+              await clan.updateOne({ID: c.ID}, {$inc: {budget: reward}});
+
+              bossCooldown.delete(c.ID);
+                 
+              return message.reply({embeds: [finalEmb]});
+            } else {
+              finalEmb
+              .setImage(bossData.url)
+              .setThumbnail(hero.url)
+              .setAuthor(b.winner + `${LANG.lang === "en" ? bossData.name : bossData.nameRus}`)
+              .setDescription((LANG.lang === "en" ? `The boss turned out to be stronger, you left him` : `Босс оказался сильнее, вы ему оставили`) + ` ${formatNumber(Math.round(bossHealth))} ❤`)
+              await clan.updateOne({ID: c.ID}, {$set: {"boss.health": Math.round(bossHealth)}});
+
+              bossCooldown.delete(c.ID);
+              
+              return message.reply({embeds: [finalEmb]});
+            }
+            
+          }
+          
+        } else {
+          let Emb = new MessageEmbed()
+            .setColor(main)
+            .setDescription(`**${bot.users.cache.get(c.boss.killer).tag}** ${LANG.lang === "en" ? "already killed the boss!" : "уже убил босса!"}`)
+            
+            return message.reply({embeds: [Emb]});
+        }
+      } else if (c.boss && c.boss.date < new Date()) {
+        let Emb = new MessageEmbed()
+            .setColor(main)
+            .setDescription(`${timeOut}\n${LANG.lang === "en" ? "New boss soon!" : "Новый босс скоро!"}`)
+            
+            return message.reply({embeds: [Emb]});
+      } else {
+        let Emb = new MessageEmbed()
+        .setColor(main)
+        .setDescription(`${LANG.lang === "en" ? "New boss soon!" : "Новый босс скоро!"}`)
+        
+        return message.reply({embeds: [Emb]});
+      }
+      
     } else {
       return error(message, cc.actionError);
     }
@@ -753,3 +887,31 @@ module.exports = {
 
   }
 };
+
+
+async function makeCanvas(data1, data2) {
+  const canvas = Canvas.createCanvas(1110, 520);
+  const ctx = canvas.getContext('2d');
+  const background = await Canvas.loadImage('https://i.ibb.co/SyjjcGt/vstemp.jpg');
+  ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
+  const h = 280;
+  const heroHeight = 120;
+  const firstW = 80;
+  const secW = 750;
+
+  const first = await Canvas.loadImage(data1);
+  const second = await Canvas.loadImage(data2);
+
+  ctx.drawImage(first, firstW, heroHeight, h, h);
+  ctx.drawImage(second, secW, heroHeight, h, h);
+
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = "#FDB416";
+  ctx.strokeRect(firstW, heroHeight, h, h)
+
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = "#FDB416";
+  ctx.strokeRect(secW, heroHeight, h, h)
+
+  return canvas
+}
