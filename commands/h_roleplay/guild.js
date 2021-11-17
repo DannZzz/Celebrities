@@ -620,9 +620,9 @@ module.exports = {
       const send = new MessageEmbed()
       .setColor(main)
       .setAuthor(cc.mTitle)
-      .setFooter(bot.users.cache.get(getCl.owner).tag, bot.users.cache.get(getCl.owner).displayAvatarURL({dynamic: true}))
+      .setFooter(bot.users.cache.get(message.author.id).tag, bot.users.cache.get(message.author.id).displayAvatarURL({dynamic: true}))
       users.forEach((user) => {
-        if (getCl.owner !== user.userID) {
+        if (message.author.id !== user.userID) {
           const DM = bot.users.cache.get(user.userID)
           DM.send({embeds: [send.setDescription(text)]}).catch(() => `ID: ${user.userID}`)
         }
