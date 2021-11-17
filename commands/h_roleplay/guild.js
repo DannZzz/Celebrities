@@ -848,7 +848,7 @@ module.exports = {
               finalEmb
               .setImage(bossData.url)
               .setThumbnail(hero.url)
-              .setAuthor(b.winner + `${LANG.lang === "en" ? bossData.name : bossData.nameRus}`)
+              .setAuthor(b.winner + ` ${LANG.lang === "en" ? bossData.name : bossData.nameRus}`)
               .setDescription((LANG.lang === "en" ? `The boss turned out to be stronger, you left him` : `Босс оказался сильнее, вы ему оставили`) + ` ${formatNumber(Math.round(bossHealth))} ❤`)
               await clan.updateOne({ID: c.ID}, {$set: {"boss.health": Math.round(bossHealth)}});
 
