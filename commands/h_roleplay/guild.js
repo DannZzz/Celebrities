@@ -670,11 +670,11 @@ module.exports = {
       .setDescription(stripIndents`
       ${cc.write}
 
-      ${cc.bonusHealth} **${addHealth}%**
-      ${cc.bonusDamage} **${addDamage}%**
+      ${cc.bonusHealth} **${addHealth.toFixed(1)}%**
+      ${cc.bonusDamage} **${addDamage.toFixed(1)}%**
       `)
-      .addField(`1. ❤ ${addHealth} + ${adding}`, `${cc.cost} ${formatNumber(cost)} ${CLAN}`)
-      .addField(`2. ⚔ ${addDamage} + ${adding}`, `${cc.cost} ${formatNumber(cost)} ${CLAN}`)
+      .addField(`1. ❤ ${addHealth.toFixed(1)} + ${adding}`, `${cc.cost} ${formatNumber(cost)} ${CLAN}`)
+      .addField(`2. ⚔ ${addDamage.toFixed(1)} + ${adding}`, `${cc.cost} ${formatNumber(cost)} ${CLAN}`)
       .addField(`3. ${cc.appType.h} __${heroes[hero.name].nameRus}__ ${cc.forEach}`, `${cc.cost} ${formatNumber(hero.cost)} ${CLAN}`)
 
       const m1 = await message.reply({embeds: [emb]});
