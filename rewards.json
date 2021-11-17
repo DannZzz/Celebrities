@@ -3,6 +3,10 @@
     "voteGoal": 700,
     "defaultGuildBossReward": 150000,
     "guildBossKiller": 150,
+    "guildShopHero": {
+        "name": "Carnage",
+        "cost": 20000000
+    },
     "partnerServer" : {
         "requiredCountOfMembers": 15,
         "reward": 150
