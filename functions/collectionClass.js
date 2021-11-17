@@ -93,14 +93,11 @@ class CollectionClass {
         });
 
         if (arr.length === 0) return error(this.msg, bool ? "You haven't collected any new collections!" : "Вы не собрали ни одной новой коллекции!");
-        let heroTxt = bool ? "You can't get this collection right now." : "Вы не можете собрать эту коллекцию сейчас.";
         arr.forEach(async obj => {
             rp = await rpgFind(this.id);
             if (obj.rewardType && obj.rewardType === "hero") {
                 const get = myHeroes.find(x => x.name === obj.reward);
                 if (!get) {
-
-                    heroTxt = bool ? `Hero __${obj.reward}__` : `Герой __${heroes[obj.reward].nameRus}__`
                     
                     rp.collections.push(obj.id);
                     const herData = heroes[obj.reward];
@@ -119,7 +116,7 @@ class CollectionClass {
             }
         });
 
-        const texted = arr.map(obj => `${bool ? obj.nameEN : obj.nameRU} - ${obj.rewardType === "hero" ? `${heroTxt}` : `${obj.reward} ${STAR}`}`);
+        const texted = arr.map(obj => `${bool ? obj.nameEN : obj.nameRU} - ${obj.rewardType === "hero" ? `${bool ? `Hero __${obj.reward}__` : `Герой __${heroes[obj.reward].nameRus}__`}` : `${obj.reward} ${STAR}`}`);
 
         const emb = new MessageEmbed()
         .setColor(main)
