@@ -1,5 +1,5 @@
 const { cardFind, bagFind, serverFind, card: cd, bag, addStar, rpgFind } = require("./models");
-const { error, embed, firstUpperCase, randomRange, delay, sendToMail, pagination } = require("./functions");
+const { error, embed, firstUpperCase, randomRange, delay, sendToMail, pagination, formatNumber } = require("./functions");
 const heroes = require("../JSON/heroes.json");
 const Collection = require("../JSON/collections.json");
 const { none, main } = require("../JSON/colours.json");
@@ -116,7 +116,7 @@ class CollectionClass {
             }
         });
 
-        const texted = arr.map(obj => `${bool ? obj.nameEN : obj.nameRU} - ${obj.rewardType === "hero" ? `${bool ? `Hero __${obj.reward}__` : `Герой __${heroes[obj.reward].nameRus}__`}` : `${obj.reward} ${STAR}`}`);
+        const texted = arr.map(obj => `${bool ? obj.nameEN : obj.nameRU} - ${obj.rewardType === "hero" ? `${bool ? `Hero __${obj.reward}__` : `Герой __${heroes[obj.reward].nameRus}__`}` : `${formatNumber(obj.reward)} ${STAR}`}`);
 
         const emb = new MessageEmbed()
         .setColor(main)
