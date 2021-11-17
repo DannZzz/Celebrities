@@ -660,8 +660,8 @@ module.exports = {
       const cost = 100000; //
 
       const hero = {
-        name: "Humanoid",
-        cost: 20000000
+        name: rewards.guildShopHero.name,
+        cost: rewards.guildShopHero.cost
       };
 
       const emb = new MessageEmbed()
