@@ -361,7 +361,7 @@ module.exports = {
                 let heroesArr = [];
                 for (let hi in heroes) {
                     let it = heroes[hi];
-                    if(it.available === "Да" || it.costType !== "dev") heroesArr.push(it.name);
+                    if(it.available === "Да" && it.costType !== "dev") heroesArr.push(it.name);
                 }
                 rew = await getValidHero(user, heroesArr);
                 if (!rew) return error(message, b.already);
