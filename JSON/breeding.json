@@ -50,6 +50,22 @@
     {
         "need": ["Leonard", "Poseidon"],
         "reward": ["Overlord"]
+    },
+    {
+        "need": ["Wolverine", "Harley"],
+        "reward": ["Light"]
+    },
+    {
+        "need": ["Atalanta", "Horus"],
+        "reward": ["Venom"]
+    },
+    {
+        "need": ["Lucifer", "Selena"],
+        "reward": ["Dracula"]
+    },
+    {
+        "need": ["Tyrus", "Shadow"],
+        "reward": ["Gigantes"]
     }
 
 ]

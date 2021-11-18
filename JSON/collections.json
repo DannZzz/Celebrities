@@ -11,7 +11,7 @@
         "list": ["Horus", "Thoth-amon", "Anubis", "Sebek", "Hathor", "Supernatural-ramses"],
         "nameRU": "Египетская коллекция",
         "nameEN": "Egyptian collection",
-        "reward": 35000
+        "reward": 3500000
     },
     {
         "id": 3,
@@ -95,5 +95,12 @@
         "nameEN": "Marvel Collection",
         "reward": "Ghost-rider",
         "rewardType": "hero"
+    },
+    {
+        "id": "DC",
+        "list": ["Wolverine", "Batman", "Harley"],
+        "nameRU": "Коллекция DC",
+        "nameEN": "DC Collection",
+        "reward": 890000
     }
 ]
