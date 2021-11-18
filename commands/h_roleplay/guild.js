@@ -14,6 +14,7 @@ const { stripIndents } = require("common-tags");
 const Canvas = require("canvas");
 const bosses = require("../../JSON/guild-bosses.json");
 const bossCooldown = new Map();
+const shopSet = new Set();
 const rewards = require("../../rewards.json");
 
 module.exports = {
@@ -652,6 +653,8 @@ module.exports = {
       if (!rp.clanID) return error(message, cm.noClan);
       let getCl = await clan.findOne({ID: rp.clanID});
       if(message.author.id !== getCl.owner && user.id !== getCl.coowner) return error(message, cm.notLeader);
+      if (shopSet.has(getCl.ID)) return;
+      shopSet.add(getCl.ID);
       let budget = getCl.budget;
 
       const addHealth = getCl.addHealth || 0;
@@ -698,6 +701,7 @@ module.exports = {
         }
         if (!isNaN(m) && Math.round(m) > 0 && Math.round(m) <= 3) {
           m = Math.round(m);
+          shopSet.delete(getCl.ID);
           if (m === 1) {
             const newClanData = await clanFind(rp.clanID);
 
