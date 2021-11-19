@@ -5,6 +5,9 @@ const bot = new Client({restGlobalRateLimit: 50, restWsBridgeTimeout: 0, shards:
 const fs = require('fs');
 const mongoose = require('mongoose');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 const { addCrystal } = require("./functions/models");
 const crystalToTopOne = 50;
 
@@ -35,110 +38,14 @@ bot.categories = fs.readdirSync("./commands/");
   require(`./handler/${handler}`)(bot);
 });
 
-const { AutoPoster } = require('topgg-autoposter');
+// const { AutoPoster } = require('topgg-autoposter');
 
-AutoPoster(process.env.TOPGG, bot)
-  .on('posted', () => {
-    console.log('Posted stats to Top.gg!')
-  })
+// AutoPoster(process.env.TOPGG, bot)
+//   .on('posted', () => {
+//     console.log('Posted stats to Top.gg!')
+//   })
 
 bot.on('error',function(err){});
-
-bot.on("guildCreate", async guild => {
-  let serverData = await serverModel.findOne({ serverID: guild.id });
-  if(!serverData) {
-    let server = await serverModel.create({
-      serverID: guild.id,
-      lang: "ru"
-    })
-  server.save()}
-
-})
-
-
-
-bot.on('messageCreate', async message => {
-      let memberData;
-      let profileData;
-      let serverData;
-      let begData;
-      let vipData;
-    try {
-    let rp = await rpg.findOne({userID: message.author.id});
-
-    if (!rp) {const asd = await rpg.create({
-      userID: message.author.id
-    })
-    asd.save()
-    }
-
-    if (rp && !rp.itemCount) await rpg.updateOne({userID: message.author.id}, {$set: {itemCount: 1}})
-
-    vipData = await vipModel.findOne({ userID: message.author.id });
-    if (!vipData) {
-    let vip = await vipModel.create({
-      userID: message.author.id
-    })
-    vip.save()}
-
-    memberData = await memberModel.findOne({ userID: message.author.id, serverID: message.guild.id });
-    if (!memberData) {
-    let member = await memberModel.create({
-      userID: message.author.id,
-      serverID: message.guild.id
-    })
-    member.save()}
-
-    begData = await begModel.findOne({ userID: message.author.id });
-    if (!begData) {
-      let beg = await begModel.create({
-        userID: message.author.id
-      })
-      beg.save()
-    }
-
-    profileData = await profileModel.findOne({ userID: message.author.id });
-    if (!profileData) {
-      let profile = await profileModel.create({
-        userID: message.author.id
-      });
-      profile.save();
-    }
-    } catch (err) {
-    console.log(err);
-    }
-});
-
-bot.on('messageCreate', async message => {
-  let memberData = await memberModel.findOne({ userID: message.author.id, serverID: message.guild.id });
-  if (!memberData) {
-  let member = await memberModel.create({
-    userID: message.author.id,
-    serverID: message.guild.id
-  })
-  member.save()}
-  let prefix;
-    if (message.author.bot || message.channel.type === "DM") return;
-        try {
-          let serverData = await serverModel.findOne({ serverID: message.guild.id });
-          if(!serverData) {
-            let server = await serverModel.create({
-              serverID: message.guild.id,
-              lang: "ru"
-            })
-          server.save()}
-
-          prefix = serverData.prefix;
-
-        } catch (e) {
-            console.log(e)
-    };
-
-  if (message.author.bot) return;
-  if (message.channel.type === "DM") return;
-});
-
-
 
 bot.on('messageCreate', async message => {
   let Embed = new MessageEmbed()

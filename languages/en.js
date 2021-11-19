@@ -61,6 +61,14 @@ module.exports = {
 
 
 
+    "global-duel": {
+        "desc": "Duel with random user.",
+        "usage": "",
+        "access": "Для всех",
+    },
+
+
+
     "special": {
         "desc": "Special temporary offer.",
         "usage": "",

@@ -61,6 +61,14 @@ module.exports = {
 
 
 
+    "global-duel": {
+        "desc": "Дуэл с рандомным участником.",
+        "usage": "",
+        "access": "Для всех",
+    },
+
+
+
     "vote": {
         "desc": "Голосовать за бота.",
         "usage": "",

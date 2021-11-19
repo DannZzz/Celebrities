@@ -14,6 +14,51 @@ const heroes = require('./../JSON/heroes.json')
 const { voteFind, powersFind, powers, serverFind, mail, mailFind, clanFind } = require("./models.js");
 
 module.exports = {
+  HealthToZero: (obj1 = {}, obj2 = {}) => { 
+    // {
+    //   id: "user1",
+    //   health: 100000,
+    //   damage: 1000
+    // }
+    if ( !obj1 || !obj2 || obj1 === {} || obj2 === {} ) return false;
+    const random = Math.ceil(Math.random() * 40);
+    let winner, loser;
+    if (random <= 20) {
+      while (true) {
+        obj1.health -= obj2.damage;
+        obj2.health -= obj1.damage;
+        if (obj1.health <= 0) {
+          winner = obj2.id;
+          loser = obj1.id;
+          break;
+        } else if (obj2.health <= 0) {
+          winner = obj1.id;
+          loser = obj2.id;
+          break;
+        }
+      }
+    } else {
+      while (true) {
+        obj1.health -= obj2.damage;
+        obj2.health -= obj1.damage;
+        if (obj2.health <= 0) {
+          winner = obj1.id;
+          loser = obj2.id;
+          break;
+        } else if (obj1.health <= 0) {
+          winner = obj2.id;
+          loser = obj1.id;
+          break;
+        }
+      }
+    }
+
+    return {
+      winner,
+      loser
+    }
+  },
+  
   getHeroData: async (bot, sponsorID, data) => {
     const get = data.heroes.find(x => x.name === data.item);
     const {health, damage} = get;

@@ -14,9 +14,8 @@ const Rate = require("../../functions/rateClass.js");
 const powerData = require("../../JSON/powers.json");
 const {bans, bansFind, powerFind, rpgFind, powersFind, powers, lfFind, mail, mailFind} = require("../../functions/models");
 
-module.exports = async (bot, messageCreate) => {
+module.exports = async (bot, message) => {
   try {
-  let message = messageCreate;
   if (message.author.bot) return
   const user = message.author;
 

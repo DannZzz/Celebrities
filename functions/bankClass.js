@@ -247,13 +247,13 @@ class bankClass {
         const data = await this.checkDocument(this.id);
         if (!data.mining || data.mining.length === 0) return;
         const filtered = data.mining.filter(obj => obj.date < new Date());
+        const filteredReverse = data.mining.filter(obj => obj.date > new Date());
 
+        await bank.updateOne({userID: this.id}, {$set: {mining: filteredReverse}});
+        
         if (!filtered || filtered.length === 0) return;
 
-        await filtered.forEach(async (obj) => {
-            const data1 = await this.checkDocument(this.id);
-            data1.mining.splice(data1.mining.indexOf(obj), 1)
-            await data1.save()
+        filtered.forEach(async (obj) => {
             await bank.updateOne({userID: this.id}, {$inc: {totalGotten: Math.round(obj.amount + (obj.amount * obj.percentage / 100) )}});
             if (data1.paymentMethod) {
                 const card = await cd.findOne({code: data1.paymentMethod});
@@ -269,7 +269,7 @@ class bankClass {
                 await addStar(this.id, Math.round(obj.amount + (obj.amount * obj.percentage / 100) ) );
             }
             await sendToMail(this.id, {createdAt: obj.date, textMessage: this.sd.lang === "en" ? `Mining successfully finished, you got __${formatNumber(Math.round(obj.amount + (obj.amount * obj.percentage / 100) ))}__.` : `Майнинг успешно закончился, вы получили __${formatNumber(Math.round(obj.amount + (obj.amount * obj.percentage / 100) ))}__.`})
-        })
+        });
     }
 
 
