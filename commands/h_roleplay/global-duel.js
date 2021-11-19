@@ -57,7 +57,7 @@ module.exports = {
         .addField(`${user.tag} (${sd.lang === "ru" ? myHeroData.nameRus : myHeroData.name})`, `**${hm.level} ${getMyHero.level}**`, true)
         .addField(`❤ ${hm.health} ${myHealth}`, `**⚔ ${hm.damage} ${myDamage}**`, true)
         .addField(`\u200b`, `\u200b`, false)
-        .addField(`${randomUserNickname} ${sd.lang === "ru" ? userHeroData.nameRus : userHeroData.name}`, `**${hm.level} ${getUserHero.level}**`, true)
+        .addField(`${randomUserNickname} (${sd.lang === "ru" ? userHeroData.nameRus : userHeroData.name})`, `**${hm.level} ${getUserHero.level}**`, true)
         .addField(`❤ ${hm.health} ${userHealth}`, `**⚔ ${hm.damage} ${userDamage}**`, true)
         .setColor(main)
 
@@ -66,7 +66,7 @@ module.exports = {
     await rpg.updateOne({ userID: user.id }, { $inc: { totalGames: 1 } })
 
     await delay(20 * 1000);
-
+    m.delete();
     const end = HealthToZero({
       id: "user",
       health: myHealth,
