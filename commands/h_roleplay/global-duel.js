@@ -85,8 +85,9 @@ module.exports = {
     
     if (end.winner === "user") {
       const value = games.twoVtwo;
-      const winCup = Rate(message).winRewardGenerator(league);
-      await Rate(message).rateUpdate(message.author.id, winCup);
+      const league = rp.league.id || 1
+      const winCup = Rate(msg).winRewardGenerator(league);
+      await Rate(msg).rateUpdate(user.id, winCup);
       await rpg.updateOne({ userID: user.id }, { $inc: { wins: 1 } })
       const reward = await addPremiumStar(bot, user.id, value, true);
       await addPremiumStar(bot, user.id, value);
