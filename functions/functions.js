@@ -4,16 +4,35 @@ const MONEY = ['', 'k', 'M', 'G', 'T', 'P', 'E'];
 const { bag: bd } = require("./../functions/models");
 const inviteRegex = /(https?:\/\/)?(www\.|canary\.|ptb\.)?discord(\.gg|(app)?\.com\/invite|\.me)\/([^ ]+)\/?/gi;
 const botInvRegex = /(https?:\/\/)?(www\.|canary\.|ptb\.)?discord(app)\.com\/(api\/)?oauth2\/authorize\?([^ ]+)\/?/gi;
-const { DISAGREE, AGREE } = require('./../config')
+const { DISAGREE, AGREE, adminID, devID, STAFF } = require('./../config')
 const {  MessageActionRow,
   Message,
   MessageEmbed,
   MessageButton,} = require('discord.js');
 const {main, none, greenlight, reddark} = require('./../JSON/colours.json')
 const heroes = require('./../JSON/heroes.json')
-const { voteFind, powersFind, powers, serverFind, mail, mailFind, clanFind } = require("./models.js");
+const { voteFind, powersFind, powers, serverFind, mail, mailFind, clanFind, botData } = require("./models.js");
+
+const badges = require("./../JSON/badges.json");
 
 module.exports = {
+  getPrivilege: async (id) => {
+    let finallArrEmojies = [];
+
+    if (devID.includes(id)) {
+      finallArrEmojies.push(STAFF.dev);
+    } else if (adminID.includes(id)) {
+      finallArrEmojies.push(STAFF.owner);
+    }
+
+    const bot = await botData.findOne({name: "main"});
+
+    bot.bugHunter && bot.bugHunter.includes(id) && finallArrEmojies.push(badges.bugHunter.emoji);
+    bot.idea && bot.idea.includes(id) && finallArrEmojies.push(badges.idea.emoji);
+    
+    return finallArrEmojies;
+  },
+
   HealthToZero: (obj1 = {}, obj2 = {}) => { 
     // {
     //   id: "user1",

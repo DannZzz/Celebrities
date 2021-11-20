@@ -18,6 +18,7 @@ const event = require("../models/event.js");
 const bank = require("../models/bank.js");
 const count = require("../models/count.js");
 const vote = require("../models/vote.js");
+const botData = require("../models/bot.js");
 
 module.exports = {
     rpg,
@@ -26,6 +27,7 @@ module.exports = {
     marry,
     profile,
     member,
+    botData,
     server,
     vip,
     card,
