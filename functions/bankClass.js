@@ -247,13 +247,14 @@ class bankClass {
         const data = await this.checkDocument(this.id);
         if (!data.mining || data.mining.length === 0) return;
         const filtered = data.mining.filter(obj => obj.date < new Date());
-        const filteredReverse = data.mining.filter(obj => obj.date > new Date());
+        const filteredReverse = data.mining.filter(obj => obj.date >= new Date());
 
         await bank.updateOne({userID: this.id}, {$set: {mining: filteredReverse}});
         
         if (!filtered || filtered.length === 0) return;
 
         filtered.forEach(async (obj) => {
+            const data1 = await this.checkDocument(this.id);
             await bank.updateOne({userID: this.id}, {$inc: {totalGotten: Math.round(obj.amount + (obj.amount * obj.percentage / 100) )}});
             if (data1.paymentMethod) {
                 const card = await cd.findOne({code: data1.paymentMethod});
