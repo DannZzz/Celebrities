@@ -36,11 +36,16 @@ module.exports = async (bot, messageCreate) => {
   let message = messageCreate;
   if (message.channel.id === "897201817526612028") {
     try {
-      await addCrystal(message.embeds[0]["title"], vote);
-      let Vote = await voteFind(message.embeds[0]["title"]);
-      await v.updateOne({userID: message.embeds[0]["title"]}, {$set: {topggDate: new Date(Date.now() + (3600000 * 12))}, $inc: {topggCount: 1}});
-      Vote = await voteFind(message.embeds[0]["title"]);
-      if (Vote.topggCount !== 0 && Vote.topggCount % 10 === 0) await addCrystal(message.embeds[0]["title"], voteGoal);
+      const id = (function (text) {
+        let res = text.split("(id:")
+        const ID = res[1].split(")")[0]
+        return ID
+      }) (message.embeds[0]["description"])
+      await addCrystal(id, vote);
+      let Vote = await voteFind(id);
+      await v.updateOne({userID: id}, {$set: {topggDate: new Date(Date.now() + (3600000 * 12))}, $inc: {topggCount: 1}});
+      Vote = await voteFind(id);
+      if (Vote.topggCount !== 0 && Vote.topggCount % 10 === 0) await addCrystal(id, voteGoal);
     } catch (error) {
       console.log("error voting");
     }
