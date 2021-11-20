@@ -4,10 +4,12 @@ const { main } = require('../../JSON/colours.json');
 const { HELL, COIN, BANK, STAR, status, CRYSTAL, devID, adminID, STAFF } = require('../../config');
 const devs = ["382906068319076372"];
 const moment = require('moment');
-const { formatNumber } = require("../../functions/functions");
+const { formatNumber, progressBar } = require("../../functions/functions");
 const EVENT = require("../../functions/eventClass");
 const { eventFind, serverFind, vip, bagFind, marry, rpg, profile, clanFind, profileFind, rpgFind, vipFind } = require("../../functions/models");
 const YTchannelInfo = require("yt-channel-info");
+const { LevelMethods } = require("../../functions/levelClass");
+const { stripIndents } = require("common-tags");
 
 module.exports = {
   config: {
@@ -58,12 +60,25 @@ module.exports = {
     if (devID.includes(member.id)) {
       znachok = STAFF.dev;
     } else if (adminID.includes(member.id)) znachok = STAFF.owner;
+    const myXp = Math.round(data1.xp || 0);
+    const myLevelObj = LevelMethods.getCurrentLevelByXp(myXp);
 
+    const xpBar = myXp - myLevelObj.currentLevelXp;
+    const neededXp = myLevelObj.xpForNextLevel - myLevelObj.currentLevelXp;
+    
+    const bar = progressBar(xpBar, neededXp, 10, "⬜", "⬛");
 
     await EVENT(member.id).checkDocument();
     const event = await eventFind(member.id);
   
-    embed.addField(`${p.status} ${vip}\n${p.subs} ${getSub(bot, member.id, LANG.lang)}`, `${STAR} ${formatNumber(Math.round(data.stars)) || Math.round(data.stars)} ${znachok}\n${CRYSTAL} ${formatNumber(Math.round(data.crystal || 0))}\n${HELL.candy} ${formatNumber(Math.round(event.candy || 0))}\n${await Rate(message).rateData(trophy)}\n${p.quiz} ${rp.quizCount}\n${CL}\n${p.gg} ${marData}\n\n`)
+    embed.addField(stripIndents`
+    ${p.status} ${vip}
+    ${p.subs} ${getSub(bot, member.id, LANG.lang)}
+    ${LANG.lang === "en" ? "Level" : "Уровень"}: ${myLevelObj.current} 
+    ${formatNumber(myXp)} / ${formatNumber(myLevelObj.xpForNextLevel)} xp
+    ${bar}
+    `, `${STAR} ${formatNumber(Math.round(data.stars)) || Math.round(data.stars)} ${znachok}\n${CRYSTAL} ${formatNumber(Math.round(data.crystal || 0))}\n${HELL.candy} ${formatNumber(Math.round(event.candy || 0))}\n${await Rate(message).rateData(trophy)}\n${p.quiz} ${rp.quizCount}\n${CL}\n${p.gg} ${marData}\n\n`)
+    
     embed.addField(`__${p.fishes}__\n`,
       `\`\`\`${p.junk}(🔧) - ${data.junk}\n${p.common}(🐟) - ${data.common}\n${p.unc}(🐠) - ${data.uncommon}\n${p.rare}(🦑) - ${data.rare}\n${p.leg}(🐋) - ${data.legendary}\`\`\`\n`, true)
 
