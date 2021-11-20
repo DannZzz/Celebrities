@@ -1,6 +1,6 @@
 const {serverFind, rpgFind, bagFind, rpg, profile} = require("../../functions/models");
 const {error, embed, roundFunc, pagination, formatNumber} = require("../../functions/functions");
-const {MEDAL, LEFT, RIGHT, LEAGUE, STAR, CRYSTAL} = require("../../config");
+const {MEDAL, LEFT, RIGHT, LEAGUE, STAR, CRYSTAL, LOADING} = require("../../config");
 const {MessageEmbed, MessageButton} = require("discord.js");
 const {greenlight, redlight, main} = require('../../JSON/colours.json');
 const heroes = require('../../JSON/heroes.json');
@@ -20,7 +20,7 @@ module.exports = {
         const m = message;
         const LANG = await serverFind(m.guild.id)
         const {hero: h, leaderboard: lb, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
-
+        const load = await m.reply(LOADING);
         // creating arrays
         const dataRPG = await rpg.find({item: {$exists: true}}).sort([['totalGames', 'descending']]).exec();
         const sliced = dataRPG.slice(0, 10);
@@ -110,8 +110,9 @@ module.exports = {
         .setThumbnail(bot.user.displayAvatarURL())
         .setDescription(stripIndents`
         ${LANG.lang === "en" ? `Top 1 will get ${rewards.lbTop1} ${CRYSTAL} daily.` : `Топ 1 будет получать ${rewards.lbTop1} ${CRYSTAL} ежедневно!`}
-        \`\`\`md
+        \`\`\`dts
         #  XP  |  Tag  |  Level
+        =======================
         ${mappedXp.join("\n")}  
         \`\`\``)
         
@@ -143,7 +144,7 @@ module.exports = {
         .setEmoji(RIGHT)
         .setStyle("SECONDARY")
         
-        return await pagination(m, [Embed00, Embed0, Embed1, Embed2], [button1, button2], 100000, [m.author.id])
+        return await pagination(m, [Embed00, Embed0, Embed1, Embed2], [button1, button2], 100000, [m.author.id]).then(load.delete());
         
     }
 }
