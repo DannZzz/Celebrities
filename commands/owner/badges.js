@@ -31,7 +31,7 @@ module.exports = {
        }
 
        const m1 = await embed(msg, text.join("\n\n"), false)
-        
+       let bool = false;
        c.on("collect", async message => {
             const m = message.content;
             const badge = badges[m];
