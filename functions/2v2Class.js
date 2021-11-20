@@ -1,7 +1,7 @@
 const { rpg, profile, profileFind, cardFind, bagFind, serverFind, card: cd, addStar, rpgFind, addPremiumStar, addCandy, addCount } = require("./models");
 const { error, embed, firstUpperCase, randomRange, delay, sendToMail, pagination, getMember, getHeroData, makeTimestamp, missingArgument } = require("./functions");
 const heroes = require("../JSON/heroes.json");
-const { none, main } = require("../JSON/colours.json");
+const { none, main, reddark } = require("../JSON/colours.json");
 const { AGREE, DISAGREE, STAR, LEFT, RIGHT, heroNames, LEAGUE, HELL, LOADING } = require("../config");
 const { stripIndents } = require("common-tags");
 const Rate = require("./rateClass");
