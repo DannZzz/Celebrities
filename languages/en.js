@@ -847,6 +847,7 @@ module.exports = {
         "none": "Unknown",
         "clan": "Guild:",
         "level": "Level:",
+        "privilege": "Privileges",
         "noclan": "Not a member of a guild.",
         "quiz": "Quiz:",
         "gg": "Spouse:",
