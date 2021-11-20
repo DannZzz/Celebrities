@@ -13,6 +13,9 @@ const Canvas = require('canvas');
 const Rate = require("../../functions/rateClass");
 const {games} = require(`../../rewards.json`);
 
+const { breedingXp, gamesXp } = require("../../JSON/addXp.json");
+const { LevelMethods } = require("../../functions/levelClass");
+
 module.exports = {
   config: {
     name: "battle",
@@ -166,6 +169,8 @@ module.exports = {
           await Rate(message).rateUpdate(message.author.id, winCup);
           await rpg.findOneAndUpdate({ userID: winner.id }, { $inc: { wins: 1 } })
 
+          await LevelMethods.addXp(winner.id, gamesXp.battle);
+          
           await addPremiumStar(bot, winner.id, value * 2);
 
           const WinData = await rpg.findOne({ userID: winner.id });

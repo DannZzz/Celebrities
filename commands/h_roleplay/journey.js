@@ -13,6 +13,9 @@ let rateLimiter = new RateLimiter(1, 3000);
 const Canvas = require('canvas');
 const { games } = require("../../rewards.json");
 
+const { breedingXp, gamesXp } = require("../../JSON/addXp.json");
+const { LevelMethods } = require("../../functions/levelClass");
+
 module.exports = {
   config: {
     name: "journey",
@@ -175,7 +178,7 @@ module.exports = {
 
     if(winner === hero){
       
-
+      await LevelMethods.addXp(user.id, gamesXp.journey);
       
       emb
       .setTitle(j.done)

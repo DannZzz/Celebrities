@@ -2,17 +2,20 @@ const { main, reddark } = require('../../JSON/colours.json');
 const heroes = require('../../JSON/heroes.json');
 const { MessageEmbed, MessageButton, MessageActionRow, MessageAttachment } = require("discord.js");
 const { STAR, AGREE, LOADING, LEAGUE } = require("../../config");
-const { error, embed, perms, firstUpperCase, makeTimestamp, delay, roundFunc, getHeroData, HealthToZero } = require("../../functions/functions");
+const { error, embed, firstUpperCase, makeTimestamp, delay, roundFunc, getHeroData, HealthToZero } = require("../../functions/functions");
 const { serverFind, rpgFind, addStar, bagFind, rpg, profileFind, profile, addPremiumStar } = require("../../functions/models");
 const Canvas = require("canvas");
 const { games } = require("../../rewards.json");
 const Rate = require("../../functions/rateClass");
 
+const { breedingXp, gamesXp } = require("../../JSON/addXp.json");
+const { LevelMethods } = require("../../functions/levelClass");
+
 module.exports = {
   config: {
     name: "global-duel",
     category: "h_roleplay",
-    aliases: ["глобал-дуэл"],
+    aliases: ["глобал-дуэль"],
     cooldown: 30,
   },
   run: async (bot, msg, args, ops) => {
@@ -92,12 +95,13 @@ module.exports = {
       const reward = await addPremiumStar(bot, user.id, value, true);
       await addPremiumStar(bot, user.id, value);
 
+      await LevelMethods.addXp(user.id, gamesXp["global-duel"]);
       
       winEmb
         .setAuthor(`${b.winner} ${user.tag}`)
         .setImage(myHeroData.url)
         .setThumbnail(userHeroData.url)
-        .setDescription(`${hm.reward}: ${reward} ${STAR} +${winCup} ${LEAGUE.cup}`)
+        .setDescription(`${hm.reward} ${reward} ${STAR} +${winCup} ${LEAGUE.cup}`)
     } else {
       winEmb
       .setAuthor(`${b.winner} ${randomUserNickname}`)

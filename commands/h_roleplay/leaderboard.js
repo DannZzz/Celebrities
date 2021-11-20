@@ -1,11 +1,14 @@
-const {serverFind, rpgFind, bagFind, rpg} = require("../../functions/models");
-const {error, embed, roundFunc, pagination} = require("../../functions/functions");
-const {MEDAL, LEFT, RIGHT, LEAGUE, STAR} = require("../../config");
+const {serverFind, rpgFind, bagFind, rpg, profile} = require("../../functions/models");
+const {error, embed, roundFunc, pagination, formatNumber} = require("../../functions/functions");
+const {MEDAL, LEFT, RIGHT, LEAGUE, STAR, CRYSTAL} = require("../../config");
 const {MessageEmbed, MessageButton} = require("discord.js");
 const {greenlight, redlight, main} = require('../../JSON/colours.json');
 const heroes = require('../../JSON/heroes.json');
 const Rate = require("../../functions/rateClass");
 const {stripIndents} = require("common-tags")
+const rewards = require("../../rewards.json");
+
+const { LevelMethods } = require("../../functions/levelClass");
 
 module.exports = {
     config: {
@@ -37,7 +40,7 @@ module.exports = {
                 let heroName = heroData.name
                 if (LANG.lang === "ru") heroName = heroData.nameRus
                 
-                return `\n${emoji} ${position}**${name}** | ${h.all} **${data.totalGames}** | 🏆 ${getWR}  | <a:herodann:883382573231923201> — ${heroName} (${hm.level} ${getCurrentHero.level})`
+                return `\n${emoji} ${position}**${name}** | ${h.all} **${formatNumber(data.totalGames)}** | 🏆 ${getWR}  | <a:herodann:883382573231923201> — ${heroName} (${hm.level} ${getCurrentHero.level})`
             } catch {
                 return `\n${emoji} ${position}**${LANG.lang === "ru" ? "Неизвестный" : "Unknown"}**`
             }
@@ -79,12 +82,39 @@ module.exports = {
             const name = bot.users.cache.get(data.userID) ? bot.users.cache.get(data.userID).tag : (LANG.lang === "ru" ? "Неизвестный" : "Unknown");
             return `\n${emoji} ${position}**${name}** | ${league}`;
         }))
+
+        const allXpData = await profile.find({xp: {$exists: true}}).sort([["xp", "descending"]]).exec();
+        const slicedXp = allXpData.slice(0, 20);
+        const mappedXp = slicedXp.map((data, pos) => {
+            const level = LevelMethods.getCurrentLevelByXp(data.xp);
+                
+                const xp = formatNumber(data.xp);
+            try {
+                const name = bot.users.cache.get(data.userID) ? bot.users.cache.get(data.userID).tag : (LANG.lang === "ru" ? "Неизвестный" : "Unknown");       
+                
+                return `${pos+1}.  ${xp} | ${name} | ${level.current} lvl`
+            } catch {
+                return `${pos+1}.  ${xp} | ${LANG.lang === "ru" ? "Неизвестный" : "Unknown"} | ${level.current} lvl`
+            }
+           
+        });
         
         // ending arrays
 
         const lg = Rate(message).fetch().reverse();
-        const text = lg.map(i => `\n${i.emoji} ${LANG.lang === "en" ? i.nameEn : i.name}: ${i.max} ${LEAGUE.cup} - ${i.reward} ${STAR}`)
+        const text = lg.map(i => `\n${i.emoji} ${LANG.lang === "en" ? i.nameEn : i.name}: ${formatNumber(i.max)} ${LEAGUE.cup} - ${formatNumber(i.reward)} ${STAR}`)
 
+        const Embed00 = new MessageEmbed()
+        .setTitle(LANG.lang === "en" ? "Top of XP" : "Топ по XP")
+        .setColor(main)
+        .setThumbnail(bot.user.displayAvatarURL())
+        .setDescription(stripIndents`
+        ${LANG.lang === "en" ? `Top 1 will get ${rewards.lbTop1} ${CRYSTAL} daily.` : `Топ 1 будет получать ${rewards.lbTop1} ${CRYSTAL} ежедневно!`}
+        \`\`\`md
+        #  XP  |  Tag  |  Level
+        ${mappedXp.join("\n")}  
+        \`\`\``)
+        
         const Embed0 = new MessageEmbed()
         .setTitle(LANG.lang === "en" ? "Top of Rate" : "Топ по рейтингу")
         .setColor(main)
@@ -113,7 +143,7 @@ module.exports = {
         .setEmoji(RIGHT)
         .setStyle("SECONDARY")
         
-        return await pagination(m, [Embed0, Embed1, Embed2], [button1, button2], 100000, [m.author.id])
+        return await pagination(m, [Embed00, Embed0, Embed1, Embed2], [button1, button2], 100000, [m.author.id])
         
     }
 }
