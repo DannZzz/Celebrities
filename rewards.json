@@ -1,5 +1,6 @@
 {
     "vote": 15,
+    "lbTop1": 50,
     "voteGoal": 700,
     "defaultGuildBossReward": 150000,
     "guildBossKiller": 150,

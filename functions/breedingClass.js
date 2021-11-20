@@ -10,6 +10,9 @@ const Rate = require("./rateClass");
 const Subscription = require("./subscriptionClass");
 const { MessageEmbed, MessageActionRow, MessageSelectMenu, MessageCollector, MessageButton, MessageAttachment } = require("discord.js");
 
+const { breedingXp, gamesXp } = require("../JSON/addXp.json");
+const { LevelMethods } = require("./levelClass");
+
 let allSlots = 3;
 
 class breedingClass {
@@ -63,6 +66,7 @@ class breedingClass {
         const get = data.heroes.find(x => x.name === hero.name);
         if (get) return error(this.msg, this.sd.lang === "en" ? "You already have this hero!" : "Ты уже имеешь этого героя!");
 
+        await LevelMethods.addXp(this.id, breedingXp[hero.type]);
         data.breeding.splice(index, 1)
         data.heroes.push({
             name: hero.name,

@@ -5,8 +5,12 @@ const bot = new Client({restGlobalRateLimit: 50, restWsBridgeTimeout: 0, shards:
 const fs = require('fs');
 const mongoose = require('mongoose');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 const { addCrystal } = require("./functions/models");
-const crystalToTopOne = 50;
+const rewards = require("./rewards.json");
+const crystalToTopOne = rewards.lbTop1;
 
 const MONGO = process.env.MONGO
 const Canvas = require('canvas')
@@ -35,12 +39,12 @@ bot.categories = fs.readdirSync("./commands/");
   require(`./handler/${handler}`)(bot);
 });
 
-const { AutoPoster } = require('topgg-autoposter');
+// const { AutoPoster } = require('topgg-autoposter');
 
-AutoPoster(process.env.TOPGG, bot)
-  .on('posted', () => {
-     console.log('Posted stats to Top.gg!')
-  })
+// AutoPoster(process.env.TOPGG, bot)
+//   .on('posted', () => {
+//     console.log('Posted stats to Top.gg!')
+//   })
 
 bot.on('error',function(err){});
 
@@ -108,9 +112,9 @@ async function runOncePerDay(){
   const asd = await hasOneDayPassed()
   if( !asd ) return;
   // your code below
-  const rpgAll = await rpg.find({userID: {$exists: true}}).sort([['totalGames', 'descending']]).exec();
+  const allXpData = await profileModel.find({xp: {$exists: true}}).sort([["xp", "descending"]]).exec();
   
-  await addCrystal(rpgAll[0]["userID"], crystalToTopOne);
+  await addCrystal(allXpData[0]["userID"], crystalToTopOne);
   await memberModel.updateMany({}, {$set: {messages: 0}})
 }
 runOncePerDay()

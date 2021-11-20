@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const profileSchema = new mongoose.Schema({
   userID: { type: String, require: true, unique: true },
   fish: { type: Number, default: 0 },
+  xp: { type: Number, default: 0 },
   daily: {type: Number, default: 0 },
   marry: { type: Number, default: 0},
   marryID: { type: Number, default: null },

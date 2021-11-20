@@ -1,9 +1,11 @@
 {
     "donate": {
-        "just": 30,
-        "classicBoost": 50,
-        "averageBoost": 100,
-        "maximumBoost": 200
+        "classicBoost": 69,
+        "averageBoost": 199,
+        "maximumBoost": 359,
+        "classicBoostUSD": 1,
+        "averageBoostUSD": 3,
+        "maximumBoostUSD": 5
     },
     "shop": {
         "vip": 45,

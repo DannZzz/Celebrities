@@ -1,0 +1,15 @@
+{
+    "gamesXp": {
+        "battle": 10,
+        "2v2": 15,
+        "journey": 20,
+        "global-duel": 5
+    },
+    "breedingXp": {
+        "common": 15,
+        "elite": 30,
+        "furious": 50,
+        "mythical": 100,
+        "private": 200
+    }
+}

@@ -613,18 +613,13 @@ module.exports = {
                 .setColor(main)
                 .addFields(
                     {
-                        name: `Поддерживать разработчика`,
-                        value: `**[${rubToDollar(donate.just, formatNumber, "ru")} Ежемесячно](https://boosty.to/iamdann/purchase/575340?ssource=DIRECT&share=subscription_link)**`,
-                        inline: false
-                    },
-                    {
                         name: `Классический Буст 💛`,
-                        value: `**[~~${rubToDollar(donate.classicBoost, formatNumber, "ru")}~~ ${rubToDollar(donate.classicBoost/2, formatNumber, "ru")} Ежемесячно](https://boosty.to/iamdann/purchase/575346?ssource=DIRECT&share=subscription_link)**\n**Доступ к приватным героям**\n**+1 слот скрещиваний**\n**+1 слот майнинга**\n+10% Душа Тайруса\n+10% Душа Анкалгона\n+5% Душа Дариуса\nДоступ к приватному каналу`,
+                        value: `**[${rubToDollar(donate.classicBoost, formatNumber, "ru")}} Ежемесячно](https://boosty.to/iamdann/purchase/575346?ssource=DIRECT&share=subscription_link)**\n**Доступ к приватным героям**\n**+1 слот скрещиваний**\n**+1 слот майнинга**\n+10% Душа Тайруса\n+10% Душа Анкалгона\n+5% Душа Дариуса\nДоступ к приватному каналу`,
                         inline: false
                     },
                     {
                         name: `Средний Буст 💚`,
-                        value: `**[~~${rubToDollar(donate.averageBoost, formatNumber, "ru")}~~ ${rubToDollar(donate.averageBoost/2, formatNumber, "ru")} Ежемесячно](https://boosty.to/iamdann/purchase/575347?ssource=DIRECT&share=subscription_link)**\n**Доступ к приватным героям**\n**+2 слот скрещиваний**\n**+2 слот майнинга**\n+15% Душа Тайруса\n+15% Душа Анкалгона\n+10% Душа Дариуса\nДоступ к приватному каналу`,
+                        value: `**[${rubToDollar(donate.averageBoost, formatNumber, "ru")} Ежемесячно](https://boosty.to/iamdann/purchase/575347?ssource=DIRECT&share=subscription_link)**\n**Доступ к приватным героям**\n**+2 слот скрещиваний**\n**+2 слот майнинга**\n+15% Душа Тайруса\n+15% Душа Анкалгона\n+10% Душа Дариуса\nДоступ к приватному каналу`,
                         inline: false
                     },
                     {
@@ -668,13 +663,13 @@ module.exports = {
                     {
                         name: `Цены в рублях.`,
                         value: stripIndents`
-                        • VIP + 10000 ${STAR} - ~~${rubToDollar(shop.vip, formatNumber, "ru")}~~ ${rubToDollar(shop.vip/2, formatNumber, "ru")}
-                        • Премиум + 20000 ${STAR} - ~~${rubToDollar(shop.premium, formatNumber, "ru")}~~ ${rubToDollar(shop.premium/2, formatNumber, "ru")}
+                        • VIP + 10000 ${STAR} - ${rubToDollar(shop.vip, formatNumber, "ru")}
+                        • Премиум + 20000 ${STAR} - ${rubToDollar(shop.premium, formatNumber, "ru")}
                         • 1 ${CRYSTAL} = 10 ${HELL.candy} (\`?купить конфеты 10\`)
                         • 1 ${CRYSTAL} = 5.000 ${STAR} (\`?купить голды 100000\`)
-                        • 1000 ${CRYSTAL} - ~~${rubToDollar(shop.hazarCrystal, formatNumber, "ru")}~~ ${rubToDollar(shop.hazarCrystal/2, formatNumber, "ru")}
-                        • 350 ${CRYSTAL} - ~~${rubToDollar(shop.ereq50Crystal, formatNumber, "ru")}~~ ${rubToDollar(shop.ereq50Crystal/2, formatNumber, "ru")}
-                        • 100 ${CRYSTAL} - ~~${rubToDollar(shop.haryurCrystal, formatNumber, "ru")}~~ ${rubToDollar(shop.haryurCrystal/2, formatNumber, "ru")}
+                        • 1000 ${CRYSTAL} - ${rubToDollar(shop.hazarCrystal, formatNumber, "ru")}
+                        • 350 ${CRYSTAL} - ${rubToDollar(shop.ereq50Crystal, formatNumber, "ru")}
+                        • 100 ${CRYSTAL} - ${rubToDollar(shop.haryurCrystal, formatNumber, "ru")}
                         • Донат-бокс (50k-200k) - ${rubToDollar(shop.donateBox, formatNumber, "ru")}`,
                         inline: false
                     },
@@ -695,18 +690,18 @@ module.exports = {
             return new MessageEmbed()
                 .setColor(main)
                 .setAuthor("Магазин баффов")
-                .addField(`${item.box.emoji} ${item.box.NAME}: ~~${item.box.cost*2}~~ ${item.box.cost} ${STAR}`, `Даёт рандомный предмет, и до ${item.box.max} голды`)
-                .addField(`${item.megabox.emoji} ${item.megabox.NAME}: ~~${item.megabox.cost*2}~~ ${item.megabox.cost} ${STAR}`, `Даёт рандомные предметы до 5, и до ${item.megabox.max} голды`)
-                .addField(`${item.hlt.emoji} ${item.hlt.NAME} : ~~${item.hlt.cost*2}~~ ${item.hlt.cost} ${STAR}`, `Добавляет герою ${item.hlt.effect} единиц жизни`)
-                .addField(`${item.dmg.emoji} ${item.dmg.NAME} : ~~${item.dmg.cost*2}~~ ${item.dmg.cost} ${STAR}`, `Добавляет герою ${item.dmg.effect} единиц атаку`)
+                .addField(`${item.box.emoji} ${item.box.NAME}: ${item.box.cost} ${STAR}`, `Даёт рандомный предмет, и до ${item.box.max} голды`)
+                .addField(`${item.megabox.emoji} ${item.megabox.NAME}: ${item.megabox.cost} ${STAR}`, `Даёт рандомные предметы до 5, и до ${item.megabox.max} голды`)
+                .addField(`${item.hlt.emoji} ${item.hlt.NAME} : ${item.hlt.cost} ${STAR}`, `Добавляет герою ${item.hlt.effect} единиц жизни`)
+                .addField(`${item.dmg.emoji} ${item.dmg.NAME} : ${item.dmg.cost} ${STAR}`, `Добавляет герою ${item.dmg.effect} единиц атаку`)
                 .addField(`${item.lvl.emoji} ${item.lvl.NAME} : Можно получить открывая ящики.`, `Увеличивает уровень героя ${item.lvl.effect} раз`)
                 .addField(`${item.meat.emoji} ${item.meat.NAME} : Можно получить побеждая боссов или открывая ящики.`, `Добавляет герою ${item.meat.effect} единиц жизни`)
                 .addField(`Паки`, "** **")
-                .addField(`${item.pack1.emoji} ${item.pack1.NAME} : ~~${item.pack1.cost*2}~~ ${item.pack1.cost} ${STAR}`, `Откройте и получите одного из этих обычных героев: \`${item.pack1.list.map(i => heroes[i].nameRus).join(", ")}\``)
-                .addField(`${item.pack2.emoji} ${item.pack2.NAME} : ~~${item.pack2.cost*2}~~ ${item.pack2.cost} ${STAR}`, `Откройте и получите одного из этих элитных героев: \`${item.pack2.list.map(i => heroes[i].nameRus).join(", ")}\``)
-                .addField(`${item.pack3.emoji} ${item.pack3.NAME} : ~~${item.pack3.cost*2}~~ ${item.pack3.cost} ${STAR}`, `Откройте и получите одного из этих Премиум героев: \`${item.pack3.list.map(i => heroes[i].nameRus).join(", ")}\``)
-                .addField(`${item.heroPack.emoji} ${item.heroPack.NAME} : ~~${item.heroPack.cost*2}~~ ${item.heroPack.cost} ${CRYSTAL}`, `Откройте и получите одного любого героя.`)
-                .addField(`${item.halloween.emoji} ${item.halloween.NAME} : ~~${item.halloween.cost*2}~~ ${item.halloween.cost} ${HELL.candy} __доступен до 30.11.2021__`, `Откройте и получите одного из этих временных героев: \`${item.halloween.validList.map(i => heroes[i].nameRus).join(", ")}\` или ничего`)
+                .addField(`${item.pack1.emoji} ${item.pack1.NAME} : ${item.pack1.cost} ${STAR}`, `Откройте и получите одного из этих обычных героев: \`${item.pack1.list.map(i => heroes[i].nameRus).join(", ")}\``)
+                .addField(`${item.pack2.emoji} ${item.pack2.NAME} : ${item.pack2.cost} ${STAR}`, `Откройте и получите одного из этих элитных героев: \`${item.pack2.list.map(i => heroes[i].nameRus).join(", ")}\``)
+                .addField(`${item.pack3.emoji} ${item.pack3.NAME} : ${item.pack3.cost} ${STAR}`, `Откройте и получите одного из этих Премиум героев: \`${item.pack3.list.map(i => heroes[i].nameRus).join(", ")}\``)
+                .addField(`${item.heroPack.emoji} ${item.heroPack.NAME} : ${item.heroPack.cost} ${CRYSTAL}`, `Откройте и получите одного любого героя.`)
+                .addField(`${item.halloween.emoji} ${item.halloween.NAME} : ${item.halloween.cost} ${HELL.candy} __доступен до 30.11.2021__`, `Откройте и получите одного из этих временных героев: \`${item.halloween.validList.map(i => heroes[i].nameRus).join(", ")}\` или ничего`)
                 .addField(`${item.donateBox.emoji} ${item.donateBox.NAME} : ${rubToDollar(15, formatNumber, "ru")}`, `Откройте и получите ${item.donateBox.winRU}`)
                 .addField(`${item.goldBox.emoji} ${item.goldBox.NAME} : ${rubToDollar(25, formatNumber, "ru")}`, `Откройте и получите:  __50-250__ ${CRYSTAL}`)
 

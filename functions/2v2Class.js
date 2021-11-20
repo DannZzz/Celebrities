@@ -10,6 +10,9 @@ const Canvas = require("canvas");
 const { games } = require("../rewards.json");
 const value = games.twoVtwo;
 
+const { breedingXp, gamesXp } = require("../JSON/addXp.json");
+const { LevelMethods } = require("./levelClass");
+
 const LANG = {
     en: {
         membError: "Specify another member.",
@@ -186,6 +189,9 @@ class pvpClass {
                             const league1 = rp1.league.id || 0;
                             const rate2 = rp2.league.rate || 0;
                             const league2 = rp2.league.id || 0;
+
+                            await LevelMethods.addXp(this.id, gamesXp["2v2"]);
+                            await LevelMethods.addXp(member.id, gamesXp["2v2"]);
 
                             
                             const winCup1 = Rate(this.msg).winRewardGenerator(league1);
