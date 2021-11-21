@@ -284,8 +284,8 @@ module.exports = {
 
           if (item.marry === true && !coinData.marryID) return error(msg, b.love);
 
-          const sub = Subs(bot, msg, item.name).heroHighSubLevel();
-          if (!sub) return error(msg, `${b.subError} **${await Subs(bot, msg, item.name).getStringById(item.subLevel)}**`);
+          const sub = await Subs.heroHighSubLevel(msg.author.id, item.name);
+          if (!sub) return error(msg, `${b.subError} **${await Subs.getStringById(item.subLevel, msg.guild.id)}**`);
 
           const idk = rp.heroes.find(x => x.name === val)
           if (idk) return error(msg, b.already)

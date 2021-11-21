@@ -47,11 +47,11 @@ module.exports = {
 
         <a:herodann:883382573231923201> ${stats.trial} ${rp.trialMax || 0}
 
-        ${powers.health.emoji} ${sd.lang === "ru" ? powers.health.nameRU : powers.health.nameEN}: ${await getPowers(bot, user.id, rp).then(x => x.h.toFixed(1))}%
+        ${powers.health.emoji} ${sd.lang === "ru" ? powers.health.nameRU : powers.health.nameEN}: ${await getPowers(user.id).then(x => x.h.toFixed(1))}%
 
-        ${powers.damage.emoji} ${sd.lang === "ru" ? powers.damage.nameRU : powers.damage.nameEN}: ${await getPowers(bot, user.id, rp).then(x => x.d.toFixed(1))}%
+        ${powers.damage.emoji} ${sd.lang === "ru" ? powers.damage.nameRU : powers.damage.nameEN}: ${await getPowers(user.id).then(x => x.d.toFixed(1))}%
 
-        ${powers.gold.emoji} ${sd.lang === "ru" ? powers.gold.nameRU : powers.gold.nameEN}: ${await getPowers(bot, user.id, rp).then(x => x.g.toFixed(1))}%
+        ${powers.gold.emoji} ${sd.lang === "ru" ? powers.gold.nameRU : powers.gold.nameEN}: ${await getPowers(user.id).then(x => x.g.toFixed(1))}%
 
         🟡 ${h.all} ${rp.totalGames || 0}
 

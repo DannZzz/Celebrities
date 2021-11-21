@@ -30,14 +30,14 @@ module.exports = {
     
     if (!rp.item || rp.heroes.length === 0) return error(msg, hm.noHero);
     const wait = await msg.reply(LOADING);
-    const myData = await getHeroData(bot, user.id, rp);
+    const myData = await getHeroData(user.id, rp);
     let myHealth = myData.h;
     let myDamage = myData.d;
 
     const allUsers = await rpg.find({ item: {$exists: true, $nin: [null, undefined, ""]}, userID: {$nin: [user.id]} }).exec();
 
     const randomUserData = allUsers[Math.floor(Math.random() * allUsers.length)];
-    const userHero = await getHeroData(bot, randomUserData.userID, randomUserData);
+    const userHero = await getHeroData(randomUserData.userID, randomUserData);
 
     const getMyHero = rp.heroes.find(heroObj => heroObj.name === rp.item);
     const getUserHero = randomUserData.heroes.find(heroObj => heroObj.name === randomUserData.item);

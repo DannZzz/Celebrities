@@ -53,10 +53,10 @@ module.exports = {
     const get1 = mrp.heroes.find(x => x.name === mrp.item)
     const get2 = rp.heroes.find(x => x.name === rp.item)
 
-    let h1 = await getHeroData (bot, user.id, rp).then(x => x.h);
-    let h2 = await getHeroData (bot, mUser.id, mrp).then(x => x.h);
-    let d1 = await getHeroData (bot, user.id, rp).then(x => x.d);
-    let d2 = await getHeroData (bot, mUser.id, mrp).then(x => x.d);
+    let h1 = await getHeroData (user.id, rp).then(x => x.h);
+    let h2 = await getHeroData (mUser.id, mrp).then(x => x.h);
+    let d1 = await getHeroData (user.id, rp).then(x => x.d);
+    let d2 = await getHeroData (mUser.id, mrp).then(x => x.d);
 
     await addCount(mUser.id, "duel")
     
@@ -209,7 +209,7 @@ if(i.customId === buttonList[0].customId) {
     await rpg.findOneAndUpdate({userID: loser.id}, {$inc: {loses: 1}})
 
     let winData = await rpg.findOne({userID: winner.id})
-    const DATA = await getHeroData(bot, winner.id, winData);
+    const DATA = await getHeroData(winner.id, winData);
     const get = winData.heroes.find(x => x.name === winData.item)
     let hero = heroes[winData.item];
 

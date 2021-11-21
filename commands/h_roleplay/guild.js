@@ -798,8 +798,8 @@ module.exports = {
 
             //const myHero = rp.heroes.find(x => x.name === rp.item);
             const hero = heroes[rp.item];
-            let myHealth = await getHeroData(bot, message.author.id, rp).then(x => x.h);
-            let myDamage = await getHeroData(bot, message.author.id, rp).then(x => x.d);
+            let myHealth = await getHeroData(message.author.id, rp).then(x => x.h);
+            let myDamage = await getHeroData(message.author.id, rp).then(x => x.d);
 
             let bossDamage = c.boss.damage;
             let bossHealth = c.boss.health;

@@ -10,6 +10,7 @@ const { eventFind, serverFind, vip, bagFind, marry, rpg, profile, clanFind, prof
 const YTchannelInfo = require("yt-channel-info");
 const { LevelMethods } = require("../../functions/levelClass");
 const { stripIndents } = require("common-tags");
+const Subs = require("../../functions/subscriptionClass");
 
 module.exports = {
   config: {
@@ -47,6 +48,8 @@ module.exports = {
     else if (data["vip1"]) vip = status.vip + " VIP";
     const trophy = rp.league.rate || 0;
 
+    
+    const sub = await Subs.getSubString(member.id, message.guild.id);
     //if(data["vip1"] && checkVip.profileImage !== null && data["vip2"]) embed.setImage(checkVip.profileImage);
     let CL;
     if (rp && rp.clanID) {
@@ -70,7 +73,7 @@ module.exports = {
     
     embed.addField(stripIndents`
     ${p.status} ${vip}
-    ${p.subs} ${getSub(bot, member.id, LANG.lang)}
+    ${p.subs} ${sub}
     ${p.level} ${myLevelObj.current} 
     ${formatNumber(myXp)} / ${formatNumber(myLevelObj.xpForNextLevel)} xp
     `, `${STAR} ${formatNumber(Math.round(data.stars)) || Math.round(data.stars)}\n${CRYSTAL} ${formatNumber(Math.round(data.crystal || 0))}\n${HELL.candy} ${formatNumber(Math.round(event.candy || 0))}\n${await Rate(message).rateData(trophy)}\n${p.quiz} ${rp.quizCount}\n${CL}\n${p.gg} ${marData}\n\n`)
@@ -130,50 +133,5 @@ module.exports = {
 
 
   }
-}
-
-
-function getSub(bot, id, lang = "ru") {
-  const server = bot.guilds.cache.get("882589567377637408");
-
-  const boosterRoleIds = {
-    classic: "897172766929858601",
-    premium: "897172906021371926",
-    premiumPlus: "897172954411053098"
-  }
-
-  const langData = {
-    en: {
-      classic: "Classic Boost 💛",
-      average: "Average Boost 💚",
-      max: "Maximum Boost 💜"
-    },
-    ru: {
-      classic: "Классический Буст 💛",
-      average: "Средний Буст 💚",
-      max: "Максимальный Буст 💜"
-    }
-  };
-
-
-  if (server) {
-    const member = server.members.cache.get(id);
-    if (member) {
-      if (member.roles.cache.get(boosterRoleIds.premiumPlus)) {
-        return langData[lang].max;
-      } else if (member.roles.cache.get(boosterRoleIds.premium)) {
-        return langData[lang].average;
-      } else if (member.roles.cache.get(boosterRoleIds.classic)) {
-        return langData[lang].classic;
-      } else {
-        return "—";
-      }
-    } else {
-      return "—";
-    }
-  } else {
-    return "—";
-  }
-
 }
 

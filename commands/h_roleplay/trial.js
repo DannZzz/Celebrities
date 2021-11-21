@@ -57,8 +57,8 @@ module.exports = {
         await addStar(user.id, -(value));
         
         
-        let h = await getHeroData(bot, user.id, data).then(x => x.h);
-        let d = await getHeroData(bot, user.id, data).then(x => x.d);
+        let h = await getHeroData(user.id, data).then(x => x.h);
+        let d = await getHeroData(user.id, data).then(x => x.d);
         let l = heroData.level;
         const hero = heroes[data.item];
         

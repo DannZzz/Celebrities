@@ -114,7 +114,7 @@ module.exports = {
         if (obj.type === i.customId.toLowerCase()) {
           let level = undefined;
           if (obj.subLevel) {
-            level = await Subs(bot, message, obj.name).getStringById(obj.subLevel);
+            level = await Subs.getStringById(obj.subLevel, msg.guild.id);
           }
 
           let ccost = `${cCost(obj.cost, obj)} ${cType(obj.costType)}`;

@@ -75,8 +75,8 @@ module.exports = {
 
     const get = rp.heroes.find(x => x.name === rp.item)
     
-    let myHealth = await getHeroData(bot, user.id, rp).then(x => x.h);
-    let myDamage = await getHeroData(bot, user.id, rp).then(x => x.d);
+    let myHealth = await getHeroData(user.id, rp).then(x => x.h);
+    let myDamage = await getHeroData(user.id, rp).then(x => x.d);
     let win;
    
     
