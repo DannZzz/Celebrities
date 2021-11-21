@@ -1,9 +1,9 @@
 {
     "gamesXp": {
-        "battle": 10,
-        "2v2": 15,
-        "journey": 20,
-        "global-duel": 5
+        "battle": 8,
+        "2v2": 6,
+        "journey": 10,
+        "global-duel": 3
     },
     "breedingXp": {
         "common": 15,
