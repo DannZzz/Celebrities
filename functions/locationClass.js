@@ -3,7 +3,6 @@ const { error, embed, firstUpperCase, randomRange, delay, pagination, makeTimest
 const {none, main, reddark} = require("../JSON/colours.json");
 const {AGREE, DISAGREE, STAR, HERO, CLAN, LEFT, RIGHT, box: B} = require("../config");
 const {MessageAttachment, MessageEmbed, MessageActionRow, MessageSelectMenu, MessageCollector, MessageButton} = require("discord.js");
-const Subs = require("./subscriptionClass");
 const locs = require("../JSON/locations.js");
 const { stripIndents } = require("common-tags");
 

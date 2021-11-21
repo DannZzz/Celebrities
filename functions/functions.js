@@ -12,7 +12,7 @@ const {  MessageActionRow,
 const {main, none, greenlight, reddark} = require('./../JSON/colours.json')
 const heroes = require('./../JSON/heroes.json')
 const { voteFind, powersFind, powers, serverFind, mail, mailFind, clanFind, botData } = require("./models.js");
-
+const Subs = require("./subscriptionClass");
 const badges = require("./../JSON/badges.json");
 
 module.exports = {
@@ -78,7 +78,8 @@ module.exports = {
     }
   },
   
-  getHeroData: async (bot, sponsorID, data) => {
+  getHeroData: async (sponsorID, data) => {
+    const dataPow = await Subs.getSubId(sponsorID);
     const get = data.heroes.find(x => x.name === data.item);
     const {health, damage} = get;
 
@@ -91,8 +92,7 @@ module.exports = {
       healthFromClan += (clanData.addHealth || 0);
       damageFromClan += (clanData.addDamage || 0);
     };
-    
-    const server = bot.guilds.cache.get("882589567377637408");
+
     const hero = heroes[get.name];
     let perc = 1;
     switch (hero.type) {
@@ -113,25 +113,16 @@ module.exports = {
     };
 
 
-    const boosterRoleIds = {
-      classic: "897172766929858601",
-      premium: "897172906021371926",
-      premiumPlus: "897172954411053098"
-    }
-    
     let boostCount = 0;
-    if (server) {
-      const member = server.members.cache.get(sponsorID);
-      if (member) {
-        if (member.roles.cache.get(boosterRoleIds.premiumPlus)) {
-          boostCount = 20;
-        } else if (member.roles.cache.get(boosterRoleIds.premium)) {
-          boostCount = 15;
-        } else if (member.roles.cache.get(boosterRoleIds.classic)) {
-          boostCount = 10;
-        }
+    if (dataPow) {
+      if (dataPow == 3) {
+        boostCount = 20;
+      } else if (dataPow == 2) {
+        boostCount = 15;
+      } else if (dataPow == 1) {
+        boostCount = 10;
       }
-    }
+    };
     
     let pows;
     let powData = await powersFind(sponsorID);
@@ -162,28 +153,21 @@ module.exports = {
     }
   },
 
-  getPowers: async function (bot, sponsorID, data) {
-    const server = bot.guilds.cache.get("882589567377637408");
-
-    const boosterRoleIds = {
-      classic: "897172766929858601",
-      premium: "897172906021371926",
-      premiumPlus: "897172954411053098"
-    }
+  getPowers: async function (sponsorID) {
+    const dataPow = await Subs.getSubId(sponsorID);
     
     let boostCount = 0;
-    if (server) {
-      const member = server.members.cache.get(sponsorID);
-      if (member) {
-        if (member.roles.cache.get(boosterRoleIds.premiumPlus)) {
-          boostCount = 20;
-        } else if (member.roles.cache.get(boosterRoleIds.premium)) {
-          boostCount = 15;
-        } else if (member.roles.cache.get(boosterRoleIds.classic)) {
-          boostCount = 10;
-        }
+    
+    if (dataPow) {
+      if (dataPow == 3) {
+        boostCount = 20;
+      } else if (dataPow == 2) {
+        boostCount = 15;
+      } else if (dataPow == 1) {
+        boostCount = 10;
       }
     };
+  
 
     let pows;
 
@@ -694,5 +678,5 @@ module.exports = {
     });
 
     return curPage;
-  },
+  }
 }

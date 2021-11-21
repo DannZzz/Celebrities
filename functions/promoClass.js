@@ -168,8 +168,8 @@ class TeamClass {
         if (!data) return error(this.msg, pc.noPromo);
 
         if (data.subLevel) {
-            const string = await Subs(bot, this.msg, "Tyrus").getStringById(data.subLevel);
-            const myLevel = Subs(bot, this.msg, "Tyrus").getSubId()
+            const string = await Subs.getStringById(data.subLevel, this.server.id);
+            const myLevel = await Subs.getSubId(this.user.id)
             if (myLevel < data.subLevel) {
                 return error(this.msg, `${pc.subReq} __${string}__`);
             }

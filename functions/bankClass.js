@@ -105,7 +105,7 @@ class bankClass {
         if (!id) id = this.id;
         const data = await this.checkDocument(id);
         const { noStar, timeOut } = require(`../languages/${this.sd.lang || "ru"}`);
-        const myBoostLevel = await Subscription(this.bot, this.msg, "Tyrus").getSubId();
+        const myBoostLevel = await Subscription.getSubId(id);
 
         const perms = {
             none: {
@@ -282,7 +282,7 @@ module.exports = function(bot, msg, sd) {
 } 
 
 async function getSlots(bot, msg) {
-    const myBoostLevel = await Subscription(bot, msg, "Tyrus").getSubId();
+    const myBoostLevel = await Subscription.getSubId(msg.author.id);
 
     const perms = {
         none: {

@@ -1,36 +1,40 @@
 const { cardFind, bagFind, serverFind, card: cd, bag, addStar } = require("./models");
-const { error, embed, firstUpperCase, randomRange, delay } = require("./functions");
 const {none, main} = require("../JSON/colours.json");
 const {AGREE, DISAGREE, STAR} = require("../config");
 const {MessageEmbed, MessageActionRow, MessageSelectMenu, MessageCollector} = require("discord.js");
 const heroes = require("../JSON/heroes.json");
 
-const boosterRoleIds = {
-    classic: "897172766929858601",
-    premium: "897172906021371926",
-    premiumPlus: "897172954411053098"
-};
+const ms = require("ms");
 
-const subId = {
-    none: 0,
-    classic: 1,
-    average: 2,
-    max: 3
-}
+const subData = require("../models/subscription");
 
-const serverId = "882589567377637408";
+const subIds = ["1", "2", "3"];
 
 class SubClass {
-    constructor(bot, msg, heroName) {
-        this.bot = bot;
-        this.msg = msg;
-        this.user = msg.author;
-        this.server = msg.guild;
-        this.hero = heroes[heroName];
-    };
+    static async addSubscription(msg, id, level, time) {
+        if (!id || !level || !subIds.includes(level) || !time || !ms(time)) return;
 
-    async getStringById (id) {
-        const sd = await serverFind(this.server.id);
+        const data = await subData.findOne({userID: id});
+        if (!data) {
+            const newd = await subData.create({
+                userID: id,
+                level: +level,
+                date: new Date(Date.now() + ms(time))
+            });
+            await newd.save();
+            return msg.react(AGREE);
+        } else {
+            await subData.updateOne({userID: id}, {$set: {
+                level: +level,
+                date: new Date(Date.now() + ms(time))
+            }});
+            return msg.react(AGREE);
+        }
+        
+    }
+    
+    static async getStringById (id, guildId) {
+        const sd = await serverFind(guildId);
         const lang = sd.lang || "ru";
         
         const langData = {
@@ -56,74 +60,45 @@ class SubClass {
         
     };
 
-    async getSubString() {
-        const server = this.bot.guilds.cache.get(serverId);
-
-        const sd = await serverFind(this.server.id);
+    static async getSubString(id, guildId) {
+        const data = await subData.findOne({userID: id});
+        const myLevel = await this.getSubId(id);
+        
+        const sd = await serverFind(guildId);
         const lang = sd.lang || "ru";
         
         const langData = {
         en: {
-            classic: "Classic Boost 💛",
-            average: "Average Boost 💚",
-            max: "Maximum Boost 💜"
+            "1": "Classic Boost 💛",
+            "2": "Average Boost 💚",
+            "3": "Maximum Boost 💜"
         },
         ru: {
-            classic: "Классический Буст 💛",
-            average: "Средний Буст 💚",
-            max: "Максимальный Буст 💜"
+            "1": "Классический Буст 💛",
+            "2": "Средний Буст 💚",
+            "3": "Максимальный Буст 💜"
         }
         };
         
         
-        if (server) {
-        const member = server.members.cache.get(this.user.id);
-        if (member) {
-            if (member.roles.cache.get(boosterRoleIds.premiumPlus)) {
-            return langData[lang].max;
-            } else if (member.roles.cache.get(boosterRoleIds.premium)) {
-            return langData[lang].average;
-            } else if (member.roles.cache.get(boosterRoleIds.classic)) {
-            return langData[lang].classic;
-            } else {
-            return "—";
-            }
-        }
-        } else {
-        return "—";
-        };
+        if (langData[lang][`${myLevel}`]) {
+            return langData[lang][`${myLevel}`] + ` ${lang === "en" ? "until" : "до"} <t:${makeTimestamp(data.date.getTime())}>`
+        } else return "—";
 
     };
 
-    getSubId () {
-        const server = this.bot.guilds.cache.get(serverId);
-
-        if (server) {
-            const member = server.members.cache.get(this.user.id);
-            if (member) {
-                if (member.roles.cache.get(boosterRoleIds.premiumPlus)) {
-                return 3;
-                } else if (member.roles.cache.get(boosterRoleIds.premium)) {
-                return 2;
-                } else if (member.roles.cache.get(boosterRoleIds.classic)) {
-                return 1;
-                } else {
-                return 0;
-                }
-            } else {
-                return 0;
-            }
-            } else {
-            return 0;
-            };
-
+    static async getSubId (id) {
+        const data = await subData.findOne({userID: id})
+        if (!data) return 0;
+        if (data.date > new Date()) return data.level;
+        return 0;
     };
 
-    heroHighSubLevel () {
-        //if (!this.hero.subLevel) return true;
+    static async heroHighSubLevel (id, hero) {
+        //if (!this.hero.subLevherel) return true;
 
-        const mySubLevel = SubId(this.bot, this.user.id) || 0;
-        const hl = this.hero.subLevel;
+        const mySubLevel = await this.getSubId(id)
+        const hl = heroes[hero].subLevel;
 
         if (mySubLevel < hl) {return false}
         else {
@@ -134,31 +109,20 @@ class SubClass {
 
 };
 
-const func = function (bot, msg, name) {
-    return new SubClass(bot, msg, name);
+module.exports = SubClass;
+
+
+
+function makeTimestamp(timestamp, add = 0) {
+    return Math.round((timestamp + add) / 1000);
 }
 
-module.exports = func;
+function error(msg, text = 'Ошибка') {
+    const Emb = new MessageEmbed()
+    .setColor(reddark)
+    //.setAuthor(msg.author.username, msg.author.displayAvatarURL({dynamic: true}))
+    .setDescription(`${DISAGREE} ${text}`)
 
-
-function SubId (bot, id) {
-    const server = bot.guilds.cache.get(serverId);
-
-    if (server) {
-        const member = server.members.cache.get(id);
-        if (member) {
-            if (member.roles.cache.get(boosterRoleIds.premiumPlus)) {
-            return 3;
-            } else if (member.roles.cache.get(boosterRoleIds.premium)) {
-            return 2;
-            } else if (member.roles.cache.get(boosterRoleIds.classic)) {
-            return 1;
-            } else {
-            return 0;
-            }
-        }
-        } else {
-        return 0;
-        };
-
-};
+    msg.react(DISAGREE)
+    return msg.reply({embeds: [Emb]}).then(message => setTimeout(() => message.delete(), 15000))
+  }

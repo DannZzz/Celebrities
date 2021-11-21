@@ -191,7 +191,7 @@ class breedingClass {
         let data = await rpgFind(this.id);
 
         let breedingCount = allSlots;
-        const myBoostLevel = await Subscription(this.bot, this.msg, "Tyrus").getSubId();
+        const myBoostLevel = await Subscription.getSubId(this.id);
         breedingCount += myBoostLevel;
         
         if (data.breeding && data.breeding.length >= breedingCount) return error(this.msg, `${this.sd.lang === "en" ? "Wait for the breeding to end." : "Дождитесь окончания разведения."}`);
@@ -308,7 +308,7 @@ module.exports = function(bot, msg, sd) {
 } 
 
 async function getSlots(bot, msg) {
-    const myBoostLevel = await Subscription(bot, msg, "Tyrus").getSubId();
+    const myBoostLevel = await Subscription.getSubId(msg.author.id);
     return allSlots + myBoostLevel;
 }
 
