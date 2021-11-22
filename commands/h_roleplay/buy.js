@@ -276,7 +276,7 @@ module.exports = {
           if (!mms.deleted) mms.delete();
           bool = true;
           ops.buying.delete(message.author.id);
-          if (item.vip === true) {
+          if (item.vip && item.vip === true) {
             if (bag["vip2"] !== true) {
               return error(msg, b.vip);
             }

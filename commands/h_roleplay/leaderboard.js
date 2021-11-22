@@ -110,7 +110,7 @@ module.exports = {
         .setThumbnail(bot.user.displayAvatarURL())
         .setDescription(stripIndents`
         ${LANG.lang === "en" ? `Top 1 will get ${rewards.lbTop1} ${CRYSTAL} daily.` : `Топ 1 будет получать ${rewards.lbTop1} ${CRYSTAL} ежедневно!`}
-        ${await tr(`Каждый новый уровень дает больше`)} ${rewards.xpLevelUpdate} ${CRYSTAL}
+        ${LANG.lang === "en" ? `Each new level will give more` : "Каждый новый уровень дает больше"} ${rewards.xpLevelUpdate} ${CRYSTAL}
         \`\`\`dts
         #  XP  |  Tag  |  Level
         =======================
