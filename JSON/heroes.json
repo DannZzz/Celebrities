@@ -9,7 +9,6 @@
     "url": "https://i.ibb.co/rfwtrXY/Zeenou.jpg",
     "path": "./images/heroes/Zeenou.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 65,
     "type": "common",
     "elements": ["water"]
@@ -24,7 +23,6 @@
     "url": "https://i.ibb.co/1b9C0vg/Dilan.jpg",
     "path": "./images/heroes/Dilan.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 80,
     "type": "common",
     "elements": ["fire"]
@@ -39,7 +37,6 @@
     "url": "https://i.ibb.co/dBhCCGS/Darius.jpg",
     "path": "./images/heroes/Darius.jpg",
     "available": "Под",
-    "vip": false,
     "upgradeCost": 100,
     "type": "private",
     "elements": ["legendary", "gold"]
@@ -54,7 +51,6 @@
     "url": "https://i.ibb.co/KNP5tC1/Selena.jpg",
     "path": "./images/heroes/Selena.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 120,
     "type": "common",
     "elements": ["magic", "fire"]
@@ -69,7 +65,6 @@
     "url": "https://i.ibb.co/FzPgCFW/Cthulhu.jpg",
     "path": "./images/heroes/Cthulhu.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 140,
     "type": "elite",
     "elements": ["water", "nature"]
@@ -84,7 +79,6 @@
     "url": "https://i.ibb.co/RQLbCGr/Zeus.jpg",
     "path": "./images/heroes/Zeus.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 95,
     "type": "private",
     "elements": ["legendary", "light"]
@@ -99,7 +93,6 @@
     "url": "https://i.ibb.co/YRQ0m7L/Perfect-Duo.jpg",
     "path": "./images/heroes/Perfect-Duo.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 130,
     "type": "elite",
     "elements": ["nature", "land"]
@@ -114,7 +107,6 @@
     "url": "https://i.ibb.co/frb1BsG/Eragon.jpg",
     "path": "./images/heroes/Eragon.jpg",
     "available": "Да",
-    "vip": true,
     "marry": true,
     "upgradeCost": 400,
     "type": "mythical",
@@ -130,7 +122,6 @@
     "url": "https://i.ibb.co/xY0NnFn/Ariel.jpg",
     "path": "./images/heroes/Ariel.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 140,
     "type": "furious",
     "elements": ["nature"]
@@ -145,7 +136,6 @@
     "url": "https://i.ibb.co/xJSTDWp/Archangel.jpg",
     "path": "./images/heroes/Archangel.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 45,
     "type": "common",
     "elements": ["light"]
@@ -160,7 +150,6 @@
     "url": "https://i.ibb.co/YRjMgkF/Darkangel.jpg",
     "path": "./images/heroes/Darkangel.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 200,
     "type": "furious",
     "elements": ["land", "fire"]
@@ -175,7 +164,6 @@
     "url": "https://i.ibb.co/Bs6V3Bz/Kumbhakarna.png",
     "path": "./images/heroes/Kumbhakarna.png",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 65,
     "type": "elite",
     "elements": ["fire", "nature"]
@@ -190,7 +178,6 @@
     "url": "https://i.ibb.co/XFCSCQm/Atalanta.png",
     "path": "./images/heroes/Atalanta.png",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 300,
     "type": "elite",
     "elements": ["light", "magic"]
@@ -205,7 +192,6 @@
     "url": "https://i.ibb.co/LvKLWT1/Countess.png",
     "path": "./images/heroes/Athena.png",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 450,
     "type": "furious",
     "elements": ["magic", "light"]
@@ -220,7 +206,6 @@
     "url": "https://i.ibb.co/QJ6BvD3/Blazer.png",
     "path": "./images/heroes/Blazer.png",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 550,
     "type": "furious",
     "elements": ["fire", "fire"]
@@ -235,7 +220,6 @@
     "url": "https://i.ibb.co/7RfSRjM/Snakewoman.jpg",
     "path": "./images/heroes/Snakewoman.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 60,
     "type": "common",
     "elements": ["nature", "magic"]
@@ -250,7 +234,6 @@
     "url": "https://i.ibb.co/8Njqg9z/Mistress-Forest.jpg",
     "path": "./images/heroes/Mistress-Forest.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 55,
     "type": "common",
     "elements": ["nature", "nature"]
@@ -265,7 +248,6 @@
     "url": "https://i.ibb.co/8MmXtmS/Hunter.jpg",
     "path": "./images/heroes/Hunter.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 500,
     "type": "mythical",
     "elements": ["magic", "nature"]
@@ -280,7 +262,6 @@
     "url": "https://i.ibb.co/9twZbPm/Broken.jpg",
     "path": "./images/heroes/Broken.jpg",
     "available": "Под",
-    "vip": false,
     "upgradeCost": 300,
     "type": "private",
     "elements": ["legendary", "land"]
@@ -295,7 +276,6 @@
     "url": "https://i.ibb.co/0M3h3Pr/Horus.jpg",
     "path": "./images/heroes/Horus.jpg",
     "available": "Под",
-    "vip": false,
     "upgradeCost": 75,
     "type": "elite",
     "elements": ["gold", "magic"]
@@ -310,7 +290,6 @@
     "url": "https://i.ibb.co/8jZMfSz/Thoth-Amon.jpg",
     "path": "./images/heroes/Thoth-Amon.jpg",
     "available": "Под",
-    "vip": false,
     "upgradeCost": 105,
     "type": "elite",
     "elements": ["gold", "magic"]
@@ -325,7 +304,6 @@
     "url": "https://i.ibb.co/R2fB8zm/Anubis.jpg",
     "path": "./images/heroes/Anubis.jpg",
     "available": "Под",
-    "vip": false,
     "upgradeCost": 350,
     "type": "furious",
     "elements": ["gold", "magic"]
@@ -340,7 +318,6 @@
     "url": "https://i.ibb.co/R4TNRd0/Sebek.jpg",
     "path": "./images/heroes/Sebek.jpg",
     "available": "Под",
-    "vip": false,
     "upgradeCost": 405,
     "type": "furious",
     "elements": ["gold", "magic"]
@@ -355,7 +332,6 @@
     "url": "https://i.ibb.co/j6R4073/Hathor.jpg",
     "path": "./images/heroes/Hathor.jpg",
     "available": "Под",
-    "vip": true,
     "upgradeCost": 600,
     "type": "mythical",
     "elements": ["gold", "magic"]
@@ -370,7 +346,6 @@
     "url": "https://i.ibb.co/yNb3dCq/Supernatural-Ramses.jpg",
     "path": "./images/heroes/Supernatural-Ramses.jpg",
     "available": "Под",
-    "vip": true,
     "upgradeCost": 750,
     "type": "mythical",
     "elements": ["gold", "magic"]
@@ -385,7 +360,6 @@
     "url": "https://i.ibb.co/ZzGxvbL/Zero.jpg",
     "path": "./images/heroes/Zero.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 1500,
     "type": "mythical",
     "elements": ["magic", "light"]
@@ -400,7 +374,6 @@
     "url": "https://i.ibb.co/kqrnSWH/Toothless.png",
     "path": "./images/heroes/Toothless.png",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "magic"]
@@ -415,7 +388,6 @@
     "url": "https://i.ibb.co/54hGTN4/X.jpg",
     "path": "./images/heroes/X.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 1800,
     "type": "mythical",
     "elements": ["light", "magic"]
@@ -430,7 +402,6 @@
     "url": "https://i.ibb.co/31Dh300/Ancalgon.jpg",
     "path": "./images/heroes/Ancalgon.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 3000,
     "type": "mythical",
     "elements": ["magic", "land"]
@@ -445,7 +416,6 @@
     "url": "https://i.ibb.co/6WfMD3v/Tartarus.jpg",
     "path": "./images/heroes/Tartarus.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "light"]
@@ -460,7 +430,6 @@
     "url": "https://i.ibb.co/9VRrJqV/Hookfang.jpg",
     "path": "./images/heroes/Hookfang.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 600,
     "type": "furious",
     "elements": ["fire", "nature"]
@@ -475,7 +444,6 @@
     "url": "https://i.ibb.co/cDsTXNv/Koko.jpg",
     "path": "./images/heroes/Koko.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 200,
     "type": "elite",
     "elements": ["water", "water"]
@@ -490,7 +458,6 @@
     "url": "https://i.ibb.co/VCBmgX0/Dido.jpg",
     "path": "./images/heroes/Dido.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 540,
     "type": "furious",
     "elements": ["magic", "water"]
@@ -505,7 +472,6 @@
     "url": "https://i.ibb.co/d6cLWMD/Light.jpg",
     "path": "./images/heroes/Light.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 2000,
     "type": "mythical",
     "elements": ["light", "magic"]
@@ -520,7 +486,6 @@
     "url": "https://i.ibb.co/186FnQ8/Tyrus.jpg",
     "path": "./images/heroes/Tyrus.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "nature"]
@@ -535,7 +500,6 @@
     "url": "https://i.ibb.co/BG6pWzh/Girl.jpg",
     "path": "./images/heroes/Girl.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 1000,
     "type": "private",
     "subLevel": 2,
@@ -551,7 +515,6 @@
     "url": "https://i.ibb.co/WPMm18b/Shadow.jpg",
     "path": "./images/heroes/Shadow.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 1000,
     "type": "private",
     "subLevel": 2,
@@ -567,7 +530,6 @@
     "url": "https://i.ibb.co/pdVtBrZ/Clarity.jpg",
     "path": "./images/heroes/Clarity.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 1000,
     "type": "private",
     "subLevel": 3,
@@ -583,7 +545,6 @@
     "url": "https://i.ibb.co/nbkqtLQ/Red.jpg",
     "path": "./images/heroes/Red.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 700,
     "type": "mythical",
     "subLevel": 1,
@@ -599,7 +560,6 @@
     "url": "https://i.ibb.co/9w4wFYq/Alfonso.jpg",
     "path": "./images/heroes/Alfonso.jpg",
     "available": "loc",
-    "vip": false,
     "upgradeCost": 833,
     "type": "mythical",
     "elements": ["magic", "gold"]
@@ -614,7 +574,6 @@
     "url": "https://i.ibb.co/dKY8sVG/Gigantos.jpg",
     "path": "./images/heroes/Gigantos.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 1050,
     "type": "private",
     "elements": ["legendary", "gold"]
@@ -629,7 +588,6 @@
     "url": "https://i.ibb.co/h9yL5bf/Dranna.jpg",
     "path": "./images/heroes/Dranna.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 655,
     "type": "furious",
     "elements": ["water", "magic"]
@@ -644,7 +602,6 @@
     "url": "https://i.ibb.co/XLsXStQ/Kindness.jpg",
     "path": "./images/heroes/Kindness.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 700,
     "type": "furious",
     "elements": ["magic", "light"]
@@ -659,7 +616,6 @@
     "url": "https://i.ibb.co/xMJWzFM/Merlin.jpg",
     "path": "./images/heroes/Merlin.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 756,
     "type": "furious",
     "elements": ["water", "fire"]
@@ -674,7 +630,6 @@
     "url": "https://i.ibb.co/9G1gD00/Lyric.jpg",
     "path": "./images/heroes/Lyric.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 3333,
     "type": "mythical",
     "elements": ["magic", "light"]
@@ -689,7 +644,6 @@
     "url": "https://i.ibb.co/93tRQdS/Muratova.jpg",
     "path": "./images/heroes/Muratova.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "light"]
@@ -704,7 +658,6 @@
     "url": "https://i.ibb.co/Zd8q63S/Centurion.jpg",
     "path": "./images/heroes/Centurion.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 963,
     "type": "mythical",
     "elements": ["fire", "nature"]
@@ -719,7 +672,6 @@
     "url": "https://i.ibb.co/hdMd8Gp/Mummy.jpg",
     "path": "./images/heroes/Mummy.jpg",
     "available": "пак",
-    "vip": false,
     "upgradeCost": 230,
     "type": "elite",
     "elements": ["magic", "fire"]
@@ -734,7 +686,6 @@
     "url": "https://i.ibb.co/DR2Z5kx/Plague-doctor.jpg",
     "path": "./images/heroes/Plague-doctor.jpg",
     "available": "пак",
-    "vip": false,
     "upgradeCost": 450,
     "type": "furious",
     "elements": ["magic", "magic"]
@@ -749,7 +700,6 @@
     "url": "https://i.ibb.co/TBn8qYX/Secret.jpg",
     "path": "./images/heroes/Secret.jpg",
     "available": "пак",
-    "vip": false,
     "upgradeCost": 555,
     "type": "furious",
     "elements": ["magic", "nature"]
@@ -764,7 +714,6 @@
     "url": "https://i.ibb.co/wLLrbRp/Witch.jpg",
     "path": "./images/heroes/Witch.jpg",
     "available": "пак",
-    "vip": false,
     "upgradeCost": 855,
     "type": "mythical",
     "elements": ["magic", "gold"]
@@ -779,7 +728,6 @@
     "url": "https://i.ibb.co/yYh4C4s/Horseman.jpg",
     "path": "./images/heroes/Horseman.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "fire"]
@@ -794,7 +742,6 @@
     "url": "https://i.ibb.co/fSYmxH2/Muratov.jpg",
     "path": "./images/heroes/Muratov.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 1200,
     "type": "mythical",
     "elements": ["light", "land"]
@@ -809,7 +756,6 @@
     "url": "https://i.ibb.co/JRfhFPZ/Golden.jpg",
     "path": "./images/heroes/Golden.jpg",
     "available": "Под",
-    "vip": false,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "gold"]
@@ -824,7 +770,6 @@
     "url": "https://i.ibb.co/2cQqBzj/Humanoid.jpg",
     "path": "./images/heroes/Humanoid.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "land"]
@@ -839,7 +784,6 @@
     "url": "https://i.ibb.co/TwsFspk/Hella.jpg",
     "path": "./images/heroes/Hella.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "magic"]
@@ -854,7 +798,6 @@
     "url": "https://i.ibb.co/cxHbK4t/Skeletron.jpg",
     "path": "./images/heroes/Skeletron.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "magic"]
@@ -869,7 +812,6 @@
     "url": "https://i.ibb.co/3v0cVvG/Heavenly.jpg",
     "path": "./images/heroes/Heavenly.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "light"]
@@ -884,7 +826,6 @@
     "url": "https://i.ibb.co/KhHPYdP/Stranger.jpg",
     "path": "./images/heroes/Stranger.jpg",
     "available": "Под",
-    "vip": false,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "fire"]
@@ -899,7 +840,6 @@
     "url": "https://i.ibb.co/3T4wD2g/Underman.jpg",
     "path": "./images/heroes/Underman.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "magic"]
@@ -914,7 +854,6 @@
     "url": "https://i.ibb.co/bbVQBpC/Noctum.jpg",
     "path": "./images/heroes/Noctum.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "fire"]
@@ -929,7 +868,6 @@
     "url": "https://i.ibb.co/9yyz3Bh/Lebas.jpg",
     "path": "./images/heroes/Lebas.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "fire"]
@@ -944,7 +882,6 @@
     "url": "https://i.ibb.co/g748Y5V/Venom.jpg",
     "path": "./images/heroes/Venom.jpg",
     "available": "Под",
-    "vip": false,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "gold"]
@@ -959,7 +896,6 @@
     "url": "https://i.ibb.co/GRNLb0j/Golem.jpg",
     "path": "./images/heroes/Golem.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 100,
     "type": "common",
     "elements": ["land"]
@@ -974,7 +910,6 @@
     "url": "https://i.ibb.co/jRyZQP2/Gladiator.jpg",
     "path": "./images/heroes/Gladiator.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 300,
     "type": "elite",
     "elements": ["land", "fire"]
@@ -989,7 +924,6 @@
     "url": "https://i.ibb.co/k5JXWjh/Plasma.jpg",
     "path": "./images/heroes/Plasma.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 500,
     "type": "furious",
     "elements": ["land", "light"]
@@ -1004,7 +938,6 @@
     "url": "https://i.ibb.co/VChTsMW/Electro.jpg",
     "path": "./images/heroes/Electro.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 750,
     "type": "mythical",
     "elements": ["light", "land"]
@@ -1019,7 +952,6 @@
     "url": "https://i.ibb.co/NnhGdBh/Monster-zero.jpg",
     "path": "./images/heroes/Monster-zero.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "magic"]
@@ -1034,7 +966,6 @@
     "url": "https://i.ibb.co/0yc7Jy2/Alena.jpg",
     "path": "./images/heroes/Alena.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "land"],
@@ -1050,7 +981,6 @@
     "url": "https://i.ibb.co/PzzCRrq/Volcano.jpg",
     "path": "./images/heroes/Volcano.jpg",
     "available": "Под",
-    "vip": true,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "land"],
@@ -1066,7 +996,6 @@
     "url": "https://i.ibb.co/3m9HNth/Tricky.jpg",
     "path": "./images/heroes/Tricky.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "nature"]
@@ -1081,7 +1010,6 @@
     "url": "https://i.ibb.co/HgT99hY/Sleepy.jpg",
     "path": "./images/heroes/Sleepy.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "land"]
@@ -1096,7 +1024,6 @@
     "url": "https://i.ibb.co/KKx89yM/Arun.jpg",
     "path": "./images/heroes/Arun.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "water"]
@@ -1111,7 +1038,6 @@
     "url": "https://i.ibb.co/160rC1t/Montra.jpg",
     "path": "./images/heroes/Montra.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "water"],
@@ -1127,7 +1053,6 @@
     "url": "https://i.ibb.co/WPtDc3Q/Poseidon.jpg",
     "path": "./images/heroes/Poseidon.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "water"],
@@ -1143,7 +1068,6 @@
     "url": "https://i.ibb.co/zRDmgK0/Leonard.jpg",
     "path": "./images/heroes/Leonard.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 750,
     "type": "mythical",
     "elements": ["water", "land"],
@@ -1159,7 +1083,6 @@
     "url": "https://i.ibb.co/G0rt4N0/Overlord.jpg",
     "path": "./images/heroes/Overlord.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "magic"],
@@ -1175,7 +1098,6 @@
     "url": "https://i.ibb.co/G2yywy3/Thanos.jpg",
     "path": "./images/heroes/Thanos.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "land"]
@@ -1190,7 +1112,6 @@
     "url": "https://i.ibb.co/4W4RqPr/Carnage.jpg",
     "path": "./images/heroes/Carnage.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "light"]
@@ -1205,7 +1126,6 @@
     "url": "https://i.ibb.co/M795GCC/Surtur.jpg",
     "path": "./images/heroes/Surtur.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "fire"],
@@ -1221,7 +1141,6 @@
     "url": "https://i.ibb.co/f8HbC9T/Galactus.jpg",
     "path": "./images/heroes/Galactus.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "magic"],
@@ -1237,7 +1156,6 @@
     "url": "https://i.ibb.co/QYGhtr3/Ghost-rider.jpg",
     "path": "./images/heroes/Ghost-rider.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "fire"],
@@ -1253,7 +1171,6 @@
     "url": "https://i.ibb.co/gJ7wjFb/Wolverine.jpg",
     "path": "./images/heroes/Wolverine.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 500,
     "type": "furious",
     "elements": ["fire", "light"]
@@ -1268,7 +1185,6 @@
     "url": "https://i.ibb.co/26k45Sp/Batman.jpg",
     "path": "./images/heroes/Batman.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 500,
     "type": "furious",
     "elements": ["nature", "magic"]
@@ -1283,7 +1199,6 @@
     "url": "https://i.ibb.co/W3dxsWV/Joker.jpg",
     "path": "./images/heroes/Joker.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 500,
     "type": "furious",
     "elements": ["fire", "magic"]
@@ -1298,7 +1213,6 @@
     "url": "https://i.ibb.co/HhjB6cw/Harley.jpg",
     "path": "./images/heroes/Harley.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 500,
     "type": "furious",
     "elements": ["light", "magic"]
@@ -1313,7 +1227,6 @@
     "url": "https://i.ibb.co/0cjvnXH/Cerberus.jpg",
     "path": "./images/heroes/Cerberus.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 750,
     "type": "mythical",
     "elements": ["fire", "land"]
@@ -1328,7 +1241,6 @@
     "url": "https://i.ibb.co/yqqDDg9/Lucifer.jpg",
     "path": "./images/heroes/Lucifer.jpg",
     "available": "Да",
-    "vip": false,
     "upgradeCost": 750,
     "type": "mythical",
     "elements": ["fire", "fire"]
@@ -1343,7 +1255,6 @@
     "url": "https://i.ibb.co/nfW2SWd/Dracula.jpg",
     "path": "./images/heroes/Dracula.jpg",
     "available": "Да",
-    "vip": true,
     "upgradeCost": 1000,
     "type": "private",
     "elements": ["legendary", "fire"]
