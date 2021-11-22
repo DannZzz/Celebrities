@@ -109,8 +109,8 @@ class pvpClass {
                     return error(this.msg, `${member} ${l["declined"]}`);
                 case but2.customId:
                     await addCount(this.id, "2v2");
-                    const data1 = await getHeroData(this.bot, this.id, rp1);
-                    const data2 = await getHeroData(this.bot, member.id, rp2);
+                    const data1 = await getHeroData(this.id, rp1);
+                    const data2 = await getHeroData(member.id, rp2);
 
                     let allH1 = Math.round(data1.h + data2.h);
                     let allD1 = Math.round(data1.d + data2.d);
