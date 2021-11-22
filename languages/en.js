@@ -616,17 +616,40 @@ module.exports = {
                 .addFields(
                     {
                         name: `Classic Boost 💛`,
-                        value: `**[${donate.classicBoostUSD}$ Monthly](https://boosty.to/iamdann/purchase/575346?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n**+1 breeding slot**\n**+1 mining slot**\n+10% Soul of Tyrus\n+10% Soul of Ancalgon\n+5% Soul of Darius\nPrivate channel access`,
+                        value: stripIndents`**[${donate.classicBoostUSD}$ Monthly](https://www.donationalerts.com/r/adanadiscord)**
+                        **Access to Private heroes**
+                        **+1 breeding slot**
+                        **+1 mining slot**
+                        +10% Soul of Tyrus
+                        +10% Soul of Ancalgon
+                        +5% Soul of Darius
+                        Private channel access`,
                         inline: false
                     },
                     {
                         name: `Average Boost 💚`,
-                        value: `**[${donate.averageBoostUSD}$ Monthly](https://boosty.to/iamdann/purchase/575347?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n**+2 breeding slot**\n**+2 mining slot**\n+15% Soul of Tyrus\n+15% Soul of Ancalgon\n+10% Soul of Darius\nPrivate channel access`,
+                        value: stripIndents`**[${donate.averageBoostUSD}$ Monthly](https://www.donationalerts.com/r/adanadiscord)**
+                        **Access to Private heroes**
+                        **x2 xp Boost**
+                        **+2 breeding slot**
+                        **+2 mining slot**
+                        +15% Soul of Tyrus
+                        +15% Soul of Ancalgon
+                        +10% Soul of Darius
+                        Private channel access`,
                         inline: false
                     },
                     {
                         name: `Maximum Boost 💜`,
-                        value: `**[${donate.maximumBoostUSD}$ Monthly](https://boosty.to/iamdann/purchase/575348?ssource=DIRECT&share=subscription_link)**\n**Access to Private heroes**\n**+3 breeding slot**\n**+3 mining slot**\n+20% Soul of Tyrus\n+20% Soul of Ancalgon\n+15% Soul of Darius\nPrivate channel access`,
+                        value: stripIndents`**[${donate.maximumBoostUSD}$ Monthly](https://www.donationalerts.com/r/adanadiscord)**
+                        **Access to Private heroes**
+                        **x3 xp Boost**
+                        **+3 breeding slot**
+                        **+3 mining slot**
+                        +20% Soul of Tyrus
+                        +20% Soul of Ancalgon
+                        +15% Soul of Darius
+                        Private channel access`,
                         inline: false
                     },
                 )
