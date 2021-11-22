@@ -16,7 +16,7 @@ module.exports = {
         category: "h_roleplay",
         aliases: ['lb', "top", "топ"],
       },
-    run: async (bot, message, args) => {
+    run: async (bot, message, args, ops, tr) => {
         const m = message;
         const LANG = await serverFind(m.guild.id)
         const {hero: h, leaderboard: lb, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
@@ -110,6 +110,7 @@ module.exports = {
         .setThumbnail(bot.user.displayAvatarURL())
         .setDescription(stripIndents`
         ${LANG.lang === "en" ? `Top 1 will get ${rewards.lbTop1} ${CRYSTAL} daily.` : `Топ 1 будет получать ${rewards.lbTop1} ${CRYSTAL} ежедневно!`}
+        ${await tr(`Каждый новый уровень дает больше`)} ${rewards.xpLevelUpdate} ${CRYSTAL}
         \`\`\`dts
         #  XP  |  Tag  |  Level
         =======================
