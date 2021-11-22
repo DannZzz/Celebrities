@@ -8,6 +8,8 @@ const { MessageEmbed, MessageActionRow, MessageSelectMenu, MessageCollector, Mes
 const levels = require("../JSON/levels.json");
 const rewards = require("../rewards.json");
 
+const Subs = require("./subscriptionClass");
+
 class LevelMethods {
     static getCurrentLevelByXp(xp) {
         for (let i in levels) {
@@ -22,7 +24,10 @@ class LevelMethods {
     };
 
     static async addXp(id, xp = 1) {
-        await profile.updateOne({userID: id}, {$inc: {xp: Math.round(xp)}});
+        const sub = await Subs.getSubId(id);
+        let subAdd = 1;
+        if (sub == 2 || sub == 3) subAdd = sub;
+        await profile.updateOne({userID: id}, {$inc: {xp: Math.round(xp * subAdd)}});
         const data = await profileFind(id);
         const nowLevel = this.getCurrentLevelByXp(data.xp || 0);
         if (nowLevel.current > (data.xpLevel || 1)) {
