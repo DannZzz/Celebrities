@@ -20,7 +20,7 @@ module.exports = {
         arr
           .sort((a, b) => b.memberCount - a.memberCount)
           .map(r => r)
-          .map((r, i) => `**${i + 1} - ${r.name} | ${r.memberCount} Участники**\nID - ${r.id}\n👑 \`${bot.users.cache.get(r.ownerId).tag || "Неизвестный"}\`\n\n`)
+          .map((r, i) => `**${i + 1} - ${r.name} | ${r.memberCount} Участники**\nID - ${r.id}\n👑 \`${(bot.users.cache.get(r.ownerId) && bot.users.cache.get(r.ownerId).tag) || "Неизвестный"}\`\n\n`)
           .slice(count, count + 10)
           .join("\n");
 
