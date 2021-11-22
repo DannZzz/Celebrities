@@ -25,6 +25,8 @@ const {bans, bansFind, addCrystal, voteFind, vote: v} = require("../../functions
 const buy2 = new Map();
 const Bank = require("../../functions/bankClass")
 
+const translate = require('@iamtraction/google-translate');
+
 const { vote, voteGoal } = require('../../rewards.json');
 
 const cardCommandsBlock = ["battle", "slot", "upgrade", "clan", "buy", "gift", "take", "close", "gcard", "send", "bank"];
@@ -94,6 +96,11 @@ module.exports = async (bot, messageCreate) => {
   const imunCmd = ["enable", "disable", "channel-enable", "channel-disable", "message"]
   var commandfile = bot.commands.get(cmd) || bot.commands.get(bot.aliases.get(cmd))
   
+  
+  async function Translate (text) {
+    const translated = await translate(text, {to: serverData.lang || "en"}).then(obj => obj.text);
+    return translated;
+  }
       
   if (
     (commandfile && 
@@ -148,7 +155,7 @@ module.exports = async (bot, messageCreate) => {
       time_stamps.set(message.author.id, currentTime);
       setTimeout(() => time_stamps.delete(message.author.id), cooldownAmount);
       
-      commandfile.run(bot, message, args, ops)
+      commandfile.run(bot, message, args, ops, Translate)
     }//.catch(()=> message.react("❌"))}
 
  
