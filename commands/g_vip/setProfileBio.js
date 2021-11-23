@@ -7,6 +7,7 @@ const vipModel = require("../../models/vipSchema");
 const {error, embed, perms} = require("../../functions/functions");
 const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
+const Enc = require("../../functions/encryptionClass");
 
 module.exports = {
   config: {
@@ -30,7 +31,7 @@ module.exports = {
     if(!args[0]) return error(message, specifyT);
 
     embed(message, b.done);
-    await vipModel.findOneAndUpdate({userID: message.author.id}, {$set: {profileBio: arg}})
+    await vipModel.findOneAndUpdate({userID: message.author.id}, {$set: {profileBio: Enc.encrypt(arg)}})
 
   }
 }
