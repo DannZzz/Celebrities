@@ -17,10 +17,15 @@ module.exports = {
         aliases: ['lb', "top", "топ"],
       },
     run: async (bot, message, args, ops, tr) => {
+        
         const m = message;
         const LANG = await serverFind(m.guild.id)
         const {hero: h, leaderboard: lb, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`);   
+        
+        if (!devID.includes(message.author.id)) return error(message, LANG.lang === "en" ? "This command is not available right now." : "Эта команда недоступна сейчас.");
+        
         const load = await m.reply(LOADING);
+
         // creating arrays
         const dataRPG = await rpg.find({item: {$exists: true}}).sort([['totalGames', 'descending']]).exec();
         const sliced = dataRPG.slice(0, 10);

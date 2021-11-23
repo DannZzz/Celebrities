@@ -55,7 +55,7 @@ module.exports = {
     let CL;
     if (rp && rp.clanID) {
       let cll = await clanFind(rp.clanID);
-      CL = `${p.clan} **${cll.name}** | ${p.level} __${cll.level}__`
+      CL = `${p.clan} **${Enc.decrypt(cll.name)}** | ${p.level} __${cll.level}__`
     } else {
       CL = p.noclan
     };
