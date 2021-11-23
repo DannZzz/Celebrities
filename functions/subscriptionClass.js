@@ -1,7 +1,7 @@
 const { cardFind, bagFind, serverFind, card: cd, bag, addStar } = require("./models");
 const {none, main} = require("../JSON/colours.json");
 const {AGREE, DISAGREE, STAR} = require("../config");
-const {MessageEmbed, MessageActionRow, MessageSelectMenu, MessageCollector} = require("discord.js");
+const {MessageEmbed, MessageActionRow, MessageSelectMenu, MessageCollector, Formatters} = require("discord.js");
 const heroes = require("../JSON/heroes.json");
 
 const ms = require("ms");
@@ -12,7 +12,7 @@ const subIds = ["1", "2", "3"];
 
 class SubClass {
     static async addSubscription(msg, id, level, time) {
-        if (!id || !level || !subIds.includes(level) || !time || !ms(time)) return;
+        if (!id || !level || !subIds.includes(level) || !time || !ms(time)) return error(msg, "[id] [level 1 2 3] [time]");
 
         const data = await subData.findOne({userID: id});
         if (!data) {
@@ -82,7 +82,7 @@ class SubClass {
         
         
         if (langData[lang][`${myLevel}`]) {
-            return langData[lang][`${myLevel}`] + ` ${lang === "en" ? "until" : "до"} <t:${makeTimestamp(data.date.getTime())}>`
+            return `**${langData[lang][`${myLevel}`]}** ${lang === "en" ? "ends" : "закончится"} ${Formatters.time(data.date, "R")}.`
         } else return "—";
 
     };
