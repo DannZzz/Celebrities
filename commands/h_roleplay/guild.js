@@ -16,6 +16,7 @@ const bosses = require("../../JSON/guild-bosses.json");
 const bossCooldown = new Map();
 const shopSet = new Set();
 const rewards = require("../../rewards.json");
+const Enc = require("../../functions/encryptionClass");
 
 module.exports = {
   config: {
@@ -98,14 +99,14 @@ module.exports = {
       
       let myClan = new MessageEmbed()
       .setColor(main)
-      .setTitle(`📊 __#${mc.ID}__ — ${mc.name}`)
+      .setTitle(`📊 __#${mc.ID}__ — ${Enc.decrypt(mc.name)}`)
       .setDescription(stripIndents`
       👑 ${cm.leader} ${message.guild.members.cache.get(mc.owner) ? message.guild.members.cache.get(mc.owner) : (bot.users.cache.get(mc.owner) ? bot.users.cache.get(mc.owner).tag : LANG.lang === "en" ? "Unknown" : "Неизвестный")}
       📈 ${cm.level} ${mc.level}
       💰 ${cm.budget} ${formatNumber(mc.budget)} ${CLAN}
       🎁 ${cm.reward} ${formatNumber(mc.level * 300)} ${mc.reward && (86400 * 1000) - (Date.now() - mc.reward) > 0 ? "<:disagree:870586968734580767>" : "<:agree:870586969606979664>"}
       ❤ ${cc.bonusHealth} ${addHealth.toFixed(1)}%
-      ⚔ ${cc.bonusDamage} ${addDamage.toFixed(1)}%${mc.description ? "\n\n" + mc.description : ''}
+      ⚔ ${cc.bonusDamage} ${addDamage.toFixed(1)}%${mc.description ? "\n\n" + Enc.decrypt(mc.description) : ''}
       
       **${cm.members} - ${a.length } / ${mc.space}**
       ${b.length !== 0 ? b.join("\n") : cm.noMembers}`)
@@ -180,7 +181,7 @@ module.exports = {
         let newClan = await clan.create({
           owner: user.id,
           ID: ID,
-          name: nameOfClan
+          name: Enc.encrypt(nameOfClan)
         });
         newClan.save()
         await rpg.updateOne({userID: message.author.id}, {$set: {clanID: ID}})
@@ -330,7 +331,7 @@ module.exports = {
       let getLimit = args.slice(1).join(" ").split("")
       if(getLimit.length > 400) return error(message, maxLimit(400))
       const descriptionText = args.slice(1).join(" ");
-      await clan.updateOne({ID: c.ID}, {$set: {description: descriptionText}});
+      await clan.updateOne({ID: c.ID}, {$set: {description: Enc.encrypt(descriptionText)}});
 
       return embed(message, cc.descDone);
     } else if (logo.includes(resp)) {
