@@ -66,6 +66,10 @@
     {
         "need": ["Tyrus", "Shadow"],
         "reward": ["Gigantes"]
+    },
+    {
+        "need": ["Atalanta", "Atlant"],
+        "reward": ["Tirana"]
     }
 
 ]
