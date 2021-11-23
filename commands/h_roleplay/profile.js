@@ -48,8 +48,8 @@ module.exports = {
     else if (data["vip1"]) vip = status.vip + " VIP";
     const trophy = rp.league.rate || 0;
 
+    const trySub = await Subs.getSubId(member.id);
     
-    const sub = await Subs.getSubString(member.id, message.guild.id);
     //if(data["vip1"] && checkVip.profileImage !== null && data["vip2"]) embed.setImage(checkVip.profileImage);
     let CL;
     if (rp && rp.clanID) {
@@ -70,10 +70,15 @@ module.exports = {
     if (znachki.length !== 0) {
       embed.addField(`-- ${p.privilege} --`, znachki.join(" "))
     }
+
+    embed.addField(`-- ${p.status.split(":")[0]} --`, `${vip}`)
+
+    if (trySub) {
+      const sub = await Subs.getSubString(member.id, message.guild.id);
+      embed.addField(`-- ${p.subs.split(":")[0]} --`, `${sub}`);
+    }
     
     embed.addField(stripIndents`
-    ${p.status} ${vip}
-    ${p.subs} ${sub}
     ${p.level} ${myLevelObj.current} 
     ${formatNumber(myXp)} / ${formatNumber(myLevelObj.xpForNextLevel)} xp
     `, `${STAR} ${formatNumber(Math.round(data.stars)) || Math.round(data.stars)}\n${CRYSTAL} ${formatNumber(Math.round(data.crystal || 0))}\n${HELL.candy} ${formatNumber(Math.round(event.candy || 0))}\n${await Rate(message).rateData(trophy)}\n${p.quiz} ${rp.quizCount}\n${CL}\n${p.gg} ${marData}\n\n`)
