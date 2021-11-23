@@ -22,6 +22,7 @@
     "canvas": "^2.8.0",
     "captcha-canvas": "^3.1.0",
     "common-tags": "^1.8.0",
+    "crypto-js": "^4.1.1",
     "discord.js": "^13.1.0",
     "discord.js-rate-limiter": "^1.2.0",
     "donationalerts-api": "^1.1.0",
