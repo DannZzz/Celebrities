@@ -1,6 +1,6 @@
 const {serverFind, rpgFind, bagFind, rpg, profile} = require("../../functions/models");
 const {error, embed, roundFunc, pagination, formatNumber} = require("../../functions/functions");
-const {MEDAL, LEFT, RIGHT, LEAGUE, STAR, CRYSTAL, LOADING} = require("../../config");
+const {MEDAL, LEFT, RIGHT, LEAGUE, STAR, CRYSTAL, LOADING, devID} = require("../../config");
 const {MessageEmbed, MessageButton} = require("discord.js");
 const {greenlight, redlight, main} = require('../../JSON/colours.json');
 const heroes = require('../../JSON/heroes.json');
