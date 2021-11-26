@@ -42,6 +42,15 @@ module.exports = {
 
 
 
+
+    "report": {
+        "desc": "Report to a member.",
+        "usage": "[mention | ID | channel] [reason | channel mention]",
+        "access": "For everyone",
+    },
+
+
+
     "promoClass": {
         "noCode": "Please enter a promo code.",
         "noPromo": "This promo code does not exist.",
@@ -688,12 +697,12 @@ module.exports = {
                     {
                         name: `Prices in dollars.`,
                         value: stripIndents`
-                        • VIP + 10000 ${STAR} - ${rubToDollar(shop.vip, formatNumber)}
-                        • Premium + 20000 ${STAR} - ${rubToDollar(shop.premium, formatNumber)}
+                        • VIP - ${rubToDollar(shop.vip, formatNumber)} + Maximum Boost for 5 days for free!
+                        • Premium - ${rubToDollar(shop.premium, formatNumber)} + Maximum Boost for 7 days for free!
                         • 1 ${CRYSTAL} = 10 ${HELL.candy} (\`?buy candy 10\`)
                         • 1 ${CRYSTAL} = 5.000 ${STAR} (\`?buy golds 100000\`)
-                        • 1000 ${CRYSTAL} - ${rubToDollar(shop.hazarCrystal, formatNumber)}
-                        • 350 ${CRYSTAL} - ${rubToDollar(shop.ereq50Crystal, formatNumber)}
+                        • 1000 ${CRYSTAL} - ${rubToDollar(shop.hazarCrystal, formatNumber)} + Maximum Boost for 7 days for free!
+                        • 350 ${CRYSTAL} - ${rubToDollar(shop.ereq50Crystal, formatNumber)} + Maximum Boost for 5 days for free!
                         • 100 ${CRYSTAL} - ${rubToDollar(shop.haryurCrystal, formatNumber)}
                         • Donate-box (50k-200k) - ${rubToDollar(shop.donateBox, formatNumber)}`,
                         inline: false

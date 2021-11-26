@@ -61,6 +61,14 @@ module.exports = {
 
 
 
+    "report": {
+        "desc": "Репортнуть участника.",
+        "usage": "[упоминание | ID | канал] [причина | упоминание канала]",
+        "access": "Для всех",
+    },
+
+
+
     "global-duel": {
         "desc": "Дуэл с рандомным участником.",
         "usage": "",
@@ -686,12 +694,12 @@ module.exports = {
                     {
                         name: `Цены в рублях.`,
                         value: stripIndents`
-                        • VIP + 10000 ${STAR} - ${rubToDollar(shop.vip, formatNumber, "ru")}
-                        • Премиум + 20000 ${STAR} - ${rubToDollar(shop.premium, formatNumber, "ru")}
+                        • VIP - ${rubToDollar(shop.vip, formatNumber, "ru")} + Максимальный Буст на 5 дней в подарок!
+                        • Премиум - ${rubToDollar(shop.premium, formatNumber, "ru")} + Максимальный Буст на 7 дней в подарок!
                         • 1 ${CRYSTAL} = 10 ${HELL.candy} (\`?купить конфеты 10\`)
                         • 1 ${CRYSTAL} = 5.000 ${STAR} (\`?купить голды 100000\`)
-                        • 1000 ${CRYSTAL} - ${rubToDollar(shop.hazarCrystal, formatNumber, "ru")}
-                        • 350 ${CRYSTAL} - ${rubToDollar(shop.ereq50Crystal, formatNumber, "ru")}
+                        • 1000 ${CRYSTAL} - ${rubToDollar(shop.hazarCrystal, formatNumber, "ru")} + Максимальный Буст на 7 дней в подарок!
+                        • 350 ${CRYSTAL} - ${rubToDollar(shop.ereq50Crystal, formatNumber, "ru")} + Максимальный Буст на 5 дней в подарок!
                         • 100 ${CRYSTAL} - ${rubToDollar(shop.haryurCrystal, formatNumber, "ru")}
                         • Донат-бокс (50k-200k) - ${rubToDollar(shop.donateBox, formatNumber, "ru")}`,
                         inline: false
