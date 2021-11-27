@@ -12,6 +12,7 @@ const { RateLimiter } = require('discord.js-rate-limiter');
 const { update } = require('../../models/profileSchema');
 let rateLimiter = new RateLimiter(1, 3000);
 const devs = ['382906068319076372'];
+const Enc = require("../../functions/encryptionClass");
 
 module.exports = {
     config: {
@@ -44,7 +45,7 @@ module.exports = {
       let inS = await clan.find({owner: {$exists: true}}).exec();
       let text = await Promise.all(inS.map(async a => {
         const users = await rpg.find({clanID: a.ID}).exec();
-        return `**#${a.ID}** **${a.name}** (${cc.lvl} **${a.level}**)\n${STAFF.owner} ${message.guild.members.cache.get(a.owner) ? message.guild.members.cache.get(a.owner) : `**${bot.users.cache.get(a.owner) ? bot.users.cache.get(a.owner).tag : (LANG.lang === "en" ? "Unknown" : "Неизвестный")}**`}\n${cc.members} **${users.length}/${a.space}** | ${cc.budget} **${a.budget} ${CLAN}**`;
+        return `**#${a.ID}** **${Enc.decrypt(a.name)}** (${cc.lvl} **${a.level}**)\n${STAFF.owner} ${message.guild.members.cache.get(a.owner) ? message.guild.members.cache.get(a.owner) : `**${bot.users.cache.get(a.owner) ? bot.users.cache.get(a.owner).tag : (LANG.lang === "en" ? "Unknown" : "Неизвестный")}**`}\n${cc.members} **${users.length}/${a.space}** | ${cc.budget} **${a.budget} ${CLAN}**`;
       }));
 
       const em = new MessageEmbed()

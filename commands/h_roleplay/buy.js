@@ -3,7 +3,7 @@ const { RateLimiter } = require('discord.js-rate-limiter');
 let rateLimiter = new RateLimiter(1, 3000);
 const ITEMS = require('../../JSON/items');
 const { event, addCandy, eventFind, addCrystal, serverFind, bagFind, rpgFind, bag: bd, rpg, profileFind, card, cardFind, addStar } = require("../../functions/models");
-const { error, embed, firstUpperCase, delay } = require("../../functions/functions");
+const { error, embed, firstUpperCase, delay, missingArgument } = require("../../functions/functions");
 const { main, none } = require("../../JSON/colours.json");
 const cards = require("../../JSON/cards.json");
 const heroes = require("../../JSON/heroes.json");
@@ -21,7 +21,7 @@ module.exports = {
     category: 'h_roleplay',
     cooldown: 35
   },
-  run: async (bot, message, args, ops) => {
+  run: async function (bot, message, args, ops, tr) {
 
 
     const getLang = require("../../models/serverSchema");
@@ -245,12 +245,7 @@ module.exports = {
 
     if (heros.includes(args[0].toLowerCase())) {
       ops.cards.delete(user.id);
-      const curr = ops.buying.get(message.author.id);
-      if (curr) return
-      ops.buying.set(message.author.id, { action: "buying" });
-      let bool = false;
-
-     
+      if (!args[1]) return await missingArgument(message, await tr("Укажите название героя!"), `${this.config.name} hero [${LANG.lang === "en" ? "hero name" : "название героя"}]`, ["buy hero Poseidon", "buy hero Zeenou"]);
       const msg = message;
 
         const coinData = await profileFind(user.id);
@@ -258,24 +253,13 @@ module.exports = {
         const bag = await bagFind(user.id);
 
         const { buy: b, heroModel: hm, heroes: hh } = require(`../../languages/${ln}`);
-        const emb = new MessageEmbed()
-          .setColor(none)
-          .setImage(ln === "ru" ? "https://i.ibb.co/z2Q3srW/buyRU.gif" : "https://i.ibb.co/4ZtRfsw/buyEN.gif")
-          .setAuthor(user.tag, user.displayAvatarURL({dynamic: true}))
-          .setDescription(ln === "ru" ? "Напишите название героя на английском!" : "Write a hero name.")
 
-        const filter = (m) => m.author.id === user.id;
-        const mms = await msg.reply({embeds: [emb]});
-        const collector = await msg.channel.createMessageCollector({
-          filter,
-          time: 20000
-        });
-        collector.on("collect", async (m) => {
-          const val = firstUpperCase(m.content.toLowerCase());
+        
+          const val = firstUpperCase(args[1].toLowerCase());
           const item = heroes[val];
-          if (!mms.deleted) mms.delete();
-          bool = true;
-          ops.buying.delete(message.author.id);
+          if (!item) return error(message, await tr("Герой не найден!"));
+          
+          
           if (item.vip && item.vip === true) {
             if (bag["vip2"] !== true) {
               return error(msg, b.vip);
@@ -327,19 +311,7 @@ module.exports = {
             return embed(msg, b.done(ln === "ru" ? item.nameRus : item.name));
           } else {
             return error(msg, b.not);
-          }
-
-
-        });
-
-        collector.on("end", async () => {
-          if (!bool) {
-            if (!mms.deleted) mms.delete()
-            ops.buying.delete(message.author.id);
-            return error(msg, quiz.err)
-          }
-        })
-      
+          }  
 
 
       function cAv(av) {
