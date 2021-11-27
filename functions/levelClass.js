@@ -39,6 +39,10 @@ class LevelMethods {
         }
     }
 
+    static async addDevXp(id, xp) {
+        await profile.updateOne({userID: id}, {$inc: {xp: Math.round(xp)}});
+    }
+
     
 }
 
