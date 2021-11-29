@@ -2,9 +2,9 @@ const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
 const { readdirSync } = require("fs");
 const { stripIndents } = require("common-tags");
 const { DEV, AGREE, PREFIX, DISAGREE, LEFT, RIGHT, DLEFT, DRIGHT, CANCEL  } = require('../../config');
-const { main } = require("../../JSON/colours.json");
+const { main, reddark } = require("../../JSON/colours.json");
 const { server : s, serverFind } = require("../../functions/models");
-const {paginationBig, missingArgument} = require("../../functions/functions");
+const {paginationBig, missingArgument, error} = require("../../functions/functions");
 
 module.exports = {
     config: {
@@ -13,104 +13,118 @@ module.exports = {
       category: "b_info",
       examples: ["help battle"]
     },
-    run: async function (bot, message, args) { 
+    run: async function (bot, message, args, ops, tr) {
       const LANG = await serverFind(message.guild.id);
-      const {help: h, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`); 
+      const {timeOut, interError, ERROR, help: h, notUser, specify, specifyT, specifyL, vipOne, vipTwo, maxLimit, perm, heroModel: hm, and, clanModel: cm, buttonYes, buttonNo, noStar} = require(`../../languages/${LANG.lang}`); 
       const cmd = require(`../../languages/${LANG.lang}`)  
    
-        let prefix;
-        let serverData = await serverFind(message.guild.id);
-        if(!serverData) {
-          let server = await s.create({
-            serverID: message.guild.id,
-          })
-        server.save()}
+      let prefix;
+      let serverData = await serverFind(message.guild.id);
+      if(!serverData) {
+        let server = await s.create({
+          serverID: message.guild.id,
+        })
+      server.save()}
 
-        prefix = serverData.prefix;
-        let catArray = ['RPG', 'roleplay', 'rpg', 'информация', 'инфо', 'info', 'экономика', 'economy', 'реакционные', 'реакция', 'reaction', 'фан', 'fun', 'настройки', 'settings', 'VIP', 'vip']
-        const embed = new MessageEmbed()
-            .setColor(main)
-            .setAuthor(`${message.guild.me.displayName}`, message.guild.iconURL())
-            .setThumbnail(bot.user.displayAvatarURL())
-        let aggr = 0;
-        bot.commands.forEach(command => {
-            if (!command.config.category || command.config.category === "owner") aggr += 1;
-        });
-        if (!args[0]) {
+      prefix = serverData.prefix;
 
+      let aggr = 0;
+      bot.commands.forEach(command => {
+          if (!command.config.category || command.config.category === "owner") aggr += 1;
+      });
+      
+      let catArray = ['RPG', 'roleplay', 'rpg', 'информация', 'инфо', 'info', 'экономика', 'economy', 'реакционные', 'реакция', 'reaction', 'фан', 'fun', 'настройки', 'settings', 'VIP', 'vip']
+      const embed = new MessageEmbed()
+          .setColor(main)
+          .setAuthor(`${message.guild.me.displayName}`)
+          .setThumbnail(bot.user.displayAvatarURL())
+          .setDescription(`${h.t1} ${message.guild.me.displayName}\n${h.t2} \`${PREFIX}\`\n${h.t3} \`${prefix}\`\n${h.t4}\n\`${prefix}help [hero]\``)
+          .setFooter(`${message.guild.me.displayName} | ${h.t5} ${bot.commands.size-aggr} `)
+          .setImage("https://i.ibb.co/WswBXmj/Help-Backround.gif")
+     
+      const categoriesInEmbeds = {}; // categoryName: embed class
+      const buttons = []; // class
+      const validButtonIds = []; // string
+      
+      if (!args[0]) {
+        const categories = readdirSync("./commands/")
 
-            const categories = readdirSync("./commands/")
-            const fkit = [];
-            embed.setDescription(`${h.t1} ${message.guild.me.displayName}\n${h.t2} \`${PREFIX}\`\n${h.t3} \`${prefix}\`\n${h.t4}\n\`${prefix}help [hero]\``)
-            embed.setFooter(`${message.guild.me.displayName} | ${h.t5} ${bot.commands.size-aggr} `, bot.user.displayAvatarURL());
-
-            // test
-            const map = categories.forEach( (category) => {
-              const dir = bot.commands.filter(c => c.config.category === category);
-              if(category === "b_info") {category = "📜 "+h.info}
-              else if (category === "e_fun") {
-                category = "😀 "+h.fun
-              }
-              else if (category === "g_vip") {
-                category = "🌟 "+h.vip
-              }
-              else if (category === "h_roleplay") {
-                category = "🐉 "+h.rpg
-              }
-              else if (category === "f_settings") {
-                category = "⚙ "+h.settings
-              }
-              else if (category === "cards") {
-                category = "💳 "+h.cards
-              }  
-
-            if (category === "owner") return 
-
-              const capitalise = category.slice(0, 1).toUpperCase() + category.slice(1);
-                embed.addField(capitalise, dir.map(c => `\`${c.config.name}\``).join(" "));
-            
-            })
-            return message.reply({embeds: [embed]})
-            // const timeout = 100000;
-            // const userids = [message.author.id]
-            // const button1 = new MessageButton()
-            //       .setCustomId('previousbtn')
-            //       .setEmoji(LEFT)
-            //       .setStyle('SECONDARY');
         
-            //       const button0 = new MessageButton()
-            //       .setCustomId('0btn')
-            //       .setEmoji(DLEFT)
-            //       .setStyle('SECONDARY');
-        
-            //       const buttonlast = new MessageButton()
-            //       .setCustomId('lastbtn')
-            //       .setEmoji(DRIGHT)
-            //       .setStyle('SECONDARY');
-        
-            //       const button2 = new MessageButton()
-            //       .setCustomId('nextbtn')
-            //       .setStyle('SECONDARY')
-            //       .setEmoji(RIGHT);
-        
-            //       const cancel = new MessageButton()
-            //       .setCustomId('cancel')
-            //       .setStyle('SECONDARY')
-            //       .setEmoji(CANCEL);
-        
-            // let buttonList = [
-            //     button0,
-            //     button1,
-            //     cancel,
-            //     button2,
-            //     buttonlast
-            // ]
-            
-            // await paginationBig(message, fkit, buttonList, timeout, userids, h.dm)
-            
-            // test 
-            // return message.channel.send({embeds: [embed]})
+        // test
+        const map = categories.forEach((category) => {
+          const embed = new MessageEmbed()
+          .setColor(main)
+          .setThumbnail(bot.user.displayAvatarURL())
           
+          const dir = bot.commands.filter(c => c.config.category === category);
+          const categoryMainName = category;
+          
+          if(category === "b_info") {category = {emoji:"📜", name: h.info}}
+          else if (category === "e_fun") {
+            category = {emoji: "😀", name: h.fun};
+          }
+          else if (category === "g_vip") {
+            category = {emoji:"🌟", name: h.vip};
+          }
+          else if (category === "h_roleplay") {
+            category = {emoji:"🐉", name: h.rpg};
+          }
+          else if (category === "f_settings") {
+            category = {emoji:"⚙", name: h.settings};
+          }
+          else if (category === "cards") {
+            category = {emoji:"💳", name: h.cards};
+          }  
+          if (category === "owner") return 
+          const capitalise = category.name.slice(0, 1).toUpperCase() + category.name.slice(1);
+          embed.setDescription(stripIndents`${category.emoji} **${capitalise}**\n${dir.map(c => `**[${LANG.prefix || "a!"}${c.config.name}](https://top.gg/bot/726784476377514045/vote)** - ${require(`../../languages/${LANG.lang}`)[c.config.name] && require(`../../languages/${LANG.lang}`)[c.config.name].desc || "—"}`).join("\n")}`);
+        
+
+          const button = new MessageButton()
+          .setEmoji(category.emoji)
+          .setCustomId(categoryMainName)
+          .setLabel(category.name)
+          .setStyle("SECONDARY")
+
+          categoriesInEmbeds[categoryMainName] = embed;
+          buttons.push(button);
+          validButtonIds.push(categoryMainName)
+        });
+
+        const row1 = new MessageActionRow().addComponents(buttons.filter((button, index) => index <= 3));
+        const row2 = new MessageActionRow().addComponents(buttons.filter((button, index) => index > 3));
+
+
+        
+        const mainMessage = await message.reply({embeds: [embed], components: [row1, row2]});
+           
+        const collector = await mainMessage.createMessageComponentCollector({
+          filter: i => validButtonIds.includes(i.customId),
+          time: 120000
+        });
+
+        collector.on("end", () => {
+          error(message, timeOut);
+          mainMessage.delete();
+          return;
+        });
+
+        collector.on("collect", async i => {
+          i.deferUpdate();
+          collector.resetTimer();
+
+          i.followUp({embeds: [categoriesInEmbeds[i.customId]], ephemeral: true})
+        })
+
+
+
+
+
+
+
+
+
+        
         } else {
             let command = bot.commands.get(bot.aliases.get(args[0].toLowerCase()) || args[0].toLowerCase())
             if (!command) return await missingArgument(message, `${h.non}`, `${this.config.name} ${h.usage}`, this.config.examples)
