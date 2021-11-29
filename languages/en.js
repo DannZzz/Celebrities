@@ -751,7 +751,7 @@ module.exports = {
         "t1": "Hello! I am",
         "t2": "My global prefix:",
         "t3": "My prefix on this server is:",
-        "t4": "You can view all information about the team by writing:",
+        "t4": "You can view all information about the command by writing:",
         "t5": "Number of commands:",
         "info": "Information",
         "vip": "VIP",
@@ -1020,7 +1020,7 @@ module.exports = {
         "done": symbol => `**🎣 You dropped your line and caught ${symbol}**!`,
         "title": "List of fish, their rarity.",
         "list": () => {
-            return `
+            return stripIndents`
         \`\`\`🔧Junk :: [ID: 1]
 🐟Common :: [ID: 2]
 🐠Uncommon :: [ID: 3]
@@ -1047,7 +1047,7 @@ The more fish, the higher the price!
 
 
     "daily": {
-        "desc": "1 selendian and loot-box daily.",
+        "desc": "Selendian and loot-box daily.",
         "usage": "",
         "access": "For everyone",
         "time": time => `You have already collected your daily prize.\nTry again in **${time.getUTCHours()} hours ${time.getMinutes()} minutes.**`,
