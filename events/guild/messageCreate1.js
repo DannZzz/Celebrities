@@ -108,6 +108,8 @@ module.exports = async (bot, messageCreate) => {
     !serverData.disabled.includes(commandfile.config.name)) || 
     (commandfile && imunCmd.includes(commandfile.config.name))
     ) {
+      if (commandfile.config.validServers && !commandfile.config.validServers.includes(message.guild.id)) return;
+
       const nowExplore = ops.explore.get(message.author.id);
       if (nowExplore) return;
       
