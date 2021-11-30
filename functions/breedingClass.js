@@ -15,6 +15,12 @@ const { LevelMethods } = require("./levelClass");
 
 let allSlots = 3;
 
+const storageLimits = {
+    none: 5,
+    vip1: 10,
+    vip2: 30
+}
+
 class breedingClass {
     constructor(bot, msg, sd) {
         this.msg = msg;
@@ -64,17 +70,46 @@ class breedingClass {
 
         const hero = heroes[data.breeding[index]["hero"]];
         const get = data.heroes.find(x => x.name === hero.name);
-        if (get) return error(this.msg, this.sd.lang === "en" ? "You already have this hero!" : "Ты уже имеешь этого героя!");
-
         await LevelMethods.addXp(this.id, breedingXp[hero.type]);
         data.breeding.splice(index, 1)
-        data.heroes.push({
+        if (!get) {
+            data.heroes.push({
             name: hero.name,
             level: 1,
             health: hero.health,
             damage: hero.damage
-        });
-        await data.save();
+            });
+            await data.save();
+        } else {
+            if (!data.storage) {
+                data.storage = {
+                    name: hero.name,
+                    count: 1
+                };
+                data.save();
+            } else {
+                let findingHero = data.storage.find(obj => obj.name === hero.name)
+                if (findingHero) {
+                    const bag = await bagFind(this.id);
+                    if (!bag.vip1 && findingHero.count >= storageLimits.none) {
+                        return error(this.msg, this.sd.lang === "en" ? `You can store only ${storageLimits.none} ${hero.name} cards!` : `Ты можешь хранить только ${storageLimits.none} ${hero.nameRus} карт!`);
+                    } else if (!bag.vip2 && findingHero.count >= storageLimits.vip1) {
+                        return error(this.msg, this.sd.lang === "en" ? `You can store only ${storageLimits.vip1} ${hero.name} cards!` : `Ты можешь хранить только ${storageLimits.vip1} ${hero.nameRus} карт!`);
+                    } else if (findingHero.count >= storageLimits.vip2) {
+                        return error(this.msg, this.sd.lang === "en" ? `You can store only ${storageLimits.vip2} ${hero.name} cards!` : `Ты можешь хранить только ${storageLimits.vip2} ${hero.nameRus} карт!`);
+                    }
+                    await data.save();
+                    await rpg.updateOne({userID: this.id}, {$inc: {[`storage.${data.storage.indexOf(findingHero)}.count`]: 1}});
+                } else {
+                    data.storage.push({
+                        name: hero.name,
+                        count: 1
+                    })
+                    data.save();
+                }
+            }
+
+        }
 
         return embed(this.msg, this.sd.lang === "en" ? `You got hero: __${hero.name}__` : `Вы получили героя: __${hero.nameRus}__`);
     };

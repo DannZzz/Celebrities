@@ -1,7 +1,7 @@
 const yes = ['yes', 'y', 'ye', 'yea', 'correct', 'да', 'Да'];
 const no = ['no', 'n', 'nah', 'nope', 'fuck off', 'нет', 'Нет', 'не'];
 const MONEY = ['', 'k', 'M', 'G', 'T', 'P', 'E'];
-const { bag: bd } = require("./../functions/models");
+const { bag: bd, rpg, rpgFind } = require("./../functions/models");
 const inviteRegex = /(https?:\/\/)?(www\.|canary\.|ptb\.)?discord(\.gg|(app)?\.com\/invite|\.me)\/([^ ]+)\/?/gi;
 const botInvRegex = /(https?:\/\/)?(www\.|canary\.|ptb\.)?discord(app)\.com\/(api\/)?oauth2\/authorize\?([^ ]+)\/?/gi;
 const { DISAGREE, AGREE, adminID, devID, STAFF } = require('./../config')
@@ -14,8 +14,110 @@ const heroes = require('./../JSON/heroes.json')
 const { voteFind, powersFind, powers, serverFind, mail, mailFind, clanFind, botData } = require("./models.js");
 const Subs = require("./subscriptionClass");
 const badges = require("./../JSON/badges.json");
+const levels = require("./../JSON/starLevels.json");
+
+async function template (action, data = {}) {
+    // data = {
+    //   id: discordUserId,
+    //   rpg: rpgModel,
+    //   item: "heroName",
+    //   countToAdd: 3,
+    //   type: "common",
+    //   stars: 3
+    // }
+    const actions = {
+      "get": async function () {
+        let rp;
+        if (data.rpg) {
+          rp = data.rpg;
+        } else if (!data.rpg && !data.id) {
+          throw new Error("Rpg model or userID not found!");
+        } else {
+          rp = await rpgFind(data.id);
+          if (!rp) throw new Error("User data not found!");
+        }
+
+        let heroName = data.item || rp.item;
+        const heroInHeroes = rp.heroes.find(heroObj => heroObj.name === heroName);
+        if (!heroName || !heroInHeroes) throw new Error("Hero not found!");
+
+        const starCount = heroInHeroes.stars || 1;
+        const addedHeroes = heroInHeroes.addedHeroes || 0;
+
+        return {
+          stars: starCount,
+          added: addedHeroes
+        };
+
+      },
+      "update": async function () {
+         let rp;
+        if (data.rpg) {
+          rp = data.rpg;
+        } else if (!data.rpg && !data.id) {
+          throw new Error("Rpg model or userID not found!");
+        } else {
+          rp = await rpgFind(data.id);
+          if (!rp) throw new Error("User data not found!");
+        }
+
+        let heroName = data.item || rp.item;
+        const heroInHeroes = rp.heroes.find(heroObj => heroObj.name === heroName);
+        const heroIndex = rp.heroes.findIndex(heroObj => heroObj.name === heroName);
+        if (!heroName || !heroInHeroes) throw new Error("Hero not found!");
+
+        let count = 1;
+        if (data.countToAdd && !isNaN(data.countToAdd) && Math.round(data.countToAdd) > 0) count = Math.round(data.countToAdd);
+
+        const storage = rp.storage || [];
+
+        const heroStorage = storage.find(obj => obj.name === heroName);
+        if (!heroStorage) {
+          return false;
+        } else {
+          if (heroStorage.count < 0) return false;
+          if (heroStorage.count < count) count = heroStorage.count;
+
+          let stars = await this.get().then(data => data.stars);
+          let need = this.need(heroes[heroName].type, heroInHeroes.stars || 1);
+          if (count + (heroInHeroes.addedHeroes || 0) > need) count = need - (heroInHeroes.addedHeroes || 0);
+
+          await rpg.updateOne({userID: rp.userID}, {$inc: { [`heroes.${heroIndex}.addedHeroes`]: count, [`storage.${rp.storage.indexOf(heroStorage)}.count`]: -count}});
+
+          rp = await rpgFind(rp.userID);
+          const updatedHero = rp.heroes.find(heroObj => heroObj.name === heroName);
+          if (updatedHero.addedHeroes >= need) {
+            await rpg.updateOne({userID: rp.userID}, {$set: {
+             [`heroes.${heroIndex}.addedHeroes`]: 0,
+             },
+             $inc: {
+              [`heroes.${heroIndex}.stars`]: heroInHeroes.stars ? 1 : 2
+             }
+           });
+            return true;
+          }
+        }
+
+      },
+      "need": function (type = data.type, stars = data.stars) {
+        if (!type || !stars) throw new Error("need Error");
+        return Math.round(levels[type] * stars);
+      }
+
+    }
+
+    if (!action || !actions[action]) {
+      throw new Error("Action not found");
+    } else {
+      const result = await actions[action]();
+      return result;
+    }
+
+  }
 
 module.exports = {
+  heroStarsGenerator: template,
+
   getPrivilege: async (id) => {
     let finallArrEmojies = [];
 
@@ -78,7 +180,15 @@ module.exports = {
     }
   },
   
-  getHeroData: async (sponsorID, data) => {
+  getHeroData: async function (sponsorID, data) {
+
+    const starData = await template("get", {
+      rpg: data,
+      item: datat.item
+    });
+
+    const starBonus = Math.round(starData.stars * levels.bonus);
+    
     const dataPow = await Subs.getSubId(sponsorID);
     const get = data.heroes.find(x => x.name === data.item);
     const {health, damage} = get;
@@ -140,12 +250,12 @@ module.exports = {
     };
     
 
-    let finalHealth = Math.round(health + (health * pows.h / 100));
-    let finalDamage = Math.round(damage + (damage * pows.d / 100));
+    let finalHealth = Math.round(health + (health * pows.h / 100) + (health * starBonus / 100));
+    let finalDamage = Math.round(damage + (damage * pows.d / 100) + (damage * starBonus / 100));
 
     finalHealth += (finalHealth * perc / 100);
     finalHealth += (health * healthFromClan / 100);
-    finalDamage += (damage * damageFromClan / 100);
+    finalDamage += (damage * damageFromClan / 100); 
     
     return {
       h: Math.round(finalHealth),
