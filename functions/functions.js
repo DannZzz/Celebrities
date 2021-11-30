@@ -184,7 +184,7 @@ module.exports = {
 
     const starData = await template("get", {
       rpg: data,
-      item: datat.item
+      item: data.item
     });
 
     const starBonus = Math.round(starData.stars * levels.bonus);
