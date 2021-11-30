@@ -1,0 +1,9 @@
+{
+	"common": 5,
+	"elite": 10,
+	"furious": 15,
+	"mythical": 20,
+	"private": 25,
+	"bonus": 5,
+	"max": 5
+}
