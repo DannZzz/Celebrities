@@ -3,7 +3,7 @@
     "lbTop1": 50,
     "voteGoal": 700,
     "defaultGuildBossReward": 150000,
-    "xpLevelUpdate": 100,
+    "xpLevelUpdate": 50,
     "guildBossKiller": 150,
     "guildShopHero": {
         "name": "Carnage",
