@@ -51,6 +51,14 @@ module.exports = {
 
 
 
+    "storage": {
+        "desc": "Storage for collected heroes.",
+        "usage": "",
+        "access": "For everyone",
+    },
+
+
+
     "promoClass": {
         "noCode": "Please enter a promo code.",
         "noPromo": "This promo code does not exist.",
@@ -777,7 +785,7 @@ module.exports = {
 
     "upgrade": {
         "desc": "Upgrade your hero.",
-        "usage": "[info]",
+        "usage": "[info | stars]",
         "access": "For everyone",
         "info": "Information about leveling up to",
         "cost": "Upgrade cost:",
