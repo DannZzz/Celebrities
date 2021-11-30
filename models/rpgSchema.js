@@ -7,6 +7,7 @@ const rpgSchema = new mongoose.Schema({
   clanID: { type: String, default: null },
   wins: { type: Number, default: 0 },
   loses: { type: Number, default: 0 },
+  storage: { type: Array, default: [] },
   breeding: { type: Array, default: [] },
   totalGames: { type: Number, default: 0 },
   surviveLevel: { type: Number, default: 0 },
