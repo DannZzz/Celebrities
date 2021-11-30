@@ -6,7 +6,7 @@ const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { COIN, STAR, LEFT, RIGHT, DLEFT, DRIGHT, CANCEL, heroType, FORCE } = require("../../config");
 const { MessageEmbed, MessageButton } = require("discord.js");
-const {error, paginationBig, formatNumber, forceGenerator, pagination} = require("../../functions/functions");
+const {error, paginationBig, formatNumber, forceGenerator, pagination, heroStarsGenerator} = require("../../functions/functions");
 module.exports = {
   config: {
     name: "my",
@@ -106,17 +106,28 @@ module.exports = {
     if (rp.heroes.length === 1) {
         return message.channel.send({embeds: [hero]})
     } else {
-      let arr = rp.heroes.map((i) => {
-        const h1 = heroes[i.name];
-        textedElements = h1.elements.map(el => elements[el].emoji).join(" ")
-        return new MessageEmbed()
-        .setThumbnail(h1.url)
-        .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
-        .setTitle(`${heroType[h1.type]} ${h1.name} (${h1.nameRus})\n ${FORCE} ${hm.force} ${forceGenerator(i.health, i.level, i.damage)}\n${LANG.lang === "en" ? "Elements:" : "Стихия:"} ${textedElements}`)
-        .setColor(main)
-        .addField(`💯 ${hm.level} ${i.level}\n❤ ${hm.health} ${formatNumber(i.health)}\n⚔ ${hm.damage} ${formatNumber(i.damage)}`, `** **`)
-        
-      })
+      let arr = await Promise.all(rp.heroes.map(async (i) => {
+              const h1 = heroes[i.name];
+      
+              const starData = await heroStarsGenerator("get", {
+                rpg: rp,
+                item: h1.name
+              });
+      
+              const need = await heroStarsGenerator("need", {
+                stars: starData.stars,
+                type: h1.type
+              })
+              
+              textedElements = h1.elements.map(el => elements[el].emoji).join(" ")
+              return new MessageEmbed()
+              .setThumbnail(h1.url)
+              .setAuthor(message.author.username, message.author.displayAvatarURL({dynamic: true}))
+              .setTitle(`${heroType[h1.type]} ${h1.name} (${h1.nameRus})\n${"🌟".repeat(starData.stars)}  ${starData.added} / ${need}\n${FORCE} ${hm.force} ${forceGenerator(i.health, i.level, i.damage)}\n${LANG.lang === "en" ? "Elements:" : "Стихия:"} ${textedElements}`)
+              .setColor(main)
+              .addField(`💯 ${hm.level} ${i.level}\n❤ ${hm.health} ${formatNumber(i.health)}\n⚔ ${hm.damage} ${formatNumber(i.damage)}`, `** **`)
+              
+            }))
     
 
     // const item1 = rp.heroes[0]

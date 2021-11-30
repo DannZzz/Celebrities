@@ -4,10 +4,11 @@ const pd = require("../../models/profileSchema");
 const bd = require("../../models/begSchema");
 const rpg = require("../../models/rpgSchema");
 const { MessageEmbed } = require("discord.js");
-const { COIN, STAR } = require("../../config");
-const { checkValue } = require("../../functions/functions");
-const { RateLimiter } = require('discord.js-rate-limiter');
-let rateLimiter = new RateLimiter(1, 3000);
+const { COIN, STAR, AGREE } = require("../../config");
+const { checkValue, heroStarsGenerator } = require("../../functions/functions");
+
+const levels = require("../../JSON/starLevels.json");
+
 const {error} = require("../../functions/functions");
 
 module.exports = {
@@ -17,7 +18,7 @@ module.exports = {
     category: 'h_roleplay',
     cooldown: 7
   },
-  run: async (bot, message, args, ops) => {
+  run: async (bot, message, args, ops, tr) => {
 
     const getLang = require("../../models/serverSchema");
     const LANG = await getLang.findOne({serverID: message.guild.id});
@@ -37,7 +38,8 @@ module.exports = {
     const get = rp.heroes.find(x => x.name === rp.item)
     let requiredValue = get.level * levelCost;
 
-    const resp = ['info', 'инфо']
+    const resp = ['info', 'инфо'];
+    const stars = ["star", "stars", "звезда", "звезды", "звёзды"];
     
     const getIndex = rp.heroes.findIndex(x => x.name === rp.item);
     
@@ -58,17 +60,44 @@ module.exports = {
       .setThumbnail(hero.url)
 
       return message.channel.send({embeds: [newEmb]})
+    } else if (args[0] && stars.includes(args[0].toLowerCase())) {
+      let toAdd = 1;
+      if (args[1] && !isNaN(args[1]) && Math.round(args[1]) > 0) toAdd = Math.round(args[1]);
+
+      const starData = await heroStarsGenerator("get", {
+        rpg: rp,
+        item: rp.item
+      });
+
+      if (starData.stars >= levels.max) return error(message, await tr(`${levels.max} пока что самый максимальный!`))
+
+      const did = await heroStarsGenerator("update", {
+        rpg: rp,
+        item: rp.item,
+        countToAdd: toAdd
+      });
+
+      if (did) {
+        return message.react(AGREE)
+      } else {
+        return error(message, await tr("В хранилище не нашлись такие герои!"));
+      }
+
+
+
     }
 
     if (bal < requiredValue) return error(message, `${u.err} — **${requiredValue}** ${STAR}.`)
     let a = rp.heroes.indexOf(rp.heroes.filter(a => a["name"] === rp.item))
     let b = rp.heroes[a];
-  
-    await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.${getIndex}.health`]: addH}});
-    await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.${getIndex}.level`]: 1}});
-    await rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.${getIndex}.damage`]: addD}});
     
-    await bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: -requiredValue}});
+    await Promise.all([
+      rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.${getIndex}.health`]: addH}}),
+      rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.${getIndex}.level`]: 1}}),
+      rpg.findOneAndUpdate({userID: message.author.id}, {$inc: {[`heroes.${getIndex}.damage`]: addD}}),
+      bd.findOneAndUpdate({userID: message.author.id}, {$inc: {stars: -requiredValue}}),
+      ])
+    
 
 
     let Embed = new MessageEmbed()
