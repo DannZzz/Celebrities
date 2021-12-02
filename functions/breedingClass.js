@@ -62,8 +62,68 @@ class breedingClass {
         const data = await rpgFind(this.id);
 
         if (!data.breeding || data.breeding.length === 0) return error(this.msg, this.sd.lang === "en" ? "You don't have any breedings!" : "У тебя нет никаких разведений!");
-        
 
+        const alls = ["all", "все"];
+       
+
+        if (isNaN(number) && alls.includes(number.toLowerCase())) {
+            const filtered = data.breeding.filter(obj => obj.date <= new Date());
+            const filteredNotEndeds = data.breeding.filter(obj => obj.date > new Date());
+
+            filtered.forEach(async obj => {
+                const data = await rpgFind(this.id);
+                if (!data.storage) data.storage = [];
+
+                const checkingMain = data.heroes.find(heroObj => heroObj.name === obj.hero);
+                if (checkingMain) {
+                    if (!data.storage) {
+                        data.storage = [{
+                            name: obj.hero,
+                            count: 1
+                        }];
+                    } else {
+                        let findingHero = data.storage.find(Fobj => Fobj.name === obj.hero)
+                        if (findingHero) {
+                            const bag = await bagFind(this.id);
+                            if (!bag.vip1 && findingHero.count >= storageLimits.none) {
+                                return;
+                            } else if (!bag.vip2 && findingHero.count >= storageLimits.vip1) {
+                                return;
+                            } else if (findingHero.count >= storageLimits.vip2) {
+                                return;
+                            }
+                            await rpg.updateOne({userID: this.id}, {$inc: {[`storage.${data.storage.indexOf(findingHero)}.count`]: 1}});
+                        } else {
+                            data.storage.push({
+                                name: obj.hero,
+                                count: 1
+                            })
+
+                        }
+                    }
+                } else {
+                    const hero = heroes[obj.hero];
+                    data.heroes.push({
+                        name: hero.name,
+                        level: 1,
+                        health: hero.health,
+                        damage: hero.damage,
+                        stars: 1,
+                        addedHeroes: 0
+                    });
+                }
+                data.breeding = filteredNotEndeds;
+                data.save();
+
+            });
+
+            return this.msg.react(AGREE);
+
+        }
+        
+        if (isNaN(number)) {
+            return error(this.msg, this.sd.lang === "en" ? "Specify a number or all." : "Укажите номер или все.")
+        }
         const index = number - 1;
         if (number > data.breeding.length || number <= 0) return error(this.msg, this.sd.lang === "en" ? "Breeding not found." : "Скрещивание не найдено.");
         if (data.breeding[index]["date"] > new Date()) return error(this.msg, this.sd.lang === "en" ? "This breeding is not ended." : "Этот скрещивание не закончилось.")
@@ -82,10 +142,10 @@ class breedingClass {
             await data.save();
         } else {
             if (!data.storage) {
-                data.storage = {
+                data.storage = [{
                     name: hero.name,
                     count: 1
-                };
+                }];
                 data.save();
             } else {
                 let findingHero = data.storage.find(obj => obj.name === hero.name)
