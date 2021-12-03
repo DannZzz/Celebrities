@@ -739,7 +739,6 @@ module.exports = {
                 .addField(`${item.pack1.emoji} ${item.pack1.NAME} : ${item.pack1.cost} ${STAR}`, `Откройте и получите одного из этих обычных героев: \`${item.pack1.list.map(i => heroes[i].nameRus).join(", ")}\``)
                 .addField(`${item.pack2.emoji} ${item.pack2.NAME} : ${item.pack2.cost} ${STAR}`, `Откройте и получите одного из этих элитных героев: \`${item.pack2.list.map(i => heroes[i].nameRus).join(", ")}\``)
                 .addField(`${item.pack3.emoji} ${item.pack3.NAME} : ${item.pack3.cost} ${STAR}`, `Откройте и получите одного из этих Премиум героев: \`${item.pack3.list.map(i => heroes[i].nameRus).join(", ")}\``)
-                .addField(`${item.heroPack.emoji} ${item.heroPack.NAME} : ${item.heroPack.cost} ${CRYSTAL}`, `Откройте и получите одного любого героя.`)
                 .addField(`${item.halloween.emoji} ${item.halloween.NAME} : ${item.halloween.cost} ${HELL.candy} __доступен до 30.11.2021__`, `Откройте и получите одного из этих временных героев: \`${item.halloween.validList.map(i => heroes[i].nameRus).join(", ")}\` или ничего`)
                 .addField(`${item.donateBox.emoji} ${item.donateBox.NAME} : ${rubToDollar(15, formatNumber, "ru")}`, `Откройте и получите ${item.donateBox.winRU}`)
                 .addField(`${item.goldBox.emoji} ${item.goldBox.NAME} : ${rubToDollar(25, formatNumber, "ru")}`, `Откройте и получите:  __50-250__ ${CRYSTAL}`)
