@@ -73,15 +73,6 @@ module.exports = {
         cost: 5000,
         list: ["Hunter", "Blazer", "Ariel", "Athena"]
     },
-    heroPack: {
-        name: "heroPack",
-        NAME: "Пак героев",
-        NAMEEN: "Hero pack", 
-        emoji: "<:HeroPack:906852510948544532>",
-        cost: 800,
-        costType: "crystal",
-        list: devHeroes
-    },
     tempPack: {
         name: "tempPack",
         NAME: "Египетский пак",

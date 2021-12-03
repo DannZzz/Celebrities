@@ -102,5 +102,13 @@
         "nameRU": "Коллекция DC",
         "nameEN": "DC Collection",
         "reward": 890000
+    },
+    {   
+        "id": "Demon",
+        "list": ["Demon-8", "Demon-7", "Demon-6", "Demon-5", "Demon-4", "Demon-3", "Demon-2", "Demon-1"],
+        "nameRU": "Коллекция демонов",
+        "nameEN": "Demon Collection",
+        "reward": "Demon-9",
+        "rewardType": "hero"
     }
 ]
