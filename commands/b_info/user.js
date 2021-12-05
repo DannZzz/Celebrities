@@ -23,7 +23,6 @@ module.exports = {
         .setTimestamp()
         .setColor(main)
         if(!member) return error(message, notUser);
-        const data = await memberFind(member.user.id, message.guild.id)
         function statusToRus(ups){
           if(ups === "dnd"){
             return ups = "Не беспокоить";
@@ -70,7 +69,6 @@ try {
 **${u.f2}** <t:${makeTimestamp(member.joinedAt.getTime())}:f> (<t:${makeTimestamp(member.joinedAt.getTime())}:R>)
 **${u.f3}** ${member.roles.cache.size-1}
 **${u.f4}** ${member.roles.highest.name}
-**${u.f5}** \`${data.messages || 0}\``)
         // UIembed.addField('Бот ли?:', `${booleanToRus(member.user.bot)}`, true)
         // UIembed.addField('Статус:', `${statusToRus(member.user.presence.status)}`, true)
         // UIembed.addField('\u200B', '\u200B', true);
