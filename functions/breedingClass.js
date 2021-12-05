@@ -73,7 +73,7 @@ class breedingClass {
             filtered.forEach(async obj => {
                 const data = await rpgFind(this.id);
                 if (!data.storage) data.storage = [];
-
+                const hero = heroes[obj.hero];
                 const checkingMain = data.heroes.find(heroObj => heroObj.name === obj.hero);
                 if (checkingMain) {
                     if (!data.storage) {
@@ -102,7 +102,7 @@ class breedingClass {
                         }
                     }
                 } else {
-                    const hero = heroes[obj.hero];
+                    
                     data.heroes.push({
                         name: hero.name,
                         level: 1,
@@ -113,6 +113,7 @@ class breedingClass {
                     });
                 }
                 data.breeding = filteredNotEndeds;
+                await LevelMethods.addXp(this.id, breedingXp[hero.type]);
                 data.save();
 
             });
