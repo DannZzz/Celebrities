@@ -3,8 +3,7 @@ const mongoose = require("mongoose");
 
 const memberSchema = new mongoose.Schema({
   serverID: { type: String, unique: false},
-  userID: { type: String, unique: false},
-  messages: { type: Number, default: 0}
+  userID: { type: String, unique: false}
 
 });
 
